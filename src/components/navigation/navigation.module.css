@@ -11,7 +11,13 @@
   list-style-type: none;
 
   display: inline-block;
-  padding: var(--padding-s) var(--padding-md);
+  padding: var(--padding-s) var(--padding-lg);
+}
+
+@media only screen and (min-width: 1024px) {
+  .navigation li {
+    padding: var(--padding-s) var(--padding-md);
+  }
 }
 
 .navigation li:first-child {

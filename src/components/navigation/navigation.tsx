@@ -15,7 +15,7 @@ const isActive = (link: Link, pathname: string) => {
   if (pathname === '') {
     return link.name === 'home'
   }
-  return pathname === link.name
+  return pathname === link.name || pathname.includes(link.name)
 }
 
 export function Navigation({ pathname }: Props) {

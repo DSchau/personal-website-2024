@@ -9,13 +9,14 @@ import { Navigation } from '@/components/navigation/navigation.tsx'
 interface Props {
   children: ReactNode;
   pathname: string;
+  showHeader?: boolean;
 }
 
-export function Layout({ children, pathname }: Props) {
+export function Layout({ children, pathname, showHeader = true }: Props) {
   return (
     <>
       <Navigation pathname={pathname} />
-      <Header />
+      {showHeader && <Header />}
       <main className={styles.container}>
         {children}
       </main>

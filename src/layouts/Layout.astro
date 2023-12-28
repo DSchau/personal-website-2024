@@ -3,7 +3,7 @@ const pathname = new URL(Astro.request.url).pathname.slice(1)
 
 import { Layout as LayoutComponent } from "@/components/layout/layout";
 
-const { title } = Astro.props
+const { title, showHeader } = Astro.props
 ---
 
 <html lang="en">
@@ -16,7 +16,7 @@ const { title } = Astro.props
     <slot name="meta" />
 	</head>
 	<body>
-    <LayoutComponent pathname={pathname}>
+    <LayoutComponent pathname={pathname} showHeader={showHeader}>
       <slot />
     </LayoutComponent>
 	</body>

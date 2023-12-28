@@ -2,8 +2,14 @@
 import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
+import { getRepositories } from '@/lib/get-repositories.ts';
 
-import { PostCollection } from '@/components/post-collection/post-collection.tsx';
+import { Collection } from '@/components/collection/collection.tsx';
+import { Project } from '@/components/project/project.tsx';
+
+const repos = await getRepositories({
+	limit: 6
+})
 
 const posts = await getCollection('posts', ({ data }) => {
 	return data.featured
@@ -17,5 +23,6 @@ const posts = await getCollection('posts', ({ data }) => {
 ---
 
 <Layout>
-	<PostCollection posts={posts} />
+	<Collection items={posts} />
+	<Collection items={repos} renderer={Project as any} />
 </Layout>

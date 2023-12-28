@@ -1,5 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro'
+
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
@@ -13,18 +15,10 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Dustin Schau | Product & Engineering Leader</title>
-	</head>
-  <body>
-    <MarkdownPostLayout frontmatter={entry.data as any}>
-      <Content />
-    </MarkdownPostLayout>
-  </body>
-</html>
+<Layout title={`Blog | ${entry.data.title}`} showHeader={false}>
+  <MarkdownPostLayout frontmatter={entry.data as any}>
+    <Content />
+  </MarkdownPostLayout>
+</Layout>
+
 
