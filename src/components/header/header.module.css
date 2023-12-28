@@ -1,5 +1,5 @@
 .header {
-  padding: 0 var(--padding-lg);
+  padding: var(--padding-md) var(--padding-lg);
 }
 
 .title {
@@ -9,6 +9,10 @@
 .byline {
   padding: 0;
   margin: 0;
+}
+
+.header > p > a {
+  color: var(--text-color);
 }
 
 .logo {

@@ -12,6 +12,7 @@ interface Props {
 export function PostPreview({ post, showImage }: Props) {
   return (
     <div className={styles.post}>
+      <p className={styles.date}>{new Date(post.data.date).toLocaleDateString("en-us")}</p>
       <h3 className={styles.title}>{post.data.title}</h3>
       {showImage && post.data.featuredImage && (
         <img src={post.data.featuredImage.src} alt={`Image for ${post.data.title}`} />

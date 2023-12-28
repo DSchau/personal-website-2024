@@ -2,6 +2,7 @@
   --text-color: #222;
   --text-accent-color: #444;
   --bg-color: #fefefe;
+  --border-color: #ddd;
 
   --header-font: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
   --body-font: system-ui, sans-serif;
@@ -21,4 +22,9 @@
   --padding-s: 0.25rem;
   --padding-md: 0.5rem;
   --padding-lg: 1rem;
+
+  --text-xs: 0.7rem;
+  --text-s: 0.8rem;
+  --text-md: 0.9rem;
+  --text-lg: 1.2rem;
 }
