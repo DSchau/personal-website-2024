@@ -4,7 +4,7 @@ title: "The AI Gap"
 author: Dustin Schau
 draft: true
 featured: true
-featuredImage: images/ai.png
+featuredImage: ./images/ai.png
 excerpt: "The rise of AI has revealed a gap. It's so close to fully replacing (read: augmenting) entire fields and professions, but there is friction, challenges, issues. Will those gaps exist forever?"
 tags:
   - ai

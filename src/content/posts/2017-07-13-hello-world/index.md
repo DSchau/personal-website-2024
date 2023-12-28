@@ -4,7 +4,7 @@ title: "Hello World"
 tags:
   - intro
   - about
-featuredImage: ui-and-code.png
+featuredImage: ./ui-and-code.png
 excerpt: Who I am, what I do, and why you should care! This post goes into some detail about my general philosophy around blogging, what I hope to accomplish with this blog, and various other details…
 ---
 

@@ -4,7 +4,7 @@ title: "Excellence"
 author: Dustin Schau
 draft: true
 featured: true
-featuredImage: images/excellence.jpg
+featuredImage: ./images/excellence.png
 excerpt: "Excellence is something that a lot of people talk about, but as we all know, showing and not just telling is better. Thus, this is a deep dive on what makes excellence and some updated and concrete examples of excellence on display."
 tags:
   - excellence

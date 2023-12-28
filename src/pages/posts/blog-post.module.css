@@ -1,0 +1,16 @@
+.container {
+  display: grid;
+  grid-template-columns:
+    1fr
+    min(65ch, 100%)
+    1fr;
+}
+
+.container > * {
+  grid-column: 2;
+}
+
+.container img {
+  width: 100%;
+  grid-column: 1 / 4;
+}

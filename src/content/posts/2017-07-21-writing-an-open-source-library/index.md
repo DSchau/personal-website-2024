@@ -8,7 +8,7 @@ tags:
   - travis
   - jest
   - unit testing
-featuredImage: preview.png
+featuredImage: ./preview.png
 draft: true
 ---
 
@@ -48,7 +48,7 @@ An additional note here: I'd urge you to consider **not** using any type of boil
 
 With all of this in mind&hellip; here's my preferred stack and you should use the same.
 
-![Troll face](images/troll-face.jpeg)
+![Troll face](./images/troll-face.jpeg)
 
 Entirely kidding! However, I do think there is implicit value in discussing how _someone_ (e.g. me) builds something. This is particularly true if it may encourage discussion or improve your existing stack in some meaningful way. There's no guarantee that you, the reader, may find my particular stack encouraging at _this_ time, but learning about it now could pay dividends in the future. With that said, let's get down to it!
 
