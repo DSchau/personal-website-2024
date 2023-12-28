@@ -30,3 +30,16 @@
 .experience p {
   padding: var(--padding-md) 0;
 }
+
+.employer > img {
+  height: var(--h3-size);
+  width: var(--h3-size);
+
+  margin-right: var(--padding-md);
+  position: relative;
+  top: -2px;
+}
+
+.job-title {
+  color: var(--text-accent-color);
+}

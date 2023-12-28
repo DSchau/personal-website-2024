@@ -2,20 +2,37 @@
 import Layout from '@/layouts/Layout.astro'
 import work from '@/assets/work.yaml'
 
+import { Company } from '@/components/company/company.tsx'
+
+import postman from '@/assets/logos/postman.svg'
+import netlify from '@/assets/logos/netlify.svg'
+import gatsby from '@/assets/logos/gatsby.svg'
+import opi from '@/assets/logos/opi.png'
+import up from '@/assets/logos/up.svg'
+
 import styles from './work.module.css'
+
+const LOGOS: { [key: string]: string } = {
+	'Postman': postman,
+	'Netlify': netlify,
+	'Gatsby': gatsby,
+	'Object Partners': opi,
+	'Union Pacific': up
+}
+
 ---
 
 <Layout title="Work">
 	<div class={styles.container}>
 		<h2 class={styles.title}>My work</h2>
-		<p>I love building developer tools and being at the intersection of great teams blending insights from product, design, and engineering.</p>
+		<p><strong>I love building</strong>. I started my career as a front-end engineer and have grown into executive positions and a leader of organizations. I build great products, great teams, and great leaders.</p>
 		<ul>
 			{
 				work.map((experience: any) => {
 					return (
 						<li class={styles.experience}>
-							<h3>{experience.employer}</h3>
-							<h4>{experience.title}</h4>
+							<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}><Company name={experience.employer} logo={LOGOS[experience.employer]} /></h3>
+							<h4 class={styles['job-title']}>{experience.title}<span class={styles.date}>, {experience.date}</span></h4>
 							<p>{experience.description}</p>
 							{experience.highlights && experience.highlights.length > 0 && (
 								<ul>
