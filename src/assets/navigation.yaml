@@ -1,0 +1,8 @@
+- name: home
+  to: /
+- name: posts
+  to: /posts
+- name: work
+  to: /work
+- name: contact
+  to: /#contact
