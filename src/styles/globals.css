@@ -1,3 +1,4 @@
+@import './variables.css';
 @import './code.css';
 
 /*
@@ -45,4 +46,17 @@ p, h1, h2, h3, h4, h5, h6 {
 .full-bleed {
   width: 100%;
   grid-column: 1 / 4;
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--body-font);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--header-font);
+}
+
+a {
+  text-decoration-skip: ink;
 }

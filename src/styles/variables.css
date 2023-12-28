@@ -1,0 +1,7 @@
+:root {
+  --text-color: #222;
+  --bg-color: #fefefe;
+
+  --header-font: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+  --body-font: system-ui, sans-serif;
+}

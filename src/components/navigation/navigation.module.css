@@ -9,3 +9,12 @@
   display: inline-block;
   padding: 0.25rem 0.5rem;
 }
+
+.navigation a {
+  color: var(--text-color);
+  text-decoration-skip: ink;
+}
+
+.navigation a:hover {
+  text-decoration: none;
+}
