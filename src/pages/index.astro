@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 
-import { Layout } from '@/components/layout/layout.tsx'
+import Layout from "@/layouts/Layout.astro";
+
+import { PostCollection } from '@/components/post-collection/post-collection.tsx';
 
 const posts = await getCollection('posts', ({ data }) => {
 	return data.featured
@@ -14,32 +16,6 @@ const posts = await getCollection('posts', ({ data }) => {
 	})
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Dustin Schau | Product & Engineering Leader</title>
-	</head>
-	<body>
-		<Layout>
-			{
-				posts.length > 0 ? (
-					<ul>
-						{
-							posts.map(entry => (
-								<li>
-									<a href={`/posts/${entry.slug}`}>
-										{entry.data.title}  
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				) : null
-			}
-		
-		</Layout>
-	</body>
-</html>
+<Layout>
+	<PostCollection posts={posts} />
+</Layout>

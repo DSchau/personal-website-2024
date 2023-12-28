@@ -1,3 +1,7 @@
+.navigation {
+  padding: var(--padding-lg) var(--padding-lg);
+}
+
 .navigation ul {
   margin: 0;
   padding: 0;
@@ -10,11 +14,23 @@
   padding: 0.25rem 0.5rem;
 }
 
+.navigation li:first-child {
+  padding-left: 0;
+}
+
 .navigation a {
   color: var(--text-color);
   text-decoration-skip: ink;
 }
 
 .navigation a:hover {
+  text-decoration: none;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.active a {
   text-decoration: none;
 }

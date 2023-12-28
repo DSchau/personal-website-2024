@@ -1,0 +1,27 @@
+.header {
+  padding: 0 var(--padding-lg);
+}
+
+.byline {
+  padding: 0;
+  margin: 0;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  height: var(--h2-size);
+
+  position: relative;
+  top: -2px; /* visual center */
+}
+
+.employer {
+  color: var(--employer-color);
+
+  text-decoration: none;
+}
+
+.employer:hover {
+  text-decoration: underline;
+}

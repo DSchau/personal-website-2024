@@ -1,27 +1,19 @@
 ---
 import { getCollection } from "astro:content";
-import { Layout } from '@/components/layout/layout.tsx'
+import Layout from '@/layouts/Layout.astro'
+import { PostCollection } from "@/components/post-collection/post-collection";
 
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
 })
+  .then(all => {
+    return all.sort((a, b) => {
+      return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    })
+  })
 ---
 
-<Layout>
-  <h1>All Posts</h1>
-  {
-    posts.length > 0 ? (
-      <ul>
-        {
-          posts.map(entry => (
-            <li>
-              <a href={`/posts/${entry.slug}`}>
-                {entry.data.title}  
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    ) : null
-  }
+<Layout title="All posts">
+  <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
+  <PostCollection posts={posts} />
 </Layout>

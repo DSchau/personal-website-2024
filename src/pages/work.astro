@@ -1,18 +1,35 @@
 ---
-import { Layout } from '@/components/layout/layout.tsx'
+import Layout from '@/layouts/Layout.astro'
+import work from '@/assets/work.yaml'
+
+import styles from './work.module.css'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Dustin Schau | Product & Engineering Leader | My work</title>
-	</head>
-	<body>
-		<Layout>
-			<h1>My work</h1>
-		</Layout>
-	</body>
-</html>
+<Layout title="Work">
+	<div class={styles.container}>
+		<h2 class={styles.title}>My work</h2>
+		<p>I love building developer tools and being at the intersection of great teams blending insights from product, design, and engineering.</p>
+		<ul>
+			{
+				work.map((experience: any) => {
+					return (
+						<li class={styles.experience}>
+							<h3>{experience.employer}</h3>
+							<h4>{experience.title}</h4>
+							<p>{experience.description}</p>
+							{experience.highlights && experience.highlights.length > 0 && (
+								<ul>
+									{experience.highlights.map((highlight: string[]) => {
+										return (
+											<li>{highlight}</li>
+										)
+									})}
+									</ul>
+							)}
+						</li>
+					)
+				})
+			}
+		</ul>
+	</div>
+</Layout>

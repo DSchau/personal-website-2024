@@ -1,0 +1,32 @@
+.container {
+  margin: 0 auto;
+  padding: var(--padding-lg) 0;
+
+  max-width: min(65ch, 100%);
+}
+
+.container > p {
+  padding: var(--padding-md) 0;
+}
+
+.title {
+  text-align: center;
+}
+
+.container > ul {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
+
+.experience {
+  margin: 0;
+  padding: var(--padding-lg) 0;
+
+  border-top: 1px solid #eee;
+}
+
+.experience p {
+  padding: var(--padding-md) 0;
+}

@@ -57,6 +57,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--header-font);
 }
 
+h1 {
+  font-size: var(--h1-size);
+}
+
+h2 {
+  font-size: var(--h2-size);
+}
+
 a {
   text-decoration-skip: ink;
 }

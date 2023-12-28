@@ -1,0 +1,23 @@
+---
+const pathname = new URL(Astro.request.url).pathname.slice(1)
+
+import { Layout as LayoutComponent } from "@/components/layout/layout";
+
+const { title } = Astro.props
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Dustin Schau | Product & Engineering Leader{title ? ` | ${title}` : ''}</title>
+    <slot name="meta" />
+	</head>
+	<body>
+    <LayoutComponent pathname={pathname}>
+      <slot />
+    </LayoutComponent>
+	</body>
+</html>

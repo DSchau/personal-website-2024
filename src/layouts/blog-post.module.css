@@ -14,3 +14,15 @@
   width: 100%;
   grid-column: 1 / 4;
 }
+
+[data-rehype-pretty-code-figure] {
+  width: 100%;
+  grid-column: 1 / 4;
+
+  background-color: #282A36;
+  margin: var(--padding-lg) 0;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  max-width: min(65ch, 100%);
+}
