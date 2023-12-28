@@ -30,6 +30,13 @@ export async function getRepositories({
               }
               url
               homepageUrl
+              repositoryTopics(first: 5) {
+                nodes {
+                    topic {
+                        name
+                    }
+                }
+              }
             }
           }
         }

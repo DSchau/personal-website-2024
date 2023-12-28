@@ -7,23 +7,40 @@
   border: 1px solid transparent;
 }
 
-.excerpt {
+.content {
   flex-grow: 1;
   padding-bottom: var(--padding-lg);
 
   font-size: var(--text-md);
-}
-
-.header, .footer {
-  padding: var(--padding-md) var(--padding-lg);
-}
-
-.excerpt {
   padding: var(--padding-lg);
 
   border: 1px solid var(--border-color);
   border-bottom-width: 0;
   border-top-width: 0;
+}
+
+.topics {
+  margin: 0;
+  padding: 0;
+
+  padding-top: var(--padding-md);
+
+  list-style-type: none;
+}
+
+.topic {
+  background-color: #f1f8ff;
+  color: #0366d6;
+  display: inline-block;
+
+  font-size: var(--text-s);
+
+  padding: var(--padding-s);
+  margin: var(--padding-s);
+}
+
+.header, .footer {
+  padding: var(--padding-md) var(--padding-lg);
 }
 
 .header {

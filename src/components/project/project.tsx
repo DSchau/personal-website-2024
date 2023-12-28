@@ -13,7 +13,19 @@ export function Project({ item }: Props) {
         <p className={styles.date}>{new Date(item.createdAt).toLocaleDateString("en-us")}</p>
         <a href={item.url}>{item.name}</a>
       </h3>
-      <p className={styles.excerpt}>{item.description}</p>
+      <div className={styles.content}>
+        <p>{item.description}</p>
+        {
+          item.repositoryTopics?.nodes?.length > 0 && (
+            <ul className={styles.topics}>
+              {item.repositoryTopics.nodes.map(({ topic }: any) => {
+                return <li className={styles.topic} key={topic.name}>{topic.name}</li>
+              })}
+            </ul>
+          )
+        }
+  
+      </div>
       <div className={styles.footer}>
         <span className="stars">
           <GoStarFill /> {item.stargazers.totalCount}
