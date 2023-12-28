@@ -59,7 +59,7 @@ Using the power and flexibility of React, we can create a React component to pow
 >
 > If you're not using those: [follow this guide for installation instructions][gatsby-plugin-react-helmet]
 
-```jsx:title=src/components/seo.js
+```jsx title="src/components/seo.js"
 import React from "react";
 // highlight-start
 import Helmet from "react-helmet";
@@ -94,7 +94,7 @@ This component doesn't _do_ anything yet, but we're laying the foundation for a 
 
 The `StaticQuery` component accepts a render prop, and at this point, we're simply returning `null` to render nothing. Let's _actually_ render something and build out our prototype for this SEO component. Let's iterate further.
 
-```jsx:title=src/components/seo.js
+```jsx title="src/components/seo.js"
 import React from "react";
 import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
@@ -151,7 +151,7 @@ In addition to SEO for actual _search_ engines we also want those pretty cards t
 
 Let's implement it 👌
 
-```jsx:title=src/components/seo.js
+```jsx title="src/components/seo.js"
 import React from "react";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types"; // highlight-line
@@ -289,7 +289,7 @@ We now have our extensible SEO component. It takes a `title` prop, and then (opt
 
 ### In a page component
 
-```jsx:title=src/pages/index.js
+```jsx title=src/pages/index.js
 import React from "react";
 
 import Layout from "../components/layout";
@@ -322,7 +322,7 @@ mkdir -p content/blog/2019-01-04-hello-world-seo
 touch content/blog/2019-01-04-hello-world-seo/index.md
 ```
 
-```md:title=content/blog/2019-01-04-hello-world-seo/index.md
+```md title=content/blog/2019-01-04-hello-world-seo/index.md
 ---
 date: 2019-01-04
 featuredImage: images/featured.jpg
@@ -341,7 +341,7 @@ the image will need to be located at `content/blog/2019-01-04-hello-world-seo/im
 
 #### Querying with GraphQL
 
-```jsx:title=src/templates/blog-post.js
+```jsx title="src/templates/blog-post.js"
 import React from 'react'
 import { graphql } from 'gatsby'
 

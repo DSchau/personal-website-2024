@@ -55,7 +55,7 @@ We're using [yarn][yarn], but npm can just as easily be used with `npm i --save 
 
 After installing each of these functional plugins, we'll edit `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed functionality of the specified plugins.
 
-```javascript{6}
+```javascript {6}
 module.exports = {
   siteMetadata: {
     title: `Your Name - Blog`,
@@ -77,7 +77,7 @@ Since the bulk of the blog's content, and each article, will be authored in Mark
 yarn add gatsby-source-filesystem
 ```
 
-```javascript{6-12}
+```javascript {6-12}
 module.exports = {
   // previous configuration
   plugins: [
@@ -113,7 +113,7 @@ yarn add gatsby-transformer-remark
 
 and editing `gatsby-config.js`
 
-```javascript{14-18}
+```javascript {14-18}
 module.exports = {
   // previous setup
   plugins: [
@@ -199,7 +199,7 @@ At this point, there is a reasonable level of confusion and "magic" occuring, pa
 
 Below the `Template` declaration, we'll want to add a GraphQL query. This is an incredibly powerful utility provided by Gatsby which lets us pick and choose very simply the pieces of data that we want to display for our blog post. Each piece of data our query selects will be injected via the `data` property we specified earlier.
 
-```javascript{24-35}
+```javascript {24-35}
 import React from "react";
 import Helmet from "react-helmet";
 
@@ -267,7 +267,7 @@ Nothing super complex yet! We're using the `createPages` API (which Gatsby will 
 
 ### Querying for posts
 
-```javascript{8-31}
+```javascript {8-31}
 const path = require("path");
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
@@ -311,7 +311,7 @@ We now have our query written, but we haven't yet programatically created the pa
 
 ### Creating the pages
 
-```javascript{32-36}
+```javascript {32-36}
 const path = require("path");
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
