@@ -18,3 +18,7 @@
   position: relative;
   top: 2px;
 }
+
+.footer a:hover {
+  text-decoration: none;
+}

@@ -15,13 +15,13 @@ interface Props {
 
 export function Layout({ children, pathname, showHeader = true }: Props) {
   return (
-    <>
+    <div className={styles.container}>
       <Navigation pathname={pathname} />
       {showHeader && <Header />}
-      <main className={styles.container}>
+      <main>
         {children}
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

@@ -28,4 +28,6 @@
   --text-s: 0.8rem;
   --text-md: 0.9rem;
   --text-lg: 1.2rem;
+
+  --content-width: min(65ch, 100%);
 }

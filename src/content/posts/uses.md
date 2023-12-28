@@ -22,6 +22,8 @@ I used to be big on SublimeText (and before that, TextMate!), but the rise of VS
 - Dracula Pro is my theme
 - Fira Code is my font
 
+![VSCode](./images/vscode.png)
+
 I recently tried out a great terminal called Warp, and I've been using that daily since late 2023. I quite like it!
 
 As far as web browsing, I've found Arc to be great for not just daily browsing, but also for debugging since it's built on Chromium the development tools are just as good as they are in Chrome.

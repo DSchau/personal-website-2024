@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
-import { Collection } from "@/components/collection/collection.tsx";
 
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
@@ -12,8 +11,43 @@ const posts = await getCollection('posts', ({ data }) => {
     })
   })
 ---
+<style>
+  p {
+    font-size: var(--text-s);
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: var(--content-width);
+
+    padding: var(--padding-lg);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    padding: var(--padding-md) 0;
+    list-style-type: none;
+  }
+</style>
 
 <Layout title="All posts">
-  <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-  <Collection items={posts} />
+  <div class="container">
+    <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
+    <ul>
+      {posts.map(post => (
+        <li>
+          <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+          <p>{post.data.excerpt}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
 </Layout>

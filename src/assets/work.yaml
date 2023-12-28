@@ -12,7 +12,6 @@
   highlights:
     - Launched Netlify Connect, the graduation and general availability launch of Valhalla (created at Gatsby, Inc.)
     - Integrated the Gatsby team into Netlify, and contributed to consolidation of Gatsby Cloud into Netlify
-    - Re-organized the Netlify engineering organization around key product areas to improve velocity and ownership
 - title: Co-founder, VP of Product & Engineering
   location: Fully remote
   employer: Gatsby
@@ -21,7 +20,7 @@
   highlights:
     - Created the SaaS product Gatsby Cloud which grew customer base from zero to over 1K+ paid customers (100 enterprise!) and over 5M ARR
     - Shipped four major releases of the Gatsby open-source web framework, culminating in one of the most popular open-source projects of all time that as of 2023 powers 0.3% of the web
-    - Co-created Valhalla (along with Abhi Aiyer and Ward Peeters), which was Gatsby's decoupled data layer and was the central product that led to Gatsby's acquisition by Netlify
+    - Co-created Valhalla (along with Abhi Aiyer and Ward Peeters), which was Gatsby's GraphQL data layer made framework agnostic and was the central product that led to Gatsby's acquisition by Netlify
 - title: Principal Consultant
   location: Omaha, NE
   employer: Object Partners
