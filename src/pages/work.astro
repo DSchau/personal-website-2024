@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro'
+
 import Layout from '@/layouts/Layout.astro'
 import work from '@/assets/work.yaml'
 
@@ -12,7 +14,7 @@ import up from '@/assets/logos/up.svg'
 
 import styles from './work.module.css'
 
-const LOGOS: { [key: string]: string } = {
+const LOGOS: { [key: string]: ImageMetadata } = {
 	'Postman': postman,
 	'Netlify': netlify,
 	'Gatsby': gatsby,

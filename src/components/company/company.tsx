@@ -1,8 +1,8 @@
+import type { ImageMetadata } from "astro";
+
 interface Props {
   name: string;
-  logo?: {
-    src: string;
-  };
+  logo?: ImageMetadata;
 }
 
 export function Company({ name, logo }: Props) {
