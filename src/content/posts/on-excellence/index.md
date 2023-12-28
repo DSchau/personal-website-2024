@@ -3,7 +3,8 @@ date: 2023-08-14
 title: "Excellence"
 author: Dustin Schau
 draft: true
-featured: images/excellence.jpg
+featured: true
+featuredImage: images/excellence.jpg
 excerpt: "Excellence is something that a lot of people talk about, but as we all know, showing and not just telling is better. Thus, this is a deep dive on what makes excellence and some updated and concrete examples of excellence on display."
 tags:
   - excellence

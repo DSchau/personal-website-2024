@@ -2,7 +2,9 @@
 import { getCollection } from "astro:content";
 import { Layout } from '@/components/layout/layout.tsx'
 
-const posts = await getCollection('posts')
+const posts = await getCollection('posts', ({ data }) => {
+  return import.meta.env.PROD ? data.draft !== true : true;
+})
 ---
 
 <Layout>

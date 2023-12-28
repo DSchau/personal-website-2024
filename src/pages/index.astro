@@ -1,5 +1,17 @@
 ---
+import { getCollection, type CollectionEntry } from "astro:content";
+
 import { Layout } from '@/components/layout/layout.tsx'
+
+const posts = await getCollection('posts', ({ data }) => {
+	return data.featured
+})
+	.then(all => {
+		return all
+			.sort((a, b) => {
+				return new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+			})
+	})
 ---
 
 <html lang="en">
@@ -12,7 +24,22 @@ import { Layout } from '@/components/layout/layout.tsx'
 	</head>
 	<body>
 		<Layout>
-
+			{
+				posts.length > 0 ? (
+					<ul>
+						{
+							posts.map(entry => (
+								<li>
+									<a href={`/posts/${entry.slug}`}>
+										{entry.data.title}  
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				) : null
+			}
+		
 		</Layout>
 	</body>
 </html>
