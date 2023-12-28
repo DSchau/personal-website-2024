@@ -3,15 +3,17 @@ import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
 import '@/styles/globals.css'
+import styles from './blog-post.module.css'
 
 interface Props {
   className?: string;
-  frontmatter: CollectionEntry<'posts'>;
+  frontmatter: CollectionEntry<'posts'>['data'];
 }
 
-const { frontmatter, className } = Astro.props;
+const { frontmatter } = Astro.props;
 ---
-<article class={className}>
+
+<article class={styles.container}>
   {frontmatter.featuredImage && (
     <Image src={frontmatter.featuredImage} alt={"A prefiw for a blog post"} />
   )}
