@@ -1,3 +1,7 @@
+:root {
+  --main-padding: 0 var(--padding-lg);
+}
+
 .container {
-  padding: 0 var(--padding-lg);
+  padding: var(--main-padding);
 }

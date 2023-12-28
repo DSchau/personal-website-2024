@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 import styles from './layout.module.css'
 
 import { Header } from '@/components/header/header.tsx'
+import { Footer } from '@/components/footer/footer.tsx'
 import { Navigation } from '@/components/navigation/navigation.tsx'
 
 interface Props {
@@ -20,6 +21,7 @@ export function Layout({ children, pathname, showHeader = true }: Props) {
       <main className={styles.container}>
         {children}
       </main>
+      <Footer />
     </>
   )
 }

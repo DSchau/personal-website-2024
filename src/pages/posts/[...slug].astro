@@ -15,6 +15,12 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
+<style>
+  :root {
+    --main-padding: 0;
+  }
+</style>
+
 <Layout title={`Blog | ${entry.data.title}`} showHeader={false}>
   <MarkdownPostLayout frontmatter={entry.data as any}>
     <Content />
