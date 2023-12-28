@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
-import { PostCollection } from "@/components/post-collection/post-collection";
+import { Collection } from "@/components/collection/collection.tsx";
 
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
@@ -15,5 +15,5 @@ const posts = await getCollection('posts', ({ data }) => {
 
 <Layout title="All posts">
   <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-  <PostCollection posts={posts} />
+  <Collection items={posts} />
 </Layout>
