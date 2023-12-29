@@ -1,6 +1,5 @@
 import styles from './project.module.css';
-import { GoStarFill, GoRepoForked } from "react-icons/go";
-
+import { ArrowArcLeft, Star } from 'phosphor-react'
 
 interface Props {
   item: any;
@@ -28,10 +27,10 @@ export function Project({ item }: Props) {
       </div>
       <div className={styles.footer}>
         <span className="stars">
-          <GoStarFill /> {item.stargazers.totalCount}
+          <Star /> {item.stargazers.totalCount}
         </span>
         <span className="forks">
-          <GoRepoForked /> {item.forks.totalCount}
+           <ArrowArcLeft /> {item.forks.totalCount}
         </span>
       </div>
     </div>
