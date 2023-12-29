@@ -1,11 +1,17 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from 'astro:assets';
 
 import Layout from "@/layouts/Layout.astro";
 import { getRepositories } from '@/lib/get-repositories.ts';
 
 import { Collection } from '@/components/collection/collection.tsx';
 import { Project } from '@/components/project/project.tsx';
+
+import noahImage from '@/assets/images/noah.jpg';
+import noahWork from '@/assets/images/noah-work.jpg';
+import maggie from '@/assets/images/maggie.jpeg';
+import gatsby from '@/assets/images/gatsby.jpeg';
 
 const POST_LIMIT = 3
 const REPO_LIMIT = 6
@@ -92,9 +98,38 @@ const posts = await getCollection('posts', ({ data }) => {
 		cursor: pointer;
 		background-color: var(--button-border-color);
 	}
+
+	.images {
+		display: grid;
+
+		grid-template-columns: 1fr;
+	}
+
+	.images > img {
+		max-height: 500px;
+
+		object-fit: cover;
+
+		padding: var(--padding-lg);
+	}
+
+	@media only screen and (min-width: 768px) {
+		.images {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
 </style>
 
 <Layout>
+	<section>
+		<div class="images">
+			<Image src={noahWork} alt="Photo of my son Noah and I" />
+			<Image src={noahImage} alt="Photo of my son Noah" />
+			<Image src={maggie} alt="Photo of my wife Maggie and I at Yosemite" />
+			<Image src={gatsby} alt="Photo of my time at Gatsby" />
+		</div>
+	</section>
 	<section>
 		<h3>recent posts</h3>
 		<p>I try to blog about topics that interest me. Maybe they interest you! Some recent ones are below.</p>
