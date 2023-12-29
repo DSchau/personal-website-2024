@@ -13,6 +13,9 @@
 .container img {
   width: 100%;
   grid-column: 1 / 4;
+
+  object-fit: contain;
+  max-height: 500px;
 }
 
 [data-rehype-pretty-code-figure] {

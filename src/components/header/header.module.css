@@ -25,6 +25,10 @@
   top: -2px; /* visual center */
 }
 
+.frequency {
+  color: var(--text-accent-color);
+}
+
 .employer {
   text-decoration: none;
   color: var(--postman-color);

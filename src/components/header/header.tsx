@@ -7,7 +7,7 @@ interface Props {
 
 export function Header({ commits }: Props) {
   const year = new Date().getFullYear()
-  const frequency = <span><strong>{commits} update{commits === 1 ? '' : 's'}</strong> in {year}</span>
+  const frequency = <span className={styles.frequency}><strong>{commits} update{commits === 1 ? '' : 's'}</strong> in {year}</span>
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Hi! I'm Dustin.</h1>

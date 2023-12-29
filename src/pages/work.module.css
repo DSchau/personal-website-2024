@@ -1,6 +1,6 @@
 .container {
   margin: 0 auto;
-  padding: var(--padding-lg) 0;
+  padding: var(--padding-lg);
 
   max-width: min(65ch, 100%);
 }
