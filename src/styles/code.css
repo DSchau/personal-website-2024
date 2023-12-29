@@ -17,16 +17,79 @@ pre > code [data-highlighted-line] {
 
 [data-rehype-pretty-code-figure] {
   position: relative;
+  font-size: var(--text-s);
 }
 
 [data-rehype-pretty-code-fragment]{
   position: relative;
 }
+
 [data-rehype-pretty-code-title] {
   position: absolute;
-  top:-1.75rem;
+  top: -1.75rem;
   left:0;
   background-color: #1E293B;
   color:#9abcf3ec;
   padding: 0.5rem 1rem;
+}
+
+[data-rehype-pretty-code-figure] code {
+  position: relative;
+}
+
+[data-rehype-pretty-code-figure] code::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: black;
+  min-height: 16px;
+  min-width: 16px;
+  padding: var(--padding-s);
+  text-align: center;
+  font-size: 0.6rem;
+}
+
+[data-rehype-pretty-code-figure] code[data-language] {
+  padding-top: 2rem;
+}
+
+[data-rehype-pretty-code-figure] code[data-language]::before {
+  background-color: white;
+}
+
+[data-rehype-pretty-code-figure] code[data-language="javascript"]::before, [data-rehype-pretty-code-figure] code[data-language="js"]::before {
+  content: 'javascript';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="jsx"]::before {
+  content: 'jsx';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="json"]::before {
+  content: 'json';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="shell"]::before {
+  content: 'shell';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="bash"]::before {
+  content: 'bash';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="typescript"]::before, [data-rehype-pretty-code-figure] code[data-language="ts"]::before {
+  content: 'typescript';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="markdown"]::before, [data-rehype-pretty-code-figure] code[data-language="md"]::before  {
+  content: 'markdown';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="graphql"]::before {
+  content: 'graphql';
+}
+
+[data-rehype-pretty-code-figure] code[data-language="html"]::before {
+  content: 'html';
 }

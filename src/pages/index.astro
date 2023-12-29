@@ -21,7 +21,8 @@ const repos = await getRepositories({
 })
 
 const posts = await getCollection('posts', ({ data }) => {
-	return data.featured
+	const canShow = import.meta.env.PROD ? data.draft !== true : true;
+	return canShow && data.featured
 })
 	.then(all => {
 		return all
@@ -30,6 +31,11 @@ const posts = await getCollection('posts', ({ data }) => {
 			})
 			.slice(0, POST_LIMIT)
 	})
+
+const validate = e => {
+	e.preventDefault()
+
+}
 ---
 <style>
 	h3 {
@@ -144,7 +150,7 @@ const posts = await getCollection('posts', ({ data }) => {
 	<section>
 		<h3>contact me</h3>
 		<p>If you'd like to chat, please do reach out. You can <a href="https://mailto:me@dustinschau.com">e-mail me</a> or you can use the form below.</p>
-		<form name="contact-me">
+		<form name="contact-me" action="/api/email" method="POST">
 			<div class="form-row">
 				<input name="name" type="text" placeholder="Your name" required />
 				<input name="email" type="email" placeholder="Your e-mail" required />

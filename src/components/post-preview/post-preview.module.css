@@ -17,6 +17,9 @@
 
 .title {
   text-align: center;
+
+  margin: 0;
+  padding: 0;
 }
 
 .link {
@@ -31,6 +34,9 @@
 .date {
   text-align: center;
   font-size: var(--text-s);
+  margin: 0;
+  padding: 0;
+  
   padding-bottom: var(--padding-s);
 
   color: var(--text-accent-color);

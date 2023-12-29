@@ -24,16 +24,17 @@ const posts = await getCollection('posts', ({ data }) => {
     margin: 0 auto;
     max-width: var(--content-width);
 
-    padding: var(--padding-lg);
+    padding: 0 var(--padding-lg);
   }
 
-  ul {
+  ol {
     margin: 0;
-    padding: 0;
+    padding: 0 var(--padding-md);
   }
 
   li {
     padding: var(--padding-md) 0;
+    list-style-type: decimal-leading-zero;
   }
 </style>
 

@@ -6,6 +6,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
+  output: 'hybrid',
   integrations: [react()],
   markdown: {
     syntaxHighlight: false,

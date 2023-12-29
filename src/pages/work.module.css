@@ -1,6 +1,6 @@
 .container {
   margin: 0 auto;
-  padding: var(--padding-lg);
+  padding: 0 var(--padding-lg);
 
   max-width: min(65ch, 100%);
 }
@@ -31,10 +31,16 @@
   padding: var(--padding-md) 0;
 }
 
+.employer {
+  margin: 0;
+  padding: 0;
+}
+
 .employer > img {
   height: var(--h3-size);
   width: var(--h3-size);
 
+  margin: 0;
   margin-right: var(--padding-md);
   position: relative;
   top: -2px;
@@ -42,4 +48,6 @@
 
 .job-title {
   color: var(--text-accent-color);
+  margin: 0;
+  padding: 0;
 }
