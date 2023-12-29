@@ -10,15 +10,22 @@
   grid-column: 2;
 }
 
-.container p:has(img) {
-  width: 100%;
-  grid-column: 1 / 4;
+.hero {
+  max-height: 50vh;
 }
 
-.container img {
-  object-fit: contain;
+.container > .full, .container > p:has(img) {
+  width: 100%;
+  grid-column: 1 / 4;
 
+  object-fit: contain;
+}
+
+.container p > img {
+  object-fit: contain;
   max-height: 50vh;
+
+  margin: var(--padding-lg) auto;
 }
 
 [data-rehype-pretty-code-figure] {
@@ -27,8 +34,14 @@
 
   background-color: #282A36;
   margin: var(--padding-lg) auto;
+  padding: 0 var(--padding-md);
+  
+  overflow: hidden;
 }
 
 [data-rehype-pretty-code-figure] pre {
-  max-width: min(65ch, 100%);
+  max-width: min(100ch, 100%);
+  margin: 0 auto;
+
+  overflow-x: scroll;
 }

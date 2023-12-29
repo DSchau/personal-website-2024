@@ -14,10 +14,10 @@ const { frontmatter } = Astro.props;
 ---
 
 <article class={styles.container}>
-  {frontmatter.featuredImage && (
-    <Image src={frontmatter.featuredImage} alt={"A prefiw for a blog post"} />
-  )}
   <h1>{frontmatter.title}</h1>
+  {frontmatter.featuredImage && (
+    <Image src={frontmatter.featuredImage} className={[styles.full, styles.hero].join(' ')} alt={"A prefiw for a blog post"} />
+  )}
   <slot />
 </article>
 

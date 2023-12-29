@@ -1,5 +1,6 @@
 :root {
   --main-padding: 0 var(--padding-lg);
+  --main-width: min(100ch, 100%);
 }
 
 .container {
@@ -19,7 +20,7 @@
 
 .container main {
   grid-column: 1 / -1;
-  width: min(100ch, 100%);
+  width: var(--main-width);
 
   margin: 0 auto;
 }
