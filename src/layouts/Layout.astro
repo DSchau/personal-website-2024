@@ -1,7 +1,13 @@
 ---
+import { Layout as LayoutComponent } from "@/components/layout/layout";
+import { getCommitCount } from '@/lib/get-commit-count.ts';
+
 const pathname = new URL(Astro.request.url).pathname.slice(1)
 
-import { Layout as LayoutComponent } from "@/components/layout/layout";
+const commits = await getCommitCount({
+	owner: 'dschau',
+	repo: 'personal-website-2024'
+})
 
 const { title, showHeader } = Astro.props
 ---
@@ -16,7 +22,7 @@ const { title, showHeader } = Astro.props
     <slot name="meta" />
 	</head>
 	<body>
-    <LayoutComponent pathname={pathname} showHeader={showHeader}>
+    <LayoutComponent pathname={pathname} commits={commits} showHeader={showHeader}>
       <slot />
     </LayoutComponent>
 	</body>

@@ -27,6 +27,8 @@
 .navigation a {
   color: var(--text-color);
   text-decoration-skip: ink;
+
+  transition: var(--ease-fn) 1s;
 }
 
 .navigation a:hover {

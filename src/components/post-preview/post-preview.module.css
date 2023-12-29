@@ -1,6 +1,6 @@
 .post {
   margin: var(--padding-s);
-  padding: var(--padding-lg);
+  padding: var(--padding-md) var(--padding-lg);
 
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
 .link {
   color: var(--text-color);
   padding: 0.125rem;
-  padding-top: var(--padding-lg);
+  padding-top: var(--padding-s);
   text-align: center;
 
   border-top: 1px solid var(--border-color);

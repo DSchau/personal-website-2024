@@ -10,14 +10,15 @@ import { Navigation } from '@/components/navigation/navigation.tsx'
 interface Props {
   children: ReactNode;
   pathname: string;
+  commits: number;
   showHeader?: boolean;
 }
 
-export function Layout({ children, pathname, showHeader = true }: Props) {
+export function Layout({ children, commits, pathname, showHeader = true }: Props) {
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
-      {showHeader && <Header />}
+      {showHeader && <Header commits={commits}/>}
       <main>
         {children}
       </main>

@@ -5,22 +5,23 @@ import styles from './post-preview.module.css';
 type Post = CollectionEntry<"posts">
 
 interface Props {
-  item: Post;
   showImage?: boolean;
+  slug: string;
+  data: Post["data"];
 }
 
-export function PostPreview({ item, showImage }: Props) {
-  const slug = `/posts/${item.slug}`;
+export function PostPreview({ slug: partialSlug, data, showImage }: Props) {
+  const slug = `/posts/${partialSlug}`;
   return (
     <div className={styles.post}>
-      <p className={styles.date}>{new Date(item.data.date).toLocaleDateString("en-us")}</p>
+      <p className={styles.date}>{new Date(data.date).toLocaleDateString("en-us")}</p>
       <h3 className={styles.title}>
-        <a href={slug}>{item.data.title}</a>
+        <a href={slug}>{data.title}</a>
       </h3>
-      {showImage && item.data.featuredImage && (
-        <img src={item.data.featuredImage.src} alt={`Image for ${item.data.title}`} />
+      {showImage && data.featuredImage && (
+        <img src={data.featuredImage.src} alt={`Image for ${data.title}`} />
       )}
-      <p className={styles.excerpt}>{item.data.excerpt}</p>
+      <p className={styles.excerpt}>{data.excerpt}</p>
       <a className={styles.link} href={slug}>Read more</a>
     </div>
   )

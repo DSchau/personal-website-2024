@@ -11,16 +11,15 @@ interface Props {
   renderer?: FunctionComponent<any>;
 }
 
-export function Collection({ items, renderer = PostPreview }: Props) {
+export function Collection({ items = [], renderer = PostPreview }: Props) {
   const Item = renderer
   return (
     <ul className={styles.collection}>
       {
         items.map((item: Post) => (
-          <Item key={item.id} item={item} />
+          <Item key={item.id} {...item} />
         ))
       }
     </ul>
   )
-  return null
 }

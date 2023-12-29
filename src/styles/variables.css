@@ -4,6 +4,9 @@
   --bg-color: #fefefe;
   --border-color: #ddd;
 
+  --button-color: #007FFF;
+  --button-border-color: #002D62;
+
   --header-font: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
   --body-font: system-ui, sans-serif;
 
@@ -30,4 +33,6 @@
   --text-lg: 1.2rem;
 
   --content-width: min(65ch, 100%);
+
+  --ease-fn: cubic-bezier(0.075, 0.82, 0.165, 1);
 }

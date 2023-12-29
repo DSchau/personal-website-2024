@@ -65,6 +65,10 @@ const posts = await getCollection('posts', ({ data }) => {
 		display: flex;
 	}
 
+	input:focus, textarea:focus {
+		outline: 1px solid var(--button-color);
+	}
+
 	input[name="name"] {
 		max-width: 40%;
 	}
@@ -74,25 +78,35 @@ const posts = await getCollection('posts', ({ data }) => {
 	}
 
 	button {
+		background-color: var(--button-color);
+		border: 1px solid var(--button-border-color);
+		color: var(--bg-color);
 		width: min(45ch, 100%);
 		margin: var(--padding-lg) auto;
 		padding: var(--padding-md) var(--padding-lg);
+		
+		transition: var(--ease-fn) 1s;
+	}
+
+	button:hover {
+		cursor: pointer;
+		background-color: var(--button-border-color);
 	}
 </style>
 
 <Layout>
 	<section>
-		<h3>Recent posts</h3>
+		<h3>recent posts</h3>
 		<p>I try to blog about topics that interest me. Maybe they interest you! Some recent ones are below.</p>
 		<Collection items={posts} />
 	</section>
 	<section>
-		<h3>Open-source work</h3>
-		<p>Working on open-source has long been a passion of mine. Some of my favorite ones, or the ones I've spent the most time on, or just simply the ones I'm proud of are below. Check them out if you'd like.</p>
+		<h3>open-source work</h3>
+		<p>Working on open-source has long been a passion of mine. Some of my favorite projects, the ones I've spent the most time on, or just simply the ones I'm most proud of are below. Check them out if you'd like.</p>
 		<Collection items={repos} renderer={Project as any} />
 	</section>
 	<section>
-		<h3>Contact me</h3>
+		<h3>contact me</h3>
 		<p>If you'd like to chat, please do reach out. You can <a href="https://mailto:me@dustinschau.com">e-mail me</a> or you can use the form below.</p>
 		<form name="contact-me">
 			<div class="form-row">
