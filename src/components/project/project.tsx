@@ -30,7 +30,7 @@ export function Project({ createdAt, description, name, url, repositoryTopics, s
         <a href={url}>{name}</a>
       </h3>
       <div className={styles.content}>
-        <p>{description}</p>
+        <p className={styles.description}>{description}</p>
         {
           repositoryTopics?.nodes?.length > 0 && (
             <ul className={styles.topics}>
