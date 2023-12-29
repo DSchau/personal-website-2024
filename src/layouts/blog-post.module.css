@@ -10,12 +10,15 @@
   grid-column: 2;
 }
 
-.container img {
+.container p:has(img) {
   width: 100%;
   grid-column: 1 / 4;
+}
 
+.container img {
   object-fit: contain;
-  max-height: 500px;
+
+  max-height: 50vh;
 }
 
 [data-rehype-pretty-code-figure] {
