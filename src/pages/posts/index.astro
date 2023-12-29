@@ -34,20 +34,19 @@ const posts = await getCollection('posts', ({ data }) => {
 
   li {
     padding: var(--padding-md) 0;
-    list-style-type: none;
   }
 </style>
 
 <Layout title="All posts">
   <div class="container">
     <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <ul>
+    <ol reversed>
       {posts.map(post => (
         <li>
           <a href={`/posts/${post.slug}`}>{post.data.title}</a>
           <p>{post.data.excerpt}</p>
         </li>
       ))}
-    </ul>
+    </ol>
   </div>
 </Layout>

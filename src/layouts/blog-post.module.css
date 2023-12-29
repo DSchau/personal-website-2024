@@ -14,6 +14,10 @@
   max-height: 50vh;
 }
 
+.title {
+  text-align: center;
+}
+
 .container > .full, .container > p:has(img) {
   width: 100%;
   grid-column: 1 / 4;
