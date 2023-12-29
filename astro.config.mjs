@@ -3,6 +3,8 @@ import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
@@ -30,5 +32,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [yaml()]
-  }
+  },
+  adapter: cloudflare()
 });
