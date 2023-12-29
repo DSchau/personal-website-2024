@@ -49,3 +49,11 @@
 
   overflow-x: scroll;
 }
+
+.date {
+  font-size: var(--text-s);
+  text-align: center;
+
+  margin: 0;
+  padding: var(--padding-md) 0;
+}

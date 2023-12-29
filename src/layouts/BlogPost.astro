@@ -2,6 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
+import Me from '@/components/me/me.astro';
+
 import '@/styles/globals.css'
 import styles from './blog-post.module.css'
 
@@ -14,6 +16,8 @@ const { frontmatter } = Astro.props;
 ---
 
 <article class={styles.container}>
+  <Me />
+  <p class={styles.date}>{new Date(frontmatter.date).toLocaleDateString('en-us')}</p>
   <h1 class={styles.title}>{frontmatter.title}</h1>
   {frontmatter.featuredImage && (
     <Image src={frontmatter.featuredImage} class={[styles.full, styles.hero].join(' ')} alt={"A prefiw for a blog post"} />

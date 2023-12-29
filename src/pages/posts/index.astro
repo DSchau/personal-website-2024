@@ -36,6 +36,12 @@ const posts = await getCollection('posts', ({ data }) => {
     padding: var(--padding-md) 0;
     list-style-type: decimal-leading-zero;
   }
+
+  .date {
+    font-size: 0.8rem;
+    float: right;
+    color: var(--text-color);
+  }
 </style>
 
 <Layout title="All posts">
@@ -44,7 +50,7 @@ const posts = await getCollection('posts', ({ data }) => {
     <ol reversed>
       {posts.map(post => (
         <li>
-          <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+          <a href={`/posts/${post.slug}`}>{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us')}</span></a>
           <p>{post.data.excerpt}</p>
         </li>
       ))}
