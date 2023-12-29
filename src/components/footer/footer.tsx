@@ -1,5 +1,5 @@
 import { Social } from '@/components/footer/social.tsx';
-import { Heart } from 'phosphor-react'
+import Heart from 'phosphor-react/src/icons/Heart.tsx'
 
 import styles from './footer.module.css'
 
