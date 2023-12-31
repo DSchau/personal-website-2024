@@ -15,7 +15,7 @@ Those two accomplishments have dwarfed all others in 2023. But, I'll still jot d
 
 ## What I accomplished
 
-- Became a dad with the arrival of Noah on February 10th, 2023
+- Became a dad with the arrival of Noah on February 10th, 2023 (my wife deserves much more of the credit here, let's be honest)
 - Bought a house in San Francisco in September 2023
 - My startup, Gatsby, was [acquired by Netlify](https://www.netlify.com/press/netlify-acquires-gatsby-inc-to-accelerate-adoption-of-composable-web-architectures/) in February 2023 (yes, February was a little bit stressful)
 - While at Netlify, we launched [Netlify Connect](https://www.netlify.com/platform/connect/), which is Gatsby's data layer made framework agnostic and available on Netlify's platform
