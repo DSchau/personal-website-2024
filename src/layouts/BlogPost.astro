@@ -16,9 +16,9 @@ const { frontmatter } = Astro.props;
 ---
 
 <article class={styles.container}>
-  <Me />
   <p class={styles.date}>{new Date(frontmatter.date).toLocaleDateString('en-us')}</p>
   <h1 class={styles.title}>{frontmatter.title}</h1>
+  <Me />
   {frontmatter.featuredImage && (
     <Image src={frontmatter.featuredImage} class={[styles.full, styles.hero].join(' ')} alt={"A prefiw for a blog post"} />
   )}
