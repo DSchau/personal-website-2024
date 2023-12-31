@@ -32,7 +32,7 @@ Those two accomplishments have dwarfed all others in 2023. But, I'll still jot d
 
 ## What am I hoping for in 2024?
 
-2023 was a great year, and I achieved many of my long-term goals in being a parent and buying a house. I thought there'd be this moment of satisfaction and zen in doing so, but I still feel a hunger and a desire to be better.
+2023 was a great year, and I achieved many of my long-term goals in being a parent and buying a house. I thought there'd be this moment of satisfaction and zen in achieving these life-long dreams, but I still feel a hunger and a desire. I don't feel content, and I still want to be better.
 
 So 2024 is about being better. I want to be a better partner to my wife, Maggie. I want to be a better, more active parent to my son, Noah. And I want to absolutely thrive in my new, exciting role as Head of API Client at Postman. How will I measure that? That's for me to figure out.
 
