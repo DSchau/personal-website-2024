@@ -20,6 +20,7 @@ Those two accomplishments have dwarfed all others in 2023. But, I'll still jot d
 - My startup, Gatsby, was [acquired by Netlify](https://www.netlify.com/press/netlify-acquires-gatsby-inc-to-accelerate-adoption-of-composable-web-architectures/) in February 2023 (yes, February was a little bit stressful)
 - While at Netlify, we launched [Netlify Connect](https://www.netlify.com/platform/connect/), which is Gatsby's data layer made framework agnostic and available on Netlify's platform
 - Chose a new job as Head of API Client at Postman in October 2023 (more on that... soon)
+- I wrote my son Noah a book, [Riley the Robot](https://github.com/dschau/riley-the-robot)
 - [Went on Syntax.fm](https://syntax.fm/show/631/supper-club-why-netlify-bought-gatsby-graphql-data-layer-and-headless-cms-with-dustin-schau) to talk about the Gatsby acquisition
 - [Read 25 books](https://www.goodreads.com/user_challenges/41049652)
 
