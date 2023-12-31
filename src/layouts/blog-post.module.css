@@ -8,6 +8,8 @@
 
 .container > * {
   grid-column: 2;
+
+  padding: 0 var(--padding-lg);
 }
 
 .hero {
@@ -23,6 +25,7 @@
   grid-column: 1 / 4;
 
   object-fit: contain;
+  padding: 0;
 }
 
 .container p > img {
@@ -35,6 +38,7 @@
 [data-rehype-pretty-code-figure] {
   width: 100%;
   grid-column: 1 / 4;
+  padding: 0;
 
   background-color: #282A36;
   margin: var(--padding-lg) auto;
