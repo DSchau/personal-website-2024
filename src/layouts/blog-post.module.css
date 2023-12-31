@@ -35,6 +35,10 @@
   margin: var(--padding-lg) auto;
 }
 
+.container ol, .container ul {
+  padding-left: 2rem;
+}
+
 [data-rehype-pretty-code-figure] {
   width: 100%;
   grid-column: 1 / 4;

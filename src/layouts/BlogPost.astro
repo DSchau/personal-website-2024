@@ -13,10 +13,11 @@ interface Props {
 }
 
 const { frontmatter } = Astro.props;
+
 ---
 
 <article class={styles.container}>
-  <p class={styles.date}>{new Date(frontmatter.date).toLocaleDateString('en-us')}</p>
+  <p class={styles.date}>{new Date(frontmatter.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</p>
   <h1 class={styles.title}>{frontmatter.title}</h1>
   <Me />
   {frontmatter.featuredImage && (

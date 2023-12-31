@@ -14,7 +14,7 @@ export function PostPreview({ slug: partialSlug, data, showImage }: Props) {
   const slug = `/posts/${partialSlug}`;
   return (
     <div className={styles.post}>
-      <p className={styles.date}>{new Date(data.date).toLocaleDateString("en-us")}</p>
+      <p className={styles.date}>{new Date(data.date).toLocaleDateString("en-us", {timeZone: 'UTC'})}</p>
       <h3 className={styles.title}>
         <a href={slug}>{data.title}</a>
       </h3>

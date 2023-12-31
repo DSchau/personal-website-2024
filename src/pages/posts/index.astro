@@ -50,7 +50,7 @@ const posts = await getCollection('posts', ({ data }) => {
     <ol reversed>
       {posts.map(post => (
         <li>
-          <a href={`/posts/${post.slug}`}>{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us')}</span></a>
+          <a href={`/posts/${post.slug}`}>{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</span></a>
           <p>{post.data.excerpt}</p>
         </li>
       ))}

@@ -26,7 +26,7 @@ export function Project({ createdAt, description, name, url, repositoryTopics, s
   return (
     <div className={styles.project}>
       <h3 className={styles.header}>
-        <p className={styles.date}>{new Date(createdAt).toLocaleDateString("en-us")}</p>
+        <p className={styles.date}>{new Date(createdAt).toLocaleDateString("en-us", {timeZone: 'UTC'})}</p>
         <a href={url}>{name}</a>
       </h3>
       <div className={styles.content}>
