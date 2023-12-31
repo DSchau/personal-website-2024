@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
 
+import { Tags } from '@/components/tags/tags.tsx';
+
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
 })
@@ -42,6 +44,7 @@ const posts = await getCollection('posts', ({ data }) => {
     float: right;
     color: var(--text-color);
   }
+
 </style>
 
 <Layout title="All posts">
@@ -51,6 +54,9 @@ const posts = await getCollection('posts', ({ data }) => {
       {posts.map(post => (
         <li>
           <a href={`/posts/${post.slug}`}>{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</span></a>
+          <Tags small={true} list={
+            post.data.tags.map(tag => ({ label: tag }))
+          } />
           <p>{post.data.excerpt}</p>
         </li>
       ))}

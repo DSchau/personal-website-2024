@@ -6,15 +6,17 @@ type Tag = {
 }
 
 interface Props {
-  list?: Tag[]
+  className?: string;
+  list?: Tag[];
+  small?: boolean;
 }
 
-export function Tags({ list }: Props) {
+export function Tags({ className, list, small }: Props) {
   if (list?.length === 0) {
     return null
   }
   return (
-    <ul className={styles.tags}>
+    <ul className={[styles.tags].concat(className || '').filter(Boolean).join(' ')} {...small ? { 'data-size': 'small' } : {}}>
       {
         (list || []).map(item => {
           const content = item.href ? <a href={item.href}>{item.label}</a> : item.label
