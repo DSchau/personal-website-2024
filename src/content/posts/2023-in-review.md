@@ -24,7 +24,7 @@ Those last two accomplishments have dwarfed all others in 2023 and really put my
 - [Went on Syntax.fm](https://syntax.fm/show/631/supper-club-why-netlify-bought-gatsby-graphql-data-layer-and-headless-cms-with-dustin-schau) to talk about the Gatsby acquisition
 - Joined the board of an early-stage startup: Kepler, with my good friend [Sam Bhagwat](https://twitter.com/calcsam)
 - [Read 25 books](https://www.goodreads.com/user_challenges/41049652). The best of these was definitely the [Red Rising series](https://www.goodreads.com/series/117100-red-rising-saga), it's incredible.
-- I re-built this website  -- finally! My last one said I was a frontend developer who lived in Omaha... neither of which are true -- with Astro
+- I re-built this website  -- finally! My last one said I was a frontend developer who lived in Omaha... neither of which are true
 
 ## What I learned
 
