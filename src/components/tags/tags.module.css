@@ -1,0 +1,14 @@
+.tags {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  font-size: var(--text-xs);
+
+  padding: var(--padding-s) var(--padding-md);
+  margin: var(--padding-s);
+  border: 1px solid black;
+}

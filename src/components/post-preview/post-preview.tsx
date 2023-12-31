@@ -1,5 +1,6 @@
 import { type CollectionEntry } from "astro:content"
-import { Image } from 'astro:assets';
+
+import { Tags } from '@/components/tags/tags.tsx';
 import styles from './post-preview.module.css';
 
 type Post = CollectionEntry<"posts">
@@ -18,6 +19,9 @@ export function PostPreview({ slug: partialSlug, data, showImage }: Props) {
       <h3 className={styles.title}>
         <a href={slug}>{data.title}</a>
       </h3>
+      <Tags list={data.tags.map(tag => ({
+        label: tag
+      }))} />
       {showImage && data.featuredImage && (
         <img src={data.featuredImage.src} alt={`Image for ${data.title}`} />
       )}

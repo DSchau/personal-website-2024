@@ -2,6 +2,8 @@ import styles from './project.module.css';
 import Star from 'phosphor-react/src/icons/Star.tsx';
 import GitFork from 'phosphor-react/src/icons/GitFork.tsx';
 
+import { Tags } from '@/components/tags/tags.tsx';
+
 interface Props {
   createdAt: string;
   name: string;
@@ -31,16 +33,11 @@ export function Project({ createdAt, description, name, url, repositoryTopics, s
       </h3>
       <div className={styles.content}>
         <p className={styles.description}>{description}</p>
-        {
-          repositoryTopics?.nodes?.length > 0 && (
-            <ul className={styles.topics}>
-              {repositoryTopics.nodes.map(({ topic }: any) => {
-                return <li className={styles.topic} key={topic.name}>{topic.name}</li>
-              })}
-            </ul>
-          )
-        }
-  
+        <Tags list={repositoryTopics?.nodes.map(node => {
+          return {
+            label: node.topic.name
+          }
+        })} />
       </div>
       <div className={styles.footer}>
         <span className="stars">

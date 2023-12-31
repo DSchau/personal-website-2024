@@ -19,26 +19,6 @@
   border-top-width: 0;
 }
 
-.topics {
-  margin: 0;
-  padding: 0;
-
-  padding-top: var(--padding-md);
-
-  list-style-type: none;
-}
-
-.topic {
-  background-color: #f1f8ff;
-  color: #0366d6;
-  display: inline-block;
-
-  font-size: var(--text-s);
-
-  padding: var(--padding-s);
-  margin: var(--padding-s);
-}
-
 .header, .footer {
   padding: var(--padding-md) var(--padding-lg);
 }
