@@ -1,7 +1,7 @@
 {
-  "name": "dustin-schau-website",
+  "name": "personal-website-2024",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

@@ -1,5 +1,5 @@
 import styles from './project.module.css';
-import Star from 'phosphor-react/src/icons/Star';
+import Star from 'phosphor-react/src/icons/Star.tsx';
 import GitFork from 'phosphor-react/src/icons/GitFork.tsx';
 
 interface Props {

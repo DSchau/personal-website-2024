@@ -12,6 +12,11 @@
   text-align: center;
 }
 
+.copyright {
+  margin: 0;
+  padding: 0;
+}
+
 .footer p > svg {
   display: inline-block;
 
@@ -21,4 +26,10 @@
 
 .footer a:hover {
   text-decoration: none;
+}
+
+.version {
+  font-size: 0.6rem;
+  margin: 0;
+  padding: 0;
 }
