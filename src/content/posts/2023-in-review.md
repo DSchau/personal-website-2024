@@ -21,7 +21,7 @@ Those two accomplishments have dwarfed all others in 2023. But, I'll still jot d
 - While at Netlify, we launched [Netlify Connect](https://www.netlify.com/platform/connect/), which is Gatsby's data layer made framework agnostic and available on Netlify's platform
 - Chose a new job as Head of API Client at Postman in October 2023 (more on that... soon)
 - [Went on Syntax.fm](https://syntax.fm/show/631/supper-club-why-netlify-bought-gatsby-graphql-data-layer-and-headless-cms-with-dustin-schau) to talk about the Gatsby acquisition
-- [Read 25 books](https://www.goodreads.com/challenges/11633)
+- [Read 25 books](https://www.goodreads.com/user_challenges/41049652)
 
 ## What I learned
 
