@@ -32,6 +32,8 @@ I spent quite a bit of time building up my [dotfiles repo](https://github.com/ds
 
 ## macOS Apps
 
+[Check out the applications](https://github.com/DSchau/dotfiles/blob/main/init/applications.txt) I install automatically with my [dotfiles](https://github.com/dschau/dotfiles) repo. That's kept most up-to-date.
+
 - **Arc**. An amazing web browser that has replaced Chrome as my daily web browser. 
 - **Raycast**. A useful productivity enhancement tool. I particularly like the clipboard history, the app launching, and the AI tools.
 - **Bettertouchtool**. Every Mac I own gets Bettertouchtool installed day one. I use all kinds of gestures to be more productive with the laptop trackpad or the Apple Trackpad, dependent upon which I'm using.
