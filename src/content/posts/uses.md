@@ -39,3 +39,11 @@ I spent quite a bit of time building up my [dotfiles repo](https://github.com/ds
 - **Bettertouchtool**. Every Mac I own gets Bettertouchtool installed day one. I use all kinds of gestures to be more productive with the laptop trackpad or the Apple Trackpad, dependent upon which I'm using.
 - **Fantastical**. The best calendar app I've ever used. I use it for all my events, and I have particularly loved the natural language parsing to create events.
 - **Spark Desktop**. Best mail client I've used. I use it on Mac and iOS. The snooze feature is great, as are some newer features like the block feature which introduces a gate before an e-mail gets into your inbox to block unwanted e-mail.
+
+## Hardware
+
+Mostly pretty bog standard MacBook Pro 14", but I'll add a few of my favorite home office necessities.
+
+- **Herman Miller Embody**. I sit in my chair roughly ~8-hours per day. The Embody is a great chair.
+- **Apple Trackpad**. I love Apple's trackpad in their laptops, and the trackpad is a great accessory. I particularly like it in combination with Bettertouchtool to add custom gestures.
+- **Keychron Q2 Pro**. Best mechanical keyboard I've ever used. It's heavy, the presses are satisfying, and I love some of the features like the volume knob.
