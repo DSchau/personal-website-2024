@@ -9,7 +9,8 @@ export async function getRepositories({
   owner = 'dschau',
   limit = 6
 }: getRepositoriesArgs) {
-  const { user } = await octokit.graphql(`
+  try {
+    const { user } = await octokit.graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
       user(login: $owner) {
         pinnedItems(first: $limit, types: REPOSITORY) {
@@ -44,4 +45,9 @@ export async function getRepositories({
   }) as any
 
   return user.pinnedItems.nodes
+  } catch (e) {
+    console.error(e)
+
+    return []
+  }
 }
