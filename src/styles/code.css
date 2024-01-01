@@ -3,6 +3,7 @@ pre > code {
   padding: 1.5rem 0;
   /* background-color: #1E293B; */
   border-radius: 0.5rem;
+  font-size: 12px;
 }
 
 pre > code .line {
