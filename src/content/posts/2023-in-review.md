@@ -29,7 +29,7 @@ Those last two accomplishments have dwarfed all others in 2023 and really put my
 ## What I learned
 
 - **Being a parent is relentlessly difficult.** The challenge isn't the individual moments or any particular moment being exceptionally hard, it's the constancy of tending to him and the re-prioritization it causes you to make, whereas before I could be a bit more selfish with my time. I'll also note that it's relentlessly difficult but ridiculously rewarding. Just seeing him smile and giggle makes it all worth it.
-- **Focus on relationships.** With a child, it's ever more important to keep focusing on relationships, both with my wife Maggie and with friends and family. It's easy to get consumed by the new life, but it's important to remember: I was me before Noah, and I need to be me with Noah too. Living a fulfilling life makes me a better partner, parent, and professional and relationships are one aspect where I find fulfilment.
+- **Focus on relationships.** With a child, it's ever more important to keep focusing on relationships, both with my wife Maggie and with friends and family. It's easy to get consumed by the new life, but it's important to remember: I was me before Noah, and I need to be me with Noah too. Living a fulfilling life makes me a better partner, parent, and professional and personal relationships are one aspect where I find fulfilment.
 - **In an acquisition, seek clarity and tough decisions on why you're acquired.** One of the mistakes I made with Gatsby was not being more decisive on the acquisition strategy, which led to confusion about the framework and Gatsby Cloud strategy when the focus was on the data layer.
 
 ## What am I hoping for in 2024?
