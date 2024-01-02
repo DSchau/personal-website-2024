@@ -18,7 +18,6 @@ pre > code [data-highlighted-line] {
 
 [data-rehype-pretty-code-figure] {
   position: relative;
-  font-size: var(--text-s);
 }
 
 [data-rehype-pretty-code-fragment]{
