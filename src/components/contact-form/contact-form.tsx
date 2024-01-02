@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useState, useRef } from 'react'
 
 import styles from './contact-form.module.css';
 
@@ -15,6 +15,7 @@ const delay = (duration: number) => new Promise(resolve => {
 
 export function ContactForm() {
   const [status, setStatus] = useState(Status.idle)
+  const formEl = useRef(null)
 
   async function submit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
@@ -31,6 +32,10 @@ export function ContactForm() {
       setStatus(Status.success)
   
       await delay(5000)
+
+      if (formEl && formEl.current) {
+        (formEl.current as any).reset()
+      }
 
       setStatus(Status.idle)
     } else {
@@ -51,7 +56,7 @@ export function ContactForm() {
     }
   }
   return (
-    <form className={styles.container} name="contact-me" action="/api/email" method="POST" onSubmit={submit}>
+    <form className={styles.container} name="contact-me" action="/api/email" method="POST" onSubmit={submit} ref={formEl}>
       <div className={styles.row}>
         <input name="name" type="text" placeholder="Your name" required />
         <input name="email" type="email" placeholder="Your e-mail" required />
