@@ -47,3 +47,5 @@ Mostly pretty bog standard MacBook Pro 14", but I'll add a few of my favorite ho
 - **Herman Miller Embody**. I sit in my chair roughly ~8-hours per day. The Embody is a great chair.
 - **Apple Trackpad**. I love Apple's trackpad in their laptops, and the trackpad is a great accessory. I particularly like it in combination with Bettertouchtool to add custom gestures.
 - **Keychron Q2 Pro**. Best mechanical keyboard I've ever used. It's heavy, the presses are satisfying, and I love some of the features like the volume knob.
+- **Opal C1 Webcam**. It's not without its issues, but it's a reasonably close DSLR-like experience for much cheaper for better looking video calls.
+- **Elgato Key Light**. Lighting is arguably more important than anything else for good appearance on video calls, and this is the best light I've found.
