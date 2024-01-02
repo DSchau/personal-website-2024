@@ -19,7 +19,7 @@ const fullDescription = description ? description : metayaml.description
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		{pathname === '/' && <link rel="preconnect" href="https://dschau-website.imgix.net" />}
+		{pathname === '' && <link rel="preconnect" href="https://dschau-website.imgix.net" />}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
