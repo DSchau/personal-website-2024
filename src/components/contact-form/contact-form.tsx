@@ -29,13 +29,13 @@ export function ContactForm() {
     })
     if (response.ok) {
       setStatus(Status.success)
+  
+      await delay(5000)
+
+      setStatus(Status.idle)
     } else {
       setStatus(Status.failed)
     }
-
-    await delay(3000)
-
-    setStatus(Status.idle)
   }
 
   const getButtonText = () => {
