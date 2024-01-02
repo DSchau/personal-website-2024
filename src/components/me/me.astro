@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets'
-import me from '@/assets/images/me.jpg'
+import { Image } from '@unpic/astro'
 ---
 <style>
   .me {
@@ -32,7 +31,7 @@ import me from '@/assets/images/me.jpg'
 </style>
 
 <div class="me">
-  <Image src={me} alt="Headshot of Dustin Schau" />
+  <Image src="https://dschau-website.imgix.net/me.jpeg" layout="fixed" height={32} width={32} background="auto" alt="Headshot portrait of Dustin Schau" />
   <div class="row">
     <h3>Dustin Schau</h3>
     <p>Product & Engineering Leader</p>
