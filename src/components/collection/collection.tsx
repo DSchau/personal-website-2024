@@ -21,7 +21,9 @@ export function Collection({ items = [], renderer = PostPreview }: Props) {
     <ul className={styles.collection}>
       {
         items.map((item: Post) => (
-          <Item key={item.id} {...item} />
+          <li className={styles.item} key={item.id}>
+            <Item key={item.id} {...item} />
+          </li>
         ))
       }
     </ul>
