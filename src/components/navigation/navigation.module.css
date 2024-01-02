@@ -1,5 +1,10 @@
 .navigation {
-  padding: var(--padding-lg) var(--padding-lg);
+  padding: var(--padding-s) var(--padding-lg);
+
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
 }
 
 .navigation ul {
