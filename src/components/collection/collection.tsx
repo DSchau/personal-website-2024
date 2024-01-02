@@ -13,6 +13,10 @@ interface Props {
 
 export function Collection({ items = [], renderer = PostPreview }: Props) {
   const Item = renderer
+  if (items.length === 0 || !items) {
+    return null
+  }
+
   return (
     <ul className={styles.collection}>
       {

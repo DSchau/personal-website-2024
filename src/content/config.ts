@@ -6,6 +6,7 @@ const postsCollection = defineCollection({
     schema: ({ image }) => z.object({
       title: z.string(),
       date: z.date(),
+      canonicalLink: z.string().optional(),
       draft: z.boolean().optional(),
       featured: z.boolean().optional(),
       featuredImage: image().optional(),

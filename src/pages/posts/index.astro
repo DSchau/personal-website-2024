@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
+import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
 
 import { Tags } from '@/components/tags/tags.tsx';
 
@@ -45,21 +46,33 @@ const posts = await getCollection('posts', ({ data }) => {
     color: var(--text-color);
   }
 
+  a > .icon {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+
+    margin-right: var(--padding-s);
+  }
+
 </style>
 
 <Layout title="All posts">
   <div class="container">
     <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
     <ol reversed>
-      {posts.map(post => (
-        <li>
-          <a href={`/posts/${post.slug}`}>{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</span></a>
-          <Tags small={true} list={
-            post.data.tags.map(tag => ({ label: tag }))
-          } />
-          <p>{post.data.excerpt}</p>
-        </li>
-      ))}
+      {posts.map(post => {
+        const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.slug}`
+        const external = /https?/.test(href)
+        return (
+          <li>
+            <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</span></a>
+            <Tags small={true} list={
+              post.data.tags.map(tag => ({ label: tag }))
+            } />
+            <p>{post.data.excerpt}</p>
+          </li>
+        )
+      })}
     </ol>
   </div>
 </Layout>
