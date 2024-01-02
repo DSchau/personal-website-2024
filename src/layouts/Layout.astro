@@ -1,6 +1,7 @@
 ---
 import { Layout as LayoutComponent } from "@/components/layout/layout";
 import { getCommitCount } from '@/lib/get-commit-count.ts';
+import metayaml from '@/assets/meta.yaml'
 
 const pathname = new URL(Astro.request.url).pathname.slice(1)
 
@@ -9,7 +10,10 @@ const commits = await getCommitCount({
 	repo: 'personal-website-2024'
 })
 
-const { title, showHeader, showCopy } = Astro.props
+const { title, description, showHeader, showCopy } = Astro.props
+
+const fullTitle = `${metayaml.title}${title ? ` | ${title}` : ''}`
+const fullDescription = description ? description : metayaml.description
 ---
 
 <html lang="en">
@@ -18,7 +22,14 @@ const { title, showHeader, showCopy } = Astro.props
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Dustin Schau | Product & Engineering Leader{title ? ` | ${title}` : ''}</title>
+		<meta name="description" content={fullDescription} />
+		<meta name="og:description" content={fullDescription} />
+		<meta name="twitter:description" content={fullDescription} />
+		<meta name="keywords" content={metayaml.keywords} />
+		<meta name="og:title" content={fullTitle} />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="og:type" content="website" />
+		<title>{fullTitle}</title>
     <slot name="meta" />
 	</head>
 	<body>

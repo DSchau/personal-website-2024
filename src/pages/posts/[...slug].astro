@@ -22,7 +22,7 @@ const { Content } = await entry.render();
   }
 </style>
 
-<Layout title={`Blog | ${entry.data.title}`} showHeader={false}>
+<Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false}>
   <MarkdownPostLayout frontmatter={entry.data as any}>
     <Content />
   </MarkdownPostLayout>
