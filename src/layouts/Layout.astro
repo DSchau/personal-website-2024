@@ -9,7 +9,7 @@ const commits = await getCommitCount({
 	repo: 'personal-website-2024'
 })
 
-const { title, showHeader } = Astro.props
+const { title, showHeader, showCopy } = Astro.props
 ---
 
 <html lang="en">
@@ -22,7 +22,7 @@ const { title, showHeader } = Astro.props
     <slot name="meta" />
 	</head>
 	<body>
-    <LayoutComponent pathname={pathname} commits={commits} showHeader={showHeader}>
+    <LayoutComponent pathname={pathname} commits={commits} showHeader={showHeader} showCopy={showCopy}>
       <slot />
     </LayoutComponent>
 	</body>

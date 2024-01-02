@@ -12,13 +12,14 @@ interface Props {
   pathname: string;
   commits: number;
   showHeader?: boolean;
+  showCopy?: boolean;
 }
 
-export function Layout({ children, commits, pathname, showHeader = true }: Props) {
+export function Layout({ children, commits, pathname, showCopy, showHeader = true }: Props) {
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
-      {showHeader && <Header commits={commits} className={styles.header} />}
+      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} />}
       <main>
         {children}
       </main>

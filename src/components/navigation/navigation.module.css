@@ -25,7 +25,7 @@
   }
 
   .navigation li {
-    padding: var(--padding-s) var(--padding-md);
+    padding: var(--padding-lg) var(--padding-md);
   }
 }
 
