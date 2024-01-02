@@ -2,14 +2,16 @@ import { defineConfig } from 'astro/config';
 import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
-
 import cloudflare from "@astrojs/cloudflare";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   output: 'hybrid',
-  integrations: [react()],
+  site: 'https://www.dustinschau.com',
+  integrations: [react(), sitemap()],
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [[rehypePrettyCode, {
