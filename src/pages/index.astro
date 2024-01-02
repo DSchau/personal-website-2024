@@ -7,6 +7,7 @@ import { getRepositories } from '@/lib/get-repositories.ts';
 
 import { Collection } from '@/components/collection/collection.tsx';
 import { Project } from '@/components/project/project.tsx';
+import { ContactForm } from '@/components/contact-form/contact-form.tsx'
 
 
 const POST_LIMIT = 3
@@ -47,53 +48,6 @@ const posts = await getCollection('posts', ({ data }) => {
 		width: var(--content-width);
 
 		padding: var(--padding-md) var(--padding-lg);
-	}
-
-	form {
-		margin: 0 auto;
-
-		width: var(--content-width);
-		padding: var(--padding-md) var(--padding-lg);
-	}
-
-	form input, form textarea {
-		display: inline-block;
-		width: 100%;
-
-		padding: var(--padding-md) var(--padding-lg);
-		margin: var(--padding-s);
-	}
-
-	.form-row {
-		display: flex;
-	}
-
-	input:focus, textarea:focus {
-		outline: 1px solid var(--button-color);
-	}
-
-	input[name="name"] {
-		max-width: 40%;
-	}
-	
-	textarea {
-		min-height: 150px;
-	}
-
-	button {
-		background-color: var(--button-color);
-		border: 1px solid var(--button-border-color);
-		color: var(--bg-color);
-		width: min(45ch, 100%);
-		margin: var(--padding-lg) auto;
-		padding: var(--padding-md) var(--padding-lg);
-		
-		transition: var(--ease-fn) 1s;
-	}
-
-	button:hover {
-		cursor: pointer;
-		background-color: var(--button-border-color);
 	}
 
 	.images {
@@ -143,17 +97,6 @@ const posts = await getCollection('posts', ({ data }) => {
 	<section>
 		<h3>contact me</h3>
 		<p>If you'd like to chat, please do reach out. You can <a href="https://mailto:me@dustinschau.com">e-mail me</a> or you can use the form below.</p>
-		<form name="contact-me" action="/api/email" method="POST">
-			<div class="form-row">
-				<input name="name" type="text" placeholder="Your name" required />
-				<input name="email" type="email" placeholder="Your e-mail" required />
-			</div>
-			<div class="form-row">
-				<textarea name="message" placeholder="Your message" required></textarea>
-			</div>
-			<div class="form-row">
-				<button type="submit">Send message</button>
-			</div>
-		</form>
+		<ContactForm client:load />
 	</section>
 </Layout>
