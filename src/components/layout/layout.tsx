@@ -18,7 +18,7 @@ export function Layout({ children, commits, pathname, showHeader = true }: Props
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
-      {showHeader && <Header commits={commits}/>}
+      {showHeader && <Header commits={commits} className={styles.header} />}
       <main>
         {children}
       </main>
