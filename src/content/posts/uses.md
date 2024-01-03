@@ -2,7 +2,6 @@
 date: 2023-12-28
 title: "Uses"
 author: Dustin Schau
-draft: true
 excerpt: "In this post, I'll share my preferred stack as it relates to development. Software, hardware, and everything in between."
 tags:
   - software
