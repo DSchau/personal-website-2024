@@ -12,6 +12,9 @@ export default defineConfig({
   output: 'hybrid',
   site: 'https://www.dustinschau.com',
   integrations: [react(), sitemap()],
+  redirects: {
+    '/uses': '/posts/uses'
+  },
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [[rehypePrettyCode, {
