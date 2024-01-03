@@ -37,7 +37,6 @@ const fullDescription = description ? description : metayaml.description
 		<meta name="twitter:title" content={fullTitle} />
 		<meta name="og:type" content="website" />
 		<title>{fullTitle}</title>
-    <slot name="meta" />
 	</head>
 	<body>
     <LayoutComponent pathname={pathname} commits={commits} updated={updated} showHeader={showHeader} showCopy={showCopy}>
