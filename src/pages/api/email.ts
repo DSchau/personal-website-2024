@@ -1,11 +1,7 @@
 import { type APIRoute } from "astro";
 import { Resend } from 'resend'
-import EmailValidation from 'emailvalid'
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY)
-const validator = new EmailValidation({
-  allowFreemail: true
-})
 
 export const prerender = false;
 
@@ -26,15 +22,6 @@ export const POST: APIRoute = async ({ request }) => {
         }
       )
     }
-
-    const { valid } = validator.check(email)
-
-    console.log(valid)
-
-    if (!valid) {
-      throw new Error('Likely spam candidate.')
-    }
-
     const { error } = await resend.emails.send({
       from: `Website Contact Form <website@dschau.dev>`,
       to: ['website@dustinschau.com'],
