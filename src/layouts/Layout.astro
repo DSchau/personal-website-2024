@@ -1,14 +1,20 @@
 ---
 import { Layout as LayoutComponent } from "@/components/layout/layout";
 import { getCommitCount } from '@/lib/get-commit-count.ts';
+import { getMostRecentCommit } from "@/lib/get-most-recent-commit";
 import metayaml from '@/assets/meta.yaml'
 
 const pathname = new URL(Astro.request.url).pathname.slice(1)
 
-const commits = await getCommitCount({
+const gitHubArgs = {
 	owner: 'dschau',
 	repo: 'personal-website-2024'
-})
+}
+
+const [commits, updated] = await Promise.all([
+	getCommitCount(gitHubArgs),
+	getMostRecentCommit(gitHubArgs)
+])
 
 const { title, description, showHeader, showCopy } = Astro.props
 
@@ -34,7 +40,7 @@ const fullDescription = description ? description : metayaml.description
     <slot name="meta" />
 	</head>
 	<body>
-    <LayoutComponent pathname={pathname} commits={commits} showHeader={showHeader} showCopy={showCopy}>
+    <LayoutComponent pathname={pathname} commits={commits} updated={updated} showHeader={showHeader} showCopy={showCopy}>
       <slot />
     </LayoutComponent>
 	</body>

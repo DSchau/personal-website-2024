@@ -13,9 +13,10 @@ interface Props {
   commits: number;
   showHeader?: boolean;
   showCopy?: boolean;
+  updated: string | undefined;
 }
 
-export function Layout({ children, commits, pathname, showCopy, showHeader = true }: Props) {
+export function Layout({ children, commits, pathname, showCopy, showHeader = true, updated }: Props) {
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
@@ -23,7 +24,7 @@ export function Layout({ children, commits, pathname, showCopy, showHeader = tru
       <main>
         {children}
       </main>
-      <Footer />
+      <Footer updated={updated} />
     </div>
   )
 }
