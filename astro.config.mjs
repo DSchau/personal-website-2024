@@ -13,7 +13,8 @@ export default defineConfig({
   site: 'https://www.dustinschau.com',
   integrations: [react(), sitemap()],
   redirects: {
-    '/uses': '/posts/uses'
+    '/uses': '/posts/uses',
+    '/blog': '/posts'
   },
   markdown: {
     syntaxHighlight: false,
