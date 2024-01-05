@@ -14,7 +14,8 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   redirects: {
     '/uses': '/posts/uses',
-    '/blog': '/posts'
+    '/blog': '/posts',
+    '/posts/about': '/posts/readme'
   },
   markdown: {
     syntaxHighlight: false,
