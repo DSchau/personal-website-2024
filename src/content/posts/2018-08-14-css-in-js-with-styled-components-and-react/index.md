@@ -1,6 +1,7 @@
 ---
 featuredImage: ./images/featured.jpg
 date: 2018-08-15T00:00:00.756Z
+slug: css-in-js-with-styled-components-and-react-manning
 title: "CSS in JS with styled-components and React (Manning)"
 tags:
   - css in js

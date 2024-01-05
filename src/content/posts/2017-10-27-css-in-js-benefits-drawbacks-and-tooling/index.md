@@ -1,6 +1,7 @@
 ---
 date: 2017-10-28T02:59:05.957Z
 title: "CSS In JS: Benefits, Drawbacks, and Tooling"
+slug: css-in-js-benefits-drawbacks-and-tooling
 tags:
   - css
   - css in js
