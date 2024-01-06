@@ -39,6 +39,21 @@
   padding-left: 2rem;
 }
 
+.container details {
+  margin-bottom: 1rem;
+}
+
+.container summary {
+  font-weight: bold;
+}
+
+.container blockquote {
+  font-style: italic;
+  padding-left: 1rem;
+  margin-left: 1rem;
+  border-left: 2px solid var(--border-color);
+}
+
 [data-rehype-pretty-code-figure] {
   width: 100%;
   grid-column: 1 / 4;
