@@ -2,7 +2,6 @@
 date: 2024-01-01
 title: "README: About me and leadership style"
 author: Dustin Schau
-draft: true
 excerpt: "A little about me. My leadership style, my likes, my dislikes, my quirks."
 tags:
   - personal
