@@ -1,6 +1,6 @@
 ---
 date: 2023-12-15
-title: "README: About me and leadership style"
+title: "README"
 author: Dustin Schau
 excerpt: "A little about me. My leadership style, my likes, my dislikes, my quirks."
 tags:
