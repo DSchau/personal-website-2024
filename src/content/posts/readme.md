@@ -1,5 +1,5 @@
 ---
-date: 2024-01-01
+date: 2023-12-15
 title: "README: About me and leadership style"
 author: Dustin Schau
 excerpt: "A little about me. My leadership style, my likes, my dislikes, my quirks."
