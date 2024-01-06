@@ -2,6 +2,7 @@
 date: 2023-12-15
 title: "README"
 author: Dustin Schau
+featured: true
 excerpt: "A little about me. My leadership style, my likes, my dislikes, my quirks."
 tags:
   - personal
@@ -25,7 +26,7 @@ It’s challenging to distill something as complex as leadership into a few sent
 How I build that trust is shown, demonstrated, and embodied over time with my actions, but at a high-level, here are some of the things I value and try to cultivate and demonstrate:
 
 - **Driving decisions downwards.** Ultimately, it is my role as a leader to create an environment where good decisions happen by those closest to the work. Of course I will make decisions, and set just enough top-level strategy to create this environment, but I am successful if I give enough autonomy and authority to those closest to the decision to make it and feel empowered to confidently pursue a direction. To use a metaphor: my role as a leader is to draw the shape of an owl. Your role, as a member of the team is to help us all draw the rest of the owl.
-- **Over-communicate, especially written.** With a remote culture (API Client team has team members in PST all the way over to IST), I try very hard to ensure that nothing I communicate is surprising. This is done primarily via writing, sharing documents, and communicating well across timezones and with async-friendly artifacts, leveraging meetings where appropriate to enhance or share important updates. A good, written document is the best way to communicate, share, and solicit feedback about an idea.
+- **Over-communicate, especially written.** I try very hard to ensure that nothing I communicate is surprising. This is done primarily via writing, sharing documents, and communicating well across timezones and with async-friendly artifacts, leveraging meetings where appropriate to enhance or share important updates. A good, written document is the best way to communicate, share, and solicit feedback about an idea.
 - **Feedback is a gift.** I try to actively solicit feedback since as a leader it is not given particularly often. I welcome and relish feedback, particularly if it’s something you particularly liked so I can do more of it or something that could be improved so I can do less of it. I will try and do the same, although admittedly I will not always have feedback and I only give feedback if I have an observation and something to share.
 
 ## Expectations of myself

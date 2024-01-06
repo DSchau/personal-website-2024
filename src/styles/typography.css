@@ -2,8 +2,8 @@ p {
   line-height: 1.75;
   font-size: 1rem;
 
-  margin-top: var(--padding-lg);
-  margin-bottom: var(--padding-lg);
+  margin-top: var(--padding-md);
+  margin-bottom: var(--padding-md);
 }
 
 h1 {
@@ -15,8 +15,8 @@ h1 {
 
 h2 {
   font-size: 1.5rem;
-  margin-top: 1.6rem;
-  margin-bottom: 0.8rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.6rem;
   line-height: 1.4;
 }
 
@@ -59,4 +59,8 @@ li {
 
 ol > li, ul > li {
   padding-left: 0.4rem;
+}
+
+blockquote {
+  font-style: italic;
 }
