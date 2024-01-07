@@ -4,6 +4,12 @@ import fs from 'fs/promises'
 import path from 'path'
 import { ImageResponse } from '@vercel/og';
 
+interface Params {
+  type: 'post' | 'page';
+  tags?: string;
+  title?: string;
+}
+
 const Tags = (list: string[]) => {
   return {
     type: 'ul',
@@ -123,12 +129,18 @@ const footer = {
 
 export const GET: APIRoute = async function GET({ request }) {
   const url = new URL(request.url)
-  const params = url.searchParams
+  const urlParams = url.searchParams
 
-  console.log({
-    url,
-    params
-  })
+  const title = urlParams.get('title') as string
+  const tags = urlParams.get('tags')?.split(',') as string[]
+  const type = urlParams.get('type') as string
+
+  const params = {
+    title,
+    tags,
+    type
+  }
+
 
   const [rockwell, rockwellBold, sfPro] = await Promise.all([
     fs.readFile(
@@ -168,7 +180,7 @@ export const GET: APIRoute = async function GET({ request }) {
                   children: 'Blog'
                 }
               },
-              Tags(params.get('tags')?.split(',') as string[]),
+              Tags(params.tags)
             ]
           }
         },
@@ -181,7 +193,7 @@ export const GET: APIRoute = async function GET({ request }) {
               paddingBottom: 72,
               textAlign: 'center'
             },
-            children: params.get('title')
+            children: `1234${params.title}`
           }
         },
         footer
