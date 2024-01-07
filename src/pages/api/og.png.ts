@@ -175,7 +175,7 @@ export const GET: APIRoute = async function GET({ request }) {
               paddingBottom: 72,
               textAlign: 'center'
             },
-            children: params.get('title')
+            children: decodeURIComponent(params.get('title') as string)
           }
         },
         footer
