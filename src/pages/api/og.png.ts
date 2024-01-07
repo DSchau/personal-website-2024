@@ -193,7 +193,7 @@ export const GET: APIRoute = async function GET({ request }) {
               paddingBottom: 72,
               textAlign: 'center'
             },
-            children: `${request.url}`
+            children: `${url.search}`
           }
         },
         footer
