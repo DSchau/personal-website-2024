@@ -106,17 +106,17 @@ const footer = {
       alignItems: 'center'
     },
     children: [
-      bio,
       {
         type: 'h3',
         props: {
           style: {
             fontSize: 36,
-            paddingRight: 24
+            padding: 24
           },
           children: 'dustinschau.com'
         }
-      }
+      },
+      bio,
     ]
   }
 }
@@ -154,7 +154,7 @@ export const GET: APIRoute = async function GET({ request }) {
                 type: 'h2',
                 props: {
                   style: {
-                    fontSize: 32,
+                    fontSize: 40,
                     margin: 0,
                     paddingTop: 24,
                     paddingBottom: 4
@@ -171,7 +171,9 @@ export const GET: APIRoute = async function GET({ request }) {
           props: {
             style: {
               fontSize: 72,
-              paddingBottom: 72
+              padding: 24,
+              paddingBottom: 72,
+              textAlign: 'center'
             },
             children: params.get('title')
           }

@@ -11,7 +11,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const site = Astro.site?.href
+const site = Astro.site
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
@@ -27,8 +27,20 @@ const { Content } = await entry.render();
 
 <Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false} meta={[
   {
+    name: 'twitter:card',
+    content: 'summary_large_image'
+  },
+  {
+    property: 'twitter:domain',
+    content: site?.hostname
+  },
+  {
+    property: 'twitter:url',
+    content: `${site?.href}posts/${entry.slug}`
+  },
+  {
     property: 'og:image',
-    content: `${site}api/og?title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
+    content: `${site?.href}api/og?title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
   },
   {
     property: 'og:image:width',

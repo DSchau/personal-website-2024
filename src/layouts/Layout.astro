@@ -30,15 +30,15 @@ const fullDescription = description ? description : metayaml.description
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={fullDescription} />
-		<meta name="og:description" content={fullDescription} />
+		<meta property="og:description" content={fullDescription} />
 		<meta name="twitter:description" content={fullDescription} />
 		<meta name="keywords" content={metayaml.keywords} />
-		<meta name="og:title" content={fullTitle} />
+		<meta property="og:title" content={fullTitle} />
 		<meta name="twitter:title" content={fullTitle} />
-		<meta name="og:type" content="website" />
+		<meta property="og:type" content="website" />
 		{
 			meta.map(({ property, name, content }: any) => {
-				return <meta property={property} content={content} />
+				return <meta property={property} name={name} content={content} />
 			})
 		}
 		<title>{fullTitle}</title>
