@@ -2,13 +2,46 @@ import fs from 'fs/promises'
 import path from 'path'
 import { ImageResponse } from '@vercel/og';
 
+const Tags = (list: string[]) => {
+  return {
+    type: 'ul',
+    props: {
+      style: {
+        display: 'flex',
+        listStyleType: 'none',
+        padding: 0,
+        margin: 0
+      },
+      children: list.map(item => {
+        return {
+          type: 'li',
+          props: {
+            key: item,
+            style: {
+              fontFamily: 'SFPro',
+              margin: 10,
+              padding: 10,
+              fontSize: 18,
+              border: '1px solid black'
+            },
+            children: item
+          }
+        }
+      })
+    }
+  }
+}
+
 export async function GET() {
-  const [rockwell, rockwellBold] = await Promise.all([
+  const [rockwell, rockwellBold, sfPro] = await Promise.all([
     fs.readFile(
       path.resolve('./src/assets/fonts/Rockwell.ttf')
     ),
     fs.readFile(
       path.resolve('./src/assets/fonts/Rockwell-Bold.ttf')
+    ),
+    fs.readFile(
+      path.resolve('./src/assets/fonts/SFPro.otf')
     )
   ])
 
@@ -18,7 +51,8 @@ export async function GET() {
     props: {
       style: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 20
       },
       children: [
         {
@@ -59,7 +93,7 @@ export async function GET() {
                 props: {
                   children: 'Product & Engineering Leader',
                   style: {
-                    fontFamily: 'Rockwell',
+                    fontFamily: 'SFPro',
                     margin: 0,
                     padding: 0,
                     fontSize: 24
@@ -79,6 +113,31 @@ export async function GET() {
     props: {
       children: [
         {
+          type: 'div',
+          props: {
+            style: {
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            },
+            children: [
+              {
+                type: 'h2',
+                props: {
+                  style: {
+                    fontSize: 32,
+                    margin: 0,
+                    paddingTop: 24,
+                    paddingBottom: 4
+                  },
+                  children: 'Blog'
+                }
+              },
+              Tags(['life', 'career']),
+            ]
+          }
+        },
+        {
           type: 'h1',
           props: {
             style: {
@@ -95,8 +154,11 @@ export async function GET() {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
+        backgroundColor: 'white',
+        backgroundImage: `radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)`,
+        backgroundSize: '100px 100px',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
       }
     }
   }
@@ -116,6 +178,11 @@ export async function GET() {
           data: rockwell.buffer,
           style: 'normal',
         },
+        {
+          name: 'SFPro',
+          data: sfPro.buffer,
+          style: 'normal'
+        }
       ],
     },
   );
