@@ -28,7 +28,7 @@ const { Content } = await entry.render();
 <Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false} meta={[
   {
     property: 'og:image',
-    content: `${site}api/og?title=${entry.data.title}&tags=${entry.data.tags.join(',')}`
+    content: `${site}api/og?title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
   },
   {
     property: 'og:image:width',
