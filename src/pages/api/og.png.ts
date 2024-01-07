@@ -1,16 +1,7 @@
 import { type APIRoute } from "astro";
-
-import fs from 'fs/promises'
-import path from 'path'
 import { ImageResponse } from '@vercel/og';
 
 export const prerender = false;
-
-interface Params {
-  type: 'post' | 'page';
-  tags?: string;
-  title?: string;
-}
 
 const Tags = (list: string[]) => {
   return {
@@ -143,19 +134,6 @@ export const GET: APIRoute = async function GET({ request }) {
     type
   }
 
-
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell-Bold.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/SFPro.otf')
-    )
-  ])
-
   const html = {
     type: 'div',
     key: '1234',
@@ -218,23 +196,6 @@ export const GET: APIRoute = async function GET({ request }) {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: 'Rockwell Bold',
-          data: rockwellBold.buffer,
-          style: 'normal',
-        },
-        {
-          name: 'Rockwell',
-          data: rockwell.buffer,
-          style: 'normal',
-        },
-        {
-          name: 'SFPro',
-          data: sfPro.buffer,
-          style: 'normal'
-        }
-      ],
     },
   );
 }
