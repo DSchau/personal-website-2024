@@ -42,5 +42,7 @@ export default defineConfig({
   vite: {
     plugins: [yaml()]
   },
-  adapter: cloudflare()
+  adapter: cloudflare({
+    wasmModuleImports: true
+  })
 });
