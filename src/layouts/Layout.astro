@@ -16,7 +16,7 @@ const [commits, updated] = await Promise.all([
 	getMostRecentCommit(gitHubArgs)
 ])
 
-const { title, description, showHeader, showCopy } = Astro.props
+const { title, description, showHeader, showCopy, meta = []} = Astro.props
 
 const fullTitle = `${metayaml.title}${title ? ` | ${title}` : ''}`
 const fullDescription = description ? description : metayaml.description
@@ -36,6 +36,11 @@ const fullDescription = description ? description : metayaml.description
 		<meta name="og:title" content={fullTitle} />
 		<meta name="twitter:title" content={fullTitle} />
 		<meta name="og:type" content="website" />
+		{
+			meta.map(({ property, name, content }: any) => {
+				return <meta property={property} content={content} />
+			})
+		}
 		<title>{fullTitle}</title>
 	</head>
 	<body>

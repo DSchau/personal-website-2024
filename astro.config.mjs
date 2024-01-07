@@ -6,11 +6,13 @@ import cloudflare from "@astrojs/cloudflare";
 
 import sitemap from "@astrojs/sitemap";
 
+const env = process.env.NODE_ENV
+
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   output: 'hybrid',
-  site: 'https://www.dustinschau.com',
+  site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
   integrations: [react(), sitemap()],
   redirects: {
     '/uses': '/posts/uses',

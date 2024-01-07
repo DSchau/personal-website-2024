@@ -11,6 +11,8 @@ export async function getStaticPaths() {
   }));
 }
 
+const site = Astro.site?.href
+
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
@@ -23,7 +25,20 @@ const { Content } = await entry.render();
 
 </style>
 
-<Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false}>
+<Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false} meta={[
+  {
+    property: 'og:image',
+    content: `${site}api/og?title=${entry.data.title}&tags=${entry.data.tags.join(',')}`
+  },
+  {
+    property: 'og:image:width',
+    content: `1200`
+  },
+  {
+    property: 'og:image:height',
+    content: `630`
+  }
+]}>
   <MarkdownPostLayout frontmatter={entry.data as any}>
     <Content />
   </MarkdownPostLayout>

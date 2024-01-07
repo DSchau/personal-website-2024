@@ -1,3 +1,5 @@
+import { type APIRoute } from "astro";
+
 import fs from 'fs/promises'
 import path from 'path'
 import { ImageResponse } from '@vercel/og';
@@ -32,7 +34,96 @@ const Tags = (list: string[]) => {
   }
 }
 
-export async function GET() {
+const bio = {
+  type: 'div',
+  key: 'bio',
+  props: {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: 20
+    },
+    children: [
+      {
+        type: 'img',
+        props: {
+          src: 'https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format',
+          style: {
+            height: 64,
+            width: 64,
+            borderRadius: 12
+          }
+        }
+      },
+      {
+        type: 'div',
+        props: {
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingLeft: 10
+          },
+          children: [
+            {
+              type: 'h2',
+              props: {
+                style: {
+                  fontFamily: 'Rockwell Bold',
+                  margin: 0,
+                  padding: 0,
+                  fontSize: 30
+                },
+                children: 'Dustin Schau'
+              }
+            },
+            {
+              type: 'p',
+              props: {
+                children: 'Product & Engineering Leader',
+                style: {
+                  fontFamily: 'SFPro',
+                  margin: 0,
+                  padding: 0,
+                  fontSize: 24
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+  }
+}
+
+const footer = {
+  type: 'div',
+  props: {
+    style: {
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    children: [
+      bio,
+      {
+        type: 'h3',
+        props: {
+          style: {
+            fontSize: 36,
+            paddingRight: 24
+          },
+          children: 'dustinschau.com'
+        }
+      }
+    ]
+  }
+}
+
+export const GET: APIRoute = async function GET({ request }) {
+  const url = new URL(request.url)
+  const params = url.searchParams
   const [rockwell, rockwellBold, sfPro] = await Promise.all([
     fs.readFile(
       path.resolve('./src/assets/fonts/Rockwell.ttf')
@@ -44,68 +135,6 @@ export async function GET() {
       path.resolve('./src/assets/fonts/SFPro.otf')
     )
   ])
-
-  const bio = {
-    type: 'div',
-    key: 'bio',
-    props: {
-      style: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: 20
-      },
-      children: [
-        {
-          type: 'img',
-          props: {
-            src: 'https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format',
-            style: {
-              height: 64,
-              width: 64,
-              borderRadius: 12
-            }
-          }
-        },
-        {
-          type: 'div',
-          props: {
-            style: {
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              paddingLeft: 10
-            },
-            children: [
-              {
-                type: 'h2',
-                props: {
-                  style: {
-                    fontFamily: 'Rockwell Bold',
-                    margin: 0,
-                    padding: 0,
-                    fontSize: 30
-                  },
-                  children: 'Dustin Schau'
-                }
-              },
-              {
-                type: 'p',
-                props: {
-                  children: 'Product & Engineering Leader',
-                  style: {
-                    fontFamily: 'SFPro',
-                    margin: 0,
-                    padding: 0,
-                    fontSize: 24
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
-    }
-  }
 
   const html = {
     type: 'div',
@@ -133,7 +162,7 @@ export async function GET() {
                   children: 'Blog'
                 }
               },
-              Tags(['life', 'career']),
+              Tags(params.get('tags')?.split(',') as string[]),
             ]
           }
         },
@@ -144,10 +173,10 @@ export async function GET() {
               fontSize: 72,
               paddingBottom: 72
             },
-            children: '2023: Year in Review'
+            children: params.get('title')
           }
         },
-        bio
+        footer
       ],
       style: {
         display: 'flex',
