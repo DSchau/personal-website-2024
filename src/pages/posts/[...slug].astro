@@ -32,7 +32,7 @@ const { Content } = await entry.render();
   },
   {
     property: 'twitter:domain',
-    content: site?.hostname
+    content: site?.hostname.replace('www.', '')
   },
   {
     property: 'twitter:url',
