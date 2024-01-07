@@ -14,7 +14,7 @@ const Tags = (list: string[]) => {
         padding: 0,
         margin: 0
       },
-      children: list.map(item => {
+      children: (list || []).map(item => {
         return {
           type: 'li',
           props: {
