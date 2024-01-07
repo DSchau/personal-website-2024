@@ -124,6 +124,12 @@ const footer = {
 export const GET: APIRoute = async function GET({ request }) {
   const url = new URL(request.url)
   const params = url.searchParams
+
+  console.log({
+    url,
+    params
+  })
+
   const [rockwell, rockwellBold, sfPro] = await Promise.all([
     fs.readFile(
       path.resolve('./src/assets/fonts/Rockwell.ttf')
@@ -175,7 +181,7 @@ export const GET: APIRoute = async function GET({ request }) {
               paddingBottom: 72,
               textAlign: 'center'
             },
-            children: decodeURIComponent(params.get('title') as string)
+            children: params.get('title')
           }
         },
         footer
