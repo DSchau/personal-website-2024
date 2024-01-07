@@ -4,6 +4,8 @@ import fs from 'fs/promises'
 import path from 'path'
 import { ImageResponse } from '@vercel/og';
 
+export const prerender = false;
+
 interface Params {
   type: 'post' | 'page';
   tags?: string;
