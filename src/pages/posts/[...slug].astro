@@ -40,7 +40,7 @@ const { Content } = await entry.render();
   },
   {
     property: 'og:image',
-    content: `${site?.href}api/og?title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
+    content: `${site?.href}api/og.png?title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
   },
   {
     property: 'og:image:width',
