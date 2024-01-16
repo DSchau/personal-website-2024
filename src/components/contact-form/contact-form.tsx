@@ -73,9 +73,9 @@ export function ContactForm() {
   return (
     <form className={styles.container} name="contact-me" action="/api/email" method="POST" onSubmit={submit} ref={formEl}>
       <div className={styles.row}>
-        <input name="name" type="text" placeholder="Your name" required />
+        <input name="name" type="text" placeholder="Your name" autoComplete="name" required />
         <input name="lastName" type="text" placeholder="Your last name" defaultValue={SPAM_FIELD_VALUE} tabIndex={-1} required />
-        <input name="email" type="email" placeholder="Your e-mail" required />
+        <input name="email" type="email" placeholder="Your e-mail" autoComplete="email" required />
       </div>
       <div className={styles.row}>
         <textarea name="message" className={styles.message} placeholder="Your message" required></textarea>

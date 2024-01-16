@@ -11,14 +11,15 @@ export async function getCommitCount({ owner, repo }: CommitCountArgs): Promise<
   const untilDate = new Date(`${currentYear}-12-31`);
 
   try {
-    const response = await octokit.rest.repos.listCommits({
+    const data = await octokit.paginate(octokit.rest.repos.listCommits, {
       owner,
       repo,
       since: sinceDate.toISOString(),
       until: untilDate.toISOString(),
-    });
+      per_page: 100
+    })
 
-    const commitsThisYear = response.data.filter((commit: any) => {
+    const commitsThisYear = data.filter((commit: any) => {
       const commitDate = new Date(commit.commit.author.date);
       return commitDate >= sinceDate && commitDate <= untilDate;
     });
