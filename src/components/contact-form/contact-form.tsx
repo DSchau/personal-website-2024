@@ -15,6 +15,7 @@ const delay = (duration: number) => new Promise(resolve => {
 
 export function ContactForm() {
   const [status, setStatus] = useState(Status.idle)
+  const [time, setTime] = useState(Date.now())
   const formEl = useRef(null)
 
   async function submit(ev: FormEvent<HTMLFormElement>) {
@@ -24,23 +25,35 @@ export function ContactForm() {
 
     const formData = new FormData(ev.target as HTMLFormElement)
 
-    const response = await fetch("/api/email", {
-      method: 'POST',
-      body: formData
-    })
-    if (response.ok) {
-      setStatus(Status.success)
+    const diffSeconds = (Date.now() - time) / 1000
+    const HUMAN_THRESHOLD_SECONDS = 10
+
+    /*
+     * Naive spam bot detection
+     * I tested a bunch, and 10s is about the minimum time a real human user takes to fill this out
+     */
+    if (diffSeconds >= HUMAN_THRESHOLD_SECONDS) {
+      const response = await fetch("/api/email", {
+        method: 'POST',
+        body: formData
+      })
+      if (response.ok) {
+        setStatus(Status.success)
+    
+        await delay(5000)
   
-      await delay(5000)
-
-      if (formEl && formEl.current) {
-        (formEl.current as any).reset()
+        if (formEl && formEl.current) {
+          (formEl.current as any).reset()
+        }
+  
+        setStatus(Status.idle)
+      } else {
+        setStatus(Status.failed)
       }
-
-      setStatus(Status.idle)
     } else {
       setStatus(Status.failed)
     }
+    
   }
 
   const getButtonText = () => {
