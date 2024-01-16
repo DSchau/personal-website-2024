@@ -59,10 +59,14 @@ When I think about simplicity and the choices a development team makes on a gree
 
 1. **Self-hosted**. If you use bare-metal AWS, GCP, or something similar you will need to build, maintain, and support a deployment pipeline for the lifetime of your web application. It increases development time _and_ the # of deployment steps, but likely it will cost you less from an infrastructure standpoint over time.
     - Worth also noting other solutions like [SST](https://github.com/sst/sst#readme) which are tailor made to make self-hosting modern frameworks easier
-1. **Modern jamstack solution**. You could use a tool like Netlify, Vercel, or Cloudflare Pages to host your application. These tools are all genuinely great, but they need to grow into their high valuations ($2B for Netlify, $2.2B for Vercel) and over time the more you use of the platform, the more you will pay for it. Ultimately, these tools exist to abstract the (created) complexity of modern frameworks.
+1. **Modern deployment solution**. You could use a tool like Netlify, Vercel, or Cloudflare Pages to host your application. These tools are all genuinely great, but they need to grow into their high valuations ($2B for Netlify, $2.2B for Vercel) and over time the more you use of the platform, the more you will pay for it. Ultimately, these tools exist to abstract the (created) complexity of modern frameworks.
 
-In all of technology, you're always making trade-offs so this is nothing new. What's new is the trend towards complexity that increasingly necessitates a choice like #2. React Server Components is a more complex solution (more steps, more time for deployment) that is directly in the middle of the static vs. dynamic spectrum.
+In all of technology, you're always making trade-offs so this is nothing new. What's new is the trend towards complexity that increasingly necessitates a choice like #2. Next.js with React Server Components is a more complex solution (more steps, more time for deployment) that is directly in the middle of the static vs. dynamic spectrum.
 
-I'd try hard to answer this question in 2024: if you quantify the amount of time you're spending with your tools, what could you consider instead that is _simpler_? How much time would that save you?
+## Closing
 
-And to framework owners: focus on simplicity. Not the 1% of use cases that 
+Some tools (Astro, Remix) in 2024 have embraced simplicity and carved out a well-defined niche on one end of the static vs. dynamic spectrum. These tools are excellent and exemplify the best of the modern web and a deep understanding of their customer.
+
+Other tools (Next.js) in 2024 do not. They are designed for a use case that is intentionally wide, and that is nigh impossible to deliver a simpler (less steps, less time to deploy) solution without using purpose-built tooling to tame the complexity.
+
+I'd ask myself in 2024: do I need the complexity?
