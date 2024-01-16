@@ -72,7 +72,7 @@ export function ContactForm() {
     <form className={styles.container} name="contact-me" action="/api/email" method="POST" onSubmit={submit} ref={formEl}>
       <div className={styles.row}>
         <input name="name" type="text" placeholder="Your name" required />
-        <input name="lastName" type="text" placeholder="Your last name" required />
+        <input name="lastName" type="text" placeholder="Your last name" />
         <input name="email" type="email" placeholder="Your e-mail" required />
       </div>
       <div className={styles.row}>
