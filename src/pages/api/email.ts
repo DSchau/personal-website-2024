@@ -9,8 +9,13 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData()
     const name = formData.get('name')
+    const lastName = formData.get('lastName')
     const email = formData.get('email')
     const message = formData.get('message')
+
+    if (lastName) {
+      throw new Error('Likely spam')
+    }
   
     if (!name || !email || !message) {
       return new Response(
