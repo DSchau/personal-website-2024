@@ -42,5 +42,5 @@ export default defineConfig({
   vite: {
     plugins: [yaml()]
   },
-  adapter: vercel()
+  adapter: cloudflare()
 });
