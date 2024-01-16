@@ -4,9 +4,8 @@ import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
-import vercel from "@astrojs/vercel/serverless";
-const env = process.env.NODE_ENV;
 
+const env = process.env.NODE_ENV;
 
 // https://astro.build/config
 export default defineConfig({
