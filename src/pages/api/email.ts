@@ -5,6 +5,8 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY)
 
 export const prerender = false;
 
+const SPAM_FIELD_VALUE = import.meta.env.PUBLIC_SPAM_FIELD_VALUE
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData()
@@ -13,7 +15,7 @@ export const POST: APIRoute = async ({ request }) => {
     const email = formData.get('email')
     const message = formData.get('message')
 
-    if (lastName) {
+    if (lastName !== SPAM_FIELD_VALUE) {
       throw new Error('Likely spam')
     }
   
