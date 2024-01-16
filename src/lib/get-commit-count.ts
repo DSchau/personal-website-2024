@@ -24,7 +24,11 @@ export async function getCommitCount({ owner, repo }: CommitCountArgs): Promise<
       return commitDate >= sinceDate && commitDate <= untilDate;
     });
 
-    return commitsThisYear.length;
+    const features = commitsThisYear.filter((commit) => {
+      return commit.commit.message.includes('feat:')
+    })
+
+    return features.length;
   } catch (error) {
     console.error("Error fetching commit data:", error);
     return 0;
