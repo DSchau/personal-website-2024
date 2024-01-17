@@ -23,6 +23,55 @@ I used to be big on SublimeText (and before that, TextMate!), but the rise of VS
 
 ![VSCode](./images/vscode.png)
 
+On VSCode, I've particularly liked a more minimal setup with the side panels and footer removed. If you're curious (as of 17 January 2024), the below settings.json can be used to get the same effect. Note: these will likely need to be tweaked, configured, and various settings removed to match your setup or to install additional extensions.
+
+```json
+{
+    "editor.tabSize": 2,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.startupEditor": "newUntitledFile",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.minimap.enabled": false,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.colorTheme": "Dracula Pro",
+    "editor.inlineSuggest.enabled": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "explorer.confirmDelete": false,
+    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+    "workbench.activityBar.location": "hidden",
+    "workbench.statusBar.visible": false,
+    "window.titleBarStyle": "native",
+    "editor.hideCursorInOverviewRuler": true,
+    "apc.electron": {
+        "titleBarStyle": "hiddenInset",
+        "trafficLightPosition": {
+          "x": 11,
+          "y": 10
+        }
+      },
+      "apc.header": {
+        "height": 36
+      },
+      // Remove unnecessary controls from primary bar and tabs list
+      "apc.stylesheet": {
+        ".title-label > h2": "display: none", // Remove primary side bar title
+        ".title-actions": "display: none", // Remove primary side bar action icons
+        ".editor-actions": "display: none", // Remove editor action icons
+        ".nosidebar .inline-tabs-placeholder": "width: 75px" // Align tabs to not overlap window controls when primary bar is hidden
+    },
+    "update.mode": "manual",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "cSpell.userWords": [
+      "customizability"
+    ],
+    "security.promptForLocalFileProtocolHandling": false
+}
+```
+
 I recently tried out a great terminal called Warp, and I've been using that daily since late 2023. I quite like it!
 
 As far as web browsing, I've found Arc to be great for not just daily browsing, but also for debugging since it's built on Chromium the development tools are just as good as they are in Chrome.
