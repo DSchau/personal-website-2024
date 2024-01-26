@@ -23,7 +23,7 @@ Now let me state my thesis: modern web, particularly Next.js, is skewing towards
 
 ## What problem are you solving?
 
-First, when we think about simplicity, think deeply about the problem that you are solving. We tend to think in terms of what your tech stack can do, instead of what your user and business needs. Frankly, this is a terrible way to make decisions. Are you building an e-commerce website that needs to do real-time updates to Product SKUs and inventory or are you building a largely static website that gets updates weekly, not by the second? Choosing a singular tool to do both of these widely different use cases may indicate a needlessly complex solution that will require more steps for you, the user, to build and maintain.
+First, when we think about simplicity, think deeply about the problem that you are solving. We tend to think in terms of what your tech stack can do, instead of what your user and business needs. Frankly, this is a terrible way to make decisions. Are you building an e-commerce website that needs to do real-time updates to Product SKUs and inventory or are you building a largely static website that gets updates weekly, not by the second? Choosing a singular tool to do both of these wildly different use cases may indicate a needlessly complex solution that will require more steps for you, the user, to build and maintain.
 
 When I think about the kinds of websites (and web apps) that teams are building, I tend to find thinking in terms of a spectrum helpful. On one end of the spectrum, we have simple, static websites. On the other hand, we have true dynamic, web applications.
 
