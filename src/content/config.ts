@@ -8,6 +8,8 @@ const postsCollection = defineCollection({
       date: z.date(),
       canonicalLink: z.string().optional(),
       draft: z.boolean().optional(),
+      // this is added by the remark plugin
+      lastModified: z.string().optional(),
       featured: z.boolean().optional(),
       featuredImage: image().optional(),
       excerpt: z.string().optional(),

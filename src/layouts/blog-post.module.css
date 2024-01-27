@@ -80,3 +80,9 @@
   margin: 0;
   padding: var(--padding-md) 0;
 }
+
+.modified {
+  display: block;
+  font-style: italic;
+  font-size: var(--text-xs);
+}

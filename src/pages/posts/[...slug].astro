@@ -14,7 +14,8 @@ export async function getStaticPaths() {
 const site = Astro.site
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, remarkPluginFrontmatter } = await entry.render();
+
 ---
 
 <style>
@@ -51,7 +52,7 @@ const { Content } = await entry.render();
     content: `630`
   }
 ]}>
-  <MarkdownPostLayout frontmatter={entry.data as any}>
+  <MarkdownPostLayout frontmatter={Object.assign({}, remarkPluginFrontmatter, entry.data)}>
     <Content />
   </MarkdownPostLayout>
 </Layout>
