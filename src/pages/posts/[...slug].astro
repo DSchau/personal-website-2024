@@ -52,7 +52,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
     content: `630`
   }
 ]}>
-  <MarkdownPostLayout frontmatter={Object.assign({}, remarkPluginFrontmatter, entry.data)}>
+  <MarkdownPostLayout frontmatter={Object.assign({}, remarkPluginFrontmatter, entry.data) as any}>
     <Content />
   </MarkdownPostLayout>
 </Layout>
