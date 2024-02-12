@@ -26,7 +26,8 @@ export default defineConfig({
   redirects: {
     '/uses': '/posts/uses',
     '/blog': '/posts',
-    '/posts/about': '/posts/readme'
+    '/posts/about': '/posts/readme',
+    '/readme': '/posts/readme'
   },
   markdown: {
     syntaxHighlight: false,
