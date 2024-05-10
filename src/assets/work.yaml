@@ -19,7 +19,7 @@
   description: "I joined Gatsby in 2018 as employee #11 as an engineer on the open-source team. I eventually ended up leading a team of 25+ containing all of Product, Engineering, and Design and we grew our revenue from 40K to over 5M and were successfully acquired by Netlify in 2023. I received an honorary co-founder title to celebrate my impact on Gatsby's success."
   highlights:
     - Created the SaaS product Gatsby Cloud which grew customer base from zero to over 1K+ paid customers (100 enterprise!) and over 5M ARR
-    - Shipped four major releases of the Gatsby open-source web framework, culminating in one of the most popular open-source projects of all time that as of 2023 powers 0.3% of the web
+    - Shipped four major releases of the Gatsby open-source web framework, culminating in one of the most popular open-source projects of all time (50k+ GitHub stars) that as of 2023 powers 0.3% of the web
     - Co-created Valhalla (along with Abhi Aiyer, Ward Peeters, and Shane Thomas), which was Gatsby's GraphQL data layer made framework agnostic and was the central product that led to Gatsby's acquisition by Netlify
 - title: Principal Consultant
   location: Omaha, NE
