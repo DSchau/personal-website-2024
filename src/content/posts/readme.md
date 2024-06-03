@@ -56,8 +56,8 @@ is unclear, be active and seek making something more clear. Actively listen. If 
 ## My quirks
 
 1. **I tend to over-prepare**. Plan for the worst, expect the best. In way too many scenarios, I tend to over-prepare. That could be 1:1s, team meetings, all hands, and really anything where I am in a position of visible influence. How I turn that nervous energy into productivity is I write things down. So, you may notice that I do a lot of writing. I think it’s a good thing, and I encourage you to read most of what I write (and I’ll explicitly note the must-reads), but it’s my way of preparing and ensuring that I can explain what I am trying to explain and that I am always prepared.
-    a. Previous employers joked a phrase of mine was: “I have a doc for that!” (And there usually was... )
-    b. You don’t have to write as much as I do, but I do encourage my team to write well and write more. It’s the best way to communicate
+    - Previous employers joked a phrase of mine was: “I have a doc for that!” (And there usually was... )
+    - You don’t have to write as much as I do, but I do encourage my team to write well and write more. It’s the best way to communicate
 for understanding and comprehension. Across timezones, across teams.
 2. **I care a lot about communication**. I can be a little pedantic about good, broad communications. This is highly intentional, but it can come off a little nit-picky at times. For example: I may encourage you to post a message in a team Slack channel instead of in a 1:1, or to post takeaways from a meeting that all of us were at, and so forth. I care about good communication because I believe it’s one of the most important things that separates good from great teams, but I also acknowledge it can be a little pedantic   Feel free to push back from time-to-time.
 3. **Concrete examples help me**. While I’m still technical and can understand most things, concrete examples and demos help me understand much more easily than an abstract, high-level example. You may see me re-phrase sometimes and say something like: “So does that mean X? Is that an example of what that concern would lead to?” and that’s largely just to help myself understand it and make sure we’re on the same page.
@@ -88,6 +88,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>How I learn</summary>
+
   I learn by doing! I use our product, competitor’s product, and I build something to develop my own conviction and understanding.
 </details>
 
@@ -110,7 +111,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>Favorite books</summary>
-  Check out my Goodreads!
+  <a href="https://www.goodreads.com/user/show/7210735-dustin-schau">Check out my Goodreads!</a>
 
   <strong>fiction</strong>
 
@@ -126,20 +127,24 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
   - Creativity, Inc.
   - The Hard thing about Hard Things
   - Amp it Up
-  - How will you measure your life?
+  - How Will you Measure Your Life?
+  - Scaling People
 </details>
 
 <details>
   <summary>Favorite games</summary>
+
   - Mass Effect 2
   - The Last of Us
   - God of War
-  - Metal Gear Solid IV Uncharted
+  - Metal Gear Solid IV
+  - Uncharted
   - Red Dead Redemption
 </details>
 
 <details>
   <summary>Other things to know</summary>
+
   <blockquote>“What is our definition of victory? Sun Tzu, in The Art of War, had a simple answer: ‘Breaking the enemy's will to fight.’</blockquote>
 
   I’m highly competitive and I care about winning. What does it mean to win for me at Postman? To be a critical part of a wildly successful business, and to help Postman grow into the outsized opportunity that I think we currently have.
