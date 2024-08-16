@@ -7,7 +7,7 @@ import { ImageResponse } from '@vercel/og';
 /*
  * TODO: Fix issue with Cloudflare deployment
  */
-export const prerender = true;
+export const prerender = false;
 
 const Tags = (list: string[]) => {
   return {
