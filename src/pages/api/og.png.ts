@@ -1,8 +1,10 @@
 import { type APIRoute } from "astro";
 
-import fs from 'fs/promises'
-import path from 'path'
 import { ImageResponse } from '@vercel/og';
+
+import rockwell from '../assets/fonts/Rockwell.ttf';
+import rockwellBold from '../assets/fonts/Rockwell-Bold.ttf';
+import sfPro from '../assets/fonts/SFPro.otf';
 
 /*
  * TODO: Fix issue with Cloudflare deployment
@@ -141,18 +143,6 @@ export const GET: APIRoute = async function GET({ request }) {
   }
 
 
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell-Bold.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/SFPro.otf')
-    )
-  ])
-
   const html = {
     type: 'div',
     key: '1234',
@@ -218,17 +208,17 @@ export const GET: APIRoute = async function GET({ request }) {
       fonts: [
         {
           name: 'Rockwell Bold',
-          data: rockwellBold.buffer,
+          data: Buffer.from(rockwellBold, 'base64'),
           style: 'normal',
         },
         {
           name: 'Rockwell',
-          data: rockwell.buffer,
+          data: Buffer.from(rockwell, 'base64'),
           style: 'normal',
         },
         {
           name: 'SFPro',
-          data: sfPro.buffer,
+          data: Buffer.from(sfPro),
           style: 'normal'
         }
       ],
