@@ -51,10 +51,7 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml()],
-    ssr: {
-      noExternal: false
-    }
+    plugins: [yaml()]
   },
   adapter: cloudflare()
 });
