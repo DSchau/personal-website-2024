@@ -139,12 +139,6 @@ export const GET: APIRoute = async function GET({ request }) {
   }
 
 
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    fetch('https://pub-5a4e2d7f12684753b6b539c4d160934f.r2.dev/Rockwell.ttf').then(res => res.arrayBuffer()),
-    fetch('https://pub-5a4e2d7f12684753b6b539c4d160934f.r2.dev/Rockwell-Bold.ttf').then(res => res.arrayBuffer()),
-    fetch('https://pub-5a4e2d7f12684753b6b539c4d160934f.r2.dev/SFPro.otf').then(res => res.arrayBuffer())
-  ])
-
   const html = {
     type: 'div',
     key: '1234',
@@ -206,24 +200,7 @@ export const GET: APIRoute = async function GET({ request }) {
     html,
     {
       width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: 'Rockwell Bold',
-          data: rockwellBold,
-          style: 'normal',
-        },
-        {
-          name: 'Rockwell',
-          data: rockwell,
-          style: 'normal',
-        },
-        {
-          name: 'SFPro',
-          data: sfPro,
-          style: 'normal'
-        }
-      ],
+      height: 630
     },
   );
 }
