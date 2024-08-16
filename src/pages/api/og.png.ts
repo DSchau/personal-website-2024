@@ -210,17 +210,17 @@ export const GET: APIRoute = async function GET({ request }) {
       fonts: [
         {
           name: 'Rockwell Bold',
-          data: rockwellBold.buffer,
+          data: rockwellBold,
           style: 'normal',
         },
         {
           name: 'Rockwell',
-          data: rockwell.buffer,
+          data: rockwell,
           style: 'normal',
         },
         {
           name: 'SFPro',
-          data: sfPro.buffer,
+          data: sfPro,
           style: 'normal'
         }
       ],
