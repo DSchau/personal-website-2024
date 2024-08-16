@@ -4,7 +4,7 @@ import Heart from 'phosphor-react/src/icons/Heart.tsx'
 import styles from './footer.module.css'
 
 interface Props {
-  updated: string | undefined
+  updated: string
 }
 
 export function Footer(props: Props) {

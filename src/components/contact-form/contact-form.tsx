@@ -17,7 +17,7 @@ const delay = (duration: number) => new Promise(resolve => {
 
 export function ContactForm() {
   const [status, setStatus] = useState(Status.idle)
-  const [time, setTime] = useState(Date.now())
+  const [time] = useState(Date.now())
   const formEl = useRef(null)
 
   async function submit(ev: FormEvent<HTMLFormElement>) {
