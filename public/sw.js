@@ -4,11 +4,11 @@
  * I will probably need to keep this file... forever?
  * Hat-tip: https://www.benjaminrancourt.ca/how-to-remove-a-service-worker/
  */
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", () => {
   self.registration
     .unregister()
     .then(() => self.clients.matchAll())

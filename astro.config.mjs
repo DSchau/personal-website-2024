@@ -9,7 +9,7 @@ import sitemap from "@astrojs/sitemap";
 const env = process.env.NODE_ENV;
 
 function remarkModifiedTime() {
-  return function (tree, file) {
+  return function (_, file) {
     const filepath = file.history[0];
     const result = execSync(`git log -1 --pretty="format:%cI" "${filepath}"`);
 
