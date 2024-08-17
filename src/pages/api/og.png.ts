@@ -2,12 +2,13 @@ import { type APIRoute } from "astro";
 
 import fs from 'fs/promises'
 import path from 'path'
-import { ImageResponse } from '@vercel/og';
+import satori from 'satori'
+import { Resvg } from '@resvg/resvg-js';
 
 /*
  * TODO: Fix issue with Cloudflare deployment
  */
-export const prerender = true;
+export const prerender = false;
 
 const Tags = (list: string[]) => {
   return {
@@ -210,28 +211,39 @@ export const GET: APIRoute = async function GET({ request }) {
       }
     }
   }
-  return new ImageResponse(
-    html,
-    {
-      width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: 'Rockwell Bold',
-          data: rockwellBold.buffer,
-          style: 'normal',
-        },
-        {
-          name: 'Rockwell',
-          data: rockwell.buffer,
-          style: 'normal',
-        },
-        {
-          name: 'SFPro',
-          data: sfPro.buffer,
-          style: 'normal'
-        }
-      ],
+
+  const svg = await satori(html, {
+    width: 1200,
+    height: 620,
+    fonts: [
+      {
+        name: 'Rockwell Bold',
+        data: rockwellBold.buffer,
+        style: 'normal',
+      },
+      {
+        name: 'Rockwell',
+        data: rockwell.buffer,
+        style: 'normal',
+      },
+      {
+        name: 'SFPro',
+        data: sfPro.buffer,
+        style: 'normal'
+      }
+    ]
+  })
+
+  const resvg = new Resvg(svg);
+  const pngData = resvg.render();
+
+  const pngBuffer = pngData.asPng(); // Get PNG as buffer
+
+  return new Response(pngBuffer, {
+    status: 200,
+    headers: {
+      'Content-Type': 'image/png',
+      'Content-Length': pngBuffer.byteLength.toString(),
     },
-  );
+  });
 }
