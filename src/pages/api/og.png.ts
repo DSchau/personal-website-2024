@@ -3,7 +3,7 @@ import { type APIRoute } from "astro";
 import fs from 'fs/promises'
 import path from 'path'
 import satori from 'satori'
-import { Resvg } from '@resvg/resvg-js';
+
 
 /*
  * TODO: Fix issue with Cloudflare deployment
@@ -233,17 +233,32 @@ export const GET: APIRoute = async function GET({ request }) {
       }
     ]
   })
+  
+  if (typeof OffscreenCanvas !== 'undefined') {
+    const canvas = new OffscreenCanvas(1200, 620); // Width and height of the output PNG
+    const ctx = canvas.getContext('2d');
 
-  const resvg = new Resvg(svg);
-  const pngData = resvg.render();
+    // Create a Blob from the SVG and then an ImageBitmap
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const imageBitmap = await createImageBitmap(blob);
 
-  const pngBuffer = pngData.asPng(); // Get PNG as buffer
+    // Draw the SVG onto the canvas
+    (ctx as any).drawImage(imageBitmap, 0, 0);
 
-  return new Response(pngBuffer, {
-    status: 200,
-    headers: {
-      'Content-Type': 'image/png',
-      'Content-Length': pngBuffer.byteLength.toString(),
-    },
-  });
+    // Convert the canvas to a PNG Blob
+    const pngBlob = await canvas.convertToBlob({ type: 'image/png' });
+
+    // Return the PNG as the response
+    const arrayBuffer = await pngBlob.arrayBuffer();
+
+    return new Response(arrayBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Content-Length': arrayBuffer.byteLength.toString(),
+      },
+    });
+  }
+
+  return new Response('Failure')
 }
