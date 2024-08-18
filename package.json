@@ -26,7 +26,8 @@
     "rehype-pretty-code": "^0.12.3",
     "resend": "^2.1.0",
     "satori": "^0.10.14",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",

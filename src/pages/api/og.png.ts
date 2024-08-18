@@ -1,13 +1,8 @@
 import { type APIRoute } from "astro";
 
-import fs from 'fs/promises'
-import path from 'path'
 import satori from 'satori'
-import { Resvg } from '@resvg/resvg-js';
+import { Resvg } from '@resvg/resvg-js'
 
-/*
- * TODO: Fix issue with Cloudflare deployment
- */
 export const prerender = true;
 
 const Tags = (list: string[]) => {
@@ -141,18 +136,12 @@ export const GET: APIRoute = async function GET({ request }) {
     type
   }
 
-
   const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/Rockwell-Bold.ttf')
-    ),
-    fs.readFile(
-      path.resolve('./src/assets/fonts/SFPro.otf')
-    )
+    import('../../assets/fonts/Rockwell.ttf').then(mod => mod.default),
+    import('../../assets/fonts/Rockwell-Bold.ttf').then(mod => mod.default),
+    import('../../assets/fonts/SFPro.otf').then(mod => mod.default),
   ])
+    .then(all => all.map(part => Buffer.from(part)))
 
   const html = {
     type: 'div',
@@ -218,17 +207,17 @@ export const GET: APIRoute = async function GET({ request }) {
     fonts: [
       {
         name: 'Rockwell Bold',
-        data: rockwellBold.buffer,
+        data: rockwellBold,
         style: 'normal',
       },
       {
         name: 'Rockwell',
-        data: rockwell.buffer,
+        data: rockwell,
         style: 'normal',
       },
       {
         name: 'SFPro',
-        data: sfPro.buffer,
+        data: sfPro,
         style: 'normal'
       }
     ]

@@ -4,6 +4,7 @@ import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 import cloudflare from "@astrojs/cloudflare";
+import FontToBuffer from 'unplugin-font-to-buffer/vite'
 import sitemap from "@astrojs/sitemap";
 
 const env = process.env.NODE_ENV;
@@ -51,7 +52,7 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml()]
+    plugins: [yaml(), FontToBuffer()]
   },
   adapter: cloudflare()
 });
