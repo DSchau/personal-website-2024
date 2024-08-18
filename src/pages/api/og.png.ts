@@ -3,7 +3,7 @@ import { type APIRoute } from "astro";
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 
-export const prerender = true;
+export const prerender = false;
 
 const Tags = (list: string[]) => {
   return {
