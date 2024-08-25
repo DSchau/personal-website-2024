@@ -30,6 +30,7 @@
     "rehype-pretty-code": "^0.12.3",
     "resend": "^2.1.0",
     "satori": "^0.10.14",
+    "thumbo": "^1.0.8",
     "typescript": "^5.3.3",
     "unplugin-font-to-buffer": "^0.2.0"
   },
