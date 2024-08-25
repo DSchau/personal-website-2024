@@ -1,7 +1,8 @@
 import { type APIRoute } from "astro";
 
 import satori from 'satori'
-import { Resvg } from '@resvg/resvg-js'
+
+import { getSvgRenderer } from "@/lib/get-svg-render";
 
 export const prerender = false;
 
@@ -123,6 +124,8 @@ const footer = {
 }
 
 export const GET: APIRoute = async function GET({ request }) {
+  const Renderer = await getSvgRenderer()
+
   const url = new URL(request.url)
   const urlParams = url.searchParams
 
@@ -223,7 +226,7 @@ export const GET: APIRoute = async function GET({ request }) {
     ]
   })
 
-  const resvg = new Resvg(svg);
+  const resvg = new Renderer(svg);
   const pngData = resvg.render();
 
   const pngBuffer = pngData.asPng(); // Get PNG as buffer
