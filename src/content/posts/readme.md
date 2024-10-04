@@ -115,20 +115,21 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
   <strong>fiction</strong>
 
-  - The Stand
-  - Lonesome Dove
-  - The Sparrow
-  - Red Rising
-  - Barbarian Days
+- <a href="https://www.goodreads.com/book/show/149267.The_Stand">The Stand</a>
+- <a href="https://www.goodreads.com/book/show/256008.Lonesome_Dove">Lonesome Dove</a>
+- <a href="https://www.goodreads.com/book/show/334176.The_Sparrow">The Sparrow</a>
+- <a href="https://www.goodreads.com/book/show/15839976-red-rising">Red Rising</a>
+- <a href="https://www.goodreads.com/book/show/23632253-barbarian-days">Barbarian Days</a>
 
   <strong>non-fiction</strong>
 
-  - How to Win Friends and Influence People
-  - Creativity, Inc.
-  - The Hard thing about Hard Things
-  - Amp it Up
-  - How Will you Measure Your Life?
-  - Scaling People
+- <a href="https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People">How to Win Friends and Influence People</a>
+- <a href="https://www.goodreads.com/book/show/18077903-creativity-inc">Creativity, Inc.</a>
+- <a href="https://www.goodreads.com/book/show/18176747-the-hard-thing-about-hard-things">The Hard Thing About Hard Things</a>
+- <a href="https://www.goodreads.com/book/show/59383944-amp-it-up">Amp it Up</a>
+- <a href="https://www.goodreads.com/book/show/13425570-how-will-you-measure-your-life">How Will You Measure Your Life?</a>
+- <a href="https://www.goodreads.com/book/show/62833466-scaling-people">Scaling People</a>
+- 
 </details>
 
 <details>
