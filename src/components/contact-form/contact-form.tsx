@@ -27,35 +27,23 @@ export function ContactForm() {
 
     const formData = new FormData(ev.target as HTMLFormElement)
 
-    const diffSeconds = (Date.now() - time) / 1000
-    const HUMAN_THRESHOLD_SECONDS = 10
+    const response = await fetch("/api/email", {
+      method: 'POST',
+      body: formData
+    })
+    if (response.ok) {
+      setStatus(Status.success)
+  
+      await delay(5000)
 
-    /*
-     * Naive spam bot detection
-     * I tested a bunch, and 10s is about the minimum time a real human user takes to fill this out
-     */
-    if (diffSeconds >= HUMAN_THRESHOLD_SECONDS) {
-      const response = await fetch("/api/email", {
-        method: 'POST',
-        body: formData
-      })
-      if (response.ok) {
-        setStatus(Status.success)
-    
-        await delay(5000)
-  
-        if (formEl && formEl.current) {
-          (formEl.current as any).reset()
-        }
-  
-        setStatus(Status.idle)
-      } else {
-        setStatus(Status.failed)
+      if (formEl && formEl.current) {
+        (formEl.current as any).reset()
       }
+
+      setStatus(Status.idle)
     } else {
       setStatus(Status.failed)
     }
-    
   }
 
   const getButtonText = () => {

@@ -1,22 +1,39 @@
 import { type APIRoute } from "astro";
+import arcjet, { validateEmail, type ArcjetNodeRequest } from "@arcjet/node";
 import { Resend } from 'resend'
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY)
 
 export const prerender = false;
 
-const SPAM_FIELD_VALUE = import.meta.env.PUBLIC_SPAM_FIELD_VALUE
+const aj = arcjet({
+  key: import.meta.env.ARCJET_KEY!,
+  rules: [
+    validateEmail({
+      mode: "LIVE",
+      block: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+    }),
+  ],
+});
+
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData()
     const name = formData.get('name')
-    const lastName = formData.get('lastName')
-    const email = formData.get('email')
+    const email = formData.get('email') as string
     const message = formData.get('message')
 
-    if (lastName !== SPAM_FIELD_VALUE) {
-      throw new Error('Likely spam')
+    const decision = await aj.protect(request as any, {
+      email,
+    });
+
+    console.log("Arcjet decision", decision);
+  
+    if (decision.isDenied()) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), {
+        status: 403
+      })
     }
   
     if (!name || !email || !message) {
