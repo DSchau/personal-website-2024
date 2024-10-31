@@ -18,25 +18,17 @@ function remarkModifiedTime() {
   };
 }
 
-const generateRedirectsWithTrailing = redirects => {
-  const keys = Object.keys(redirects)
-  return keys.reduce((merged, key) => {
-    merged[key + '/'] = redirects[key]
-    return merged
-  }, redirects)
-}
-
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   output: 'hybrid',
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
   integrations: [react(), sitemap(), icon()],
-  redirects: generateRedirectsWithTrailing({
+  redirects: {
     '/uses': '/posts/uses',
     '/blog': '/posts',
     '/readme': '/posts/readme'
-  }),
+  },
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkModifiedTime],
