@@ -1,9 +1,8 @@
 import { type APIRoute } from "astro";
 
-import satori from 'satori'
-import { Resvg } from '@resvg/resvg-js'
+import { ImageResponse } from '@vercel/og'
 
-export const prerender = true;
+export const prerender = false;
 
 const Tags = (list: string[]) => {
   return {
@@ -201,38 +200,8 @@ export const GET: APIRoute = async function GET({ request }) {
     }
   }
 
-  const svg = await satori(html, {
+  return new ImageResponse(html, {
     width: 1200,
-    height: 620,
-    fonts: [
-      {
-        name: 'Rockwell Bold',
-        data: rockwellBold,
-        style: 'normal',
-      },
-      {
-        name: 'Rockwell',
-        data: rockwell,
-        style: 'normal',
-      },
-      {
-        name: 'SFPro',
-        data: sfPro,
-        style: 'normal'
-      }
-    ]
+    height: 620
   })
-
-  const resvg = new Resvg(svg);
-  const pngData = resvg.render();
-
-  const pngBuffer = pngData.asPng(); // Get PNG as buffer
-
-  return new Response(pngBuffer, {
-    status: 200,
-    headers: {
-      'Content-Type': 'image/png',
-      'Content-Length': pngBuffer.byteLength.toString(),
-    },
-  });
 }
