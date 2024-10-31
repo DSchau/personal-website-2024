@@ -24,6 +24,7 @@ export default defineConfig({
   prefetch: true,
   output: 'hybrid',
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
+  trailingSlash: 'always',
   integrations: [react(), sitemap(), icon()],
   redirects: {
     '/uses': '/posts/uses',
