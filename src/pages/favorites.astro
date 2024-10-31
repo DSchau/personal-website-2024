@@ -1,10 +1,17 @@
 ---
+import { getCollection } from "astro:content";
+
 import Layout from "@/layouts/Layout.astro";
-import { Favorites as FavoritesComponent } from '@/components/favorites/favorites.tsx'
+import FavoritesComponent from '@/components/favorites/favorites.astro'
 
-import favorites from '@/assets/favorites.yaml'
+const favorites = await getCollection('favorites')
+	.then(data => data[0].data)
 
-const { films, series, albums, songs } = favorites
+const allFavorites = Object.keys(favorites)
+	.map(favorite => ({
+		title: favorite.slice(0, 1).toUpperCase() + favorite.slice(1),
+		list: favorites[favorite]
+	}))
 ---
 <style>
 	h3 {
@@ -55,21 +62,11 @@ const { films, series, albums, songs } = favorites
 
 </style>
 
-<Layout title="Favorites • Films, Series, Albums, and Songs" copy="These are some of my favorite things. Movies, series, albums, and songs; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
-	<section>
-		<h3>Films</h3>
-		<FavoritesComponent list={films} />
-	</section>
-	<section>
-		<h3>Series</h3>
-		<FavoritesComponent list={series} />
-	</section>
-	<section>
-		<h3>Albums</h3>
-		<FavoritesComponent list={albums} />
-	</section>
-	<section>
-		<h3>Songs</h3>
-		<FavoritesComponent list={songs} />
-	</section>
+<Layout title="Favorites • Films, Series, Albums, and Songs" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, and songs; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
+	{allFavorites.map(({ title, list }) => (
+		<section>
+			<h3>{title}</h3>
+			<FavoritesComponent list={list} />
+		</section>
+	))}
 </Layout>

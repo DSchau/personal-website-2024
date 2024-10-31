@@ -10,7 +10,7 @@
 }
 
 .item {
-  margin: 0;
+  margin: var(--padding-lg) auto;
   padding: var(--padding-s);
 
   text-align: center;
@@ -18,6 +18,13 @@
 
 .title {
   font-size: var(--text-md);
+  color: var(--text-color);
+
+  text-decoration: none;
+}
+
+.title:hover {
+  text-decoration: underline;
 }
 
 .subtitle {
@@ -25,6 +32,10 @@
   font-size: var(--text-s);
 
   color: var(--text-accent-color);
+}
+
+picture {
+  margin: 0 auto;
 }
 
 @media only screen and (min-width: 768px) {

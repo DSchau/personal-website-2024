@@ -8,7 +8,7 @@ import { Tags } from '@/components/tags/tags.tsx';
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
 })
-  .then(all => {
+  .then((all) => {
     return all.sort((a, b) => {
       return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
     })
@@ -56,7 +56,7 @@ const posts = await getCollection('posts', ({ data }) => {
 
 </style>
 
-<Layout title="All posts">
+<Layout title="All posts" copy={`My blog, where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
     <ol reversed>

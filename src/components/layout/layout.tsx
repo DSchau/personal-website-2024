@@ -15,13 +15,14 @@ interface Props {
   showCopy?: boolean;
   updated: string | undefined;
   copy: string | undefined
+  byline: string | undefined;
 }
 
-export function Layout({ children, commits, pathname, showCopy, showHeader = true, copy, updated }: Props) {
+export function Layout({ children, commits, pathname, showCopy, showHeader = true, copy, byline, updated }: Props) {
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
-      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} />}
+      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} />}
       <main>
         {children}
       </main>
