@@ -150,3 +150,9 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
   I’m highly competitive and I care about winning. What does it mean to win for me at Postman? To be a critical part of a wildly successful business, and to help Postman grow into the outsized opportunity that I think we currently have.
 </details>
+
+<details>
+  <summary>Favorite things</summary>
+
+  Please check out <a href="https://dustinschau.com/favorites">favorite things</a> for all my top five favorites (songs, films, series, games, and books).
+</details>
