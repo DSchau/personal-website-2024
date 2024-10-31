@@ -17,7 +17,7 @@ const postsCollection = defineCollection({
     })
 });
 
-const favoriteSchema = ({ image }) => z.array(z.object({
+const favoriteSchema = ({ image }: any) => z.array(z.object({
   key: z.string(),
   title: z.string(),
   subtitle: z.string().optional(),

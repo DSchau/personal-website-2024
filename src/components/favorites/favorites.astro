@@ -6,7 +6,7 @@ const { list } = Astro.props
 ---
 <ul class={styles.container}>
   {
-    list.map(item => (
+    list.map((item: any) => (
       <li class={styles.item}>
           {item.image && <Picture src={item.image} formats={['avif', 'webp']} height={200} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle} poster` : ''}`} loading="lazy" />}
           <a href={item.hyperlink} class={styles.title}>
