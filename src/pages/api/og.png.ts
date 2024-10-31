@@ -3,7 +3,7 @@ import { type APIRoute } from "astro";
 import satori from 'satori'
 import Thumbo, { Transfer } from "thumbo";
 
-export const prerender = false;
+export const prerender = true;
 
 const Tags = (list: string[]) => {
   return {

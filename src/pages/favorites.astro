@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import FavoritesComponent from '@/components/favorites/favorites.astro'
+
+const favorites = await getCollection('favorites')
+	.then(data => data[0].data)
+
+const allFavorites = Object.keys(favorites)
+	.map(favorite => ({
+		title: favorite.slice(0, 1).toUpperCase() + favorite.slice(1),
+		list: favorites[favorite]
+	}))
+---
+<style>
+	h3 {
+		text-align: center;
+		padding: var(--padding-md) 0;
+
+		margin: var(--padding-s) auto;
+		max-width: var(--content-width);
+		border-top: 1px solid var(--border-color);
+	}
+
+	section {
+		margin: var(--padding-lg) 0;
+		padding: var(--padding-lg) 0;
+	}
+
+	section h3 {
+		text-transform: lowercase;
+	}
+
+	section > p {
+		margin: 0 auto;
+		width: var(--content-width);
+
+		padding: var(--padding-md) var(--padding-lg);
+	}
+
+	.images {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.images > .image {
+		padding: var(--padding-s);
+	}
+
+	.images img {
+		max-height: 450px;
+		height: 100%;
+		border-radius: var(--padding-lg);
+	}
+
+	@media only screen and (min-width: var(--breakpoint-md)) {
+		.images {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+</style>
+
+<Layout title="Favorites • Films, Series, Albums, and Songs" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, and songs; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
+	{allFavorites.map(({ title, list }) => (
+		<section>
+			<h3>{title}</h3>
+			<FavoritesComponent list={list} />
+		</section>
+	))}
+</Layout>

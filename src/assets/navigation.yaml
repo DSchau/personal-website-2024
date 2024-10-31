@@ -4,4 +4,5 @@
   to: /posts
 - name: work
   to: /work
-
+- name: favorites
+  to: /favorites

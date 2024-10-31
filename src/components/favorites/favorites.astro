@@ -1,0 +1,19 @@
+---
+import { Picture } from 'astro:assets'
+import styles from './favorites.module.css'
+
+const { list } = Astro.props
+---
+<ul class={styles.container}>
+  {
+    list.map(item => (
+      <li class={styles.item}>
+          {item.image && <Picture src={item.image} formats={['avif', 'webp']} height={200} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle} poster` : ''}`} loading="lazy" />}
+          <a href={item.hyperlink} class={styles.title}>
+            {item.title}
+            {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
+          </a>
+      </li>
+    ))
+  }
+</ul>

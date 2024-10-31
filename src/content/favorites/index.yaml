@@ -1,0 +1,141 @@
+books:
+  - key: the-stand
+    title: The Stand
+    hyperlink: https://www.goodreads.com/book/show/87591651-the-stand
+    image: ./images/the_stand.png
+  - key: lonesome-dove
+    title: Lonesome Dove
+    hyperlink: https://www.goodreads.com/book/show/256008.Lonesome_Dove
+    image: ./images/lonesome_dove.jpg
+  - key: the-sparrow
+    title: The Sparrow
+    hyperlink: https://www.goodreads.com/book/show/334176.The_Sparrow
+    image: ./images/the_sparrow.jpg
+  - key: red-rising
+    title: Red Rising
+    hyperlink: https://www.goodreads.com/book/show/15839976-red-rising
+    image: ./images/red_rising.jpg
+  - key: barbarian-days
+    title: "Barbarian Days: A Surfing Life"
+    hyperlink: https://www.goodreads.com/book/show/18693910-barbarian-days
+    image: ./images/barbarian_days.jpg
+films:
+  - key: interstellar
+    title: Interstellar
+    hyperlink: https://www.imdb.com/title/tt0816692/
+    image: ./images/interstellar.jpg
+  - key: the-social-network
+    title: The Social Network
+    hyperlink: https://www.imdb.com/title/tt1285016/
+    image: ./images/the_social_network.jpg
+  - key: the-dark-knight
+    title: The Dark Knight
+    hyperlink: https://www.imdb.com/title/tt0468569/
+    image: ./images/the_dark_knight.jpg
+  - key: indiana-jones
+    title: Indiana Jones and the Last Crusade
+    hyperlink: https://www.imdb.com/title/tt0097576/
+    image: ./images/indiana_jones.jpg
+  - key: superbad
+    title: Superbad
+    hyperlink: https://www.imdb.com/title/tt0829482/
+    image: ./images/superbad.jpg
+series:
+  - key: band-of-brothers
+    title: Band of Brothers
+    hyperlink: https://www.imdb.com/title/tt0185906/
+    image: ./images/band_of_brothers.jpg
+  - key: what-we-do-in-the-shadows
+    title: What We Do in the Shadows
+    hyperlink: https://www.imdb.com/title/tt7908628/
+    image: ./images/what_we_do_in_the_shadows.jpg
+  - key: watchmen
+    title: Watchmen
+    hyperlink: https://www.imdb.com/title/tt7049682/
+    image: ./images/watchmen.png
+  - key: true-detective
+    title: True Detective
+    subtitle: Season 1
+    hyperlink: https://www.imdb.com/title/tt2356777/
+    image: ./images/true_detective.jpeg
+  - key: succession
+    title: Succession
+    hyperlink: https://www.imdb.com/title/tt7660850/
+    image: ./images/succession.jpg
+albums:
+  - key: my-beautiful-dark-twisted-fantasy
+    title: My Beautiful Dark Twisted Fantasy
+    subtitle: Kanye West
+    hyperlink: https://open.spotify.com/album/20r762YmB5HeofjMCiPMLv
+    image: ./images/mbdtf.jpg
+  - key: kid-a
+    title: Kid A
+    subtitle: Radiohead
+    hyperlink: https://open.spotify.com/album/6GjwtEZcfenmOf6l18N7T7
+    image: ./images/kida.jpg
+  - key: daytona
+    title: Daytona
+    subtitle: Pusha T
+    hyperlink: https://open.spotify.com/album/07bIdDDe3I3hhWpxU6tuBp
+    image: ./images/daytona.jpeg
+  - key: them-crooked-vultures
+    title: Them Crooked Vultures
+    subtitle: Them Crooked Vultures
+    hyperlink: https://open.spotify.com/album/0Z6IBizcq7DLXpenjSHqF3
+    image: ./images/them_crooked_vultures.jpg
+  - key: camp
+    title: Camp
+    subtitle: Childish Gambino
+    hyperlink: https://open.spotify.com/album/2nkHPk6e7TgemWh07yFHxh
+    image: ./images/camp.jpg
+songs:
+  - key: everything-in-its-right-place
+    title: Everything In Its Right Place
+    subtitle: Radiohead
+    hyperlink: https://open.spotify.com/track/2kRFrWaLWiKq48YYVdGcm8
+    image: ./images/kida.jpg
+  - key: aint-no-rest-for-the-wicked
+    title: Ain't No Rest for the Wicked
+    subtitle: Cage the Elephant
+    hyperlink: https://open.spotify.com/track/3Pzh926pXggbMe2ZpXyMV7
+    image: ./images/cte.jpg
+  - key: lateralus
+    title: Lateralus
+    subtitle: Tool
+    hyperlink: https://open.spotify.com/track/7tvuLLroI0n6uYBWuFig5d
+    image: ./images/tool.jpg
+  - key: the-last-goodbye
+    title: The Last Goodbye
+    subtitle: The Kills
+    hyperlink: https://open.spotify.com/track/2mgz3wBdrzO2gS7TMKb6UP
+    image: ./images/the_kills.jpg
+  - key: wildflowers
+    title: Wildflowers
+    subtitle: Tom Petty
+    hyperlink: https://open.spotify.com/track/2Pr1nZpt8A8WP7QYpyq6L3
+    image: ./images/wildflowers.jpg
+   # - key: sitting-on-the-dock-of-the-bay
+    #   title: (Sittin' On) the Dock of the Bay
+    #   subtitle: Otis Redding
+    # hyperlink: https://todo.com
+games:
+  - key: the-last-of-us
+    title: The Last of Us
+    hyperlink: https://en.wikipedia.org/wiki/The_Last_of_Us
+    image: ./images/last_of_us.jpg
+  - key: mass-effect
+    title: Mass Effect
+    hyperlink: https://en.wikipedia.org/wiki/Mass_Effect
+    image: ./images/mass_effect.jpg
+  - key: bioshock
+    title: BioShock
+    hyperlink: https://en.wikipedia.org/wiki/BioShock
+    image: ./images/bioshock.jpg
+  - key: uncharted
+    title: "Uncharted 4: A Thief's End"
+    hyperlink: https://en.wikipedia.org/wiki/Uncharted_4:_A_Thief%27s_End
+    image: ./images/uncharted_4.jpg
+  - key: gears-of-war
+    title: Gears of War
+    hyperlink: https://en.wikipedia.org/wiki/Gears_of_War
+    image: ./images/gears_of_war.jpg

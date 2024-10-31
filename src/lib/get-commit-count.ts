@@ -1,11 +1,16 @@
 import { octokit } from "./octokit";
+import { isOnline } from "./is-online";
 
 interface CommitCountArgs {
   owner: string;
   repo: string;
 }
 
-export async function getCommitCount({ owner, repo }: CommitCountArgs): Promise<number> {
+export async function getCommitCount({ owner, repo }: CommitCountArgs, fallbackValue: number): Promise<number> {
+  if (!await isOnline()) {
+    return fallbackValue
+  }
+
   const currentYear = new Date().getFullYear();
   const sinceDate = new Date(`${currentYear}-01-01`);
   const untilDate = new Date(`${currentYear}-12-31`);

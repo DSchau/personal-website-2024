@@ -1,11 +1,15 @@
 import { octokit } from "./octokit";
+import { isOnline } from "./is-online";
 
 interface CommitCountArgs {
   owner: string;
   repo: string;
 }
 
-export async function getMostRecentCommit({ owner, repo }: CommitCountArgs): Promise<string | undefined> {
+export async function getMostRecentCommit({ owner, repo }: CommitCountArgs, fallbackValue: Date): Promise<string | undefined> {
+  if (!await isOnline()) {
+    return fallbackValue.toISOString()
+  }
   try {
     const { data } = await octokit.rest.repos.listCommits({
       owner,
