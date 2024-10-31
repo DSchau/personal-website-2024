@@ -4,6 +4,7 @@ type Favorite = {
   key: string;
   title: string;
   image: string;
+  subtitle?: string;
 }
 
 interface FavoriteProps {
@@ -17,7 +18,15 @@ export function Favorites({ list }: FavoriteProps) {
   return (
     <ul className={styles.container}>
       {
-        list.map(item => (<li key={item.key}>{item.title}</li>))
+        list.map(item => (
+          <li className={styles.item} key={item.key}>
+            {(/^https?/.test(item.image) && (<img src={item.image} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle} poster` : ''}`} />))}
+            <span className={styles.title}>
+              {item.title}
+              {item.subtitle && <span className={styles.subtitle}>{item.subtitle}</span>}
+            </span>
+          </li>
+        ))
       }
     </ul>
   )

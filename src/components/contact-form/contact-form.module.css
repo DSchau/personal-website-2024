@@ -17,8 +17,14 @@
   margin: var(--padding-s);
 }
 
+input, textarea {
+  border-radius: 0;
+  border: 2px solid var(--border-color);
+}
+
 input:focus, textarea:focus {
-  outline: 1px solid var(--button-color);
+  border-color: transparent;
+  outline: 2px solid var(--button-color);
 }
 
 input[name="name"] {

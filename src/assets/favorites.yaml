@@ -26,39 +26,49 @@ series:
     image: whatever
   - key: true-detective
     title: True Detective
+    subtitle: Season 1
     image: whatever
-  - key: watchmen
-    title: TODO
+  - key: review
+    title: Review
     image: whatever
 albums:
   - key: my-beautiful-dark-twisted-fantasy
-    title: My Beautiful Dark Twisted Fantasy by Kanye West
+    title: My Beautiful Dark Twisted Fantasy
+    subtitle: Kanye West
     image: whatever
   - key: kid-a
-    title: Kid A by Radiohead
+    title: Kid A
+    subtitle: Radiohead
     image: whatever
-  - key: watchmen
-    title: TODO
+  - key: daytona
+    title: Daytona
+    subtitle: Pusha T
     image: whatever
   - key: true-detective
-    title: TODO
+    title: Them Crooked Vultures
+    subtitle: Them Crooked Vultures
     image: whatever
   - key: TODO
     title: TODO
     image: whatever
 songs:
   - key: everything-in-its-right-place
-    title: Everything In Its Right Place by Radiohead
+    title: Everything In Its Right Place
+    subtitle: Radiohead
     image: whatever
-  - key: kid-a
-    title: Kid A
+  - key: aint-no-rest-for-the-wicked
+    title: Ain't No Rest for the Wicked
+    subtitle: Cage the Elephant
     image: whatever
-  - key: watchmen
-    title: TODO
+  - key: mural
+    title: Mural
+    subtitle: Lupe Fiasco
     image: whatever
-  - key: true-detective
-    title: TODO
+  - key: sitting-on-the-dock-of-the-bay
+    title: Sitting on the Dock of the Bay
+    subtitle: Otis Redding
     image: whatever
-  - key: TODO
-    title: TODO
+  - key: wildflowers
+    title: Wildflowers
+    subtitle: Tom Petty
     image: whatever
