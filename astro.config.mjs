@@ -4,8 +4,9 @@ import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 import cloudflare from "@astrojs/cloudflare";
-import FontToBuffer from 'unplugin-font-to-buffer/vite'
+import FontToBuffer from 'unplugin-font-to-buffer/vite';
 import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
 
@@ -13,17 +14,17 @@ function remarkModifiedTime() {
   return function (_, file) {
     const filepath = file.history[0];
     const result = execSync(`git log -1 --pretty="format:%cI" "${filepath}"`);
-
     file.data.astro.frontmatter.lastModified = result.toString();
   };
 }
+
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   output: 'hybrid',
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap(), icon()],
   redirects: {
     '/uses': '/posts/uses',
     '/blog': '/posts',

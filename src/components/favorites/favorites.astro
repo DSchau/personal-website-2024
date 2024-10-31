@@ -2,6 +2,8 @@
 import { Picture } from 'astro:assets'
 import styles from './favorites.module.css'
 
+import FancyLink from '../fancy-link/fancy-link.astro'
+
 const { list } = Astro.props
 ---
 <ul class={styles.container}>
@@ -9,10 +11,10 @@ const { list } = Astro.props
     list.map((item: any) => (
       <li class={styles.item}>
           {item.image && <Picture src={item.image} formats={['avif', 'webp']} height={200} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle} poster` : ''}`} loading="lazy" />}
-          <a href={item.hyperlink} class={styles.title}>
+          <FancyLink href={item.hyperlink} class={styles.title}>
             {item.title}
             {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
-          </a>
+          </FancyLink>
       </li>
     ))
   }

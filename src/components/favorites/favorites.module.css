@@ -20,11 +20,7 @@
   font-size: var(--text-md);
   color: var(--text-color);
 
-  text-decoration: none;
-}
-
-.title:hover {
-  text-decoration: underline;
+  margin: var(--padding-md) 0;
 }
 
 .subtitle {
