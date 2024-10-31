@@ -10,7 +10,7 @@ const favorites = await getCollection('favorites')
 const allFavorites = Object.keys(favorites)
 	.map(favorite => ({
 		title: favorite.slice(0, 1).toUpperCase() + favorite.slice(1),
-		list: favorites[favorite]
+		list: (favorites as any)[favorite]
 	}))
 ---
 <style>
@@ -62,7 +62,7 @@ const allFavorites = Object.keys(favorites)
 
 </style>
 
-<Layout title="Favorites • Films, Series, Albums, and Songs" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, and songs; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
+<Layout title="Favorites • Films, Series, Albums, Songs, and Games" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, songs, and games; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
 	{allFavorites.map(({ title, list }) => (
 		<section>
 			<h3>{title}</h3>
