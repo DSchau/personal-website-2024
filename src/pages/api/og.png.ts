@@ -1,9 +1,10 @@
 import { type APIRoute } from "astro";
 
 import satori from 'satori'
-import Thumbo, { Transfer } from "thumbo";
 
-export const prerender = true;
+import { getSvgRenderer } from "@/lib/get-svg-render";
+
+export const prerender = false;
 
 const Tags = (list: string[]) => {
   return {
@@ -123,6 +124,8 @@ const footer = {
 }
 
 export const GET: APIRoute = async function GET({ request }) {
+  const Renderer = await getSvgRenderer()
+
   const url = new URL(request.url)
   const urlParams = url.searchParams
 
@@ -223,14 +226,10 @@ export const GET: APIRoute = async function GET({ request }) {
     ]
   })
 
-  await Thumbo.init()
+  const resvg = new Renderer(svg);
+  const pngData = resvg.render();
 
-  const pngBuffer = await Thumbo.thumbnail(
-    Transfer(svg),
-    Thumbo.ImageFormat.Svg,
-    1200,
-    620
-  )
+  const pngBuffer = pngData.asPng(); // Get PNG as buffer
 
   return new Response(pngBuffer, {
     status: 200,
