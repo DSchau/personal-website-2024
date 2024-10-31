@@ -1,0 +1,64 @@
+films:
+  - key: the-dark-knight
+    title: The Dark Knight
+    image: whatever
+  - key: the-social-network
+    title: The Social Network
+    image: whatever
+  - key: the-dark-knight
+    title: TODO
+    image: whatever
+  - key: the-dark-knight
+    title: TODO
+    image: whatever
+  - key: the-dark-knight
+    title: TODO
+    image: whatever
+series:
+  - key: band-of-brothers
+    title: Band of Brothers
+    image: whatever
+  - key: what-we-do-in-the-shadows
+    title: What We Do in the Shadows
+    image: whatever
+  - key: watchmen
+    title: Watchmen
+    image: whatever
+  - key: true-detective
+    title: True Detective
+    image: whatever
+  - key: watchmen
+    title: TODO
+    image: whatever
+albums:
+  - key: my-beautiful-dark-twisted-fantasy
+    title: My Beautiful Dark Twisted Fantasy by Kanye West
+    image: whatever
+  - key: kid-a
+    title: Kid A by Radiohead
+    image: whatever
+  - key: watchmen
+    title: TODO
+    image: whatever
+  - key: true-detective
+    title: TODO
+    image: whatever
+  - key: TODO
+    title: TODO
+    image: whatever
+songs:
+  - key: everything-in-its-right-place
+    title: Everything In Its Right Place by Radiohead
+    image: whatever
+  - key: kid-a
+    title: Kid A
+    image: whatever
+  - key: watchmen
+    title: TODO
+    image: whatever
+  - key: true-detective
+    title: TODO
+    image: whatever
+  - key: TODO
+    title: TODO
+    image: whatever

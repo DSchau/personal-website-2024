@@ -16,7 +16,7 @@ const [commits, updated] = await Promise.all([
 	getMostRecentCommit(gitHubArgs, new Date())
 ])
 
-const { title, description, showHeader, showCopy, meta = []} = Astro.props
+const { title, description, showHeader, showCopy, copy, meta = []} = Astro.props
 
 const fullTitle = `${metayaml.title}${title ? ` | ${title}` : ''}`
 const fullDescription = description ? description : metayaml.description
@@ -45,7 +45,7 @@ const fullDescription = description ? description : metayaml.description
 		<script defer data-domain="dustinschau.com" src="https://plausible.io/js/script.js"></script>
 	</head>
 	<body>
-    <LayoutComponent pathname={pathname} commits={commits} updated={updated} showHeader={showHeader} showCopy={showCopy}>
+    <LayoutComponent pathname={pathname} commits={commits} updated={updated} showHeader={showHeader} showCopy={showCopy} copy={copy}>
       <slot />
     </LayoutComponent>
 	</body>

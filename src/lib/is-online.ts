@@ -2,6 +2,10 @@ const TIMEOUT_THRESHOLD = 2500
 
 let cachedOnlineStatus: boolean | undefined
 
+/*
+ * Naive function that checks google.com status
+ * presumes google and network will respond in <2.5s
+ */
 export async function isOnline(): Promise<boolean> {
   if (typeof cachedOnlineStatus === 'boolean') {
     return cachedOnlineStatus

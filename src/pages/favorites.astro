@@ -1,5 +1,10 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { Favorites as FavoritesComponent } from '@/components/favorites/favorites.tsx'
+
+import favorites from '@/assets/favorites.yaml'
+
+const { films, series, albums, songs } = favorites
 ---
 <style>
 	h3 {
@@ -45,17 +50,21 @@ import Layout from "@/layouts/Layout.astro";
 
 </style>
 
-<Layout title="Product & Engineering Leader">
+<Layout title="Favorites • Films, Series, Albums, and Songs" copy="These are some of my favorite things. Movies, Series, Movies, and Songs, all my top five favorites.">
 	<section>
 		<h3>films</h3>
+		<FavoritesComponent list={films} />
 	</section>
 	<section>
-		<h3>shows</h3>
+		<h3>series</h3>
+		<FavoritesComponent list={series} />
 	</section>
 	<section>
 		<h3>albums</h3>
+		<FavoritesComponent list={albums} />
 	</section>
 	<section>
 		<h3>songs</h3>
+		<FavoritesComponent list={songs} />
 	</section>
 </Layout>
