@@ -12,8 +12,8 @@ const gitHubArgs = {
 }
 
 const [commits, updated] = await Promise.all([
-	getCommitCount(gitHubArgs),
-	getMostRecentCommit(gitHubArgs)
+	getCommitCount(gitHubArgs, 0),
+	getMostRecentCommit(gitHubArgs, new Date())
 ])
 
 const { title, description, showHeader, showCopy, meta = []} = Astro.props
