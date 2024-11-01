@@ -7,7 +7,6 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "test": "vitest",
     "astro": "astro"
   },
   "dependencies": {
@@ -34,8 +33,7 @@
     "satori": "^0.10.14",
     "thumbo": "^1.0.8",
     "typescript": "^5.3.3",
-    "unplugin-font-to-buffer": "^0.2.0",
-    "vitest": "^2.1.4"
+    "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
