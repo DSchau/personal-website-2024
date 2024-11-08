@@ -83,11 +83,11 @@ albums:
     subtitle: Them Crooked Vultures
     hyperlink: https://open.spotify.com/album/0Z6IBizcq7DLXpenjSHqF3
     image: ./images/them_crooked_vultures.jpg
-  - key: camp
-    title: Camp
-    subtitle: Childish Gambino
-    hyperlink: https://open.spotify.com/album/2nkHPk6e7TgemWh07yFHxh
-    image: ./images/camp.jpg
+  - key: elephant
+    title: Elephant
+    subtitle: The White Stripes
+    hyperlink: https://open.spotify.com/album/6D9urpsOWWKtYvF6PaorGE?si=SHu0s8MITP-Ol3DLV__NeA
+    image: ./images/elephant.jpg
 songs:
   - key: everything-in-its-right-place
     title: Everything In Its Right Place
