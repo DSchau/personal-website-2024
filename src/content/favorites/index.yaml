@@ -123,6 +123,10 @@ games:
     title: The Last of Us
     hyperlink: https://en.wikipedia.org/wiki/The_Last_of_Us
     image: ./images/last_of_us.jpg
+  - key: red-dead-redemption-2
+    title: Red Dead Redemption 2
+    hyperlink: https://en.wikipedia.org/wiki/Red_Dead_Redemption_2
+    image: ./images/rdr2.jpg
   - key: mass-effect
     title: Mass Effect
     hyperlink: https://en.wikipedia.org/wiki/Mass_Effect
@@ -135,7 +139,3 @@ games:
     title: "Uncharted 4: A Thief's End"
     hyperlink: https://en.wikipedia.org/wiki/Uncharted_4:_A_Thief%27s_End
     image: ./images/uncharted_4.jpg
-  - key: gears-of-war
-    title: Gears of War
-    hyperlink: https://en.wikipedia.org/wiki/Gears_of_War
-    image: ./images/gears_of_war.jpg
