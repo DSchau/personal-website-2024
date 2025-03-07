@@ -17,7 +17,7 @@ books:
     image: ./images/red_rising.jpg
   - key: "11-22-63"
     title: "11/22/63"
-    hyperlink: https://www.goodreads.com/book/show/18693910-barbarian-days
+    hyperlink: https://www.goodreads.com/book/show/10644930-11-22-63
     image: ./images/112263.jpg
 films:
   - key: interstellar
