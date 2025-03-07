@@ -33,7 +33,11 @@ const icon = (() => {
   }
 
   a[data-icon-type="imdb"] {
-    padding-right: 28px;
+    padding-right: calc(var(--icon-size-lg) + var(--padding-md));
+  }
+
+  a[data-icon-type="wikipedia"] {
+    padding-right: var(--icon-size-lg);
   }
 
   a:hover {
@@ -45,7 +49,7 @@ const icon = (() => {
     position: absolute;
     top: 0;
     right: 0;
-
+    
     height: var(--icon-size-md);
     width: var(--icon-size-md);
   }
