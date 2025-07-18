@@ -3,7 +3,6 @@ date: 2024-12-31
 title: "2024: Year in Review"
 author: Dustin Schau
 featured: false
-draft: true
 excerpt: "In closing 2024, I reflect upon what I learned, accomplished, and what I hope to do even better in 2025."
 tags:
   - life
