@@ -21,7 +21,7 @@ function remarkModifiedTime() {
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
-  output: 'hybrid',
+  output: 'server',
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
   integrations: [react(), sitemap(), icon()],
   redirects: {
@@ -51,7 +51,10 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml(), FontToBuffer()]
+    plugins: [yaml(), FontToBuffer()],
+    ssr: {
+      external: ['@resvg/resvg-js']
+    }
   },
   adapter: cloudflare()
 });
