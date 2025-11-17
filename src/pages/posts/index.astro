@@ -5,6 +5,8 @@ import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
 
 import { Tags } from '@/components/tags/tags.tsx';
 
+export const prerender = true
+
 const posts = await getCollection('posts', ({ data }) => {
   return import.meta.env.PROD ? data.draft !== true : true;
 })

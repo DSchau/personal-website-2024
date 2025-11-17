@@ -4,6 +4,8 @@ import Layout from '@/layouts/Layout.astro'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
 
+export const prerender = true
+
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts');
   return blogEntries.map(entry => ({
