@@ -6,24 +6,25 @@ interface getRepositoriesArgs {
   limit: number;
 }
 
-// Cache to store the result during build time
-let cachedRepos: any[] | null = null
-
 export async function getRepositories({
   owner = 'dschau',
   limit = 6
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
-  // Return cached value if available (prevents multiple API calls during build)
-  if (cachedRepos !== null) {
-    return cachedRepos
-  }
 
   if (!await isOnline()) {
     return fallbackValue
   }
   try {
-    const { user } = await octokit.graphql(`
+    const { user, rateLimit } = await octokit.graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
+      rateLimit {
+        cost
+        limit
+        remaining
+        used
+        resetAt
+      }
+  
       user(login: $owner) {
         pinnedItems(first: $limit, types: REPOSITORY) {
           nodes {
@@ -56,12 +57,12 @@ export async function getRepositories({
     limit
   }) as any
 
+  console.log(rateLimit)
+
   const repos = user.pinnedItems.nodes
-  cachedRepos = repos // Cache the result for subsequent calls
   return repos
   } catch (e) {
     console.error(e)
-    cachedRepos = [] // Cache empty array to prevent retry on error
     return []
   }
 }
