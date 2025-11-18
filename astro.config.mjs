@@ -22,6 +22,11 @@ function remarkModifiedTime() {
 export default defineConfig({
   prefetch: true,
   output: 'server',
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
+    }
+  },
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
   integrations: [react(), sitemap(), icon()],
   redirects: {
