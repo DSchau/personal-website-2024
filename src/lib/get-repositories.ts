@@ -1,4 +1,4 @@
-import { Octokit } from 'octokit';
+import { graphql } from './octokit';
 import { isOnline } from './is-online';
 
 interface getRepositoriesArgs {
@@ -17,10 +17,7 @@ export async function getRepositories({
     return fallbackValue
   }
   try {
-    const octokit = new Octokit({
-      auth
-    })
-    const { user } = await octokit.graphql(`
+    const { user } = await graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
       user(login: $owner) {
         pinnedItems(first: $limit, types: REPOSITORY) {
