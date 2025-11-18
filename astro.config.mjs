@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import { execSync } from "child_process";
 import { readFileSync } from "fs";
 import yaml from '@rollup/plugin-yaml';
@@ -40,6 +40,11 @@ function remarkModifiedTime() {
 export default defineConfig({
   prefetch: true,
   output: 'server',
+  env: {
+    schema: {
+      GITHUB_TOKEN: envField.string({ context: "server", access: "secret" })
+    }
+  },
   image: {
     service: {
       entrypoint: 'astro/assets/services/noop'

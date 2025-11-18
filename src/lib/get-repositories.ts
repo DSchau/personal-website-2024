@@ -6,32 +6,10 @@ interface getRepositoriesArgs {
   limit: number;
 }
 
-// Cache to prevent excessive API calls
-let cacheTimestamp: number | null = null;
-const CACHE_TTL = 1000 * 60 * 60; // 1 hour
-
-// Call tracking
-let callCount = 0;
-const callTimestamps: number[] = [];
-
 export async function getRepositories({
   owner = 'dschau',
   limit = 6
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
-
-  callCount++;
-  callTimestamps.push(Date.now());
-
-  console.log('=== getRepositories called ===');
-  console.log(`Call #${callCount}`);
-  console.log(`Time: ${new Date().toISOString()}`);
-  console.log(`Owner: ${owner}, Limit: ${limit}`);
-  console.log(`Stack trace:`, new Error().stack?.split('\n').slice(2, 5).join('\n'));
-
-  if (callTimestamps.length > 1) {
-    const timeSinceLastCall = callTimestamps[callTimestamps.length - 1] - callTimestamps[callTimestamps.length - 2];
-    console.log(`Time since last call: ${timeSinceLastCall}ms`);
-  }
 
   if (!await isOnline()) {
     return fallbackValue
@@ -79,25 +57,12 @@ export async function getRepositories({
     limit
   }) as any
 
-  console.log('✓ GitHub API call successful');
-  console.log('Rate limit info:', rateLimit);
-  console.log(`Total calls to getRepositories: ${callCount}`);
-  console.log('==============================\n');
-
   const repos = user.pinnedItems.nodes
-
-  // Cache the results
-  cacheTimestamp = Date.now();
 
   return repos
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : String(e);
     console.error('GitHub API Error:', errorMessage);
-
-    // Check for Cloudflare quota errors
-    if (errorMessage.includes('quota') || errorMessage.includes('Quota')) {
-      console.warn('⚠️  Cloudflare quota exceeded - returning fallback value');
-    }
 
     // Return fallback data
     return fallbackValue
