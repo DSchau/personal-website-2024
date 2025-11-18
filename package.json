@@ -20,7 +20,7 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "@unpic/astro": "^1.0.1",
-    "astro": "^5.15.8",
+    "astro": "^5.15.9",
     "astro-icon": "^1.1.1",
     "env-ci": "^11.0.0",
     "octokit": "^3.1.2",
