@@ -1,11 +1,9 @@
 import { Octokit } from 'octokit'
 
+// exclude the "throttling" plugin.
+// see https://github.com/octokit/plugin-throttling.js/issues/794
+Octokit.plugins = Octokit.plugins.filter((plugin) => plugin.name !== "throttling");
+
 export const octokit = new Octokit({
-  auth: import.meta.env.GITHUB_TOKEN,
-  retry: {
-    enabled: false  // Disable retries to avoid Cloudflare quota issues
-  },
-  request: {
-    timeout: 10000  // 10 second timeout
-  }
+  auth: import.meta.env.GITHUB_TOKEN
 })
