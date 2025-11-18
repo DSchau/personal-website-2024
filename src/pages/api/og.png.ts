@@ -11,7 +11,6 @@ export const GET: APIRoute = async function GET({ request }) {
 
   const title = urlParams.get("title") as string;
   const tags = urlParams.get("tags")?.split(",") as string[];
-  // const type = urlParams.get("type") as string;
 
   const [rockwell, rockwellBold, sfPro] = await Promise.all([
     import("../../assets/fonts/Rockwell.ttf").then((mod) => mod.default),
