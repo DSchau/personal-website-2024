@@ -5,21 +5,21 @@ import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 import cloudflare from "@astrojs/cloudflare";
-import FontToBuffer from 'unplugin-font-to-buffer/vite';
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
 
-// Plugin to handle .bin files as buffers
-function binFilePlugin() {
+// Plugin to handle font and .bin files as ArrayBuffers (Cloudflare-compatible)
+function arrayBufferPlugin() {
   return {
-    name: 'bin-file-loader',
+    name: 'arraybuffer-loader',
     transform(code, id) {
-      if (id.endsWith('.bin')) {
+      if (id.endsWith('.bin') || id.endsWith('.ttf') || id.endsWith('.otf') || id.endsWith('.woff') || id.endsWith('.woff2')) {
         const buffer = readFileSync(id);
+        const arr = Array.from(buffer);
         return {
-          code: `export default new Uint8Array([${Array.from(buffer).join(',')}]).buffer`,
+          code: `export default new Uint8Array([${arr.join(',')}]).buffer`,
           map: null
         };
       }
@@ -73,7 +73,7 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml(), FontToBuffer(), binFilePlugin()],
+    plugins: [yaml(), arrayBufferPlugin()],
     ssr: {
       noExternal: ['@cloudflare/pages-plugin-vercel-og']
     }
