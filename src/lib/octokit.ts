@@ -14,5 +14,11 @@ export const octokit = new Octokit({
         return true;
       }
     },
+    onSecondaryRateLimit: (retryAfter, options, octokit) => {
+      // does not retry, only logs a warning
+      octokit.log.warn(
+        `SecondaryRateLimit detected for request ${options.method} ${options.url}`,
+      );
+    },
   }
 })
