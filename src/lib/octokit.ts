@@ -5,5 +5,5 @@ import { Octokit } from 'octokit'
 Octokit.plugins = Octokit.plugins.filter((plugin) => plugin.name !== "throttling");
 
 export const octokit = new Octokit({
-  auth: import.meta.env.GITHUB_TOKEN
+  auth: import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN
 })
