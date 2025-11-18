@@ -1,10 +1,10 @@
 import { type APIRoute } from "astro";
 import { Resend } from 'resend'
+import { RESEND_API_KEY } from "astro:env/server";
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY)
+const resend = new Resend(RESEND_API_KEY)
 
 export const prerender = false;
-
 interface ValidationResult {
   isMXValid: boolean;
   emailType: string;
