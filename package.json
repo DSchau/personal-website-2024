@@ -14,9 +14,8 @@
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.6.0",
+    "@cloudflare/pages-plugin-vercel-og": "^0.1.2",
     "@napi-rs/canvas": "^0.1.54",
-    "@resvg/resvg-js": "^2.6.2",
-    "@resvg/resvg-wasm": "^2.6.2",
     "@types/env-ci": "^3.1.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
@@ -30,7 +29,6 @@
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.12.3",
     "resend": "^2.1.0",
-    "satori": "^0.10.14",
     "thumbo": "^1.0.8",
     "typescript": "^5.3.3",
     "unplugin-font-to-buffer": "^0.2.0"

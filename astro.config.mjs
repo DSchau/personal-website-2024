@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { execSync } from "child_process";
+import { readFileSync } from "fs";
 import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -9,6 +10,22 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
+
+// Plugin to handle .bin files as buffers
+function binFilePlugin() {
+  return {
+    name: 'bin-file-loader',
+    transform(code, id) {
+      if (id.endsWith('.bin')) {
+        const buffer = readFileSync(id);
+        return {
+          code: `export default new Uint8Array([${Array.from(buffer).join(',')}]).buffer`,
+          map: null
+        };
+      }
+    }
+  };
+}
 
 function remarkModifiedTime() {
   return function (_, file) {
@@ -56,9 +73,9 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml(), FontToBuffer()],
+    plugins: [yaml(), FontToBuffer(), binFilePlugin()],
     ssr: {
-      external: ['@resvg/resvg-js']
+      noExternal: ['@cloudflare/pages-plugin-vercel-og']
     }
   },
   adapter: cloudflare()
