@@ -1,32 +1,27 @@
-import { octokitAuth } from './octokit'
+import { Octokit } from 'octokit';
 import { isOnline } from './is-online';
 
 interface getRepositoriesArgs {
   owner?: string;
   limit: number;
-  token?: string;
+  auth?: string;
 }
 
 export async function getRepositories({
   owner = 'dschau',
   limit = 6,
-  token
+  auth
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
 
   if (!await isOnline()) {
     return fallbackValue
   }
   try {
-    const { user, rateLimit } = await octokitAuth(token).graphql(`
+    const octokit = new Octokit({
+      auth
+    })
+    const { user } = await octokit.graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
-      rateLimit {
-        cost
-        limit
-        remaining
-        used
-        resetAt
-      }
-  
       user(login: $owner) {
         pinnedItems(first: $limit, types: REPOSITORY) {
           nodes {

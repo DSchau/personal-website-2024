@@ -15,7 +15,7 @@ export function Header({ commits, showCopy = true, copy: customizedCopy, byline:
   const updateWord = commits >= 10 ? 'occasionally' : 'infrequently'
   const copy = customizedCopy ? customizedCopy : (
     <>
-      Welcome to my website! I update it... {updateWord} ({frequency}). I like to build things, teams, and products and occasionally <a href="/posts/">blog</a> about those topics. I live in San Francisco, CA with my lovely wife and son.
+      Welcome to my website! I update it... {updateWord} ({frequency}). I like to build things, teams, and products and occasionally <a href="/posts/">blog</a> about those topics. I live in San Francisco, CA with my lovely wife and two children.
     </>
   )
   const byline = customizedByline ? customizedByline : (
