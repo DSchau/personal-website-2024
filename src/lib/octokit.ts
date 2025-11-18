@@ -6,14 +6,14 @@ Octokit.plugins = Octokit.plugins.filter((plugin) => plugin.name !== "throttling
 
 const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN
 
+const octokit = new Octokit({
+  auth: GITHUB_TOKEN
+})
+
 const graphql = octokit.graphql.defaults({
   headers: {
     authorization: GITHUB_TOKEN,
   },
-})
-
-const octokit = new Octokit({
-  auth: GITHUB_TOKEN
 })
 
 export { graphql, octokit }
