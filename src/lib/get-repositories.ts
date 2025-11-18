@@ -1,21 +1,23 @@
-import { octokit } from './octokit'
+import { octokitAuth } from './octokit'
 import { isOnline } from './is-online';
 
 interface getRepositoriesArgs {
   owner?: string;
   limit: number;
+  token?: string;
 }
 
 export async function getRepositories({
   owner = 'dschau',
-  limit = 6
+  limit = 6,
+  token
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
 
   if (!await isOnline()) {
     return fallbackValue
   }
   try {
-    const { user, rateLimit } = await octokit.graphql(`
+    const { user, rateLimit } = await octokitAuth(token).graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
       rateLimit {
         cost
