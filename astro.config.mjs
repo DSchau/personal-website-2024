@@ -42,7 +42,7 @@ export default defineConfig({
   output: 'server',
   env: {
     schema: {
-      PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client' }),
+      PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client', access: "public" }),
       GITHUB_TOKEN: envField.string({ context: "server", access: "secret" })
     },
     validateSecrets: true

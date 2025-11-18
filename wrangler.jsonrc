@@ -13,5 +13,8 @@
   },
   "observability": {
     "enabled": true
+  },
+  "vars" : {
+    "PUBLIC_SPAM_FIELD_VALUE": "Doe"
   }
 }
