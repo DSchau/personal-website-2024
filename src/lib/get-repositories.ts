@@ -91,8 +91,15 @@ export async function getRepositories({
 
   return repos
   } catch (e) {
-    console.error(e)
-    // Return cached data if available, even if expired
+    const errorMessage = e instanceof Error ? e.message : String(e);
+    console.error('GitHub API Error:', errorMessage);
+
+    // Check for Cloudflare quota errors
+    if (errorMessage.includes('quota') || errorMessage.includes('Quota')) {
+      console.warn('⚠️  Cloudflare quota exceeded - returning fallback value');
+    }
+
+    // Return fallback data
     return fallbackValue
   }
 }
