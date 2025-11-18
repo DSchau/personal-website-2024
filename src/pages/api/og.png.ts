@@ -16,7 +16,7 @@ export const GET: APIRoute = async function GET({ request }) {
     import("../../assets/fonts/Rockwell.ttf").then((mod) => mod.default),
     import("../../assets/fonts/Rockwell-Bold.ttf").then((mod) => mod.default),
     import("../../assets/fonts/SFPro.otf").then((mod) => mod.default),
-  ]).then((all) => all.map((part) => Buffer.from(part)));
+  ]);
 
   const response = new ImageResponse(
     OG({ tags, title }),
