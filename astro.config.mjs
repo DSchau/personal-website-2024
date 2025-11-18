@@ -9,6 +9,7 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
+const CF_PAGES_URL = process.env.CF_PAGES_URL
 
 // Plugin to handle font and .bin files as ArrayBuffers (Cloudflare-compatible)
 function arrayBufferPlugin() {
@@ -44,7 +45,7 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/noop'
     }
   },
-  site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
+  site: env === 'development' ? 'http://localhost:4321' : CF_PAGES_URL || 'https://www.dustinschau.com',
   integrations: [react(), sitemap(), icon()],
   redirects: {
     '/uses': '/posts/uses',
