@@ -8,8 +8,8 @@ export const octokit = new Octokit({
         `Request quota exhausted for request ${options.method} ${options.url}`,
       );
 
-      if (retryCount < 1) {
-        // only retries once
+      if (retryCount < 3) {
+        // retries three times
         octokit.log.info(`Retrying after ${retryAfter} seconds!`);
         return true;
       }
