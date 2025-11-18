@@ -7,6 +7,12 @@ let cachedOnlineStatus: boolean | undefined
  * presumes google and network will respond in <2.5s
  */
 export async function isOnline(): Promise<boolean> {
+  // During build time (CF_PAGES or import.meta.env.PROD), assume we're online
+  // This prevents excessive requests during Cloudflare Pages builds
+  if (import.meta.env.PROD || process.env.CF_PAGES) {
+    return true
+  }
+
   if (typeof cachedOnlineStatus === 'boolean') {
     return cachedOnlineStatus
   }
@@ -22,13 +28,13 @@ export async function isOnline(): Promise<boolean> {
       cachedOnlineStatus = true
       return true
     }
-  
+
     cachedOnlineStatus = false
     return false
   } catch (e) {
     console.error(e)
     cachedOnlineStatus = false
-  
+
     return false
   }
 }

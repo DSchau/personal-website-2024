@@ -1,20 +1,23 @@
-import { octokit } from './octokit'
+import { graphql } from './octokit';
 import { isOnline } from './is-online';
 
 interface getRepositoriesArgs {
   owner?: string;
   limit: number;
+  auth?: string;
 }
 
 export async function getRepositories({
   owner = 'dschau',
-  limit = 6
+  limit = 6,
+  auth
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
+
   if (!await isOnline()) {
     return fallbackValue
   }
   try {
-    const { user } = await octokit.graphql(`
+    const { user } = await graphql(`
     query GetPinnedRepos($owner: String!, $limit: Int!) {
       user(login: $owner) {
         pinnedItems(first: $limit, types: REPOSITORY) {
@@ -48,10 +51,14 @@ export async function getRepositories({
     limit
   }) as any
 
-  return user.pinnedItems.nodes
-  } catch (e) {
-    console.error(e)
+  const repos = user.pinnedItems.nodes
 
-    return []
+  return repos
+  } catch (e) {
+    const errorMessage = e instanceof Error ? e.message : String(e);
+    console.error('GitHub API Error:', errorMessage);
+
+    // Return fallback data
+    return fallbackValue
   }
 }

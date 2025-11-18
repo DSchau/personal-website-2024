@@ -4,6 +4,8 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import FavoritesComponent from '@/components/favorites/favorites.astro'
 
+export const prerender = true
+
 const favorites = await getCollection('favorites')
 	.then(data => data[0].data)
 

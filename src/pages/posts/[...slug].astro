@@ -4,6 +4,8 @@ import Layout from '@/layouts/Layout.astro'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
 
+export const prerender = true
+
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts');
   return blogEntries.map(entry => ({
@@ -13,7 +15,19 @@ export async function getStaticPaths() {
 
 const site = Astro.site
 
-const { entry } = Astro.props;
+// In server mode, fetch the entry based on the slug
+const slug = Astro.params.slug;
+let entry = Astro.props.entry;
+
+if (!entry) {
+  const blogEntries = await getCollection('posts');
+  entry = blogEntries.find(e => e.slug === slug);
+
+  if (!entry) {
+    return Astro.redirect('/404');
+  }
+}
+
 const { Content, remarkPluginFrontmatter } = await entry.render();
 
 ---

@@ -10,18 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.4",
-    "@astrojs/cloudflare": "^8.0.0",
-    "@astrojs/react": "^3.0.9",
-    "@astrojs/sitemap": "^3.0.4",
-    "@napi-rs/canvas": "^0.1.54",
-    "@resvg/resvg-js": "^2.6.2",
-    "@resvg/resvg-wasm": "^2.6.2",
+    "@astrojs/check": "^0.9.5",
+    "@astrojs/cloudflare": "^12.6.11",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.6.0",
+    "@cloudflare/pages-plugin-vercel-og": "^0.1.2",
     "@types/env-ci": "^3.1.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "@unpic/astro": "^0.0.37",
-    "astro": "^4.14.2",
+    "@unpic/astro": "^1.0.1",
+    "astro": "^5.15.9",
     "astro-icon": "^1.1.1",
     "env-ci": "^11.0.0",
     "octokit": "^3.1.2",
@@ -30,13 +28,12 @@
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.12.3",
     "resend": "^2.1.0",
-    "satori": "^0.10.14",
     "thumbo": "^1.0.8",
     "typescript": "^5.3.3",
     "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
-    "wrangler": "^3.22.3"
+    "wrangler": "^4.47.0"
   }
 }

@@ -1,5 +1,22 @@
 import { Octokit } from 'octokit'
+import { GITHUB_TOKEN } from "astro:env/server";
 
-export const octokit = new Octokit({
-  auth: import.meta.env.GITHUB_TOKEN
+// exclude the "throttling" plugin.
+// see https://github.com/octokit/plugin-throttling.js/issues/794
+Octokit.plugins = Octokit.plugins.filter((plugin) => plugin.name !== "throttling");
+
+console.log({
+  GITHUB_TOKEN
 })
+
+const octokit = new Octokit({
+  auth: GITHUB_TOKEN
+})
+
+const graphql = octokit.graphql.defaults({
+  headers: {
+    authorization: GITHUB_TOKEN,
+  },
+})
+
+export { graphql, octokit }

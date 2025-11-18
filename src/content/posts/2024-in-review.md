@@ -27,7 +27,6 @@ Postman is an amazing company with great leadership, a great team, and a great p
 ## What I learned
 
 - *Metrics are guardrails, not a guide*. I've long been a leader who cares about outcomes, and outcomes should ideally be measured. While this is important, one lesson I've internalized is that metrics are not a destination, they are guardrails that *test* strategy. 
-- 
 
 ## What am I hoping for in 2025?
 

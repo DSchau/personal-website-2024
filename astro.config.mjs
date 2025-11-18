@@ -1,14 +1,32 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from "astro/config"
 import { execSync } from "child_process";
+import { readFileSync } from "fs";
 import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
 import cloudflare from "@astrojs/cloudflare";
-import FontToBuffer from 'unplugin-font-to-buffer/vite';
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
+const CF_PAGES_URL = process.env.CF_PAGES_URL
+
+// Plugin to handle font and .bin files as ArrayBuffers (Cloudflare-compatible)
+function arrayBufferPlugin() {
+  return {
+    name: 'arraybuffer-loader',
+    transform(code, id) {
+      if (id.endsWith('.bin') || id.endsWith('.ttf') || id.endsWith('.otf') || id.endsWith('.woff') || id.endsWith('.woff2')) {
+        const buffer = readFileSync(id);
+        const arr = Array.from(buffer);
+        return {
+          code: `export default new Uint8Array([${arr.join(',')}]).buffer`,
+          map: null
+        };
+      }
+    }
+  };
+}
 
 function remarkModifiedTime() {
   return function (_, file) {
@@ -21,8 +39,20 @@ function remarkModifiedTime() {
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
-  output: 'hybrid',
-  site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
+  output: 'server',
+  env: {
+    schema: {
+      PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client', access: "public" }),
+      GITHUB_TOKEN: envField.string({ context: "server", access: "secret" })
+    },
+    validateSecrets: true
+  },
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
+    }
+  },
+  site: env === 'development' ? 'http://localhost:4321' : CF_PAGES_URL || 'https://www.dustinschau.com',
   integrations: [react(), sitemap(), icon()],
   redirects: {
     '/uses': '/posts/uses',
@@ -51,7 +81,10 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml(), FontToBuffer()]
+    plugins: [yaml(), arrayBufferPlugin()],
+    ssr: {
+      noExternal: ['@cloudflare/pages-plugin-vercel-og']
+    }
   },
   adapter: cloudflare()
 });
