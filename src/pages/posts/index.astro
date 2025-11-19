@@ -63,7 +63,7 @@ const posts = await getCollection('posts', ({ data }) => {
 
 </style>
 
-<Layout title="All posts" copy={`My blog, where I write about people, places, things, and ideas occasionally.`}>
+<Layout title="All posts" byline="Occasionally interesting content" copy={`My blog, where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
     <ol reversed>
