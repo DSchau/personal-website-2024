@@ -4,7 +4,7 @@ title: "The value of simple tools"
 author: Dustin Schau
 featured: true
 draft: false
-excerpt: "In 2024, the choice of development teams on which framework they use seems increasingly murky. The choices seem to be skewing towards complex and development teams are caught in the middle. What should you do? What can you do? Read this post to learn more."
+excerpt: "Not every problem needs a complex solution. Sometimes the best tool is the one that does less, not more."
 tags:
   - react
   - javascript
