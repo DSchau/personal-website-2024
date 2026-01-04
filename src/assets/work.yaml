@@ -3,7 +3,11 @@
   employer: Postman
   logo: ./logos/postman.svg
   date: "2023-Present"
-  description: I lead the team that owns the central engine of the Postman product in the API Client. The API Client team is responsible for maintaining and improving the core functionality of enabling developers to send, debug, and test requests across multiple protocols (REST, gRPC, Websockets, GraphQL, and MQTT). Postman is a Series D startup that has over 6M monthly users and strong triple-digit millions in revenue.
+  description: I lead the team that owns the central engine of the Postman product in the API Client. Postman is one of the world's most loved and ubiquitous developer tools. The API Client team is responsible for maintaining and improving the core functionality of enabling developers to send, debug, and test requests across multiple protocols (REST, gRPC, Websockets, GraphQL, MQTT, AI models, and MCP). Postman is a Series D startup that has millions of daily users and strong triple-digit millions in revenue.
+  highlights:
+    - Modernized the core API client, making it simpler, faster, and more feature rich, addressing the longest-standing user-reported issues ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)
+    - Launched two new protocols from zero to thousands of users with AI request and MCP request
+    - Led and cultivated a first-class, product-minded engineering team with hubs in SF Bay Area and Bangalore, India
 - title: Senior Director, Engineering
   location: Fully remote
   employer: Netlify

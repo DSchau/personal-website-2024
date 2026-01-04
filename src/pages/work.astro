@@ -14,6 +14,8 @@ import up from '@/assets/logos/up.svg'
 
 import styles from './work.module.css'
 
+import { marked } from 'marked'
+
 export const prerender = true
 
 const LOGOS: { [key: string]: ImageMetadata } = {
@@ -24,6 +26,12 @@ const LOGOS: { [key: string]: ImageMetadata } = {
 	'Union Pacific': up
 }
 
+// Process markdown in highlights at build time
+const processedWork = work.map((experience: any) => ({
+	...experience,
+	highlights: experience.highlights?.map((highlight: string) => marked.parseInline(highlight))
+}))
+
 ---
 
 <Layout title="Work" showCopy={false}>
@@ -32,7 +40,7 @@ const LOGOS: { [key: string]: ImageMetadata } = {
 		<p><strong>I love building</strong>. I started my career as a front-end engineer and have grown into executive positions and a leader of organizations. I build great products, great teams, and great leaders.</p>
 		<ul>
 			{
-				work.map((experience: any) => {
+				processedWork.map((experience: any) => {
 					return (
 						<li class={styles.experience}>
 							<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}><Company name={experience.employer} logo={LOGOS[experience.employer]} /></h3>
@@ -40,9 +48,9 @@ const LOGOS: { [key: string]: ImageMetadata } = {
 							<p>{experience.description}</p>
 							{experience.highlights && experience.highlights.length > 0 && (
 								<ul>
-									{experience.highlights.map((highlight: string[]) => {
+									{experience.highlights.map((highlight: string) => {
 										return (
-											<li>{highlight}</li>
+											<li set:html={highlight} />
 										)
 									})}
 									</ul>
