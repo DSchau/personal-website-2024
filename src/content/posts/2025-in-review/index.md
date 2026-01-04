@@ -94,7 +94,7 @@ Lots of standouts this year. "City of Thieves" was such a surprising book that I
 <details>
   <summary>Things</summary>
 
-  - **[S.E.H Kelly chore coat](https://sehkelly.com/en-us/products/acorn-work-jacket?variant=53301457715530)**. I have an older, cheaper one in cotton moleskin instead of wool. It's the best jacket I own and I wear it nearly every day!
+  - **[S.E.H Kelly chore coat](https://sehkelly.com/en-us/products/acorn-work-jacket?variant=53301457715530)**. I have an older, cheaper one in cotton moleskin instead of wool. It's the best jacket I own and I wear it nearly every day! One of my favorite things is discovering smaller brands that really nail an aesthetic and style that I really love, and S.E.H Kelly is one of my favorite brands ever.
 - **[The Iron Snail "The Dinghy Skipper" wallet](https://theironsnail.us/products/the-dinghy-skipper-_01)**. This is a great little wallet and it's been cool to see the Iron Snail brand grow in popularity and made in USA high-quality goods.
 - **[Fairbault Woolen Mill wool blanket (twin)](https://www.faribaultmill.com/products/cabin-wool-throw-charcoal)**. A great, wool blanket that I use nightly on the couch.
 - **[Anker "Laptop" Power Bank](https://www.amazon.com/dp/B0DCBB2YTR)**. I use this thing all the time, mostly for charging iPhones but yes, occasionally my MacBook when traveling.
