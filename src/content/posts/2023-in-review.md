@@ -2,7 +2,7 @@
 date: 2023-12-31
 title: "2023: Year in Review"
 author: Dustin Schau
-featured: true
+featured: false
 excerpt: "2023 was a whirlwind year for me and my family. I'll wrap up what I accomplished, what I learned, and what I hope to do in 2024."
 tags:
   - life

@@ -2,7 +2,8 @@
 date: 2024-01-29
 title: "Modern web development and the value of simple tools"
 author: Dustin Schau
-draft: true
+featured: true
+draft: false
 excerpt: "In 2024, the choice of development teams on which framework they use seems increasingly murky. The choices seem to be skewing towards complex and development teams are caught in the middle. What should you do? What can you do? Read this post to learn more."
 tags:
   - react
