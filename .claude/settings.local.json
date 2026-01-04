@@ -3,7 +3,14 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
-      "WebFetch(domain:rakyesh.com)"
+      "WebFetch(domain:rakyesh.com)",
+      "WebSearch",
+      "Bash(convert:*)",
+      "Bash(ls:*)",
+      "Bash(magick:*)",
+      "Bash(npx:*)",
+      "Bash(node /Users/dustinschau/Projects/Personal/personal-website-2024/optimize-images.mjs:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
