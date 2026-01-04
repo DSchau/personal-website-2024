@@ -57,7 +57,7 @@ I think you can learn a lot about a person by what they like, and I think the wo
   <summary>Albums</summary>
 
   1. **SAYA** by Saya Gray
-  2. **Let Got Sort 'Em Out** by Clipse
+  2. **Let God Sort 'Em Out** by Clipse
   3. **SABLE, fABLE** by Bon Iver
   4. **GNX** by Kendrick Lamar
   5. **Chromokopia** by Tyler, the Creator
