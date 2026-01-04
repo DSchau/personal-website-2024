@@ -1,6 +1,6 @@
 ---
 date: 2024-01-29
-title: "Modern web development and the value of simple tools"
+title: "The value of simple tools"
 author: Dustin Schau
 featured: true
 draft: false
