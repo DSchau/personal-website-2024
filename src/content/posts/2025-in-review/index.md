@@ -26,10 +26,10 @@ Yes. I'm most proud of becoming a more confident, in-rhythm parent. The kind who
 - **Became a scout and angel investor** and wrote one check: [mastra](https://mastra.ai).
 - **Spoke at the inaugural MCP Night** ([link to YouTube](https://www.youtube.com/watch?v=qvpi6XtVbFI&list=PLB4m9iWZsJzj02wRZl-MDsDvOqtP2ujgt&index=26)) and did a true, fully live demo. As they say, the vibes were great, and it's a memory I'll look back upon fondly for years to come.
 - **Spoke at [TSConf](https://tsconf.ai/)** and attempted to re-position Postman as so much more than just an HTTP client (although it's the very best one at that).
-- **Traveled to Omaha** to visit my friends from Union Pacific (my first job!) before the birth of Emilia.
-- **[Read 26 books](https://www.goodreads.com/readingchallenges/gr/annual/2025)** and listened to 36688 minutes of music.
 - **Led the Postman API client team** with some major launches: **NPM Scripts**, **[simplified variables](https://blog.postman.com/engineering/a-simpler-and-local-first-variables-experience/)**, **reusable requests**, and **MCP and AI protocols**, and [so much more](https://www.postman.com/release-notes/postman-app/).
 - **Participated in a panel discussion** on developer experience (DX) in the era of artificial intelligence (AI). It was my first ever panel, and I quite enjoyed it!
+- **Traveled to Omaha** to visit my friends from Union Pacific (my first job!) before the birth of Emilia.
+- **[Read 26 books](https://www.goodreads.com/readingchallenges/gr/annual/2025)** and listened to 36688 minutes of music.
 - **Survived one year** of a Trump presidency. Only three more to go 😬
 
 ![API client ships in 2025](./images/2025-api-client.png)
@@ -43,7 +43,7 @@ Yes. I'm most proud of becoming a more confident, in-rhythm parent. The kind who
 
 ## What I’m proud of
 
-- **Being an active parent** particularly for Noah (almost three years old). I think it helps that as a dad, as my kids get older, I get to shine more by playing with them, teaching them things, etc.
+- **Being an active parent** particularly for Noah (almost three years old). I think it helps that as a dad, as my kids get older, I get to shine more by playing with them, teaching them things, etc. Noah has started calling me his best friend, which just warms my heart immensely.
 - **Being a confident parent**. Having two children has made me a much more confident parent. I remember with Noah I had a lot of feelings of doubt, anxiety, etc. as to whether I was doing enough, whether I was helping enough, etc. and now with two most of those feelings have gone away and I am getting more into rhythm in being a parent.
 - **Continuing to learn**. As a parent, it's important to me that I maintain my curiosities and tap into my learn by doing mindset. This year, I continued to tinker on my book "Riley the Robot" (a great training ground for gauging the pace of AI models, particularly image models) and more generally dove deep into the space of AI with models, MCP, and so much more. This will continue to be important to not let my skills grow stagnant.
 - **Internalized habits**. Establishing a **reading routine** (26 books!) that felt like a conscious habit rather than a chore. Specifically, just setting the goal (24 / year) orients my behavior as well as placing my phone away from my bedstand at night so that I _have_ to read.
