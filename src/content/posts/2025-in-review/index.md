@@ -14,9 +14,9 @@ tags:
 
 In [my 2024 "Year in Review"](./2024-in-review/), I noted that 2025 would be about **survival** with the arrival of a baby girl. Well, did I **survive**?
 
-Yes. I'm most proud of becoming a more confident, in-rhythm parent. The kind who doesn't second-guess every decision or stay up at night wondering if I'm doing enough. Emilia arrived in February, and while going from one to two kids has been incrementally harder (not exponentially, knock on wood), it's taught me that confidence and presence matter more than perfection. At work, I continued to lead by doing, diving deep into AI protocols and MCP while shipping features that meaningfully improved the lives of millions of developers. But as always, the job's not finished.
+Yes. Emilia arrived in February, and I'm most proud of getting into a rhythm as a parent of two. Going from one to two kids has been incrementally harder (not exponentially, knock on wood), and I've learned to trust my instincts more and second-guess less. At work, I led the team deep into AI protocols and MCP while shipping features that meaningfully improved the experience for millions of developers. Job's not finished.
 
-2025 was also a year of establishing better habits: I read 26 books, cut my screen time to just over 2 hours daily, and found myself more present as a result. As I look toward 2026, I want to double down on what's working: fewer distractions, higher quality experiences, and embracing the kind of boredom that makes space for real thinking and creativity.
+The metrics tell a story too: 26 books read, screen time cut to just over 2 hours daily, and I felt more present as a result. In 2026, I want to keep this momentum: fewer distractions, higher quality time, and embracing downtime that creates space for deeper thinking.
 
 ---
 
