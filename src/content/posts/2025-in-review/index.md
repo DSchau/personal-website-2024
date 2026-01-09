@@ -14,7 +14,7 @@ tags:
 
 In [my 2024 "Year in Review"](./2024-in-review/), I noted that 2025 would be about **survival** with the arrival of a baby girl. Well, did I **survive**?
 
-Yes. Emilia arrived in February, and I'm most proud of getting into a rhythm as a parent of two. Going from one to two kids has been incrementally harder (not exponentially, knock on wood), and I've learned to trust my instincts more and second-guess less. At work, I led the team deep into AI protocols and MCP while shipping features that meaningfully improved the experience for millions of developers. Job's not finished.
+Yes. Emilia arrived in February, and I'm most proud of getting into a rhythm as a parent of two alongside my wife Maggie. Going from one to two kids has been incrementally harder (not exponentially, knock on wood), and I've learned to trust my instincts more and second-guess less. At work, I led the team deep into AI protocols and MCP while shipping features that meaningfully improved the experience for millions of developers. Job's not finished.
 
 The metrics tell a story too: 26 books read, screen time cut to just over 2 hours daily, and I felt more present as a result. In 2026, I want to keep this momentum: fewer distractions, higher quality time, and embracing downtime that creates space for deeper thinking.
 
@@ -30,7 +30,7 @@ The metrics tell a story too: 26 books read, screen time cut to just over 2 hour
 - **Participated in a panel discussion** on developer experience (DX) in the era of artificial intelligence (AI). It was my first ever panel, and I quite enjoyed it!
 - **Traveled to Omaha** to visit my friends from Union Pacific (my first job!) before the birth of Emilia.
 - **[Read 26 books](https://www.goodreads.com/readingchallenges/gr/annual/2025)** and listened to 36688 minutes of music.
-- **Survived one year** of a Trump presidency. Only three more to go 😬
+- **Kept my sanity** through one year of a Trump presidency. Only three more to go 😬
 
 ![API client ships in 2025](./images/2025-api-client.png)
 
