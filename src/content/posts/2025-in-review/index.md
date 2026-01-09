@@ -12,7 +12,7 @@ tags:
 
 ![The family](./images/2025-family.jpg)
 
-In [my 2024 "Year in Review"](./2024-in-review/), I noted that 2025 would be about **survival** with the arrival of a baby girl. Well, did I **survive**?
+In [my 2024 "Year in Review"](../2024-in-review), I noted that 2025 would be about **survival** with the arrival of a baby girl. Well, did I **survive**?
 
 Yes. Emilia arrived in February, and I'm most proud of getting into a rhythm as a parent of two alongside my wife Maggie. Going from one to two kids has been incrementally harder (not exponentially, knock on wood), and I've learned to trust my instincts more and second-guess less. At work, I led the team deep into AI protocols and MCP while shipping features that meaningfully improved the experience for millions of developers. Job's not finished.
 
