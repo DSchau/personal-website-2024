@@ -16,7 +16,7 @@ In [my 2024 "Year in Review"](./2024-in-review/), I noted that 2025 would be abo
 
 Yes. Emilia arrived in February, and I'm most proud of getting into a rhythm as a parent of two alongside my wife Maggie. Going from one to two kids has been incrementally harder (not exponentially, knock on wood), and I've learned to trust my instincts more and second-guess less. At work, I led the team deep into AI protocols and MCP while shipping features that meaningfully improved the experience for millions of developers. Job's not finished.
 
-The metrics tell a story too: 26 books read, screen time cut to just over 2 hours daily, and I felt more present as a result. In 2026, I want to keep this momentum: fewer distractions, higher quality time, and embracing downtime that creates space for deeper thinking.
+The metrics tell a story too: 27 books read, screen time cut to just over 2 hours daily, and I felt more present as a result. In 2026, I want to keep this momentum: fewer distractions, higher quality time, and embracing downtime that creates space for deeper thinking.
 
 ---
 
@@ -29,7 +29,7 @@ The metrics tell a story too: 26 books read, screen time cut to just over 2 hour
 - **Led the Postman API client team** with some major launches: **NPM Scripts**, **[simplified variables](https://blog.postman.com/engineering/a-simpler-and-local-first-variables-experience/)**, **reusable requests**, and **MCP and AI protocols**, and [so much more](https://www.postman.com/release-notes/postman-app/).
 - **Participated in a panel discussion** on developer experience (DX) in the era of artificial intelligence (AI). It was my first ever panel, and I quite enjoyed it!
 - **Traveled to Omaha** to visit my friends from Union Pacific (my first job!) before the birth of Emilia.
-- **[Read 26 books](https://www.goodreads.com/readingchallenges/gr/annual/2025)** and listened to 36688 minutes of music.
+- **[Read 27 books](https://www.goodreads.com/readingchallenges/gr/annual/2025)** and listened to 36688 minutes of music.
 - **Kept my sanity** through one year of a Trump presidency. Only three more to go 😬
 
 ![API client ships in 2025](./images/2025-api-client.png)
@@ -46,7 +46,7 @@ The metrics tell a story too: 26 books read, screen time cut to just over 2 hour
 - **Being an active parent** particularly for Noah (almost three years old). I think it helps that as a dad, as my kids get older, I get to shine more by playing with them, teaching them things, etc. Noah has started calling me his best friend, which just warms my heart immensely.
 - **Being a confident parent**. Having two children has made me a much more confident parent. I remember with Noah I had a lot of feelings of doubt, anxiety, etc. as to whether I was doing enough, whether I was helping enough, etc. and now with two most of those feelings have gone away and I am getting more into rhythm in being a parent.
 - **Continuing to learn**. As a parent, it's important to me that I maintain my curiosities and tap into my learn by doing mindset. This year, I continued to tinker on my book "Riley the Robot" (a great training ground for gauging the pace of AI models, particularly image models) and more generally dove deep into the space of AI with models, MCP, and so much more. This will continue to be important to not let my skills grow stagnant.
-- **Internalized habits**. Establishing a **reading routine** (26 books!) that felt like a conscious habit rather than a chore. Specifically, just setting the goal (24 / year) orients my behavior as well as placing my phone away from my bedstand at night so that I _have_ to read.
+- **Internalized habits**. Establishing a **reading routine** (27 books) that felt like a conscious habit rather than a chore. Specifically, just setting the goal (24 / year) orients my behavior as well as placing my phone away from my bedstand at night so that I _have_ to read.
 - **Not being a zombie**. I think there's a real risk in society of not unplugging, and it's been fascinating going to events and just seeing people on their phone for significant chunks of them. I've been able to cut my **screen time** down to just over 2 hours daily, down from 3-4 hours in recent years. I still want to drive this down further, or in other words job's not finished.
 
 ## What I most enjoyed
