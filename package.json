@@ -18,7 +18,6 @@
     "@types/env-ci": "^3.1.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "@unpic/astro": "^1.0.2",
     "astro": "^6.0.4",
     "astro-icon": "^1.1.5",
     "env-ci": "^11.0.0",
