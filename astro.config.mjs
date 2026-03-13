@@ -39,6 +39,9 @@ function remarkModifiedTime() {
 export default defineConfig({
   prefetch: true,
   output: 'server',
+  adapter: cloudflare({
+    prerenderEnvironment: 'node',
+  }),
   env: {
     schema: {
       PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client', access: "public" }),
@@ -85,6 +88,5 @@ export default defineConfig({
     ssr: {
       noExternal: ['@cloudflare/pages-plugin-vercel-og']
     }
-  },
-  adapter: cloudflare()
+  }
 });
