@@ -10,17 +10,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.5",
-    "@astrojs/cloudflare": "^12.6.11",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/check": "^0.9.7",
+    "@astrojs/cloudflare": "^13.1.1",
+    "@astrojs/react": "^5.0.0",
+    "@astrojs/sitemap": "^3.7.1",
     "@cloudflare/pages-plugin-vercel-og": "^0.1.2",
     "@types/env-ci": "^3.1.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
-    "@unpic/astro": "^1.0.1",
-    "astro": "^5.15.9",
-    "astro-icon": "^1.1.1",
+    "@unpic/astro": "^1.0.2",
+    "astro": "^6.0.4",
+    "astro-icon": "^1.1.5",
     "env-ci": "^11.0.0",
     "marked": "^17.0.1",
     "octokit": "^3.1.2",
@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
-    "wrangler": "^4.47.0"
+    "wrangler": "^4.61.1"
   }
 }
