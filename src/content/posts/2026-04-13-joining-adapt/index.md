@@ -2,8 +2,8 @@
 date: 2026-04-13
 title: "Joining Adapt"
 author: Dustin Schau
-featured: true
-draft: false
+featured: false
+draft: true
 excerpt: "I've decided to join Adapt: the AI-native operating system for your team to lead the Product & Engineering teams"
 tags:
   - career
