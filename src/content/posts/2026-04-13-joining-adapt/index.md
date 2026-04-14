@@ -47,10 +47,10 @@ I won't pretend this isn't a risk. Seed-stage startups are inherently risky. Lea
 
 But I've never optimized for safe choices. The best decisions I've made in my career have been the ones that felt a little scary and a lot exciting. This feels like that.
 
-The AI space is moving fast, and I believe the teams that win will be the ones building tools that make _teams_ better, not just individuals. Adapt is building for teams, and I think that's the right bet.
+The AI space is moving fast, and I believe the teams that win will be the ones building tools that make _teams_ better, not just individuals (and definitely not just engineers). Adapt is building for teams and specifically Adapt is building on a broader persona that include the engineer but is not only focused on the engineer and I think that's the right bet.
 
 ## What's next
 
 I start Monday, April 13th, and I couldn't be more energized. If you're a builder who's excited about the future of AI-powered work, or if you're just curious about what we're building, I'd love to hear from you. [Reach out](mailto:me@dustinschau.com).
 
-Job's not finished. Let's get to work.
+Job's not finished. Time to get to work.
