@@ -1,5 +1,5 @@
 import styles from './header.module.css'
-import logo from '@/assets/logos/postman.svg'
+import logo from '@/assets/logos/adapt.svg'
 
 interface Props {
   commits: number;
@@ -20,7 +20,7 @@ export function Header({ commits, showCopy = true, copy: customizedCopy, byline:
   )
   const byline = customizedByline ? customizedByline : (
     <>
-      Product & Engineering Leader at <a className={styles.employer} href="https://getpostman.com" target="_blank"><img className={styles.logo} src={logo.src} alt="The logo of my employer Postman, an API Platform and REST Client" /> Postman</a>
+      Product & Engineering Leader at <a className={styles.employer} href="https://adapt.com" target="_blank"><img className={styles.logo} src={logo.src} alt="The logo of my employer Adapt, an AI-native operating system for teams" /> Adapt</a>
     </>
   )
   return (
