@@ -10,7 +10,7 @@ tags:
   - ai
 ---
 
-I've decided to take a new job leading the Product & Engineering teams at [Adapt](https://adaptai.com), a seed-stage startup building the AI-native operating system for teams. In this post, I'll share why I'm joining, what excites me about the product and the team, and what I'll be doing.
+I've decided to take a new job leading the Engineering, Product, and Design teams (hereafter EPD) at [Adapt](https://adaptai.com), a seed-stage startup building the AI-native operating system for teams. In this post, I'll share why I'm joining, what excites me about the product and the team, and you know, what I'll be doing day-to-day.
 
 ## Why Adapt?
 
@@ -24,15 +24,15 @@ Lots of reasons, but in my experience I've relied on my instincts just as much o
 
 ## What is Adapt?
 
-The simplest way I can describe it: Adapt is the AI computer for your business. It connects to the tools your team already uses (Slack, Notion, GitHub, Linear, whatever) and gives you a single interface to ask questions, take action, and automate workflows across all of them.
+The simplest way I can describe it: Adapt is the integration layer for your business and is particularly useful and relevant for the _entire_ team not just the engineering team. It connects to the tools your team already uses (Slack, Notion, GitHub, Linear, whatever) and gives you a single interface to ask questions, take action, and automate workflows across all of them.
 
-Think of it less as a chatbot and more as a colleague who has read every document, knows every process, and can actually _do things_ on your behalf. Schedule a report that pulls data from three systems every Monday morning? Done. Summarize what happened across engineering and product this week? Done. Draft a response to a customer issue using context from your knowledge base, CRM, and support tickets? Also done.
+Think of it less as a chatbot or a collection of tools and more as a colleague who has read every document, knows every process, and can actually _do things_ on your behalf. Schedule a report that pulls data from three systems every Monday morning? Done. Summarize what happened across engineering and product this week? Done. Build a website so that summary is a sharable, reusable asset to review weekly? Done. Draft a response to a customer issue using context from your knowledge base, CRM, and support tickets? Also done.
 
-What makes it different from other AI tools I've used is that it's not a point solution. It's a platform. The vision is ambitious and the early product delivers on that ambition in a way that surprised me (and I'm pretty skeptical of most AI products).
+What makes it different from other AI tools I've used is that it's not just a point solution and it's not only focused on the coding agent use case. It's a platform. The vision is ambitious and the early product delivers on that ambition in a way that surprised me (and I'm pretty skeptical of most AI products) in that it worked well and particularly it worked well for such an early-stage product where the expectations are oftentimes a little more hype than substance.
 
 ## What I'll be doing
 
-I'll be leading Product & Engineering, which at a seed-stage company means a lot of things:
+I'll be leading EPD, which at a seed-stage company means a lot of things:
 
 - **Building the team**. Hiring great engineers and product thinkers who want to work on hard problems at the intersection of AI and productivity.
 - **Shaping the product**. Defining what Adapt becomes. What do we build next? What do we say no to? How do we make the product so good that teams can't imagine working without it?
