@@ -1,9 +1,19 @@
+- title: VP of Product & Engineering
+  location: San Francisco, CA
+  employer: Adapt
+  logo: ./logos/adapt.svg
+  date: "2026-Present"
+  description: I lead Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. Adapt connects to the tools your team already uses and gives you a single interface to ask questions, take action, and automate workflows across all of them.
+  highlights:
+    - Building and leading the Product & Engineering teams from the ground up at seed stage
+    - Shaping the product vision and roadmap for an AI-native platform used by teams to automate work across their entire tool stack
+    - Writing code and setting the technical and cultural bar for the engineering organization
 - title: Head of API Client
   location: San Francisco, CA
   employer: Postman
   logo: ./logos/postman.svg
-  date: "2023-Present"
-  description: I lead the team that owns the central engine of the Postman product in the API Client. Postman is one of the world's most loved and ubiquitous developer tools. The API Client team is responsible for maintaining and improving the core functionality of enabling developers to send, debug, and test requests across multiple protocols (REST, gRPC, Websockets, GraphQL, MQTT, AI models, and MCP). Postman is a Series D startup that has millions of daily users and strong triple-digit millions in revenue.
+  date: "2023-2026"
+  description: I led the team that owns the central engine of the Postman product in the API Client. Postman is one of the world's most loved and ubiquitous developer tools. The API Client team is responsible for maintaining and improving the core functionality of enabling developers to send, debug, and test requests across multiple protocols (REST, gRPC, Websockets, GraphQL, MQTT, AI models, and MCP). Postman is a Series D startup that has millions of daily users and strong triple-digit millions in revenue.
   highlights:
     - Modernized the core API client, making it simpler, faster, and more feature rich, addressing the longest-standing user-reported issues ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)
     - Launched two new protocols from zero to thousands of users with AI request and MCP request
