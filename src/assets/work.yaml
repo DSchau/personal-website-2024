@@ -15,11 +15,11 @@
   date: "2023-2026"
   description: I led the team that owns the central engine of the Postman product in the API Client. Postman is one of the world's most loved and ubiquitous developer tools. The API Client team is responsible for maintaining and improving the core functionality of enabling developers to send, debug, and test requests across multiple protocols (REST, gRPC, Websockets, GraphQL, MQTT, AI models, and MCP). Postman is a Series D startup that has millions of daily users and strong triple-digit millions in revenue.
   highlights:
-    - "**API Client modernization.** Addressed the longest-standing user-reported issues, making the core client simpler, faster, and more feature rich ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)"
+    - "**Modernized and innovated on the core API client.** Closed the top upvoted issues representing dozens of years of cumulative feature requests long demanded by users, making the core client simpler, faster, and more feature rich ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)"
     - "**Multi-protocol collection architecture.** Shipped a unified execution layer that standardized request sending across all protocols, accelerating new protocol development and expanding platform capabilities (collection runner, monitors, and mocks) to the full protocol suite"
     - "**Git-native filesystem.** Shipped a dramatically different filesystem layer that de-risked and validated next-generation product capabilities including first-class git integration, native filesystem support, and the v3 specification—the foundation for the next decade of API development"
     - "**New protocols and platform breadth.** Launched AI request and MCP request from zero to thousands of users, and shipped collection runner and CLI support for gRPC and GraphQL"
-    - "**Team building.** Led and cultivated a first-class, product-minded engineering team with hubs in SF Bay Area and Bangalore, India"
+    - "**Built a top-tier global team.** Led and cultivated a first-class, product-minded engineering team with hubs in SF Bay Area and Bangalore, India"
 - title: Senior Director, Engineering
   location: Fully remote
   employer: Netlify
