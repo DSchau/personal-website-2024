@@ -3,7 +3,6 @@ date: 2026-04-13
 title: "Joining Adapt"
 author: Dustin Schau
 featured: false
-draft: true
 excerpt: "I'm joining Adapt to lead Product & Engineering. Here's why."
 tags:
   - career
