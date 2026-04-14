@@ -31,7 +31,7 @@
 
 .employer {
   text-decoration: none;
-  color: var(--postman-color);
+  color: var(--adapt-color);
 }
 
 .employer:hover {
