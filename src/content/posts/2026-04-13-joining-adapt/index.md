@@ -51,6 +51,6 @@ The AI space is moving fast, and I believe the teams that win will be the ones b
 
 ## What's next
 
-I start Monday, April 13th, and I couldn't be more energized. If you're a builder who's excited about the future of AI-powered work, or if you're just curious about what we're building, I'd love to hear from you. [Reach out](mailto:me@dustinschau.com).
+I start(ed) Monday, April 13th, and I couldn't be more energized. If you're a builder who's excited about the future of AI-powered work, or if you're just curious about what we're building, I'd love to hear from you. [Reach out](mailto:me@dustinschau.com).
 
 Job's not finished. Time to get to work.
