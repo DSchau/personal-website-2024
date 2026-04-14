@@ -1,9 +1,14 @@
 :root {
+  --adapt-color: #0f0e0e;
   --postman-color: rgb(255, 108, 55);
   --netlify-color: rgb(1, 72, 71);
   --gatsby-color: rebeccapurple;
   --opi-color: #d22630;
   --up-color: rgb(0, 82, 155);
+}
+
+.adapt {
+  color: var(--adapt-color);
 }
 
 .postman {
