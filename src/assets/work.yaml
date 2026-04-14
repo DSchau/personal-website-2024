@@ -17,6 +17,8 @@
   highlights:
     - Modernized the core API client, making it simpler, faster, and more feature rich, addressing the longest-standing user-reported issues ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)
     - Launched two new protocols from zero to thousands of users with AI request and MCP request
+    - Shipped a unified multi-protocol collection architecture that standardized request execution across the platform, accelerating new protocol development and expanding platform capabilities (collection runner, monitors, and mocks) to the full protocol suite
+    - Shipped a git-native filesystem layer that de-risked and validated next-generation product capabilities including first-class git integration, native filesystem support, and the v3 specification—the foundation for the next decade of API development
     - Led and cultivated a first-class, product-minded engineering team with hubs in SF Bay Area and Bangalore, India
 - title: Senior Director, Engineering
   location: Fully remote
