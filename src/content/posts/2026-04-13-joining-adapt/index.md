@@ -45,7 +45,7 @@ This is the type of role I've been building toward for a long time. Leading both
 
 I won't pretend this isn't a risk. Seed-stage startups are inherently risky. Leaving a stable role at a great company to join a team of less than ten people is not the safe choice.
 
-But I've never optimized for safe choices. The best decisions I've made in my career have been the ones that felt a little scary and a lot exciting. This feels like that.
+This being said, the best decisions I've made in my career have been the ones that felt a little scary and a lot exciting. This feels like that.
 
 The AI space is moving fast, and I believe the teams that win will be the ones building tools that make _teams_ better, not just individuals (and definitely not just engineers). Adapt is building for teams and specifically Adapt is building on a broader persona that include the engineer but is not only focused on the engineer and I think that's the right bet.
 
