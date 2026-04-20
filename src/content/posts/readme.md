@@ -11,7 +11,7 @@ tags:
 
 ## `whoami`
 
-My name is Dustin Schau, and my current role at Postman is Head of API Client. I joined Postman in October of 2023. What matters is what I do next, but before Postman I was co-founder and VP of Product & Engineering at Gatsby and before that a software engineer as a consultant and at Fortune 500 companies. As Head of API Client, my role is to ensure that the core engine of Postman in API Client (sending, debugging, and testing requests across multiple protocols) continues to improve.
+My name is Dustin Schau, and my current role at Adapt is leading the Product & Engineering teams. Adapt is a seed-stage startup building the AI-native operating system for teams. Before Adapt, I was Head of API Client at Postman, and before that co-founder and VP of Product & Engineering at Gatsby, and before that a software engineer as a consultant and at Fortune 500 companies.
 
 Personally, I am a new, first-time dad and lucky husband to my wife Maggie. I live in San Francisco, CA but am from the middle of America (Iowa!) and moved to the Bay Area in 2019. In my spare time, I like to spend time with my family exploring local parks, neighborhoods, and coffee shops. I like to read (recent favorites have been the Red Rising series, as well as Tomorrow, and Tomorrow, and Tomorrow), explore new restaurants in San Francisco and in the world, and golf when I can although less than I used to with the little one.
 
@@ -44,7 +44,7 @@ As indicated, the foundation of a successful leader is one of building trust. As
 
 In many ways, my expectations of the team are largely the same as my expectations of myself. I hold myself to the same standards of excellence that I expect of my team. Importantly, I think of us as a team not a family. As a member of the team we all have an obligation to help the team thrive and win, and we should have high expectations of one another.
 
-1. **Care deeply**. Each of us may have a particular set of variables about what we care about, but ultimately, we should care about the customer, the business, the product, and each other. Passion is a prerequisite for success, and we should care quite a lot and take pride in what we do. We are working on a ubiquitous developer tool and our users rely on us, let’s treat that with the respect and care that it deserves.
+1. **Care deeply**. Each of us may have a particular set of variables about what we care about, but ultimately, we should care about the customer, the business, the product, and each other. Passion is a prerequisite for success, and we should care quite a lot and take pride in what we do. We are working on something our users rely on, let’s treat that with the respect and care that it deserves.
 2. **Kindness not niceness**. Since we’re a team, we operate with kindness over niceness. A simple example: niceness is telling someone what they want to hear, whereas kindness is telling someone something they need to hear. Great, trusting relationships are predicated
 on the ability to hold one another accountable, and kindness is a better long-term path to get to that trusting relationship.
 3. **Show up prepared**. If you are attending a meeting, leading a session, leading a meeting, do your part to prepare and make sure that what you’re doing is successful. Something as simple as reading the agenda, adding topics to a 1:1 or thinking about a prompt from a previous 1:1, or thinking about a good question to ask in an All Hands goes quite a long way to improving the outcome for all. It may only
@@ -148,7 +148,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
   <blockquote>“What is our definition of victory? Sun Tzu, in The Art of War, had a simple answer: ‘Breaking the enemy's will to fight.’</blockquote>
 
-  I’m highly competitive and I care about winning. What does it mean to win for me at Postman? To be a critical part of a wildly successful business, and to help Postman grow into the outsized opportunity that I think we currently have.
+  I’m highly competitive and I care about winning. What does it mean to win for me at Adapt? To be a critical part of a wildly successful business, and to help Adapt grow into the outsized opportunity that I think we currently have.
 </details>
 
 <details>
