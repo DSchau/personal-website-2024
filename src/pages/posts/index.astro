@@ -68,7 +68,7 @@ const posts = await getCollection('posts', ({ data }) => {
     <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
     <ol reversed>
       {posts.map(post => {
-        const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.slug}`
+        const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
         const external = /https?/.test(href)
         return (
           <li>

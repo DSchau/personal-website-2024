@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '@/layouts/Layout.astro'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
@@ -9,7 +9,7 @@ export const prerender = true
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts');
   return blogEntries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
+    params: { slug: entry.id }, props: { entry },
   }));
 }
 
@@ -21,14 +21,14 @@ let entry = Astro.props.entry;
 
 if (!entry) {
   const blogEntries = await getCollection('posts');
-  entry = blogEntries.find(e => e.slug === slug);
+  entry = blogEntries.find((e) => e.id === slug);
 
   if (!entry) {
     return Astro.redirect('/404');
   }
 }
 
-const { Content, remarkPluginFrontmatter } = await entry.render();
+const { Content, remarkPluginFrontmatter } = await render(entry);
 
 ---
 
@@ -51,7 +51,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
   },
   {
     property: 'twitter:url',
-    content: `${site?.href}posts/${entry.slug}`
+    content: `${site?.href}posts/${entry.id}`
   },
   {
     property: 'og:image',
@@ -70,5 +70,4 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
     <Content />
   </MarkdownPostLayout>
 </Layout>
-
 
