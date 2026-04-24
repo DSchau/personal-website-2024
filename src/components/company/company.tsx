@@ -8,7 +8,7 @@ interface Props {
 export function Company({ name, logo }: Props) {
   return (
     <>
-      {logo?.src && <img src={logo.src} alt={`Logo for ${name}`} style={{
+      {logo?.src && <img src={logo.src} alt={`Logo for ${name}`} data-logo={name} style={{
         display: 'inline-block',
         verticalAlign: 'middle'
       }}/>}

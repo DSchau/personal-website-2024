@@ -36,7 +36,7 @@
   padding: 0;
 }
 
-.employer > img {
+.employer img {
   height: var(--h3-size);
   width: var(--h3-size);
 

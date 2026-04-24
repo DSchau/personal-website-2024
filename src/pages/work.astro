@@ -37,6 +37,45 @@ const processedWork = work.map((experience: any) => ({
 
 ---
 
+<style is:global>
+  @keyframes rocket-launch {
+    /* takeoff bounce */
+    0%   { transform: none; animation-timing-function: ease-out; }
+    6%   { transform: translateY(8px); animation-timing-function: ease-in; }
+    14%  { transform: translateY(-6px); animation-timing-function: ease-out; }
+    20%  { transform: translateY(3px); animation-timing-function: ease-in; }
+    26%  { transform: translateY(0); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+    /* fly off */
+    48%  { transform: translate(800px, -1000px); animation-timing-function: linear; }
+    /* pause off screen */
+    75%  { transform: translate(800px, -1000px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+    /* return and landing bounce */
+    90%  { transform: translateY(-14px); animation-timing-function: ease-out; }
+    94%  { transform: translateY(7px); animation-timing-function: ease-in-out; }
+    97%  { transform: translateY(-3px); animation-timing-function: ease-out; }
+    100% { transform: none; }
+  }
+
+  [data-logo="Postman"] {
+    cursor: pointer;
+  }
+  [data-logo="Postman"].fly {
+    animation: rocket-launch 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('[data-logo="Postman"]');
+    if (logo) {
+      logo.addEventListener('dblclick', () => {
+        logo.classList.add('fly');
+        logo.addEventListener('animationend', () => logo.classList.remove('fly'), { once: true });
+      });
+    }
+  });
+</script>
+
 <Layout title="Work" showCopy={false}>
 	<div class={styles.container}>
 		<h2 class={styles.title}>My work</h2>
