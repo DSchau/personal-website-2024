@@ -13,7 +13,7 @@ tags:
 
 My name is Dustin Schau, and my current role at Adapt is leading the Product & Engineering teams. Adapt is a seed-stage startup building the AI-native operating system for teams. Before Adapt, I was Head of API Client at Postman, and before that co-founder and VP of Product & Engineering at Gatsby, and before that a software engineer as a consultant and at Fortune 500 companies.
 
-Personally, I am a new, first-time dad and lucky husband to my wife Maggie. I live in San Francisco, CA but am from the middle of America (Iowa!) and moved to the Bay Area in 2019. In my spare time, I like to spend time with my family exploring local parks, neighborhoods, and coffee shops. I like to read (recent favorites have been the Red Rising series, as well as Tomorrow, and Tomorrow, and Tomorrow), explore new restaurants in San Francisco and in the world, and golf when I can although less than I used to with the little one.
+Personally, I am a lucky husband to my wife Maggie and dad to two kids, Noah and Emilia. I live in San Francisco, CA but am from the middle of America (Iowa!) and moved to the Bay Area in 2019. In my spare time, I like to spend time with my family exploring local parks, neighborhoods, and coffee shops. I like to read (recent favorites have been the Red Rising series, as well as Tomorrow, and Tomorrow, and Tomorrow), explore new restaurants in San Francisco and in the world, and golf when I can although less than I used to with the little ones.
 
 ## Leadership style
 
@@ -35,7 +35,7 @@ As indicated, the foundation of a successful leader is one of building trust. As
 
 - **Follow-through**. If I say I will do something, I will do it. Typically, I also self-impose a deadline for accountability purposes, and if that deadline slips, I will communicate that proactively. If I slip on something I said I was going to do that you are relying upon, please let me know and likely I’ll be frustrated with myself.
 - **Authenticity**. I try to bring my full, authentic self to all my interactions. That means I will share my honest observations, my honest responses, and bring my full self to work and in all interactions. If I don’t know something, I will say that and usually I’ll try and get an answer too. I will do my best to communicate the why especially in cases of disagreement. The weight of ideas matters more than the weight of a title.
-- **Strong personal relationships**. If you are a direct report, we should meet weekly since 1:1s are the bedrock of strong relationships and trust. If you are an indirect report (report to someone who reports to me), I will try and meet monthly but please reach out via DM if you’d like a different cadence. In both scenarios, don’t wait for a 1:1 and if you need my time, request it. Nothing is more important than the people, and I will always have an “open door” policy with my time.
+- **Strong personal relationships**. 1:1s are the bedrock of long-term, trusting relationships — that’s the point of them. In practice, I run 1:1s ad hoc rather than on a fixed weekly schedule; the right cadence depends on what you need and what’s happening. Don’t wait for a scheduled slot: if you need my time, request it. Nothing is more important than the people, and I will always have an “open door” policy.
     - 1:1s are for you, which means that while I’ll sometimes have topics to discuss, ultimately what you get out of them and the agenda should be driven by you. In service of that, I typically have a Google document that is shared only between us, where I encourage you to add topics and track takeaways.
     - 1:1s are a great way to share topics that you wouldn’t share with others, share an idea or a strategic topic you’re uncertain about for guidance, and to give and receive feedback.
 - **Minimize surprises**. Good communication is clear, transparent, and rarely surprising. This doesn’t mean it’s never surprising, but my commitment is that when there is information relevant to a team or an individual, I will do my best to make sure it’s communicated regularly, repeatedly, and in different venues (Slack, Google Doc, synchronous meeting, etc.).
@@ -74,7 +74,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>Preferred working hours</summary>
-  9AM - 5PM PST. I’ll typically have 1-2 days reserved for IST calls, and on those days I may start a little later in the morning. I do have a 1-year old Noah, and I do prioritize his well being and my family’s, so it’s possible I may be late to a meeting, prioritize him if he’s sick, and so on from time-to-time. 
+  9AM - 5PM PST, though I typically also log on in the evenings after the kids are down. I have two young kids (Noah and Emilia), and I do prioritize their well-being and my family’s, so it’s possible I may be late to a meeting or need to step away if one of them is sick.
 
   I am typically in the SF office Monday, Wednesday, and often Friday.
 </details>
