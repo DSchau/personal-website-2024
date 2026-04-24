@@ -111,7 +111,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>Favorite books</summary>
-  <a href="https://www.goodreads.com/user/show/7210735-dustin-schau">Check out my Goodreads!</a>
+  <a href="https://www.goodreads.com/user/show/7210735-dustin-schau">Check out my Goodreads!</a> · <a href="https://dustinschau.com/favorites">See my top 5 favorites</a>
 
   <strong>fiction</strong>
 
@@ -134,6 +134,8 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>Favorite games</summary>
+
+  <a href="https://dustinschau.com/favorites">See my top 5 favorites</a>
 
   - Mass Effect 2
   - The Last of Us
