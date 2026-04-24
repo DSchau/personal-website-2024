@@ -138,8 +138,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
   - Mass Effect 2
   - The Last of Us
   - God of War
-  - Metal Gear Solid IV
-  - Uncharted
+  - Metal Gear Solid 4: Guns of the Patriots
   - Red Dead Redemption
 </details>
 

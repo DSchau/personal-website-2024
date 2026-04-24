@@ -135,7 +135,7 @@ games:
     title: BioShock
     hyperlink: https://en.wikipedia.org/wiki/BioShock
     image: ./images/bioshock.jpg
-  - key: uncharted
-    title: "Uncharted 4: A Thief's End"
-    hyperlink: https://en.wikipedia.org/wiki/Uncharted_4:_A_Thief%27s_End
-    image: ./images/uncharted_4.jpg
+  - key: metal-gear-solid-4
+    title: "Metal Gear Solid 4: Guns of the Patriots"
+    hyperlink: https://en.wikipedia.org/wiki/Metal_Gear_Solid_4:_Guns_of_the_Patriots
+    image: ./images/metal_gear_solid_4.jpg
