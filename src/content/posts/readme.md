@@ -106,10 +106,11 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 <details>
   <summary>Things I love</summary>
 
-  1. Documents
-  2. Demos
-  3. Proactive, broad communication
-  4. Active participation in team meetings
+  1. Crisp, written decisions — a good doc is worth ten meetings
+  2. Demos (show, don't tell)
+  3. Proactive Slack updates no one asked for but everyone needed
+  4. Noah calling me his best friend
+  5. A good cup of coffee before the kids wake up (this never happens)
 </details>
 
 <details>
