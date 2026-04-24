@@ -66,7 +66,7 @@ const allFavorites = Object.keys(favorites)
 
 <Layout title="Favorites • Films, Series, Albums, Songs, and Games" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, songs, and games; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
 	{allFavorites.map(({ title, list }) => (
-		<section>
+		<section id={title.toLowerCase()}>
 			<h3>{title}</h3>
 			<FavoritesComponent list={list} />
 		</section>

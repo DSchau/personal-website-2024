@@ -114,9 +114,9 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 
 <details>
   <summary>Favorite books</summary>
-  <a href="https://www.goodreads.com/user/show/7210735-dustin-schau">Check out my Goodreads!</a> · <a href="https://dustinschau.com/favorites">See my top 5 favorites</a>
+  <a href="https://www.goodreads.com/user/show/7210735-dustin-schau">Check out my Goodreads!</a> · <a href="/favorites#books">See my top 5 favorites</a>
 
-  <strong>fiction</strong>
+<p><strong>fiction</strong></p>
 
 - <a href="https://www.goodreads.com/book/show/149267.The_Stand">The Stand</a>
 - <a href="https://www.goodreads.com/book/show/256008.Lonesome_Dove">Lonesome Dove</a>
@@ -124,7 +124,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 - <a href="https://www.goodreads.com/book/show/15839976-red-rising">Red Rising</a>
 - <a href="https://www.goodreads.com/book/show/18693910-barbarian-days">Barbarian Days</a>
 
-  <strong>non-fiction</strong>
+<p><strong>non-fiction</strong></p>
 
 - <a href="https://www.goodreads.com/book/show/4865.How_to_Win_Friends_Influence_People">How to Win Friends and Influence People</a>
 - <a href="https://www.goodreads.com/book/show/18077903-creativity-inc">Creativity, Inc.</a>
@@ -138,7 +138,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 <details>
   <summary>Favorite games</summary>
 
-  <a href="https://dustinschau.com/favorites">See my top 5 favorites</a>
+  <a href="/favorites#games">See my top 5 favorites</a>
 
   - Mass Effect 2
   - The Last of Us
@@ -158,5 +158,5 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
 <details>
   <summary>Favorite things</summary>
 
-  Please check out <a href="https://dustinschau.com/favorites">favorite things</a> for all my top five favorites (songs, films, series, games, and books).
+  Please check out <a href="/favorites">favorite things</a> for all my top five favorites (songs, films, series, games, and books).
 </details>
