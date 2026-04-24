@@ -76,7 +76,7 @@ In both scenarios, I prefer just-in-time feedback, so that the interaction is st
   <summary>Preferred working hours</summary>
   9AM - 5PM PST, though I typically also log on in the evenings after the kids are down. I have two young kids (Noah and Emilia), and I do prioritize their well-being and my family’s, so it’s possible I may be late to a meeting or need to step away if one of them is sick.
 
-  I am typically in the SF office Monday, Wednesday, and often Friday.
+  I am typically in the SF office every day.
 </details>
 
 <details>
