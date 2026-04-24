@@ -29,11 +29,15 @@
 }
 
 .container p > img {
-  object-fit: contain;
+  width: auto;
+  height: auto;
+  max-width: 100%;
   max-height: 50vh;
+  cursor: zoom-in;
 
   margin: var(--padding-lg) auto;
 }
+
 
 .container ol, .container ul {
   padding-left: 2rem;
@@ -45,6 +49,15 @@
 
 .container summary {
   font-weight: bold;
+}
+
+.container figcaption {
+  text-align: center;
+  font-size: var(--text-s);
+  font-style: italic;
+  color: var(--text-muted, #888);
+  margin-top: calc(-1 * var(--padding-lg));
+  padding-bottom: var(--padding-md);
 }
 
 .container blockquote {

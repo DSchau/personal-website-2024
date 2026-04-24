@@ -15,6 +15,9 @@ My name is Dustin Schau, and my current role at Adapt is leading the Product & E
 
 Personally, I am a lucky husband to my wife Maggie and dad to two kids, Noah and Emilia. I live in San Francisco, CA but am from the middle of America (Iowa!) and moved to the Bay Area in 2019. In my spare time, I like to spend time with my family exploring local parks, neighborhoods, and coffee shops. I like to read (recent favorites have been the Red Rising series, as well as Tomorrow, and Tomorrow, and Tomorrow), explore new restaurants in San Francisco and in the world, and golf when I can although less than I used to with the little ones.
 
+![The Schau family in Golden Gate Park](./images/family.jpg)
+<figcaption>The Schau family in Golden Gate Park</figcaption>
+
 ## Leadership style
 
 > Don't listen to what leaders say—watch what they do.

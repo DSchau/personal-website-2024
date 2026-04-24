@@ -33,3 +33,19 @@ const shouldDisplayEdited = new Date(frontmatter.lastModified).getTime() > new D
   <slot />
 </article>
 
+<style is:global>
+  .medium-zoom-overlay {
+    z-index: 9002;
+  }
+  .medium-zoom-image--opened {
+    z-index: 9003;
+    max-height: none !important;
+    object-fit: contain !important;
+  }
+</style>
+
+<script>
+  import mediumZoom from 'medium-zoom';
+  mediumZoom('article p > img', { margin: 24, background: 'rgba(0,0,0,0.8)' });
+</script>
+

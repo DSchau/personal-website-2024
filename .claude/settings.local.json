@@ -11,7 +11,8 @@
       "Bash(npx:*)",
       "Bash(node /Users/dustinschau/Projects/Personal/personal-website-2024/optimize-images.mjs:*)",
       "Bash(node:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Skill(git-commit)"
     ],
     "deny": [],
     "ask": []
