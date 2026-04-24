@@ -31,6 +31,7 @@ const LOGOS: { [key: string]: ImageMetadata } = {
 // Process markdown in highlights at build time
 const processedWork = work.map((experience: any) => ({
 	...experience,
+	description: marked.parseInline(experience.description),
 	highlights: experience.highlights?.map((highlight: string) => marked.parseInline(highlight))
 }))
 
@@ -47,7 +48,7 @@ const processedWork = work.map((experience: any) => ({
 						<li class={styles.experience}>
 							<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}><Company name={experience.employer} logo={LOGOS[experience.employer]} /></h3>
 							<h4 class={styles['job-title']}>{experience.title}<span class={styles.date}>, {experience.date}</span></h4>
-							<p>{experience.description}</p>
+							<p set:html={experience.description} />
 							{experience.highlights && experience.highlights.length > 0 && (
 								<ul>
 									{experience.highlights.map((highlight: string) => {

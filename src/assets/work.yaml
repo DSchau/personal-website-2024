@@ -3,17 +3,17 @@
   employer: Adapt
   logo: ./logos/adapt.svg
   date: "2026-Present"
-  description: I lead Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. Adapt connects to the tools your team already uses and gives you a single interface to ask questions, take action, and automate workflows across all of them.
+  description: I lead Product & Engineering at [Adapt](https://adapt.com), a seed-stage startup building the AI-native operating system for teams. Adapt connects to the tools your team already uses and gives you a single interface to ask questions, take action, and automate workflows — think less chatbot, more a colleague who has read every document, knows every process, and can actually _do things_ on your behalf.
   highlights:
     - Building and leading the Product & Engineering teams from the ground up at seed stage
-    - Shaping the product vision and roadmap for an AI-native platform used by teams to automate work across their entire tool stack
+    - Owning and delivering the product vision and roadmap for an AI-native platform used by teams to automate work across their entire tool stack
     - Writing code and setting the technical and cultural bar for the engineering organization
 - title: Head of API Client
   location: San Francisco, CA
   employer: Postman
   logo: ./logos/postman.svg
   date: "2023-2026"
-  description: I led the API Client team at Postman—one of the world's most loved developer tools, used by millions of developers daily. We owned the core request-sending engine across all protocols (REST, gRPC, WebSockets, GraphQL, MQTT, AI models, and MCP) and modernized the Postman platform for both humans and AI agents.
+  description: I led the API Client team at [Postman](https://postman.com)—one of the world's most loved developer tools, used by millions of developers daily. We owned the core request-sending engine across all protocols (REST, gRPC, WebSockets, GraphQL, MQTT, AI models, and MCP) and modernized the Postman platform for both humans and AI agents.
   highlights:
     - "**Modernized and innovated on the core API client.** Closed the top upvoted issues representing dozens of years of cumulative feature requests long demanded by users, making the core client simpler, faster, and more feature rich ([HTTP/2 support](https://github.com/postmanlabs/postman-app-support/issues/2701), [prompting for variables](https://github.com/postmanlabs/postman-app-support/issues/285), [SOCKS5 Proxy](https://github.com/postmanlabs/postman-app-support/issues/1321) and many more)"
     - "**Multi-protocol collection architecture.** Shipped a unified execution layer that standardized request sending across all protocols, accelerating new protocol development and expanding platform capabilities (collection runner, monitors, and mocks) to the full protocol suite"
@@ -24,7 +24,7 @@
   location: Fully remote
   employer: Netlify
   date: "2023"
-  description: I helped integrate the Gatsby team into the Netlify organization as part of the acquisition. Additionally, I helped launch the general availability launch of Netlify Connect, which was the primary reason that Gatsby was acquired.
+  description: I helped integrate the Gatsby team into the [Netlify](https://netlify.com) organization as part of the acquisition. Additionally, I helped launch the general availability launch of Netlify Connect, which was the primary reason that Gatsby was acquired.
   highlights:
     - Launched Netlify Connect, the graduation and general availability launch of Valhalla (created at Gatsby, Inc.)
     - Integrated the Gatsby team into Netlify, and contributed to consolidation of Gatsby Cloud into Netlify
@@ -32,7 +32,7 @@
   location: Fully remote
   employer: Gatsby
   date: "2018-2023"
-  description: "I joined Gatsby in 2018 as employee #11 as an engineer on the open-source team. I eventually ended up leading a team of 25+ containing all of Product, Engineering, and Design and we grew our revenue from 40K to over 5M and were successfully acquired by Netlify in 2023. I received an honorary co-founder title to celebrate my impact on Gatsby's success by the board and the two co-founders of Gatsby"
+  description: "I joined [Gatsby](https://gatsbyjs.com) in 2018 as employee #11 as an engineer on the open-source team. I eventually ended up leading a team of 25+ containing all of Product, Engineering, and Design and we grew our revenue from 40K to over 5M and were successfully acquired by [Netlify](https://netlify.com) in 2023. I received an honorary co-founder title to celebrate my impact on Gatsby's success by the board and the two co-founders of Gatsby"
   highlights:
     - Created the SaaS product Gatsby Cloud which grew customer base from zero to over 1K+ paid customers (100 enterprise!) and over 5M ARR
     - Shipped four major releases of the Gatsby open-source web framework, culminating in one of the most popular open-source projects of all time (50k+ GitHub stars) that as of 2023 powers 0.3% of the web
