@@ -88,8 +88,8 @@ const posts = await getCollection('posts', ({ data }) => {
 		</section>
 	)}
 	<section>
-		<h3 class="section-title">recent posts</h3>
-		<p>I try to blog about topics that interest me. Maybe they interest you! Some recent ones are below.</p>
+		<h3 class="section-title"><a href="/posts">writing</a></h3>
+		<p>I try to write about topics that interest me. Maybe they interest you! Some recent ones are below.</p>
 		<Collection items={posts} />
 	</section>
 	{repos.length > 0 && (
