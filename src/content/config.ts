@@ -30,7 +30,7 @@ const favoritesCollection = defineCollection({
   schema: schemaArgs => {
     const categorySchema = favoriteSchema(schemaArgs);
     return z.object({
-      books: categorySchema,
+      books: categorySchema.optional(),
       films: categorySchema,
       series: categorySchema,
       albums: categorySchema,

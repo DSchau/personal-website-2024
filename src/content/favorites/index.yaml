@@ -1,24 +1,3 @@
-books:
-  - key: the-stand
-    title: The Stand
-    hyperlink: https://www.goodreads.com/book/show/87591651-the-stand
-    image: ./images/the_stand.png
-  - key: lonesome-dove
-    title: Lonesome Dove
-    hyperlink: https://www.goodreads.com/book/show/256008.Lonesome_Dove
-    image: ./images/lonesome_dove.jpg
-  - key: the-sparrow
-    title: The Sparrow
-    hyperlink: https://www.goodreads.com/book/show/334176.The_Sparrow
-    image: ./images/the_sparrow.jpg
-  - key: red-rising
-    title: Red Rising
-    hyperlink: https://www.goodreads.com/book/show/15839976-red-rising
-    image: ./images/red_rising.jpg
-  - key: "11-22-63"
-    title: "11/22/63"
-    hyperlink: https://www.goodreads.com/book/show/10644930-11-22-63
-    image: ./images/112263.jpg
 films:
   - key: interstellar
     title: Interstellar

@@ -3,17 +3,27 @@ import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
 import FavoritesComponent from '@/components/favorites/favorites.astro'
+import { getFavoriteBooks, getRecentlyRead, toFavoriteItem } from '@/lib/goodreads'
 
-export const prerender = true
+export const prerender = false
 
 const favorites = await getCollection('favorites')
 	.then(data => data[0].data)
 
 const allFavorites = Object.keys(favorites)
+	.filter(key => key !== 'books')
 	.map(favorite => ({
 		title: favorite.slice(0, 1).toUpperCase() + favorite.slice(1),
 		list: (favorites as any)[favorite]
 	}))
+
+const [favoriteBooks, recentlyRead] = await Promise.all([
+	getFavoriteBooks(),
+	getRecentlyRead(10)
+])
+
+const favoriteBooksList = favoriteBooks.map(toFavoriteItem)
+const recentlyReadList = recentlyRead.map(toFavoriteItem)
 ---
 <style>
 	h3 {
@@ -64,11 +74,23 @@ const allFavorites = Object.keys(favorites)
 
 </style>
 
-<Layout title="Favorites • Films, Series, Albums, Songs, and Games" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, songs, and games; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
+<Layout title="Favorites &#x2022;&#xa0;Films, Series, Albums, Songs, and Games" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, songs, and games; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
+	{favoriteBooksList.length > 0 && (
+		<section id="books">
+			<h3>Books</h3>
+			<FavoritesComponent list={favoriteBooksList} />
+		</section>
+	)}
 	{allFavorites.map(({ title, list }) => (
 		<section id={title.toLowerCase()}>
 			<h3>{title}</h3>
 			<FavoritesComponent list={list} />
 		</section>
 	))}
+	{recentlyReadList.length > 0 && (
+		<section id="recently-read">
+			<h3>Recently Read</h3>
+			<FavoritesComponent list={recentlyReadList} />
+		</section>
+	)}
 </Layout>

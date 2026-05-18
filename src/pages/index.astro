@@ -9,6 +9,8 @@ import { getRepositories } from '@/lib/get-repositories.ts';
 import { Collection } from '@/components/collection/collection.tsx';
 import { Project } from '@/components/project/project.tsx';
 import { ContactForm } from '@/components/contact-form/contact-form.tsx'
+import CurrentlyReading from '@/components/currently-reading/currently-reading.astro'
+import { getCurrentlyReading } from '@/lib/goodreads'
 
 export const prerender = true
 
@@ -18,6 +20,8 @@ const REPO_LIMIT = 6
 const repos = await getRepositories({
 	limit: REPO_LIMIT,
 })
+
+const currentlyReading = await getCurrentlyReading()
 
 const posts = await getCollection('posts', ({ data }) => {
 	const canShow = import.meta.env.PROD ? data.draft !== true : true;
@@ -86,6 +90,9 @@ const posts = await getCollection('posts', ({ data }) => {
 			<div class="image"><Image src="https://dschau-website.imgix.net/gatsby-cropped.jpeg" alt="My time at Gatsby" layout="fullWidth" height={450} background="auto"/></div>
 		</div>
 	</section>
+	{currentlyReading.length > 0 && (
+		<CurrentlyReading books={currentlyReading} />
+	)}
 	<section>
 		<h3>recent posts</h3>
 		<p>I try to blog about topics that interest me. Maybe they interest you! Some recent ones are below.</p>

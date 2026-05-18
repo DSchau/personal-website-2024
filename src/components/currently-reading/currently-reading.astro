@@ -1,0 +1,85 @@
+---
+import type { GoodreadsBook } from '@/lib/goodreads'
+
+interface Props {
+  books: GoodreadsBook[]
+}
+
+const { books } = Astro.props
+const book = books[0]
+---
+<style>
+  .currently-reading {
+    max-width: var(--content-width);
+    margin: var(--padding-lg) auto;
+    padding: var(--padding-lg);
+
+    display: flex;
+    align-items: center;
+    gap: var(--padding-lg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+  }
+
+  .label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-accent-color);
+    margin: 0 0 var(--padding-s);
+  }
+
+  .cover {
+    flex-shrink: 0;
+    width: 48px;
+    height: 72px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .details {
+    min-width: 0;
+  }
+
+  .title {
+    font-size: var(--text-md);
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color);
+  }
+
+  .title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .title a:hover {
+    text-decoration: underline;
+  }
+
+  .author {
+    font-size: var(--text-s);
+    color: var(--text-accent-color);
+    margin: 0;
+  }
+
+  .page-count {
+    font-size: var(--text-xs);
+    color: var(--text-accent-color);
+    margin: var(--padding-xs) 0 0;
+  }
+</style>
+
+<div class="currently-reading">
+  {book.imageUrl && (
+    <img class="cover" src={book.imageUrl} alt={book.title} loading="lazy" />
+  )}
+  <div class="details">
+    <p class="label">Currently Reading</p>
+    <p class="title"><a href={book.link}>{book.title}</a></p>
+    <p class="author">{book.author}</p>
+    {book.pageCount > 0 && <p class="page-count">{book.pageCount} pages</p>}
+  </div>
+</div>
