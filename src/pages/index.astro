@@ -43,6 +43,13 @@ const posts = await getCollection('posts', ({ data }) => {
 		margin: var(--padding-s) auto;
 		max-width: var(--content-width);
 		border-top: 1px solid var(--border-color);
+
+		font-size: var(--text-s);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--text-accent-color);
+		font-family: var(--body-font);
+		font-weight: normal;
 	}
 
 	section {
@@ -91,7 +98,10 @@ const posts = await getCollection('posts', ({ data }) => {
 		</div>
 	</section>
 	{currentlyReading.length > 0 && (
-		<CurrentlyReading books={currentlyReading} />
+		<section>
+			<h3>Currently Reading</h3>
+			<CurrentlyReading books={currentlyReading} />
+		</section>
 	)}
 	<section>
 		<h3>recent posts</h3>
