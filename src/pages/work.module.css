@@ -9,9 +9,6 @@
   padding: var(--padding-md) 0;
 }
 
-.title {
-  text-align: center;
-}
 
 .container > ul {
   margin: 0;

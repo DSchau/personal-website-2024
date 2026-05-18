@@ -26,21 +26,6 @@ const favoriteBooksList = favoriteBooks.map(toFavoriteItem)
 const recentlyReadList = recentlyRead.map(toFavoriteItem)
 ---
 <style>
-	h3 {
-		text-align: center;
-		margin: var(--padding-s) auto;
-		max-width: var(--content-width);
-		border-top: 1px solid var(--border-color);
-		padding-top: var(--padding-lg);
-
-		font-size: var(--text-s);
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--text-accent-color);
-		font-family: var(--body-font);
-		font-weight: normal;
-	}
-
 	section {
 		margin: var(--padding-lg) 0;
 		padding: var(--padding-lg) 0;
@@ -79,19 +64,19 @@ const recentlyReadList = recentlyRead.map(toFavoriteItem)
 <Layout title="Favorites &#x2022;&#xa0;Films, Series, Albums, Songs, and Games" byline="My favorite things" copy="These are some of my favorite things. Books, movies, series, albums, songs, and games; my top five favorites. You can learn a lot about a person by what they appreciate, what they enjoy, and what matters to them, so I hope this reveals a bit more about me.">
 	{favoriteBooksList.length > 0 && (
 		<section id="books">
-			<h3>Books</h3>
+			<h3 class="section-title">Books</h3>
 			<FavoritesComponent list={favoriteBooksList} />
 		</section>
 	)}
 	{allFavorites.map(({ title, list }) => (
 		<section id={title.toLowerCase()}>
-			<h3>{title}</h3>
+			<h3 class="section-title">{title}</h3>
 			<FavoritesComponent list={list} />
 		</section>
 	))}
 	{recentlyReadList.length > 0 && (
 		<section id="recently-read">
-			<h3>Recently Read</h3>
+			<h3 class="section-title">Recently Read</h3>
 			<FavoritesComponent list={recentlyReadList} />
 		</section>
 	)}

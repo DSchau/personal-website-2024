@@ -21,9 +21,6 @@ const posts = await getCollection('posts', ({ data }) => {
     font-size: var(--text-s);
   }
 
-  h2 {
-    text-align: center;
-  }
 
   .container {
     margin: 0 auto;
@@ -65,7 +62,7 @@ const posts = await getCollection('posts', ({ data }) => {
 
 <Layout title="All posts" byline="Occasionally interesting content" copy={`My blog, where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
-    <h2>{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
+    <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
     <ol reversed>
       {posts.map(post => {
         const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.slug}`

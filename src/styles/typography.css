@@ -69,3 +69,17 @@ ol > li, ul > li {
 blockquote {
   font-style: italic;
 }
+
+.section-title {
+  text-align: center;
+  margin: var(--padding-s) auto;
+  max-width: var(--content-width);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--padding-lg);
+  font-size: var(--text-md);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-accent-color);
+  font-family: var(--body-font);
+  font-weight: normal;
+}
