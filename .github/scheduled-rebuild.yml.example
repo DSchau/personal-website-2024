@@ -12,7 +12,7 @@ name: Scheduled rebuild
 
 on:
   schedule:
-    - cron: "0 13 * * 1" # daily at 13:00 UTC (~6am America/Los_Angeles)
+    - cron: "0 13 * * 1" # weekly at 13:00 UTC (~6am America/Los_Angeles)
   workflow_dispatch: {}
 
 jobs:
