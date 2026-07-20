@@ -50,15 +50,60 @@ function parseItems(xml: string): GoodreadsBook[] {
   return items;
 }
 
-async function fetchShelf(shelf: string): Promise<GoodreadsBook[]> {
+// A browser-like User-Agent reduces Goodreads' intermittent anti-bot
+// "404 - invalid user_id" responses on the RSS endpoints.
+const USER_AGENT =
+  "Mozilla/5.0 (compatible; dustinschau.com/favorites; +https://www.dustinschau.com)";
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Goodreads' RSS endpoints intermittently return a 404 (or a 200 with no
+// items) as an anti-scraping measure. Because /favorites is prerendered at
+// build time, a single failed fetch would bake an empty Books section into
+// the static page until the next rebuild, so we retry with a short backoff.
+async function fetchShelf(shelf: string, retries = 3): Promise<GoodreadsBook[]> {
   const url = `https://www.goodreads.com/review/list_rss/${USER_ID}?shelf=${shelf}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    console.error(`Failed to fetch Goodreads shelf "${shelf}": ${response.status}`);
-    return [];
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          "User-Agent": USER_AGENT,
+          Accept: "application/rss+xml, application/xml, text/xml",
+        },
+      });
+
+      if (response.ok) {
+        const items = parseItems(await response.text());
+        if (items.length > 0) {
+          return items;
+        }
+        // A 200 with zero items is almost always a transient anti-bot
+        // response for these shelves, so fall through and retry.
+        console.error(
+          `Goodreads shelf "${shelf}" returned 0 items (attempt ${attempt}/${retries})`
+        );
+      } else {
+        console.error(
+          `Goodreads shelf "${shelf}" returned ${response.status} (attempt ${attempt}/${retries})`
+        );
+      }
+    } catch (error) {
+      console.error(
+        `Goodreads shelf "${shelf}" fetch failed (attempt ${attempt}/${retries}):`,
+        error
+      );
+    }
+
+    if (attempt < retries) {
+      await sleep(attempt * 500);
+    }
   }
-  const xml = await response.text();
-  return parseItems(xml);
+
+  console.error(`Goodreads shelf "${shelf}" unavailable after ${retries} attempts`);
+  return [];
 }
 
 export async function getReadBooks(): Promise<GoodreadsBook[]> {

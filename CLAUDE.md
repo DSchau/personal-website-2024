@@ -12,6 +12,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Deployment
 This site is deployed to Cloudflare Pages using the `@astrojs/cloudflare` adapter in SSR mode (`output: 'server'`).
 
+The `/favorites` page is **prerendered** (`prerender = true`) and pulls books from Goodreads at build time. A daily GitHub Actions workflow (from `.github/scheduled-rebuild.yml.example`; move it to `.github/workflows/scheduled-rebuild.yml` to activate) POSTs to a Cloudflare Pages deploy hook so the baked-in Books and "Recently Read" sections refresh. This requires a `CLOUDFLARE_DEPLOY_HOOK_URL` repo secret pointing at the Pages deploy hook.
+
 ## Environment Variables
 
 Required environment variables (see `.env.sample`):
