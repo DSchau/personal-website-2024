@@ -160,7 +160,7 @@ export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
       height: "100%",
       backgroundColor: "#141210",
       backgroundImage:
-        "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(110, 82, 52, 0.28), transparent 58%)",
+        "radial-gradient(circle at 50% 0%, #3d2e22 0%, #141210 60%)",
       justifyContent: "space-between",
     }}
   >

@@ -17,7 +17,7 @@
   list-style-type: none;
 
   display: inline-block;
-  padding: var(--padding-s) var(--padding-lg);
+  padding: var(--padding-s) 0.7rem;
 }
 
 @media only screen and (min-width: 1024px) {
