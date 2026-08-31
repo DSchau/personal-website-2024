@@ -81,6 +81,17 @@ export const POST: APIRoute = async ({ request }) => {
     const email = formData.get('email') as string
     const message = formData.get('message')
 
+    if (!name || !email || !message) {
+      return new Response(
+        JSON.stringify({
+          message: `Missing required field`
+        }),
+        {
+          status: 400
+        }
+      )
+    }
+
     const { emailType, isMXValid, hasGravatar } = await validateEmail(email)
 
     const isValid = isMXValid && hasGravatar && emailType !== 'disposable'
@@ -91,17 +102,6 @@ export const POST: APIRoute = async ({ request }) => {
       }), {
         status: 500
       })
-    }
-  
-    if (!name || !email || !message) {
-      return new Response(
-        JSON.stringify({
-          message: `Missing required field`
-        }),
-        {
-          status: 400
-        }
-      )
     }
     const { error } = await resend.emails.send({
       from: `Website Contact Form <website@dschau.dev>`,
