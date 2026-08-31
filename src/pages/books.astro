@@ -10,7 +10,7 @@ const completed = await getCompletedReads();
 const hero = completed.slice(0, 5);
 const groups = groupReadsByYear(completed);
 const site = Astro.site;
-const ogImage = `${site?.href ?? "/"}api/og/books.png`;
+const ogImage = `${site?.href ?? "/"}api/og.png?type=books`;
 ---
 
 <style>
