@@ -1,0 +1,215 @@
+---
+import type { ReadsByYear } from "@/lib/goodreads";
+
+interface Props {
+  groups: ReadsByYear[];
+  total: number;
+}
+
+const { groups, total } = Astro.props;
+
+function formatDate(dateRead: string): string {
+  return new Date(dateRead).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+function formatPages(pageCount: number): string {
+  return `${pageCount.toLocaleString("en-US")} pp.`;
+}
+
+function formatRating(rating: number): string {
+  return "★".repeat(rating);
+}
+
+function shortTitle(title: string): string {
+  return title.replace(/\s+\(.*\)$/, "");
+}
+---
+
+<section class="reads">
+  <h3 class="section-title">All finished reads</h3>
+  <p class="lede">
+    {total.toLocaleString("en-US")} books, sorted by the day I finished them.
+  </p>
+
+  {groups.map((group) => (
+    <section class="year-group" aria-labelledby={`year-${group.year}`}>
+      <h4 class="year" id={`year-${group.year}`}>
+        {group.year}
+        <span class="year-count">{group.books.length}</span>
+      </h4>
+      <ul class="rows">
+        {group.books.map((book) => (
+          <li class="row">
+            {book.imageUrl ? (
+              <img
+                class="thumb"
+                src={book.imageUrl}
+                alt=""
+                width="40"
+                height="60"
+                loading="lazy"
+              />
+            ) : (
+              <span class="thumb thumb-empty" aria-hidden="true"></span>
+            )}
+            <div class="copy">
+              <a class="title" href={book.link}>{shortTitle(book.title)}</a>
+              <p class="author">{book.author}</p>
+            </div>
+            <time class="date" datetime={book.dateRead}>
+              {formatDate(book.dateRead)}
+            </time>
+            <span class="rating" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
+              {book.rating > 0 ? formatRating(book.rating) : ""}
+            </span>
+            <span class="pages">
+              {book.pageCount > 0 ? formatPages(book.pageCount) : ""}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</section>
+
+<style>
+  .reads {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 var(--padding-lg) var(--padding-xl);
+  }
+
+  .lede {
+    margin: 0 auto var(--padding-xl);
+    max-width: var(--content-width);
+    text-align: center;
+    color: var(--text-accent-color);
+    font-size: var(--text-s);
+  }
+
+  .year-group {
+    margin-top: var(--padding-xl);
+  }
+
+  .year {
+    display: flex;
+    align-items: baseline;
+    gap: var(--padding-md);
+    margin: 0 0 var(--padding-md);
+    font-family: var(--header-font);
+    font-size: var(--h3-size);
+    font-weight: 400;
+  }
+
+  .year-count {
+    font-family: var(--body-font);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-accent-color);
+  }
+
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-template-areas:
+      "thumb copy"
+      "thumb meta";
+    column-gap: var(--padding-lg);
+    row-gap: 0.15rem;
+    align-items: start;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .thumb {
+    grid-area: thumb;
+    width: 40px;
+    height: 60px;
+    margin: 0;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    background: #eee;
+  }
+
+  .thumb-empty {
+    display: block;
+  }
+
+  .copy {
+    grid-area: copy;
+    min-width: 0;
+  }
+
+  .title {
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: var(--text-md);
+    text-decoration: none;
+  }
+
+  .title:hover {
+    text-decoration: underline;
+    text-decoration-skip: ink;
+  }
+
+  .author {
+    margin: 0.1rem 0 0;
+    font-size: var(--text-s);
+    color: var(--text-accent-color);
+  }
+
+  .date,
+  .rating,
+  .pages {
+    font-size: var(--text-xs);
+    color: var(--text-accent-color);
+    white-space: nowrap;
+  }
+
+  .date {
+    grid-area: meta;
+  }
+
+  .rating,
+  .pages {
+    display: none;
+  }
+
+  .rating {
+    letter-spacing: 0.06em;
+    color: #8a6a22;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .row {
+      grid-template-columns: 40px minmax(0, 1fr) 7.5rem 4.25rem 4.5rem;
+      grid-template-areas: "thumb copy date rating pages";
+      align-items: center;
+    }
+
+    .date,
+    .rating,
+    .pages {
+      display: block;
+      font-size: var(--text-s);
+    }
+
+    .pages {
+      text-align: right;
+    }
+  }
+</style>

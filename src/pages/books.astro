@@ -1,0 +1,52 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import BookHero from "@/components/books/hero.astro";
+import BooksList from "@/components/books/list.astro";
+import { getCompletedReads, groupReadsByYear } from "@/lib/goodreads";
+
+export const prerender = true;
+
+const completed = await getCompletedReads();
+const hero = completed.slice(0, 5);
+const groups = groupReadsByYear(completed);
+const site = Astro.site;
+const ogImage = `${site?.href ?? "/"}api/og/books.png`;
+---
+
+<style>
+  :root {
+    --main-width: min(72rem, 100%);
+  }
+</style>
+
+<Layout
+  title="Books"
+  description="Every book I've finished, sorted by the day I finished it. The five most recent sit up top."
+  byline="What I've been reading"
+  copy="A running list of finished reads from my Goodreads shelf, newest first. Books without a completion date stay off the list."
+  meta={[
+    { name: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: site?.hostname.replace("www.", "") },
+    { property: "twitter:url", content: `${site?.href}books` },
+    { property: "og:image", content: ogImage },
+    { name: "twitter:image", content: ogImage },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+  ]}
+>
+  {hero.length > 0 && <BookHero books={hero} />}
+  {groups.length > 0 && <BooksList groups={groups} total={completed.length} />}
+  {completed.length === 0 && (
+    <p class="empty">Couldn't load books from Goodreads right now.</p>
+  )}
+</Layout>
+
+<style>
+  .empty {
+    margin: var(--padding-xl) auto;
+    max-width: var(--content-width);
+    padding: 0 var(--padding-lg);
+    text-align: center;
+    color: var(--text-accent-color);
+  }
+</style>

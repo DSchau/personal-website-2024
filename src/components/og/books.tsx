@@ -1,0 +1,216 @@
+import React from "react";
+
+export interface BooksOgBook {
+  title: string;
+  author: string;
+  imageUrl: string;
+}
+
+const TILT_SHIFTS = [8, 0, 14, 4, 10];
+
+function shortTitle(title: string): string {
+  return title.replace(/\s+\(.*\)$/, "");
+}
+
+function BookMockup({
+  book,
+  index,
+}: {
+  book: BooksOgBook;
+  index: number;
+}) {
+  const height = 248 + (index % 3) * 10;
+  const coverWidth = 154;
+  const spineWidth = 16;
+  const pageWidth = 11;
+  const lift = TILT_SHIFTS[index] ?? 6;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: lift,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "stretch",
+          height,
+          boxShadow: "0 28px 36px rgba(0, 0, 0, 0.5)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            width: spineWidth,
+            background:
+              "linear-gradient(90deg, #14110f 0%, #3a322c 46%, #241e1a 100%)",
+            borderTopLeftRadius: 3,
+            borderBottomLeftRadius: 3,
+          }}
+        />
+        {book.imageUrl ? (
+          <img
+            src={book.imageUrl}
+            width={coverWidth}
+            height={height}
+            style={{
+              objectFit: "cover",
+              width: coverWidth,
+              height,
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              width: coverWidth,
+              height,
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#2a2420",
+              color: "#e8dfd2",
+              fontFamily: "Rockwell",
+              fontSize: 18,
+              padding: 12,
+              textAlign: "center",
+            }}
+          >
+            {shortTitle(book.title)}
+          </div>
+        )}
+        <div
+          style={{
+            display: "flex",
+            width: pageWidth,
+            background:
+              "linear-gradient(90deg, #d8cdb6 0%, #f4ebda 48%, #e8deca 100%)",
+            borderTopRightRadius: 2,
+            borderBottomRightRadius: 2,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+const Bio = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: 20,
+      }}
+    >
+      <img
+        src="https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format"
+        width={64}
+        height={64}
+        style={{
+          height: 64,
+          width: 64,
+          borderRadius: 12,
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          paddingLeft: 10,
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "Rockwell Bold",
+            margin: 0,
+            padding: 0,
+            fontSize: 28,
+            color: "#f3ece3",
+          }}
+        >
+          Dustin Schau
+        </h2>
+        <p
+          style={{
+            fontFamily: "SFPro",
+            margin: 0,
+            padding: 0,
+            fontSize: 20,
+            color: "#b8aea2",
+          }}
+        >
+          Product & Engineering Leader
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#141210",
+      backgroundImage:
+        "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(110, 82, 52, 0.28), transparent 58%)",
+      justifyContent: "space-between",
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: 28,
+        fontFamily: "SFPro",
+        fontSize: 18,
+        letterSpacing: 4,
+        color: "#9a9084",
+      }}
+    >
+      RECENTLY FINISHED
+    </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        gap: 26,
+        paddingLeft: 48,
+        paddingRight: 48,
+      }}
+    >
+      {books.map((book, index) => (
+        <BookMockup key={`${book.title}-${index}`} book={book} index={index} />
+      ))}
+    </div>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: "Rockwell",
+          fontSize: 32,
+          padding: 24,
+          margin: 0,
+          color: "#f3ece3",
+        }}
+      >
+        dustinschau.com/books
+      </h3>
+      <Bio />
+    </div>
+  </div>
+);
