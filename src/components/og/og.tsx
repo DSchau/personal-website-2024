@@ -14,7 +14,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
         <li
           key={item}
           style={{
-            fontFamily: "SFPro",
+            fontFamily: "Rockwell",
             margin: 10,
             padding: 10,
             fontSize: 18,
@@ -69,7 +69,7 @@ const Bio = ({ avatarUrl }: { avatarUrl?: string }) => {
         </h2>
         <p
           style={{
-            fontFamily: "SFPro",
+            fontFamily: "Rockwell",
             margin: 0,
             padding: 0,
             fontSize: 24,
@@ -121,8 +121,6 @@ export const OG = ({
           width: "100%",
           height: "100%",
           backgroundColor: "white",
-          backgroundImage: `radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)`,
-          backgroundSize: "100px 100px",
           alignItems: "center",
           justifyContent: "space-between",
         }}

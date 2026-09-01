@@ -23,7 +23,7 @@ export const FallbackOG = ({
     <div
       style={{
         display: "flex",
-        fontFamily: "SFPro",
+        fontFamily: "Rockwell",
         fontSize: 20,
         letterSpacing: 4,
         color: "#8c8578",

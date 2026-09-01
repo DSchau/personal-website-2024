@@ -13,9 +13,11 @@ import fallbackPng from "../../assets/og-fallback.png";
 
 export const prerender = false;
 
-const COVER_TIMEOUT_MS = 2500;
-const MAX_COVER_BYTES = 80_000;
+const COVER_TIMEOUT_MS = 1500;
+const MAX_COVER_BYTES = 24_000;
 const MIN_PNG_BYTES = 1000;
+const BOOK_COUNT = 3;
+const COVER_HEIGHT = 80;
 const AVATAR_URL =
   "https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&fm=jpg";
 
@@ -156,10 +158,11 @@ async function toDataUri(url: string, timeoutMs = COVER_TIMEOUT_MS): Promise<str
 }
 
 async function loadFonts() {
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
+  // Skip SFPro (~299KB). Passing three full fonts plus covers into Satori
+  // was enough to trip Cloudflare error 1102 (worker resource limits).
+  const [rockwell, rockwellBold] = await Promise.all([
     import("../../assets/fonts/Rockwell.ttf").then((mod) => mod.default),
     import("../../assets/fonts/Rockwell-Bold.ttf").then((mod) => mod.default),
-    import("../../assets/fonts/SFPro.otf").then((mod) => mod.default),
   ]);
 
   return [
@@ -171,11 +174,6 @@ async function loadFonts() {
     {
       name: "Rockwell",
       data: asArrayBuffer(rockwell),
-      style: "normal" as const,
-    },
-    {
-      name: "SFPro",
-      data: asArrayBuffer(sfPro),
       style: "normal" as const,
     },
   ];
@@ -207,28 +205,26 @@ export const GET: APIRoute = async function GET({ request }) {
 
     if (type === "books") {
       let books: { title: string; author: string; imageUrl: string }[] = [];
-      let avatarUrl = "";
 
       try {
-        const recent = await getRecentlyReadFirstPage(5);
-        const [covers, avatar] = await Promise.all([
-          Promise.all(
-            recent.map((book) => toDataUri(resizeCover(book.imageUrl, 160)))
-          ),
-          toDataUri(AVATAR_URL),
-        ]);
+        const recent = await getRecentlyReadFirstPage(BOOK_COUNT, {
+          timeoutMs: 2500,
+          retries: 1,
+        });
+        const covers = await Promise.all(
+          recent.map((book) => toDataUri(resizeCover(book.imageUrl, COVER_HEIGHT)))
+        );
         books = recent.map((book, index) => ({
           title: book.title,
           author: book.author,
           imageUrl: covers[index] ?? "",
         }));
-        avatarUrl = avatar;
       } catch (error) {
         console.error("Books OG data failed:", error);
       }
 
       try {
-        const bytes = await renderPng(BooksOG({ books, avatarUrl }), {
+        const bytes = await renderPng(BooksOG({ books }), {
           width: 1200,
           height: 630,
           fonts,
