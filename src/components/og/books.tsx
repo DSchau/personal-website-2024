@@ -39,7 +39,7 @@ function BookMockup({
           display: "flex",
           alignItems: "stretch",
           height,
-          boxShadow: "0 28px 36px rgba(0, 0, 0, 0.5)",
+          boxShadow: "0 24px 32px rgba(74, 46, 16, 0.3)",
         }}
       >
         <div
@@ -130,7 +130,7 @@ const Bio = () => {
             margin: 0,
             padding: 0,
             fontSize: 28,
-            color: "#f3ece3",
+            color: "#2e2a24",
           }}
         >
           Dustin Schau
@@ -141,7 +141,7 @@ const Bio = () => {
             margin: 0,
             padding: 0,
             fontSize: 20,
-            color: "#b8aea2",
+            color: "#6f665a",
           }}
         >
           Product & Engineering Leader
@@ -158,9 +158,9 @@ export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
       flexDirection: "column",
       width: "100%",
       height: "100%",
-      backgroundColor: "#141210",
+      backgroundColor: "#f3eee4",
       backgroundImage:
-        "radial-gradient(circle at 50% 0%, #3d2e22 0%, #141210 60%)",
+        "radial-gradient(circle at 50% 0%, #fbf8f2 0%, #f3eee4 60%)",
       justifyContent: "space-between",
     }}
   >
@@ -172,7 +172,7 @@ export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
         fontFamily: "SFPro",
         fontSize: 18,
         letterSpacing: 4,
-        color: "#9a9084",
+        color: "#8c8578",
       }}
     >
       RECENTLY FINISHED
@@ -205,7 +205,7 @@ export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
           fontSize: 32,
           padding: 24,
           margin: 0,
-          color: "#f3ece3",
+          color: "#2e2a24",
         }}
       >
         dustinschau.com/books

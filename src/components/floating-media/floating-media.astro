@@ -1,0 +1,628 @@
+---
+import type { ImageMetadata } from "astro";
+
+export type MediaKind = "book" | "vinyl" | "case" | "game";
+
+interface Props {
+  /**
+   * book: bound hardcover · vinyl: sleeve + record ·
+   * case: DVD/Blu-ray box · game: PS5-style disc case
+   */
+  kind?: MediaKind;
+  image?: string | ImageMetadata | null;
+  title: string;
+  /** Rendered height in px; width and thickness scale from it. */
+  height: number;
+  /** Y-rotation in degrees. Positive shows the spine, negative the fore-edge. */
+  pose?: number;
+  /** In-plane lean in degrees, like a product shot not quite squared up. */
+  lean?: number;
+  /** Depth of the object in px (book page block / case shell). */
+  thickness?: number;
+  /** Fixed stage height so differently sized pieces share a baseline. */
+  stageHeight?: number;
+  /** Seed for deterministic per-item variance; defaults to the title. */
+  seedKey?: string;
+  eager?: boolean;
+}
+
+const ASPECTS: Record<MediaKind, number> = {
+  book: 0.66,
+  vinyl: 1,
+  case: 0.73,
+  game: 0.7,
+};
+
+const {
+  kind = "book",
+  image,
+  title,
+  height,
+  pose: poseProp,
+  lean: leanProp,
+  thickness,
+  stageHeight = height + 8,
+  seedKey = title,
+  eager = false,
+} = Astro.props;
+
+function hash(input: string): number {
+  let h = 0;
+  for (let i = 0; i < input.length; i++) {
+    h = (h * 31 + input.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+const isCase = kind === "case" || kind === "game";
+const seed = hash(seedKey);
+// Slight per-item variance keeps a row from feeling stamped out.
+const pose =
+  poseProp ?? (seed % 2 === 0 ? 1 : -1) * (kind === "vinyl" ? 6 + (seed % 5) : 10 + (seed % 9));
+const lean = leanProp ?? ((seed >> 3) % 7) - 3;
+const h = height - (seed % 3) * Math.round(height * 0.03);
+const w = Math.round(h * ASPECTS[kind]);
+const depth =
+  thickness ??
+  (kind === "book"
+    ? Math.round(h * 0.1)
+    : isCase
+      ? Math.max(10, Math.round(h * 0.07))
+      : 4);
+const floatDelay = -((seed % 50) / 10);
+const src = typeof image === "string" ? image : (image?.src ?? "");
+const hue = seed % 360;
+---
+
+<span
+  class:list={["stage", `kind-${kind}`]}
+  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue};`}
+>
+  <span class="shadow" aria-hidden="true"></span>
+  <span class="float">
+    <span class="media-3d">
+      {kind === "vinyl" && <span class="disc" aria-hidden="true"></span>}
+      <span class="face back" aria-hidden="true"></span>
+      {kind !== "vinyl" && (
+        <span
+          class="face spine"
+          aria-hidden="true"
+          style={src ? `background-image: url(${JSON.stringify(src)});` : undefined}
+        />
+      )}
+      {kind === "book" && (
+        <>
+          <span class="face edge-top" aria-hidden="true"></span>
+          <span class="face edge-fore" aria-hidden="true"></span>
+        </>
+      )}
+      {isCase && (
+        <>
+          <span class="face side-top" aria-hidden="true"></span>
+          <span class="face side-fore" aria-hidden="true"></span>
+        </>
+      )}
+      <span class="face front">
+        {src ? (
+          <img
+            src={src}
+            alt=""
+            width={w}
+            height={h}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ) : (
+          <span class="front-fallback">{title}</span>
+        )}
+      </span>
+    </span>
+  </span>
+</span>
+
+<style>
+  .stage {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: var(--stage-h);
+    perspective: 1400px;
+  }
+
+  .float {
+    display: block;
+    animation: levitate 7s ease-in-out infinite;
+    animation-delay: var(--float-delay);
+  }
+
+  .media-3d {
+    position: relative;
+    display: block;
+    width: var(--mw);
+    height: var(--mh);
+    transform-style: preserve-3d;
+    transform-origin: 50% 90%;
+    transform: rotate(var(--lean)) rotateY(var(--pose)) rotateX(4deg);
+    transition: transform 0.6s var(--ease-fn);
+    will-change: transform;
+  }
+
+  :global(a:hover) .media-3d,
+  :global(a:focus-visible) .media-3d {
+    transform: rotate(calc(var(--lean) * 0.25)) rotateY(calc(var(--pose) * 0.35))
+      rotateX(2deg) translateZ(34px);
+  }
+
+  .face {
+    position: absolute;
+    display: block;
+    backface-visibility: hidden;
+  }
+
+  /* ---------- front artwork ---------- */
+
+  .front {
+    inset: 0;
+    overflow: hidden;
+    background: #ece5d8;
+    transform: translateZ(calc(var(--d) / 2));
+    box-shadow: 0 0 0 1px rgba(48, 38, 24, 0.22);
+  }
+
+  .kind-book .front {
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* Cases hinge on the left: square hinge edge, rounded opening edge. */
+  .kind-case .front,
+  .kind-game .front {
+    border-radius: 2px 8px 8px 2px;
+  }
+
+  /* The translucent banner across the top of a DVD/Blu-ray case. */
+  .kind-case .front::before,
+  .kind-game .front::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(64, 140, 218, 0.92) 0%,
+      rgba(23, 84, 158, 0.9) 82%,
+      rgba(10, 48, 96, 0.92) 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .kind-vinyl .front {
+    border-radius: 1px;
+  }
+
+  .front img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: cover;
+  }
+
+  /* The banner sits above the artwork, not over it. Margins are computed
+     from --mh because percentage margins resolve against width — and
+     absolutely positioned children inside 3D faces paint unreliably. */
+  .kind-case .front img,
+  .kind-game .front img {
+    margin-top: calc(var(--mh) * 0.08);
+    height: calc(var(--mh) * 0.92);
+  }
+
+  /* Games read as a PS5 case: the blue shell wraps the whole thing,
+     with a white banner and the artwork inset inside the blue frame. */
+  .kind-game .front {
+    background: linear-gradient(160deg, #4a7dea 0%, #2c56c4 55%, #1c3c96 100%);
+  }
+
+  .kind-game .front::before {
+    top: calc(var(--mh) * 0.02);
+    left: 2.5%;
+    right: 2.5%;
+    height: calc(var(--mh) * 0.08);
+    border-radius: 2px;
+    background: linear-gradient(180deg, #ffffff 0%, #f2f2f5 70%, #dfe0e6 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(20, 30, 60, 0.25);
+  }
+
+  .kind-game .front img {
+    display: block;
+    margin: calc(var(--mh) * 0.1) auto 0;
+    width: 95%;
+    height: calc(var(--mh) * 0.88);
+  }
+
+  .front::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    /* Key light from the upper right, falloff toward the left edge. */
+    background: linear-gradient(
+      255deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.06) 28%,
+      rgba(0, 0, 0, 0.02) 55%,
+      rgba(28, 20, 10, 0.18) 100%
+    );
+    box-shadow:
+      inset 5px 0 7px -3px rgba(28, 20, 10, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset -1px 0 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Plastic gloss streak plus the two hinge grooves near the spine. */
+  .kind-case .front::after,
+  .kind-game .front::after {
+    background:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 3.4%,
+        rgba(0, 0, 0, 0.3) 3.4%,
+        rgba(0, 0, 0, 0.3) 4.1%,
+        transparent 4.1%,
+        transparent 7%,
+        rgba(0, 0, 0, 0.22) 7%,
+        rgba(0, 0, 0, 0.22) 7.6%,
+        transparent 7.6%
+      ),
+      linear-gradient(
+        105deg,
+        transparent 32%,
+        rgba(255, 255, 255, 0.24) 44%,
+        rgba(255, 255, 255, 0.05) 54%,
+        transparent 62%
+      ),
+      linear-gradient(
+        255deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.04) 28%,
+        rgba(0, 0, 0, 0.02) 55%,
+        rgba(28, 20, 10, 0.2) 100%
+      );
+    z-index: 2;
+  }
+
+  /* Just the plastic gloss; the blue shell itself is the front background. */
+  .kind-game .front::after {
+    background:
+      linear-gradient(
+        105deg,
+        transparent 32%,
+        rgba(255, 255, 255, 0.22) 44%,
+        rgba(255, 255, 255, 0.05) 54%,
+        transparent 62%
+      ),
+      linear-gradient(
+        255deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.04) 28%,
+        rgba(0, 0, 20, 0.04) 55%,
+        rgba(10, 20, 60, 0.22) 100%
+      );
+  }
+
+  /* Sleeves are printed cardboard: flatter light, visible fold on the left. */
+  .kind-vinyl .front::after {
+    background: linear-gradient(
+      255deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.04) 30%,
+      rgba(0, 0, 0, 0.03) 60%,
+      rgba(28, 20, 10, 0.14) 100%
+    );
+    box-shadow:
+      inset 3px 0 4px -2px rgba(28, 20, 10, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .front-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0.6rem;
+    text-align: center;
+    font-family: var(--header-font);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    color: #4a3a28;
+    background: linear-gradient(160deg, #d8cdb6 0%, #c4b697 100%);
+  }
+
+  /* ---------- back / spine / edges ---------- */
+
+  .back {
+    inset: 0;
+    background: linear-gradient(200deg, #383026 0%, #241e17 100%);
+    transform: translateZ(calc(var(--d) / -2)) rotateY(180deg);
+    box-shadow: 0 0 0 1px rgba(20, 14, 8, 0.6);
+  }
+
+  .kind-book .back {
+    border-radius: 2px 0 0 2px;
+  }
+
+  .kind-case .back,
+  .kind-game .back {
+    border-radius: 8px 2px 2px 8px;
+    background: linear-gradient(200deg, #26221e 0%, #17130f 100%);
+  }
+
+  .kind-game .back {
+    background: linear-gradient(200deg, #2a4a9e 0%, #16295c 100%);
+  }
+
+  /* Case spines are dark plastic with only a tint of the artwork. */
+  .kind-case .spine,
+  .kind-game .spine {
+    border-radius: 2px 0 0 2px;
+  }
+
+  .kind-game .spine::after {
+    background: linear-gradient(
+      90deg,
+      rgba(20, 40, 110, 0.7) 0%,
+      rgba(70, 120, 230, 0.45) 25%,
+      rgba(20, 40, 110, 0.55) 60%,
+      rgba(8, 18, 60, 0.8) 100%
+    );
+  }
+
+  .kind-case .spine::after {
+    background: linear-gradient(
+      90deg,
+      rgba(10, 8, 5, 0.75) 0%,
+      rgba(30, 26, 22, 0.55) 25%,
+      rgba(10, 8, 5, 0.6) 60%,
+      rgba(5, 4, 2, 0.8) 100%
+    );
+  }
+
+  .kind-vinyl .back {
+    border-radius: 1px;
+    background: linear-gradient(200deg, #d9d0bd 0%, #bfb49c 100%);
+  }
+
+  /* The spine wears a stretched slice of the artwork so it matches. */
+  .spine {
+    top: 0;
+    left: 0;
+    width: var(--d);
+    height: 100%;
+    transform-origin: left center;
+    transform: translateZ(calc(var(--d) / 2)) rotateY(-90deg);
+    border-radius: 3px 0 0 3px;
+    background-color: #383026;
+    /* A heavily zoomed smear of the artwork: picks up the cover's palette
+       without reading as a duplicated strip of the front. */
+    background-size: 1100% 340%;
+    background-position: 10% 32%;
+  }
+
+  .spine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
+      rgba(15, 10, 5, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 22%,
+      rgba(15, 10, 5, 0.18) 55%,
+      rgba(15, 10, 5, 0.55) 100%
+    );
+  }
+
+  /* Book page block, inset so the boards overhang it slightly. */
+  .edge-fore {
+    top: 3px;
+    right: 1px;
+    width: calc(var(--d) - 3px);
+    height: calc(100% - 6px);
+    transform-origin: right center;
+    transform: translateZ(calc((var(--d) - 3px) / 2)) rotateY(90deg);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(168, 148, 110, 0.28) 0px,
+        rgba(168, 148, 110, 0.28) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      linear-gradient(90deg, #efe8d6 0%, #fdfaf1 35%, #f6f0e0 82%, #e3d9c1 100%);
+    box-shadow: inset 2px 0 3px -1px rgba(60, 45, 25, 0.4);
+  }
+
+  .edge-top {
+    top: 1px;
+    left: 4px;
+    width: calc(100% - 6px);
+    height: calc(var(--d) - 3px);
+    transform-origin: top center;
+    transform: translateZ(calc((var(--d) - 3px) / 2)) rotateX(90deg);
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(168, 148, 110, 0.24) 0px,
+        rgba(168, 148, 110, 0.24) 1px,
+        transparent 1px,
+        transparent 3px
+      ),
+      linear-gradient(180deg, #fdfaf1 0%, #ece3cd 100%);
+  }
+
+  /* Case shell sides: dark plastic instead of paper. */
+  .side-fore {
+    top: 1px;
+    right: 0;
+    width: var(--d);
+    height: calc(100% - 2px);
+    transform-origin: right center;
+    transform: translateZ(calc(var(--d) / 2)) rotateY(90deg);
+    background: linear-gradient(90deg, #2b2622 0%, #17130f 100%);
+  }
+
+  .side-top {
+    top: 0;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: var(--d);
+    transform-origin: top center;
+    transform: translateZ(calc(var(--d) / 2)) rotateX(90deg);
+    background: linear-gradient(180deg, #35302a 0%, #1c1712 100%);
+  }
+
+  .kind-game .side-fore {
+    background: linear-gradient(90deg, #35569e 0%, #1a2c62 100%);
+  }
+
+  .kind-game .side-top {
+    background: linear-gradient(180deg, #eef0f4 0%, #b9c0d4 100%);
+  }
+
+  /* ---------- vinyl record ---------- */
+
+  .disc {
+    position: absolute;
+    top: 4%;
+    right: -16%;
+    width: 92%;
+    height: 92%;
+    border-radius: 50%;
+    transform: translateZ(-1px);
+    transition: transform 0.8s var(--ease-fn);
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        #0c0c0c 0%,
+        #0c0c0c 2.5%,
+        #f3eee4 2.5%,
+        #f3eee4 4%,
+        hsl(var(--hue), 45%, 42%) 4%,
+        hsl(var(--hue), 45%, 34%) 17%,
+        hsl(var(--hue), 30%, 24%) 18%,
+        transparent 18.5%
+      ),
+      conic-gradient(
+        from 205deg,
+        rgba(255, 255, 255, 0.14) 0deg,
+        transparent 40deg,
+        transparent 160deg,
+        rgba(255, 255, 255, 0.1) 200deg,
+        transparent 240deg
+      ),
+      repeating-radial-gradient(
+        circle at 50% 50%,
+        #0b0b0b 0px,
+        #161616 1px,
+        #0e0e0e 2px,
+        #131313 3px
+      );
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.65),
+      6px 8px 18px -6px rgba(30, 22, 10, 0.5);
+  }
+
+  /* The record slips out and spins when you pick the sleeve up. */
+  :global(a:hover) .disc,
+  :global(a:focus-visible) .disc {
+    transform: translateZ(-1px) translateX(14%) rotate(140deg);
+  }
+
+  /* ---------- shadow + motion ---------- */
+
+  .shadow {
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: calc(var(--mw) * 1.4);
+    height: calc(var(--mh) * 0.1);
+    margin-left: calc(var(--mw) * -0.8);
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 50% 50% at 50% 50%,
+      rgba(52, 40, 22, 0.4),
+      rgba(52, 40, 22, 0.16) 55%,
+      transparent 75%
+    );
+    filter: blur(6px);
+    animation: shadow-breathe 7s ease-in-out infinite;
+    animation-delay: var(--float-delay);
+    transition: transform 0.6s var(--ease-fn), opacity 0.6s var(--ease-fn);
+  }
+
+  .kind-vinyl .shadow {
+    width: calc(var(--mw) * 1.6);
+    margin-left: calc(var(--mw) * -0.85);
+  }
+
+  :global(a:hover) > .stage .shadow,
+  :global(a:focus-visible) > .stage .shadow {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+
+  @keyframes levitate {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes shadow-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.93);
+      opacity: 0.75;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float,
+    .shadow {
+      animation: none;
+    }
+
+    .media-3d,
+    .shadow,
+    .disc {
+      transition: none;
+    }
+
+    :global(a:hover) .media-3d,
+    :global(a:focus-visible) .media-3d {
+      transform: rotate(var(--lean)) rotateY(var(--pose)) rotateX(4deg);
+    }
+
+    :global(a:hover) .disc,
+    :global(a:focus-visible) .disc {
+      transform: translateZ(-1px);
+    }
+  }
+</style>

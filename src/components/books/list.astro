@@ -8,19 +8,6 @@ interface Props {
 
 const { groups, total } = Astro.props;
 
-function formatDate(dateRead: string): string {
-  return new Date(dateRead).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-}
-
-function formatPages(pageCount: number): string {
-  return `${pageCount.toLocaleString("en-US")} pp.`;
-}
-
 function formatRating(rating: number): string {
   return "★".repeat(rating);
 }
@@ -33,7 +20,7 @@ function shortTitle(title: string): string {
 <section class="reads">
   <h3 class="section-title">All finished reads</h3>
   <p class="lede">
-    {total.toLocaleString("en-US")} books, sorted by the day I finished them.
+    {total.toLocaleString("en-US")} books
   </p>
 
   {groups.map((group) => (
@@ -61,14 +48,8 @@ function shortTitle(title: string): string {
               <a class="title" href={book.link}>{shortTitle(book.title)}</a>
               <p class="author">{book.author}</p>
             </div>
-            <time class="date" datetime={book.dateRead}>
-              {formatDate(book.dateRead)}
-            </time>
             <span class="rating" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
               {book.rating > 0 ? formatRating(book.rating) : ""}
-            </span>
-            <span class="pages">
-              {book.pageCount > 0 ? formatPages(book.pageCount) : ""}
             </span>
           </li>
         ))}
@@ -172,52 +153,24 @@ function shortTitle(title: string): string {
     color: var(--text-accent-color);
   }
 
-  .date,
-  .rating,
-  .pages {
-    font-size: var(--text-xs);
-    color: var(--text-accent-color);
-    white-space: nowrap;
-  }
-
-  .date {
-    grid-area: meta;
-  }
-
-  .rating,
-  .pages {
-    display: none;
-  }
-
   .rating {
-    letter-spacing: 0.06em;
+    grid-area: meta;
+    font-size: var(--text-xs);
     color: #8a6a22;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
   }
 
   @media only screen and (min-width: 768px) {
     .row {
-      grid-template-columns: 40px minmax(0, 1fr) 7.5rem 4.25rem 4.5rem;
-      grid-template-areas: "thumb copy date rating pages";
+      grid-template-columns: 40px minmax(0, 1fr) 4.25rem;
+      grid-template-areas: "thumb copy rating";
       align-items: center;
-    }
-
-    .date,
-    .rating,
-    .pages {
-      display: block;
-      font-size: var(--text-s);
-    }
-
-    .date {
-      grid-area: date;
     }
 
     .rating {
       grid-area: rating;
-    }
-
-    .pages {
-      grid-area: pages;
+      font-size: var(--text-s);
       text-align: right;
     }
   }

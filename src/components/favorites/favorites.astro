@@ -1,28 +1,47 @@
 ---
-import { Picture } from 'astro:assets'
 import styles from './favorites.module.css'
 
 import FancyLink from '../fancy-link/fancy-link.astro'
+import FloatingMedia from '../floating-media/floating-media.astro'
+import type { MediaKind } from '../floating-media/floating-media.astro'
 
-const { list } = Astro.props
-
-function isRemoteImage(image: any): boolean {
-  return typeof image === 'string' && image.startsWith('http')
+interface Props {
+  list: any[];
+  kind?: MediaKind;
 }
+
+const { list, kind = 'book' } = Astro.props
+
+const HEIGHTS: Record<MediaKind, number> = {
+  book: 200,
+  case: 210,
+  game: 210,
+  vinyl: 170,
+}
+
+const height = HEIGHTS[kind]
 ---
 <ul class={styles.container}>
   {
     list.map((item: any) => (
       <li class={styles.item}>
-          {item.image && (
-            isRemoteImage(item.image)
-              ? <img src={item.image} height={200} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle}` : ''}`} loading="lazy" />
-              : <Picture src={item.image} formats={['avif', 'webp']} height={200} alt={`${item.title}${item.subtitle ? ` by ${item.subtitle}` : ''}`} loading="lazy" />
-          )}
-          <FancyLink href={item.hyperlink} class={styles.title}>
-            {item.title}
-            {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
-          </FancyLink>
+        <a
+          class={styles.media}
+          href={item.hyperlink}
+          aria-label={`${item.title}${item.subtitle ? ` by ${item.subtitle}` : ''}`}
+        >
+          <FloatingMedia
+            kind={kind}
+            image={item.image}
+            title={item.title}
+            height={height}
+            stageHeight={height + 16}
+          />
+        </a>
+        <FancyLink href={item.hyperlink} class={styles.title}>
+          {item.title}
+          {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
+        </FancyLink>
       </li>
     ))
   }

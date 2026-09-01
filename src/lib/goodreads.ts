@@ -76,6 +76,57 @@ function bookKey(book: GoodreadsBook): string {
   return book.link || `${book.title}::${book.author}`;
 }
 
+// On Cloudflare, cache parsed shelf results at the edge for a day so
+// runtime consumers (the OG image route, /api/goodreads.json) don't hit
+// Goodreads on every request. `caches.default` only exists in the Workers
+// runtime — during `astro build`/`astro dev` this is a no-op and we fetch
+// directly. We cache parsed results rather than raw RSS responses because
+// Goodreads' anti-bot 200-with-zero-items replies must never be cached.
+const EDGE_CACHE_TTL_SECONDS = 86400;
+
+function getEdgeCache(): Cache | undefined {
+  if (typeof caches === "undefined") {
+    return undefined;
+  }
+  return (caches as unknown as { default?: Cache }).default;
+}
+
+async function readEdgeCache(url: string): Promise<GoodreadsBook[] | undefined> {
+  const cache = getEdgeCache();
+  if (!cache) {
+    return undefined;
+  }
+  try {
+    const hit = await cache.match(new Request(url));
+    if (!hit) {
+      return undefined;
+    }
+    return (await hit.json()) as GoodreadsBook[];
+  } catch {
+    return undefined;
+  }
+}
+
+async function writeEdgeCache(url: string, books: GoodreadsBook[]): Promise<void> {
+  const cache = getEdgeCache();
+  if (!cache) {
+    return;
+  }
+  try {
+    await cache.put(
+      new Request(url),
+      new Response(JSON.stringify(books), {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": `public, s-maxage=${EDGE_CACHE_TTL_SECONDS}`,
+        },
+      })
+    );
+  } catch {
+    // Cache writes are best-effort; the fetched data is still returned.
+  }
+}
+
 interface FetchShelfOptions {
   page?: number;
   retries?: number;
@@ -109,6 +160,11 @@ async function fetchShelf(
   });
   const url = `https://www.goodreads.com/review/list_rss/${USER_ID}?${params}`;
 
+  const cached = await readEdgeCache(url);
+  if (cached) {
+    return cached;
+  }
+
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await fetch(url, {
@@ -121,9 +177,13 @@ async function fetchShelf(
       if (response.ok) {
         const items = parseItems(await response.text());
         if (items.length > 0) {
+          await writeEdgeCache(url, items);
           return items;
         }
         if (!emptyMeansRetry) {
+          // A legitimate end-of-shelf page; cache it too so pagination
+          // doesn't re-poke Goodreads for the empty tail.
+          await writeEdgeCache(url, []);
           return [];
         }
         // A 200 with zero items is almost always a transient anti-bot
@@ -270,6 +330,15 @@ export function groupReadsByYear(books: CompletedRead[]): ReadsByYear[] {
   return [...groups.entries()]
     .sort((a, b) => b[0] - a[0])
     .map(([year, yearBooks]) => ({ year, books: yearBooks }));
+}
+
+// Goodreads/Amazon cover URLs embed the rendered size as `_SX###_` or
+// `_SY###_`; swapping the token requests a smaller variant from their CDN.
+export function resizeCover(url: string, height: number): string {
+  if (!url) {
+    return url;
+  }
+  return url.replace(/\._S[XY]\d+_\./, `._SY${height}_.`);
 }
 
 export function toFavoriteItem(book: GoodreadsBook) {
