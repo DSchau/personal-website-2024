@@ -9,8 +9,19 @@ export const prerender = true;
 const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
-// Host-relative so preview deploys don't point og:image at production.
-const ogImage = "/api/og.png?type=books";
+const site = Astro.site;
+// Absolute URL — scrapers resolve a relative og:image against /books/ and
+// 404. `latest` fingerprints the newest finished book so CDN/scrapers
+// refetch when the shelf changes. The PNG itself is generated at request
+// time from the single /api/og.png ImageResponse route.
+const latestRead =
+  completed.length > 0
+    ? new Date(completed[0].dateRead).toISOString().slice(0, 10)
+    : "none";
+const ogImage = new URL(
+  `/api/og.png?type=books&latest=${latestRead}`,
+  site ?? "https://www.dustinschau.com"
+).href;
 
 const totalPages = completed.reduce((sum, book) => sum + book.pageCount, 0);
 const busiest = groups.reduce(
@@ -33,7 +44,8 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
   copy="You can learn a lot about a person by what they read, so here's what I've been reading"
   meta={[
     { name: "twitter:card", content: "summary_large_image" },
-    { property: "twitter:url", content: "/books" },
+    { property: "twitter:domain", content: site?.hostname.replace("www.", "") },
+    { property: "twitter:url", content: `${site?.href ?? "/"}books` },
     { property: "og:image", content: ogImage },
     { name: "twitter:image", content: ogImage },
     { property: "og:image:width", content: "1200" },
