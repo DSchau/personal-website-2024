@@ -21,16 +21,17 @@ interface Props {
   thickness?: number;
   /** Fixed stage height so differently sized pieces share a baseline. */
   stageHeight?: number;
-  /** Seed for deterministic per-item variance; defaults to the title. */
-  seedKey?: string;
   eager?: boolean;
 }
 
+// For case/game the banner occupies the top of the box, so the width is
+// chosen to leave the area below it at poster proportions (~2:3) — the
+// banner adds to the artwork instead of squeezing it.
 const ASPECTS: Record<MediaKind, number> = {
   book: 0.66,
   vinyl: 1,
-  case: 0.73,
-  game: 0.7,
+  case: 0.64,
+  game: 0.63,
 };
 
 const {
@@ -42,25 +43,20 @@ const {
   lean: leanProp,
   thickness,
   stageHeight = height + 8,
-  seedKey = title,
   eager = false,
 } = Astro.props;
 
-function hash(input: string): number {
-  let h = 0;
-  for (let i = 0; i < input.length; i++) {
-    h = (h * 31 + input.charCodeAt(i)) | 0;
-  }
-  return Math.abs(h);
+function rand(min: number, max: number): number {
+  return Math.round((min + Math.random() * (max - min)) * 10) / 10;
 }
 
 const isCase = kind === "case" || kind === "game";
-const seed = hash(seedKey);
-// Slight per-item variance keeps a row from feeling stamped out.
-const pose =
-  poseProp ?? (seed % 2 === 0 ? 1 : -1) * (kind === "vinyl" ? 6 + (seed % 5) : 10 + (seed % 9));
-const lean = leanProp ?? ((seed >> 3) % 7) - 3;
-const h = height - (seed % 3) * Math.round(height * 0.03);
+// Random per-item variance keeps a row from feeling stamped out. These
+// pages are prerendered, so positions re-roll on every build.
+const maxPose = kind === "vinyl" ? 12 : 18;
+const pose = poseProp ?? (Math.random() < 0.5 ? -1 : 1) * rand(6, maxPose);
+const lean = leanProp ?? rand(-6, 6);
+const h = height - Math.round(rand(0, height * 0.06));
 const w = Math.round(h * ASPECTS[kind]);
 const depth =
   thickness ??
@@ -69,9 +65,9 @@ const depth =
     : isCase
       ? Math.max(10, Math.round(h * 0.07))
       : 4);
-const floatDelay = -((seed % 50) / 10);
+const floatDelay = -rand(0, 5);
 const src = typeof image === "string" ? image : (image?.src ?? "");
-const hue = seed % 360;
+const hue = Math.floor(Math.random() * 360);
 ---
 
 <span
@@ -146,7 +142,9 @@ const hue = seed % 360;
     transform-origin: 50% 90%;
     transform: rotate(var(--lean)) rotateY(var(--pose)) rotateX(4deg);
     transition: transform 0.6s var(--ease-fn);
-    will-change: transform;
+    /* No will-change here: pinning a compositor layer makes Chrome skip
+       re-rasterizing the face when a lazy-loaded cover finishes decoding,
+       leaving random blank fronts. */
   }
 
   :global(a:hover) .media-3d,

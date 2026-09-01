@@ -145,10 +145,13 @@ interface FetchShelfOptions {
 // empty section into the static page until the next rebuild, so we retry
 // with a short backoff. Empty *later* pages during pagination are expected
 // and must not retry-loop.
+//
+// Returns `null` when every attempt failed, so callers can tell a fetch
+// failure apart from a legitimately empty page.
 async function fetchShelf(
   shelf: string,
   options: FetchShelfOptions = {}
-): Promise<GoodreadsBook[]> {
+): Promise<GoodreadsBook[] | null> {
   const page = options.page ?? 1;
   const retries = options.retries ?? 3;
   const emptyMeansRetry = options.emptyMeansRetry ?? true;
@@ -211,7 +214,7 @@ async function fetchShelf(
   console.error(
     `Goodreads shelf "${shelf}" page ${page} unavailable after ${retries} attempts`
   );
-  return [];
+  return null;
 }
 
 async function fetchAllShelfPages(
@@ -224,7 +227,7 @@ async function fetchAllShelfPages(
     extraParams,
   });
 
-  if (first.length === 0) {
+  if (!first || first.length === 0) {
     return [];
   }
 
@@ -244,6 +247,15 @@ async function fetchAllShelfPages(
       emptyMeansRetry: false,
       extraParams,
     });
+
+    // A failed later page is NOT the end of the list. Throwing keeps a
+    // prerender from silently baking a truncated shelf — a failed build
+    // leaves the previous (complete) deploy in place.
+    if (items === null) {
+      throw new Error(
+        `Goodreads shelf "${shelf}" page ${page} failed after retries; aborting rather than truncating the shelf`
+      );
+    }
 
     if (items.length === 0) {
       break;
@@ -276,19 +288,25 @@ export async function getReadBooks(): Promise<GoodreadsBook[]> {
     order: "d",
   });
 
-  const books = await cachedReadBooks;
-  if (books.length === 0) {
+  try {
+    const books = await cachedReadBooks;
+    if (books.length === 0) {
+      cachedReadBooks = undefined;
+    }
+    return books;
+  } catch (error) {
+    // Don't cache a rejected promise; the next caller should retry.
     cachedReadBooks = undefined;
+    throw error;
   }
-  return books;
 }
 
 export async function getCurrentlyReading(): Promise<GoodreadsBook[]> {
-  return fetchShelf("currently-reading");
+  return (await fetchShelf("currently-reading")) ?? [];
 }
 
 export async function getFavoriteBooks(): Promise<GoodreadsBook[]> {
-  const books = await fetchShelf("favorites");
+  const books = (await fetchShelf("favorites")) ?? [];
   return books.filter((book) => book.rating > 0);
 }
 
@@ -309,6 +327,16 @@ export async function getCompletedReads(): Promise<CompletedRead[]> {
 export async function getRecentlyRead(count = 10): Promise<GoodreadsBook[]> {
   const books = await getCompletedReads();
   return books.slice(0, count);
+}
+
+// For runtime consumers (the OG image) that only need the newest handful:
+// the shelf is already sorted by date read, so one page is enough — no
+// need to paginate all ~150 books on every request.
+export async function getRecentlyReadFirstPage(count = 10): Promise<CompletedRead[]> {
+  const firstPage = await fetchShelf("read", {
+    extraParams: { sort: "date_read", order: "d" },
+  });
+  return sortByDateReadDesc(firstPage ?? []).slice(0, count);
 }
 
 export function groupReadsByYear(books: CompletedRead[]): ReadsByYear[] {

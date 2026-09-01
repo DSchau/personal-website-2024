@@ -36,7 +36,13 @@ export const GET: APIRoute = async function GET({ url }) {
     );
   }
 
-  const books = await loadShelf();
+  let books: GoodreadsBook[];
+  try {
+    books = await loadShelf();
+  } catch (error) {
+    console.error(`Goodreads shelf "${shelf}" failed:`, error);
+    books = [];
+  }
 
   return new Response(JSON.stringify({ shelf, count: books.length, books }), {
     status: books.length > 0 ? 200 : 503,

@@ -3,7 +3,7 @@ import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 
 import { OG } from "../../components/og/og";
 import { BooksOG } from "../../components/og/books";
-import { getRecentlyRead } from "../../lib/goodreads";
+import { getRecentlyReadFirstPage } from "../../lib/goodreads";
 
 export const prerender = false;
 
@@ -22,9 +22,10 @@ async function toDataUri(url: string): Promise<string> {
   }
 
   try {
+    // Satori can only rasterize jpeg/png/gif, so never ask for avif/webp.
     const response = await fetch(url, {
       headers: {
-        Accept: "image/avif,image/webp,image/*,*/*;q=0.8",
+        Accept: "image/jpeg,image/png;q=0.9,image/gif;q=0.8",
         "User-Agent":
           "Mozilla/5.0 (compatible; dustinschau.com/books; +https://www.dustinschau.com)",
       },
@@ -35,8 +36,10 @@ async function toDataUri(url: string): Promise<string> {
     }
 
     const contentType = response.headers.get("content-type") || "image/jpeg";
-    if (!contentType.startsWith("image/")) {
-      return url;
+    if (!/^image\/(jpe?g|png|gif)/.test(contentType)) {
+      // An unsupported format would make Satori throw; render the text
+      // fallback for this book instead.
+      return "";
     }
 
     const bytes = new Uint8Array(await response.arrayBuffer());
@@ -79,7 +82,7 @@ export const GET: APIRoute = async function GET({ request }) {
   const fonts = await loadFonts();
 
   if (type === "books") {
-    const recent = await getRecentlyRead(5);
+    const recent = await getRecentlyReadFirstPage(5);
     const books = await Promise.all(
       recent.map(async (book) => ({
         title: book.title,
