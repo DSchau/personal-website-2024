@@ -10,10 +10,15 @@ const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
 // Host-relative so preview deploys don't point og:image at production.
-// The `v` param busts a poisoned edge cache: before this route understood
-// `type`, prod answered ?type=books with the generic card and a one-year
-// Cache-Control, which Cloudflare kept serving. Bump `v` if that recurs.
-const ogImage = "/api/og.png?type=books&v=2";
+// `latest` fingerprints the card's content (the newest finished book), so
+// the URL — and therefore every cache between us and a social scraper —
+// rolls over exactly when the card would change. It also routes around
+// the stale edge entry cached back when this route ignored `type`.
+const latestRead =
+  completed.length > 0
+    ? new Date(completed[0].dateRead).toISOString().slice(0, 10)
+    : "none";
+const ogImage = `/api/og.png?type=books&latest=${latestRead}`;
 
 const totalPages = completed.reduce((sum, book) => sum + book.pageCount, 0);
 const busiest = groups.reduce(
