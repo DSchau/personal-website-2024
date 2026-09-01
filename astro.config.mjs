@@ -10,16 +10,21 @@ import icon from "astro-icon";
 
 const env = process.env.NODE_ENV;
 
-// Plugin to handle font and .bin files as ArrayBuffers (Cloudflare-compatible)
+// Plugin to handle font, PNG, and .bin files as ArrayBuffers (Cloudflare-compatible).
+// Vite may append ?query to the module id; strip it before matching/reading.
+// Base64 is much cheaper for the worker to parse than a decimal Uint8Array literal.
 function arrayBufferPlugin() {
   return {
     name: 'arraybuffer-loader',
     transform(code, id) {
-      if (id.endsWith('.bin') || id.endsWith('.ttf') || id.endsWith('.otf') || id.endsWith('.woff') || id.endsWith('.woff2')) {
-        const buffer = readFileSync(id);
-        const arr = Array.from(buffer);
+      const cleanId = id.split('?')[0];
+      const isFontOrBin = /\.(bin|ttf|otf|woff2?)$/i.test(cleanId);
+      const isOgFallback = /og-fallback\.png$/i.test(cleanId);
+      if (isFontOrBin || isOgFallback) {
+        const buffer = readFileSync(cleanId);
+        const b64 = buffer.toString('base64');
         return {
-          code: `export default new Uint8Array([${arr.join(',')}]).buffer`,
+          code: `const u8 = Uint8Array.from(atob(${JSON.stringify(b64)}), (c) => c.charCodeAt(0));\nexport default u8.buffer;`,
           map: null
         };
       }

@@ -10,17 +10,18 @@ const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
 const site = Astro.site;
-// The card is prerendered at build time (rendering it in a Worker request
-// exceeds the 10ms CPU budget). og:image must be an ABSOLUTE URL — the
-// OpenGraph spec requires it, and scrapers resolve relative values
-// against the page path (/books/og/books.png → 404). `latest`
-// fingerprints the newest finished book so scrapers refetch exactly
-// when the card changes.
+// Absolute URL — scrapers resolve a relative og:image against /books/ and
+// 404. `latest` fingerprints the newest finished book so CDN/scrapers
+// refetch when the shelf changes. The PNG itself is generated at request
+// time from the single /api/og.png ImageResponse route.
 const latestRead =
   completed.length > 0
     ? new Date(completed[0].dateRead).toISOString().slice(0, 10)
     : "none";
-const ogImage = `${site?.href ?? "/"}og/books.png?latest=${latestRead}`;
+const ogImage = new URL(
+  `/api/og.png?type=books&latest=${latestRead}`,
+  site ?? "https://www.dustinschau.com"
+).href;
 
 const totalPages = completed.reduce((sum, book) => sum + book.pageCount, 0);
 const busiest = groups.reduce(
