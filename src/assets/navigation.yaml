@@ -6,3 +6,5 @@
   to: /work
 - name: favorites
   to: /favorites
+- name: books
+  to: /books

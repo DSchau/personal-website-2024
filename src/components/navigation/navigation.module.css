@@ -11,13 +11,17 @@
 .navigation ul {
   margin: 0;
   padding: 0;
+
+  display: flex;
+  align-items: center;
+  column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
+  overflow-x: auto;
 }
 
 .navigation li {
   list-style-type: none;
-
-  display: inline-block;
-  padding: var(--padding-s) var(--padding-lg);
+  white-space: nowrap;
+  padding: var(--padding-s) 0;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -26,12 +30,8 @@
   }
 
   .navigation li {
-    padding: var(--padding-lg) var(--padding-md);
+    padding: var(--padding-lg) 0;
   }
-}
-
-.navigation li:first-child {
-  padding-left: 0;
 }
 
 .navigation a {

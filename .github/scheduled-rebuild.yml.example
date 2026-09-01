@@ -1,8 +1,9 @@
 name: Scheduled rebuild
 
-# The /favorites page is prerendered at build time and pulls books from
-# Goodreads. This workflow triggers a fresh Cloudflare Pages build on a
-# schedule so the baked-in Books and "Recently Read" sections stay current.
+# The /favorites and /books pages are prerendered at build time and pull
+# books from Goodreads. This workflow triggers a fresh Cloudflare Pages
+# build on a schedule so the baked-in Books, "Recently Read", and /books
+# list stay current.
 #
 # Setup (one time):
 #   1. In Cloudflare Pages > this project > Settings > Builds & deployments,

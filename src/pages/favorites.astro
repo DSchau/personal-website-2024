@@ -3,27 +3,33 @@ import { getCollection } from "astro:content";
 
 import Layout from "@/layouts/Layout.astro";
 import FavoritesComponent from '@/components/favorites/favorites.astro'
-import { getFavoriteBooks, getRecentlyRead, toFavoriteItem } from '@/lib/goodreads'
+import { getFavoriteBooks, toFavoriteItem } from '@/lib/goodreads'
 
 export const prerender = true
 
 const favorites = await getCollection('favorites')
 	.then(data => data[0].data)
 
+// Which floating-media treatment each category gets.
+const MEDIA_KINDS: Record<string, 'book' | 'vinyl' | 'case' | 'game'> = {
+	books: 'book',
+	films: 'case',
+	series: 'case',
+	albums: 'vinyl',
+	songs: 'vinyl',
+	games: 'game',
+}
+
 const allFavorites = Object.keys(favorites)
 	.filter(key => key !== 'books')
 	.map(favorite => ({
 		title: favorite.slice(0, 1).toUpperCase() + favorite.slice(1),
+		kind: MEDIA_KINDS[favorite] ?? 'case',
 		list: (favorites as any)[favorite]
 	}))
 
-const [favoriteBooks, recentlyRead] = await Promise.all([
-	getFavoriteBooks(),
-	getRecentlyRead(10)
-])
-
+const favoriteBooks = await getFavoriteBooks()
 const favoriteBooksList = favoriteBooks.map(toFavoriteItem)
-const recentlyReadList = recentlyRead.map(toFavoriteItem)
 ---
 <style>
 	section {
@@ -65,19 +71,13 @@ const recentlyReadList = recentlyRead.map(toFavoriteItem)
 	{favoriteBooksList.length > 0 && (
 		<section id="books">
 			<h3 class="section-title">Books</h3>
-			<FavoritesComponent list={favoriteBooksList} />
+			<FavoritesComponent list={favoriteBooksList} kind="book" />
 		</section>
 	)}
-	{allFavorites.map(({ title, list }) => (
+	{allFavorites.map(({ title, kind, list }) => (
 		<section id={title.toLowerCase()}>
 			<h3 class="section-title">{title}</h3>
-			<FavoritesComponent list={list} />
+			<FavoritesComponent list={list} kind={kind} />
 		</section>
 	))}
-	{recentlyReadList.length > 0 && (
-		<section id="recently-read">
-			<h3 class="section-title">Recently Read</h3>
-			<FavoritesComponent list={recentlyReadList} />
-		</section>
-	)}
 </Layout>

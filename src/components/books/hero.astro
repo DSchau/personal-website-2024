@@ -1,0 +1,138 @@
+---
+import type { CompletedRead } from "@/lib/goodreads";
+import { resizeCover } from "@/lib/goodreads";
+import FloatingMedia from "@/components/floating-media/floating-media.astro";
+
+interface Props {
+  books: CompletedRead[];
+}
+
+const { books } = Astro.props;
+
+function bookThickness(pageCount: number, height: number): number {
+  return Math.round(
+    Math.min(30, Math.max(14, 10 + pageCount / 40)) * (height / 210)
+  );
+}
+
+function shortTitle(title: string): string {
+  return title.replace(/\s+\(.*\)$/, "");
+}
+---
+
+<section class="press" aria-label="Six most recently finished books">
+  <p class="eyebrow">Recently finished</p>
+  <div class="display-grid">
+    {books.map((book) => (
+      <a
+        class="cell"
+        href={book.link}
+        aria-label={`${shortTitle(book.title)} by ${book.author}`}
+      >
+        <FloatingMedia
+          kind="book"
+          image={resizeCover(book.imageUrl, 475)}
+          title={shortTitle(book.title)}
+          height={212}
+          thickness={bookThickness(book.pageCount, 212)}
+          stageHeight={226}
+          eager
+        />
+        <span class="caption">
+          <span class="caption-title">{shortTitle(book.title)}</span>
+          <span class="caption-author">{book.author}</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .press {
+    --press-ink: #2e2a24;
+    --press-muted: #8c8578;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 2.75rem 1.5rem 2.25rem;
+    color: var(--press-ink);
+    background: linear-gradient(180deg, #faf7f1 0%, #f3eee4 100%);
+    border-top: 1px solid #ece5d7;
+    border-bottom: 1px solid #ece5d7;
+  }
+
+  .eyebrow {
+    margin: 0 auto 2.25rem;
+    text-align: center;
+    font-size: var(--text-md);
+    font-family: var(--body-font);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--press-muted);
+  }
+
+  .display-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 3.25rem;
+    column-gap: 0.5rem;
+    max-width: 70rem;
+    margin: 0 auto;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .display-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .display-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .cell:focus-visible {
+    outline: 2px solid var(--button-color);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  .caption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.14rem;
+    width: 100%;
+    margin-top: 3.4rem;
+    padding: 0 0.4rem;
+    text-align: center;
+  }
+
+  .caption-title {
+    font-family: var(--header-font);
+    font-size: var(--text-md);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .caption-author {
+    font-size: var(--text-s);
+    color: var(--press-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+</style>

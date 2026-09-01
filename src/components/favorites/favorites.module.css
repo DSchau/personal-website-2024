@@ -12,8 +12,21 @@
 .item {
   margin: var(--padding-lg) auto;
   padding: var(--padding-s);
+  width: 100%;
+  max-width: 220px;
 
   text-align: center;
+}
+
+.media {
+  display: block;
+  margin-bottom: var(--padding-md);
+}
+
+.media:focus-visible {
+  outline: 2px solid var(--button-color);
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 .title {
