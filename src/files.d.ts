@@ -13,7 +13,7 @@ declare module "*.otf" {
   export default value;
 }
 
-declare module "*.png" {
+declare module "*og-fallback.png" {
   const value: ArrayBuffer;
   export default value;
 }

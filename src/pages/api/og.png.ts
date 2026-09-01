@@ -23,6 +23,7 @@ const AVATAR_URL =
 
 const SUCCESS_CACHE_BOOKS = "public, max-age=3600, s-maxage=86400";
 const SUCCESS_CACHE_POST = "public, max-age=31536000";
+const FALLBACK_CACHE = "public, max-age=60";
 const ERROR_CACHE = "no-store, no-cache, must-revalidate";
 
 function abortAfter(ms: number): AbortSignal {
@@ -224,17 +225,18 @@ export const GET: APIRoute = async function GET({ request }) {
       }
 
       try {
+        const usedFallback = books.length === 0;
         const bytes = await renderPng(
-          books.length > 0
-            ? BooksOG({ books })
-            : FallbackOG({
+          usedFallback
+            ? FallbackOG({
                 eyebrow: "RECENTLY FINISHED",
                 title: "Books",
                 subtitle: "dustinschau.com/books",
-              }),
+              })
+            : BooksOG({ books }),
           { width: 1200, height: 630, fonts }
         );
-        return pngResponse(bytes, SUCCESS_CACHE_BOOKS);
+        return pngResponse(bytes, usedFallback ? FALLBACK_CACHE : SUCCESS_CACHE_BOOKS);
       } catch (error) {
         console.error("Books OG ImageResponse failed, using text fallback:", error);
         const bytes = await renderPng(
@@ -245,7 +247,7 @@ export const GET: APIRoute = async function GET({ request }) {
           }),
           { width: 1200, height: 630, fonts }
         );
-        return pngResponse(bytes, SUCCESS_CACHE_BOOKS);
+        return pngResponse(bytes, FALLBACK_CACHE);
       }
     }
 
@@ -270,14 +272,13 @@ export const GET: APIRoute = async function GET({ request }) {
         }),
         { width: 1200, height: 620, fonts }
       );
-      return pngResponse(bytes, SUCCESS_CACHE_POST);
+      return pngResponse(bytes, FALLBACK_CACHE);
     }
   } catch (error) {
     console.error("OG route failed:", error);
     const fallback = staticFallbackPng();
     if (fallback) {
-      // Last-resort static PNG — short cache so a recovered deploy is not stuck.
-      return pngResponse(fallback, "public, max-age=60");
+      return pngResponse(fallback, FALLBACK_CACHE);
     }
     return errorResponse("OG image generation failed");
   }
