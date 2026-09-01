@@ -28,7 +28,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
   );
 };
 
-const Bio = () => {
+const Bio = ({ avatarUrl }: { avatarUrl?: string }) => {
   return (
     <div
       style={{
@@ -37,14 +37,18 @@ const Bio = () => {
         padding: 20,
       }}
     >
-      <img
-        src="https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format"
-        style={{
-          height: 64,
-          width: 64,
-          borderRadius: 12,
-        }}
-      />
+      {avatarUrl ? (
+        <img
+          src={avatarUrl}
+          width={64}
+          height={64}
+          style={{
+            height: 64,
+            width: 64,
+            borderRadius: 12,
+          }}
+        />
+      ) : null}
       <div
         style={{
           display: "flex",
@@ -78,7 +82,7 @@ const Bio = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ avatarUrl }: { avatarUrl?: string }) => {
   return (
     <div
       style={{
@@ -96,12 +100,20 @@ const Footer = () => {
       >
         dustinschau.com
       </h3>
-      <Bio />
+      <Bio avatarUrl={avatarUrl} />
     </div>
   );
 };
 
-export const OG = ({ tags, title }) => (
+export const OG = ({
+  tags,
+  title,
+  avatarUrl = "",
+}: {
+  tags?: string[];
+  title?: string | null;
+  avatarUrl?: string;
+}) => (
   <div
         style={{
           display: "flex",
@@ -144,6 +156,6 @@ export const OG = ({ tags, title }) => (
         >
           {title}
         </h1>
-        <Footer />
+        <Footer avatarUrl={avatarUrl} />
       </div>
 )

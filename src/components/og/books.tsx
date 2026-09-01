@@ -32,6 +32,8 @@ function BookMockup({
         flexDirection: "column",
         alignItems: "center",
         marginTop: lift,
+        marginLeft: 13,
+        marginRight: 13,
       }}
     >
       <div
@@ -190,7 +192,6 @@ export const BooksOG = ({
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
-        gap: 26,
         paddingLeft: 48,
         paddingRight: 48,
       }}
