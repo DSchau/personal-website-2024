@@ -208,8 +208,8 @@ export const GET: APIRoute = async function GET({ request }) {
 
       try {
         const recent = await getRecentlyReadFirstPage(BOOK_COUNT, {
-          timeoutMs: 2500,
-          retries: 1,
+          timeoutMs: 4000,
+          retries: 2,
         });
         const covers = await Promise.all(
           recent.map((book) => toDataUri(resizeCover(book.imageUrl, COVER_HEIGHT)))
@@ -224,11 +224,16 @@ export const GET: APIRoute = async function GET({ request }) {
       }
 
       try {
-        const bytes = await renderPng(BooksOG({ books }), {
-          width: 1200,
-          height: 630,
-          fonts,
-        });
+        const bytes = await renderPng(
+          books.length > 0
+            ? BooksOG({ books })
+            : FallbackOG({
+                eyebrow: "RECENTLY FINISHED",
+                title: "Books",
+                subtitle: "dustinschau.com/books",
+              }),
+          { width: 1200, height: 630, fonts }
+        );
         return pngResponse(bytes, SUCCESS_CACHE_BOOKS);
       } catch (error) {
         console.error("Books OG ImageResponse failed, using text fallback:", error);
