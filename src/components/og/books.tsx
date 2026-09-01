@@ -97,7 +97,7 @@ function BookMockup({
   );
 }
 
-const Bio = () => {
+const Bio = ({ avatarUrl }: { avatarUrl: string }) => {
   return (
     <div
       style={{
@@ -106,16 +106,18 @@ const Bio = () => {
         padding: 20,
       }}
     >
-      <img
-        src="https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format"
-        width={64}
-        height={64}
-        style={{
-          height: 64,
-          width: 64,
-          borderRadius: 12,
-        }}
-      />
+      {avatarUrl ? (
+        <img
+          src={avatarUrl}
+          width={64}
+          height={64}
+          style={{
+            height: 64,
+            width: 64,
+            borderRadius: 12,
+          }}
+        />
+      ) : null}
       <div
         style={{
           display: "flex",
@@ -151,7 +153,13 @@ const Bio = () => {
   );
 };
 
-export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
+export const BooksOG = ({
+  books,
+  avatarUrl = "",
+}: {
+  books: BooksOgBook[];
+  avatarUrl?: string;
+}) => (
   <div
     style={{
       display: "flex",
@@ -210,7 +218,7 @@ export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
       >
         dustinschau.com/books
       </h3>
-      <Bio />
+      <Bio avatarUrl={avatarUrl} />
     </div>
   </div>
 );

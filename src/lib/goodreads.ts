@@ -137,6 +137,17 @@ interface FetchShelfOptions {
    * retried. When false, zero items means end-of-list and we return [].
    */
   emptyMeansRetry?: boolean;
+  /** Abort a hung Goodreads request. Unset for build-time pagination. */
+  timeoutMs?: number;
+}
+
+function abortAfter(ms: number): AbortSignal {
+  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+    return AbortSignal.timeout(ms);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
 }
 
 // Goodreads' RSS endpoints intermittently return a 404 (or a 200 with no
@@ -175,6 +186,7 @@ async function fetchShelf(
           "User-Agent": USER_AGENT,
           Accept: "application/rss+xml, application/xml, text/xml",
         },
+        signal: options.timeoutMs ? abortAfter(options.timeoutMs) : undefined,
       });
 
       if (response.ok) {
@@ -335,6 +347,8 @@ export async function getRecentlyRead(count = 10): Promise<GoodreadsBook[]> {
 export async function getRecentlyReadFirstPage(count = 10): Promise<CompletedRead[]> {
   const firstPage = await fetchShelf("read", {
     extraParams: { sort: "date_read", order: "d" },
+    retries: 2,
+    timeoutMs: 4000,
   });
   return sortByDateReadDesc(firstPage ?? []).slice(0, count);
 }

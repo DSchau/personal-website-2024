@@ -3,9 +3,25 @@ import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 
 import { OG } from "../../components/og/og";
 import { BooksOG } from "../../components/og/books";
-import { getRecentlyReadFirstPage } from "../../lib/goodreads";
+import {
+  getRecentlyReadFirstPage,
+  resizeCover,
+} from "../../lib/goodreads";
 
 export const prerender = false;
+
+const COVER_TIMEOUT_MS = 2500;
+const AVATAR_URL =
+  "https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&fm=jpg";
+
+function abortAfter(ms: number): AbortSignal {
+  if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+    return AbortSignal.timeout(ms);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = "";
@@ -16,36 +32,58 @@ function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-async function toDataUri(url: string): Promise<string> {
+function sniffRasterType(bytes: Uint8Array): "image/jpeg" | "image/png" | "image/gif" | null {
+  if (bytes.length < 12) {
+    return null;
+  }
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) {
+    return "image/jpeg";
+  }
+  if (
+    bytes[0] === 0x89 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x4e &&
+    bytes[3] === 0x47
+  ) {
+    return "image/png";
+  }
+  if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
+    return "image/gif";
+  }
+  return null;
+}
+
+// Prefetch as a data URI so Satori never does its own unbounded remote
+// fetch. Unsupported formats (webp/avif) and hung CDNs become an empty
+// string — the book mockup falls back to a title plate.
+async function toDataUri(url: string, timeoutMs = COVER_TIMEOUT_MS): Promise<string> {
   if (!url) {
     return "";
   }
 
   try {
-    // Satori can only rasterize jpeg/png/gif, so never ask for avif/webp.
     const response = await fetch(url, {
       headers: {
-        Accept: "image/jpeg,image/png;q=0.9,image/gif;q=0.8",
+        Accept: "image/jpeg,image/png,image/gif",
         "User-Agent":
           "Mozilla/5.0 (compatible; dustinschau.com/books; +https://www.dustinschau.com)",
       },
+      signal: abortAfter(timeoutMs),
     });
 
     if (!response.ok) {
-      return url;
-    }
-
-    const contentType = response.headers.get("content-type") || "image/jpeg";
-    if (!/^image\/(jpe?g|png|gif)/.test(contentType)) {
-      // An unsupported format would make Satori throw; render the text
-      // fallback for this book instead.
       return "";
     }
 
     const bytes = new Uint8Array(await response.arrayBuffer());
-    return `data:${contentType};base64,${bytesToBase64(bytes)}`;
+    const rasterType = sniffRasterType(bytes);
+    if (!rasterType) {
+      return "";
+    }
+
+    return `data:${rasterType};base64,${bytesToBase64(bytes)}`;
   } catch {
-    return url;
+    return "";
   }
 }
 
@@ -82,16 +120,28 @@ export const GET: APIRoute = async function GET({ request }) {
   const fonts = await loadFonts();
 
   if (type === "books") {
-    const recent = await getRecentlyReadFirstPage(5);
-    const books = await Promise.all(
-      recent.map(async (book) => ({
+    let books: { title: string; author: string; imageUrl: string }[] = [];
+    let avatarUrl = "";
+
+    try {
+      const recent = await getRecentlyReadFirstPage(5);
+      const [covers, avatar] = await Promise.all([
+        Promise.all(
+          recent.map((book) => toDataUri(resizeCover(book.imageUrl, 240)))
+        ),
+        toDataUri(AVATAR_URL),
+      ]);
+      books = recent.map((book, index) => ({
         title: book.title,
         author: book.author,
-        imageUrl: await toDataUri(book.imageUrl),
-      }))
-    );
+        imageUrl: covers[index] ?? "",
+      }));
+      avatarUrl = avatar;
+    } catch (error) {
+      console.error("Books OG data failed:", error);
+    }
 
-    const response = new ImageResponse(BooksOG({ books }), {
+    const response = new ImageResponse(BooksOG({ books, avatarUrl }), {
       width: 1200,
       height: 630,
       fonts,

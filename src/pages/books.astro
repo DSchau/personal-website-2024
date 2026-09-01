@@ -9,8 +9,8 @@ export const prerender = true;
 const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
-const site = Astro.site;
-const ogImage = `${site?.href ?? "/"}api/og.png?type=books`;
+// Host-relative so preview deploys don't point og:image at production.
+const ogImage = "/api/og.png?type=books";
 
 const totalPages = completed.reduce((sum, book) => sum + book.pageCount, 0);
 const busiest = groups.reduce(
@@ -33,8 +33,7 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
   copy="You can learn a lot about a person by what they read, so here's what I've been reading"
   meta={[
     { name: "twitter:card", content: "summary_large_image" },
-    { property: "twitter:domain", content: site?.hostname.replace("www.", "") },
-    { property: "twitter:url", content: `${site?.href}books` },
+    { property: "twitter:url", content: "/books" },
     { property: "og:image", content: ogImage },
     { name: "twitter:image", content: ogImage },
     { property: "og:image:width", content: "1200" },
