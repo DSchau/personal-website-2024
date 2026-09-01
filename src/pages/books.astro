@@ -9,8 +9,15 @@ export const prerender = true;
 const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
-// Host-relative so preview deploys don't point og:image at production.
-const ogImage = "/api/og.png?type=books";
+// The card is prerendered at build time (rendering it in a Worker request
+// exceeds the 10ms CPU budget). Host-relative so preview deploys don't
+// point og:image at production; `latest` fingerprints the newest finished
+// book so social scrapers refetch exactly when the card changes.
+const latestRead =
+  completed.length > 0
+    ? new Date(completed[0].dateRead).toISOString().slice(0, 10)
+    : "none";
+const ogImage = `/og/books.png?latest=${latestRead}`;
 
 const totalPages = completed.reduce((sum, book) => sum + book.pageCount, 0);
 const busiest = groups.reduce(
