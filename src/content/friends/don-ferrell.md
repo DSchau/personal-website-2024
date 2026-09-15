@@ -9,6 +9,6 @@ You stayed. NoSQL platforms, Solr, Kafka, Neo4j — and a tracing system that st
 
 I wrote frontends in that building and then left for consulting, then California. I still think about the UP years more than the later job titles suggest. You kept the hard data problems. I have a lot of respect for that.
 
-The real work history is below. Same jobs, same dates. I wanted this page to start with you, not a list of companies.
+The real work history is below. Same jobs, same dates. I wanted you to have a version of this page that admitted that.
 
 Dustin
