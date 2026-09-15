@@ -53,11 +53,21 @@ export default defineConfig({
     }
   },
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
-  integrations: [react(), sitemap(), icon()],
+  integrations: [react(), sitemap({
+    filter: (page) => {
+      try {
+        const { pathname } = new URL(page)
+        return pathname === '/work' || pathname === '/work/' || !pathname.startsWith('/work/')
+      } catch {
+        return true
+      }
+    }
+  }), icon()],
   redirects: {
     '/uses': '/posts/uses',
     '/blog': '/posts',
-    '/readme': '/posts/readme'
+    '/readme': '/posts/readme',
+    '/work/ethan-ettemma': '/work/ethan-ettema'
   },
   markdown: {
     syntaxHighlight: false,

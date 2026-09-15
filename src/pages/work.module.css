@@ -10,7 +10,8 @@
 }
 
 
-.container > ul {
+.container > ul,
+.list {
   margin: 0;
   padding: 0;
 
@@ -47,4 +48,23 @@
   color: var(--text-accent-color);
   margin: 0;
   padding: 0;
+}
+
+.experience .callout {
+  margin: calc(var(--padding-s) * -1) 0 var(--padding-md);
+  padding: var(--padding-s) 0 var(--padding-s) var(--padding-md);
+  border-left: 2px solid var(--border-color);
+  color: var(--text-accent-color);
+  font-style: italic;
+  font-size: var(--text-md);
+}
+
+.whisper {
+  margin-top: var(--padding-xl);
+  padding-top: var(--padding-lg);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-accent-color);
+  font-size: var(--text-s);
+  font-style: italic;
+  text-align: center;
 }

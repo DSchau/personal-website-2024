@@ -1,0 +1,81 @@
+---
+import { Company } from '@/components/company/company.tsx'
+import { WORK_LOGOS, type ProcessedWorkExperience } from '@/lib/work'
+import styles from '@/pages/work.module.css'
+
+interface Props {
+	experiences: ProcessedWorkExperience[]
+	callouts?: Record<string, string>
+	titleOverrides?: Record<string, string>
+}
+
+const { experiences, callouts = {}, titleOverrides = {} } = Astro.props
+---
+
+<style is:global>
+  @keyframes rocket-launch {
+    /* takeoff bounce */
+    0%   { transform: none; animation-timing-function: ease-out; }
+    6%   { transform: translateY(8px); animation-timing-function: ease-in; }
+    14%  { transform: translateY(-6px); animation-timing-function: ease-out; }
+    20%  { transform: translateY(3px); animation-timing-function: ease-in; }
+    26%  { transform: translateY(0); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+    /* fly off */
+    48%  { transform: translate(800px, -1000px); animation-timing-function: linear; }
+    /* pause off screen */
+    75%  { transform: translate(800px, -1000px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+    /* return and landing bounce */
+    90%  { transform: translateY(-14px); animation-timing-function: ease-out; }
+    94%  { transform: translateY(7px); animation-timing-function: ease-in-out; }
+    97%  { transform: translateY(-3px); animation-timing-function: ease-out; }
+    100% { transform: none; }
+  }
+
+  [data-logo="Postman"] {
+    cursor: pointer;
+  }
+  [data-logo="Postman"].fly {
+    animation: rocket-launch 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('[data-logo="Postman"]');
+    if (logo) {
+      logo.addEventListener('dblclick', () => {
+        logo.classList.add('fly');
+        logo.addEventListener('animationend', () => logo.classList.remove('fly'), { once: true });
+      });
+    }
+  });
+</script>
+
+<ul class={styles.list}>
+	{
+		experiences.map((experience) => {
+			const title = titleOverrides[experience.employer] ?? experience.title
+			const callout = callouts[experience.employer]
+
+			return (
+				<li class={styles.experience}>
+					<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}>
+						<Company name={experience.employer} logo={WORK_LOGOS[experience.employer]} />
+					</h3>
+					<h4 class={styles['job-title']}>{title}<span class={styles.date}>, {experience.date}</span></h4>
+					<p set:html={experience.description} />
+					{callout && <p class={styles.callout}>{callout}</p>}
+					{experience.highlights && experience.highlights.length > 0 && (
+						<ul>
+							{experience.highlights.map((highlight) => {
+								return (
+									<li set:html={highlight} />
+								)
+							})}
+						</ul>
+					)}
+				</li>
+			)
+		})
+	}
+</ul>

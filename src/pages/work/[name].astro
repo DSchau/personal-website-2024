@@ -1,0 +1,90 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import Layout from '@/layouts/Layout.astro'
+import WorkHistory from '@/components/work-history/work-history.astro'
+import { getWorkHistory } from '@/lib/work'
+import workStyles from '../work.module.css'
+import styles from './_letter.module.css'
+
+export const prerender = true
+
+export async function getStaticPaths() {
+	const friends = await getCollection('friends')
+	return friends.map((entry) => ({
+		params: { name: entry.slug },
+		props: { entry },
+	}))
+}
+
+interface Props {
+	entry: CollectionEntry<'friends'>
+}
+
+const { entry: prerendered } = Astro.props
+const friends = prerendered ? [] : await getCollection('friends')
+const entry = prerendered ?? friends.find((friend) => friend.slug === Astro.params.name)
+
+if (!entry) {
+	return Astro.redirect('/404')
+}
+
+const { Content } = await entry.render()
+const experiences = getWorkHistory()
+const letterDate = entry.data.letterDate.toLocaleDateString('en-US', {
+	timeZone: 'UTC',
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric',
+})
+---
+
+<Layout
+	title={`A letter for ${entry.data.firstName}`}
+	description={`A note from Dustin Schau to ${entry.data.name}.`}
+	showCopy={false}
+	meta={[
+		{ name: 'robots', content: 'noindex, nofollow' },
+	]}
+>
+	<div class={workStyles.container}>
+		<p class={styles.kicker}>A confidential application</p>
+		<h2 class="section-title">To: {entry.data.name}</h2>
+
+		<dl class={styles.letterhead}>
+			<div>
+				<dt>From</dt>
+				<dd>Dustin Schau</dd>
+			</div>
+			<div>
+				<dt>To</dt>
+				<dd>{entry.data.name}<span class={styles.headline}>{entry.data.headline}</span></dd>
+			</div>
+			<div>
+				<dt>Date</dt>
+				<dd>{letterDate}</dd>
+			</div>
+			<div>
+				<dt>Re</dt>
+				<dd>Application for the role of {entry.data.applicationFor}</dd>
+			</div>
+		</dl>
+
+		<div class={styles.letter}>
+			<Content />
+		</div>
+
+		<p class={styles.disclaimer}>I usually have a doc for this. I made a page instead.</p>
+
+		<h2 class="section-title">My work</h2>
+		<p><strong>I love building</strong>. I started my career as a front-end engineer and have grown into executive positions and a leader of organizations. I build great products, great teams, and great leaders.</p>
+
+		<WorkHistory
+			experiences={experiences}
+			callouts={entry.data.callouts}
+		/>
+
+		<p class={styles.back}>
+			<a href="/work">The impersonal version</a>
+		</p>
+	</div>
+</Layout>

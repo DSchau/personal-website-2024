@@ -1,0 +1,63 @@
+.kicker {
+  margin: 0 0 var(--padding-md);
+  text-align: center;
+  font-size: var(--text-s);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-accent-color);
+}
+
+.letterhead {
+  display: grid;
+  gap: var(--padding-md);
+  margin: var(--padding-lg) 0 var(--padding-xl);
+  padding: var(--padding-lg);
+  border: 1px solid var(--border-color);
+}
+
+.letterhead div {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--padding-md);
+  align-items: baseline;
+}
+
+.letterhead dt {
+  margin: 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-accent-color);
+}
+
+.letterhead dd {
+  margin: 0;
+  font-family: var(--header-font);
+}
+
+.headline {
+  display: block;
+  margin-top: var(--padding-xs);
+  font-family: var(--body-font);
+  font-size: var(--text-s);
+  color: var(--text-accent-color);
+}
+
+.letter :first-child {
+  margin-top: 0;
+}
+
+.disclaimer {
+  margin: var(--padding-xl) 0 0;
+  color: var(--text-accent-color);
+  font-size: var(--text-s);
+  font-style: italic;
+}
+
+.back {
+  margin-top: var(--padding-xl);
+  padding-top: var(--padding-lg);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: var(--text-s);
+}

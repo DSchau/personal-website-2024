@@ -1,106 +1,20 @@
 ---
-import type { ImageMetadata } from 'astro'
-
 import Layout from '@/layouts/Layout.astro'
-import work from '@/assets/work.yaml'
-
-import { Company } from '@/components/company/company.tsx'
-
-import adapt from '@/assets/logos/adapt.svg'
-import postman from '@/assets/logos/postman.svg'
-import netlify from '@/assets/logos/netlify.svg'
-import gatsby from '@/assets/logos/gatsby.svg'
-import opi from '@/assets/logos/opi.png'
-import up from '@/assets/logos/up.svg'
+import WorkHistory from '@/components/work-history/work-history.astro'
+import { getWorkHistory } from '@/lib/work'
 
 import styles from './work.module.css'
 
-import { marked } from 'marked'
-
 export const prerender = true
 
-const LOGOS: { [key: string]: ImageMetadata } = {
-	'Adapt': adapt,
-	'Postman': postman,
-	'Netlify': netlify,
-	'Gatsby': gatsby,
-	'Object Partners': opi,
-	'Union Pacific': up
-}
-
-// Process markdown in highlights at build time
-const processedWork = work.map((experience: any) => ({
-	...experience,
-	description: marked.parseInline(experience.description),
-	highlights: experience.highlights?.map((highlight: string) => marked.parseInline(highlight))
-}))
-
+const processedWork = getWorkHistory()
 ---
-
-<style is:global>
-  @keyframes rocket-launch {
-    /* takeoff bounce */
-    0%   { transform: none; animation-timing-function: ease-out; }
-    6%   { transform: translateY(8px); animation-timing-function: ease-in; }
-    14%  { transform: translateY(-6px); animation-timing-function: ease-out; }
-    20%  { transform: translateY(3px); animation-timing-function: ease-in; }
-    26%  { transform: translateY(0); animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
-    /* fly off */
-    48%  { transform: translate(800px, -1000px); animation-timing-function: linear; }
-    /* pause off screen */
-    75%  { transform: translate(800px, -1000px); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
-    /* return and landing bounce */
-    90%  { transform: translateY(-14px); animation-timing-function: ease-out; }
-    94%  { transform: translateY(7px); animation-timing-function: ease-in-out; }
-    97%  { transform: translateY(-3px); animation-timing-function: ease-out; }
-    100% { transform: none; }
-  }
-
-  [data-logo="Postman"] {
-    cursor: pointer;
-  }
-  [data-logo="Postman"].fly {
-    animation: rocket-launch 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const logo = document.querySelector('[data-logo="Postman"]');
-    if (logo) {
-      logo.addEventListener('dblclick', () => {
-        logo.classList.add('fly');
-        logo.addEventListener('animationend', () => logo.classList.remove('fly'), { once: true });
-      });
-    }
-  });
-</script>
 
 <Layout title="Work" showCopy={false}>
 	<div class={styles.container}>
 		<h2 class="section-title">My work</h2>
 		<p><strong>I love building</strong>. I started my career as a front-end engineer and have grown into executive positions and a leader of organizations. I build great products, great teams, and great leaders.</p>
-		<ul>
-			{
-				processedWork.map((experience: any) => {
-					return (
-						<li class={styles.experience}>
-							<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}><Company name={experience.employer} logo={LOGOS[experience.employer]} /></h3>
-							<h4 class={styles['job-title']}>{experience.title}<span class={styles.date}>, {experience.date}</span></h4>
-							<p set:html={experience.description} />
-							{experience.highlights && experience.highlights.length > 0 && (
-								<ul>
-									{experience.highlights.map((highlight: string) => {
-										return (
-											<li set:html={highlight} />
-										)
-									})}
-									</ul>
-							)}
-						</li>
-					)
-				})
-			}
-		</ul>
+		<WorkHistory experiences={processedWork} />
+		<p class={styles.whisper}>Looking for a personalized version? Ask a friend.</p>
 	</div>
 </Layout>
