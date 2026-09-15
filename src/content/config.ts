@@ -45,14 +45,8 @@ const friendsCollection = defineCollection({
   schema: z.object({
     name: z.string(),
     firstName: z.string(),
-    headline: z.string(),
-    location: z.string(),
-    applicationFor: z.string(),
-    letterDate: z.date(),
     aliases: z.array(z.string()).optional(),
     lastModified: z.string().optional(),
-    callouts: z.record(z.string()).optional(),
-    titleOverrides: z.record(z.string()).optional(),
   })
 })
 

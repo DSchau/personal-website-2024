@@ -5,11 +5,9 @@ import styles from '@/pages/work.module.css'
 
 interface Props {
 	experiences: ProcessedWorkExperience[]
-	callouts?: Record<string, string>
-	titleOverrides?: Record<string, string>
 }
 
-const { experiences, callouts = {}, titleOverrides = {} } = Astro.props
+const { experiences } = Astro.props
 ---
 
 <style is:global>
@@ -54,17 +52,13 @@ const { experiences, callouts = {}, titleOverrides = {} } = Astro.props
 <ul class={styles.list}>
 	{
 		experiences.map((experience) => {
-			const title = titleOverrides[experience.employer] ?? experience.title
-			const callout = callouts[experience.employer]
-
 			return (
 				<li class={styles.experience}>
 					<h3 class={[styles.employer].concat(experience.employer.toLowerCase()).join(' ')}>
 						<Company name={experience.employer} logo={WORK_LOGOS[experience.employer]} />
 					</h3>
-					<h4 class={styles['job-title']}>{title}<span class={styles.date}>, {experience.date}</span></h4>
+					<h4 class={styles['job-title']}>{experience.title}<span class={styles.date}>, {experience.date}</span></h4>
 					<p set:html={experience.description} />
-					{callout && <p class={styles.callout}>{callout}</p>}
 					{experience.highlights && experience.highlights.length > 0 && (
 						<ul>
 							{experience.highlights.map((highlight) => {
