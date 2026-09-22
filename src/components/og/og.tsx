@@ -14,7 +14,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
         <li
           key={item}
           style={{
-            fontFamily: "SFPro",
+            fontFamily: "Rockwell",
             margin: 10,
             padding: 10,
             fontSize: 18,
@@ -28,7 +28,7 @@ const Tags = ({ tags }: { tags: string[] }) => {
   );
 };
 
-const Bio = () => {
+const Bio = ({ avatarUrl }: { avatarUrl?: string }) => {
   return (
     <div
       style={{
@@ -37,14 +37,18 @@ const Bio = () => {
         padding: 20,
       }}
     >
-      <img
-        src="https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&auto=format"
-        style={{
-          height: 64,
-          width: 64,
-          borderRadius: 12,
-        }}
-      />
+      {avatarUrl ? (
+        <img
+          src={avatarUrl}
+          width={64}
+          height={64}
+          style={{
+            height: 64,
+            width: 64,
+            borderRadius: 12,
+          }}
+        />
+      ) : null}
       <div
         style={{
           display: "flex",
@@ -65,7 +69,7 @@ const Bio = () => {
         </h2>
         <p
           style={{
-            fontFamily: "SFPro",
+            fontFamily: "Rockwell",
             margin: 0,
             padding: 0,
             fontSize: 24,
@@ -78,7 +82,7 @@ const Bio = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ avatarUrl }: { avatarUrl?: string }) => {
   return (
     <div
       style={{
@@ -96,12 +100,20 @@ const Footer = () => {
       >
         dustinschau.com
       </h3>
-      <Bio />
+      <Bio avatarUrl={avatarUrl} />
     </div>
   );
 };
 
-export const OG = ({ tags, title }) => (
+export const OG = ({
+  tags,
+  title,
+  avatarUrl = "",
+}: {
+  tags?: string[];
+  title?: string | null;
+  avatarUrl?: string;
+}) => (
   <div
         style={{
           display: "flex",
@@ -109,8 +121,6 @@ export const OG = ({ tags, title }) => (
           width: "100%",
           height: "100%",
           backgroundColor: "white",
-          backgroundImage: `radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)`,
-          backgroundSize: "100px 100px",
           alignItems: "center",
           justifyContent: "space-between",
         }}
@@ -144,6 +154,6 @@ export const OG = ({ tags, title }) => (
         >
           {title}
         </h1>
-        <Footer />
+        <Footer avatarUrl={avatarUrl} />
       </div>
 )

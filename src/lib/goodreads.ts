@@ -344,11 +344,14 @@ export async function getRecentlyRead(count = 10): Promise<GoodreadsBook[]> {
 // For runtime consumers (the OG image) that only need the newest handful:
 // the shelf is already sorted by date read, so one page is enough — no
 // need to paginate all ~150 books on every request.
-export async function getRecentlyReadFirstPage(count = 10): Promise<CompletedRead[]> {
+export async function getRecentlyReadFirstPage(
+  count = 10,
+  options?: { timeoutMs?: number; retries?: number }
+): Promise<CompletedRead[]> {
   const firstPage = await fetchShelf("read", {
     extraParams: { sort: "date_read", order: "d" },
-    retries: 2,
-    timeoutMs: 4000,
+    retries: options?.retries ?? 2,
+    timeoutMs: options?.timeoutMs ?? 4000,
   });
   return sortByDateReadDesc(firstPage ?? []).slice(0, count);
 }
