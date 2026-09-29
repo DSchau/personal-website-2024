@@ -1,5 +1,8 @@
 ---
 import type { GoodreadsBook } from '@/lib/goodreads'
+import { resizeCover } from '@/lib/goodreads'
+
+import FloatingMedia from '@/components/floating-media/floating-media.astro'
 
 interface Props {
   books: GoodreadsBook[]
@@ -7,6 +10,15 @@ interface Props {
 
 const { books } = Astro.props
 const book = books[0]
+
+const HEIGHT = 120
+
+// Same feel as the /books hero: longer books get a thicker page block.
+function bookThickness(pageCount: number, height: number): number {
+  return Math.round(
+    Math.min(30, Math.max(14, 10 + pageCount / 40)) * (height / 210)
+  )
+}
 ---
 <style>
   .book {
@@ -16,45 +28,44 @@ const book = books[0]
 
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--padding-lg);
 
     border: 1px solid var(--border-color);
     border-radius: 8px;
   }
 
-  .cover {
+  .media {
     flex-shrink: 0;
-    width: 48px;
-    height: 72px;
-    border-radius: 4px;
-    object-fit: cover;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    display: block;
+  }
+
+  .media:focus-visible {
+    outline: 2px solid var(--button-color);
+    outline-offset: 4px;
+    border-radius: 6px;
   }
 
   .details {
     min-width: 0;
   }
 
-  .title {
+  .details a {
     font-size: var(--text-md);
     font-weight: 600;
-    margin: 0;
     color: var(--text-color);
-  }
-
-  .title a {
     text-decoration: none;
-    color: inherit;
   }
 
-  .title a:hover {
+  .details a:hover {
     text-decoration: underline;
   }
 
   .author {
+    display: block;
     font-size: var(--text-s);
+    font-weight: 400;
     color: var(--text-accent-color);
-    margin: 0;
   }
 
   .page-count {
@@ -65,12 +76,25 @@ const book = books[0]
 </style>
 
 <div class="book">
-  {book.imageUrl && (
-    <img class="cover" src={book.imageUrl} alt={book.title} loading="lazy" />
-  )}
+  <a
+    class="media"
+    href={book.link}
+    aria-label={`${book.title} by ${book.author}`}
+  >
+    <FloatingMedia
+      kind="book"
+      image={resizeCover(book.imageUrl, 475)}
+      title={book.title}
+      height={HEIGHT}
+      thickness={bookThickness(book.pageCount, HEIGHT)}
+      stageHeight={HEIGHT + 16}
+    />
+  </a>
   <div class="details">
-    <p class="title"><a href={book.link}>{book.title}</a></p>
-    <p class="author">{book.author}</p>
+    <a href={book.link}>
+      {book.title}
+      <span class="author">{book.author}</span>
+    </a>
     {book.pageCount > 0 && <p class="page-count">{book.pageCount} pages</p>}
   </div>
 </div>
