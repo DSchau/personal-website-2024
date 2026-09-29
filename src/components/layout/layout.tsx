@@ -16,13 +16,14 @@ interface Props {
   updated: string | undefined;
   copy: string | undefined
   byline: string | undefined;
+  photo?: boolean;
 }
 
-export function Layout({ children, commits, pathname, showCopy, showHeader = true, copy, byline, updated }: Props) {
+export function Layout({ children, commits, pathname, showCopy, showHeader = true, copy, byline, updated, photo }: Props) {
   return (
     <div className={styles.container}>
       <Navigation pathname={pathname} />
-      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} />}
+      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
       <main>
         {children}
       </main>

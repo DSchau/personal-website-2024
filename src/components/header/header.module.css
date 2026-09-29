@@ -2,6 +2,22 @@
   padding: var(--padding-md) var(--padding-lg);
 }
 
+.withPhoto {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--padding-lg);
+}
+
+.withPhoto h1 {
+  margin-bottom: var(--padding-s);
+}
+
+.photo {
+  border-radius: var(--padding-md);
+  flex-shrink: 0;
+  margin-top: var(--padding-xs);
+}
+
 .title {
   display: inline-block;
 }

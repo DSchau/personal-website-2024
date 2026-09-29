@@ -1,0 +1,271 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+export const prerender = true
+---
+
+<style>
+	.container {
+		margin: 0 auto;
+		padding: 0 var(--padding-lg) var(--padding-lg);
+
+		max-width: var(--content-width);
+	}
+
+	.switcher {
+		border-top: 1px solid var(--border-color);
+		padding-top: var(--padding-lg);
+	}
+
+	.controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: var(--padding-xl);
+
+		margin-bottom: var(--padding-lg);
+	}
+
+	.copy-button {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--padding-s);
+
+		margin-left: auto;
+		padding: var(--padding-s) var(--padding-md);
+		height: fit-content;
+
+		border: 1px solid var(--border-color);
+		background-color: var(--bg-color);
+		color: var(--text-accent-color);
+
+		font-size: var(--text-s);
+		font-family: var(--body-font);
+		cursor: pointer;
+
+		transition: border-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn);
+	}
+
+	.copy-button:hover {
+		border-color: var(--text-accent-color);
+		color: var(--text-color);
+	}
+
+	.copy-button:focus-visible {
+		outline: 2px solid var(--button-color);
+		outline-offset: 2px;
+	}
+
+	.copy-button svg {
+		width: 14px;
+		height: 14px;
+	}
+
+	.copy-button .icon-check {
+		display: none;
+	}
+
+	.copy-button[data-state="copied"] .icon-copy {
+		display: none;
+	}
+
+	.copy-button[data-state="copied"] .icon-check {
+		display: block;
+	}
+
+	.control-group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--padding-s);
+	}
+
+	.control-label {
+		font-size: var(--text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-accent-color);
+	}
+
+	.control-options {
+		display: flex;
+	}
+
+	.control-options label {
+		position: relative;
+		cursor: pointer;
+		user-select: none;
+
+		padding: var(--padding-s) var(--padding-md);
+		border: 1px solid var(--border-color);
+		margin-left: -1px;
+
+		font-size: var(--text-s);
+		line-height: 1.2;
+		color: var(--text-accent-color);
+		background-color: var(--bg-color);
+
+		transition: background-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn), border-color 0.15s var(--ease-fn);
+	}
+
+	.control-options label:first-of-type {
+		margin-left: 0;
+	}
+
+	.control-options input[type="radio"] {
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		pointer-events: none;
+	}
+
+	.control-options label:has(input:checked) {
+		z-index: 1;
+
+		background-color: var(--button-color);
+		border-color: var(--button-border-color);
+		color: #fff;
+	}
+
+	.control-options label:has(input:focus-visible) {
+		outline: 2px solid var(--button-color);
+		outline-offset: 2px;
+	}
+
+	.panels {
+		border-top: 1px solid var(--border-color);
+		padding-top: var(--padding-lg);
+	}
+
+	.panel {
+		display: none;
+	}
+
+	.panel > p:first-child {
+		margin-top: 0;
+	}
+
+	.switcher:has(input[name="person"][value="first"]:checked):has(input[name="length"][value="short"]:checked) [data-panel="first-short"],
+	.switcher:has(input[name="person"][value="first"]:checked):has(input[name="length"][value="medium"]:checked) [data-panel="first-medium"],
+	.switcher:has(input[name="person"][value="first"]:checked):has(input[name="length"][value="long"]:checked) [data-panel="first-long"],
+	.switcher:has(input[name="person"][value="third"]:checked):has(input[name="length"][value="short"]:checked) [data-panel="third-short"],
+	.switcher:has(input[name="person"][value="third"]:checked):has(input[name="length"][value="medium"]:checked) [data-panel="third-medium"],
+	.switcher:has(input[name="person"][value="third"]:checked):has(input[name="length"][value="long"]:checked) [data-panel="third-long"] {
+		display: block;
+	}
+</style>
+
+<Layout
+	title="Bio"
+	description="A short bio for Dustin Schau, a product & engineering leader in San Francisco — in first- or third-person, and short, medium, or long."
+	photo
+	byline=""
+	copy="A few ways to describe myself, useful for speaking engagements, introductions, and so forth."
+>
+	<div class="container">
+		<div class="switcher">
+			<div class="controls">
+				<div class="control-group">
+					<span class="control-label">Perspective</span>
+					<div class="control-options">
+						<label><input type="radio" name="person" value="first" checked /> First person</label>
+						<label><input type="radio" name="person" value="third" /> Third person</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<span class="control-label">Length</span>
+					<div class="control-options">
+						<label><input type="radio" name="length" value="short" /> Short</label>
+						<label><input type="radio" name="length" value="medium" checked /> Medium</label>
+						<label><input type="radio" name="length" value="long" /> Long</label>
+					</div>
+				</div>
+				<button type="button" class="copy-button" data-copy-bio aria-label="Copy bio to clipboard">
+					<svg class="icon-copy" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<polyline points="216 184 216 40 72 40" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+						<rect x="40" y="72" width="144" height="144" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+					</svg>
+					<svg class="icon-check" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+					</svg>
+					<span class="copy-label">Copy</span>
+				</button>
+			</div>
+
+			<div class="panels">
+				<div class="panel" data-panel="first-short">
+					<p>I lead Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. Before that, I ran the API Client team at Postman, and before that, I co-founded Gatsby. I live in San Francisco with my wife, Maggie, and our two kids, Noah and Emilia — and I write here, occasionally, about building things.</p>
+				</div>
+
+				<div class="panel" data-panel="first-medium">
+					<p>I'm a product and engineering leader based in San Francisco. Right now, I lead Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. Before Adapt, I was Head of API Client at Postman, and before that, co-founder and VP of Product & Engineering at Gatsby, where I helped grow revenue from $40K to $5M+ ARR and watched an open-source project I helped build cross 50,000 GitHub stars before Gatsby was acquired by Netlify.</p>
+					<p>I grew up in Iowa, started my career as a frontend engineer in Omaha, and moved to the Bay Area in 2019. These days, when I'm not building, I'm chasing my two kids, Noah and Emilia, around Golden Gate Park with my wife, Maggie, reading more than I probably should, and occasionally writing here about the web, leadership, and whatever else is on my mind.</p>
+				</div>
+
+				<div class="panel" data-panel="first-long">
+					<p>I'm a product and engineering leader who's spent the last decade-plus building products, teams, and — hopefully — a few good leaders along the way. I currently lead Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams, connecting to the tools teams already use and giving them a single interface to ask questions, take action, and automate work across all of them.</p>
+					<p>Before Adapt, I was Head of API Client at Postman, where I led the team that owns the core request-sending engine across every protocol — REST, gRPC, WebSockets, GraphQL, MQTT, and more — and helped modernize the platform for both humans and AI agents. Before that, I joined Gatsby in 2018 as employee #11, on the open-source team, and eventually ended up leading a group of 25+ across Product, Engineering, and Design. We grew revenue from $40K to over $5M, shipped an open-source framework that crossed 50,000 GitHub stars and now powers roughly 0.3% of the web, and were acquired by Netlify in 2023 — an outcome that earned me an honorary co-founder title from the board. My career started as a frontend engineer in Omaha, Nebraska, building internal tools at Union Pacific and consulting at Object Partners.</p>
+					<p>I believe great teams trust their leaders and trust one another, and that trust is built slowly, through follow-through and over-communication, not asserted. I write a lot — docs, 1:1 notes, blog posts — because writing is how I think clearly and make sure I've actually explained myself.</p>
+					<p>Outside of work, I live in San Francisco with my wife, Maggie, and our two kids, Noah and Emilia — originally from Iowa, by way of far too many California parks and coffee shops. I read constantly (recent favorites: the Red Rising series, and Tomorrow, and Tomorrow, and Tomorrow), golf less than I used to, and am always up for a new restaurant recommendation.</p>
+					<p>If you want more, check out my <a href="/work">work history</a>, some of my <a href="/posts">writing</a>, or my <a href="/favorites">favorite books, films, and games</a>. Or just <a href="mailto:me@dustinschau.com">say hello</a>.</p>
+				</div>
+
+				<div class="panel" data-panel="third-short">
+					<p>Dustin leads Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. He previously led the API Client team at Postman and co-founded Gatsby, where he served as VP of Product & Engineering. He lives in San Francisco with his wife, Maggie, and their two kids, Noah and Emilia.</p>
+				</div>
+
+				<div class="panel" data-panel="third-medium">
+					<p>Dustin is a product and engineering leader based in San Francisco. He currently leads Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams. Before Adapt, he was Head of API Client at Postman, and before that, co-founder and VP of Product & Engineering at Gatsby, where he helped grow revenue from $40K to $5M+ ARR and helped build an open-source project that crossed 50,000 GitHub stars before Gatsby's acquisition by Netlify.</p>
+					<p>Dustin grew up in Iowa, started his career as a frontend engineer in Omaha, and moved to the Bay Area in 2019. Outside of work, he spends his time with his wife, Maggie, and their two kids, Noah and Emilia, exploring San Francisco's parks and coffee shops, and reading more than he probably should.</p>
+				</div>
+
+				<div class="panel" data-panel="third-long">
+					<p>Dustin is a product and engineering leader with over a decade of experience building products, teams, and organizations. He currently leads Product & Engineering at Adapt, a seed-stage startup building the AI-native operating system for teams, giving them a single interface to ask questions, take action, and automate work across the tools they already use.</p>
+					<p>Before Adapt, Dustin was Head of API Client at Postman, where he led the team behind the platform's core request-sending engine across every major protocol — REST, gRPC, WebSockets, GraphQL, MQTT, and more — and helped modernize it for both human and AI-agent users. Prior to Postman, he joined Gatsby in 2018 as employee #11 on the open-source team, and went on to lead a group of 25+ spanning Product, Engineering, and Design. Under his leadership, Gatsby grew revenue from $40K to over $5M, shipped an open-source framework with 50,000+ GitHub stars now powering roughly 0.3% of the web, and was acquired by Netlify in 2023 — a milestone that earned him an honorary co-founder title from Gatsby's board. He began his career as a frontend engineer in Omaha, Nebraska, working with Union Pacific and Object Partners.</p>
+					<p>Dustin's leadership style is grounded in a simple belief: great teams trust their leaders, and trust one another. He is a prolific writer, using documentation and over-communication to build that trust and to think clearly.</p>
+					<p>Dustin lives in San Francisco with his wife, Maggie, and their two children, Noah and Emilia. Originally from Iowa, he moved to the Bay Area in 2019. Outside of work, he can usually be found reading, exploring new restaurants, or spending time outdoors with his family.</p>
+					<p>For more, see his <a href="/work">work history</a>, <a href="/posts">writing</a>, and <a href="/favorites">favorite books, films, and games</a>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	const button = document.querySelector<HTMLButtonElement>('[data-copy-bio]');
+	const label = button?.querySelector('.copy-label');
+
+	let resetTimeout: number | undefined;
+
+	button?.addEventListener('click', async () => {
+		const panels = document.querySelectorAll<HTMLElement>('.panel');
+		const visible = Array.from(panels).find((panel) => getComputedStyle(panel).display !== 'none');
+		const text = visible?.innerText.trim();
+
+		if (!text) {
+			return;
+		}
+
+		try {
+			await navigator.clipboard.writeText(text);
+		} catch {
+			return;
+		}
+
+		button.dataset.state = 'copied';
+		button.setAttribute('aria-label', 'Copied to clipboard');
+		if (label) {
+			label.textContent = 'Copied!';
+		}
+
+		window.clearTimeout(resetTimeout);
+		resetTimeout = window.setTimeout(() => {
+			delete button.dataset.state;
+			button.setAttribute('aria-label', 'Copy bio to clipboard');
+			if (label) {
+				label.textContent = 'Copy';
+			}
+		}, 1500);
+	});
+</script>
