@@ -6,6 +6,7 @@ import styles from './layout.module.css'
 import { Header } from '@/components/header/header.tsx'
 import { Footer } from '@/components/footer/footer.tsx'
 import { Navigation } from '@/components/navigation/navigation.tsx'
+import { HeaderScene } from '@/components/header-scene/header-scene.tsx'
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,7 @@ export function Layout({ children, commits, totalCommits, pathname, showCopy, sh
       <div className={styles.container}>
         <Navigation pathname={pathname} />
         {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
+        {pathname === '' && <HeaderScene />}
         <main>
           {children}
         </main>

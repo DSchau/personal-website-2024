@@ -1,0 +1,131 @@
+.scene {
+  --ink: #161616;
+
+  display: block;
+  grid-column: 1 / -1;
+  /* break out of the layout container's side padding */
+  width: calc(100% + 2 * var(--padding-lg));
+  max-width: none;
+  margin: 0 calc(-1 * var(--padding-lg)) calc(-1 * var(--padding-xl));
+
+  /* follow the art's aspect ratio (192 / 1600) so nothing is cropped on desktop */
+  height: clamp(100px, 12vw, 192px);
+
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+
+  /* the sea fades out at the bottom so the scene flows into the content below */
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent);
+  mask-image: linear-gradient(to bottom, #000 88%, transparent);
+}
+
+/* ---- sun (from the mocks): faint, rises on load, rays turn + twinkle; climbs + darkens on hover ---- */
+.sun {
+  opacity: 0.35;
+  transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.scene:hover .sun {
+  opacity: 0.75;
+  transform: translateY(-10px);
+}
+
+.rise {
+  animation: rise 2.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from { transform: translateY(40px); }
+}
+
+.rays {
+  animation: turn 90s linear infinite;
+}
+
+.raysA {
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+
+.raysB {
+  animation: twinkle 3.2s ease-in-out -1.6s infinite;
+}
+
+@keyframes turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* ---- sea: each row drifts slowly sideways and breathes up + down, out of step with its neighbours ---- */
+.drift {
+  animation: drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translateX(calc(-1 * var(--dx))); }
+  to { transform: translateX(var(--dx)); }
+}
+
+.heave {
+  animation: heave 7s ease-in-out infinite alternate;
+}
+
+@keyframes heave {
+  from { transform: translateY(calc(-1 * var(--dy))); }
+  to { transform: translateY(var(--dy)); }
+}
+
+.glitter path {
+  animation: glint 3.2s ease-in-out infinite;
+}
+
+@keyframes glint {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.7; }
+}
+
+/* ---- birds (from the mocks): a near flock and a smaller, fainter, slower far one ---- */
+.flock {
+  animation: glide 55s linear infinite;
+}
+
+.far {
+  animation-duration: 80s;
+  opacity: 0.55;
+}
+
+@keyframes glide {
+  from { transform: translate(-80px, 6px); }
+  to { transform: translate(1720px, -18px); }
+}
+
+.flock path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flap 0.5s ease-in-out infinite alternate;
+}
+
+.flock :global(.bob) {
+  animation: bob 2s ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  to { transform: scaleY(-0.4); }
+}
+
+@keyframes bob {
+  from { transform: translateY(-1.5px); }
+  to { transform: translateY(1.5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene *,
+  .scene {
+    animation: none !important;
+    transition: none !important;
+  }
+}
