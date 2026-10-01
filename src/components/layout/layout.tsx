@@ -7,6 +7,7 @@ import { Header } from '@/components/header/header.tsx'
 import { Footer } from '@/components/footer/footer.tsx'
 import { Navigation } from '@/components/navigation/navigation.tsx'
 import { Sea } from '@/components/sea/sea.tsx'
+import { Writing } from '@/components/writing/writing.tsx'
 
 interface Props {
   children: ReactNode;
@@ -21,8 +22,8 @@ interface Props {
   photo?: boolean;
   /** a large display heading above the scene + page content (e.g. the 404) */
   display?: string;
-  /** the 404's full-bleed sea, with a message in a bottle */
-  scene?: 'lost-at-sea';
+  /** a full-bleed illustration under the header: the 404's sea (with a message in a bottle), or the /posts writing-into-waves */
+  scene?: 'lost-at-sea' | 'writing';
 }
 
 export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo, display, scene }: Props) {
@@ -34,6 +35,7 @@ export function Layout({ children, commits, totalCommits, pathname, showCopy, sh
         {display && <h1 className={styles.display}>{display}</h1>}
         {pathname === '' && <Sea />}
         {scene === 'lost-at-sea' && <Sea bottle />}
+        {scene === 'writing' && <Writing />}
         <main>
           {children}
         </main>

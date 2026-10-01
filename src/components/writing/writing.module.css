@@ -1,0 +1,60 @@
+.scene {
+  --ink: #161616;
+
+  display: block;
+  grid-column: 1 / -1;
+  /* break out of the layout container's side padding, like the homepage sea */
+  width: calc(100% + 2 * var(--padding-lg));
+  max-width: none;
+  margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
+
+  /* follow the art's aspect ratio (250 / 1600) up to its natural height */
+  height: clamp(170px, 15.6vw, 250px);
+
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* the sea fades out at the bottom, like the homepage */
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent);
+}
+
+/*
+  The first line writes itself, left to right (pathLength is 100, so a 100/100
+  dash revealed by its offset), rests, fades, and starts again.
+*/
+.write {
+  stroke-dasharray: 100 100;
+  animation: write 26s ease-in-out infinite;
+}
+
+@keyframes write {
+  0% { stroke-dashoffset: 100; opacity: 1; }
+  65% { stroke-dashoffset: 0; opacity: 1; }
+  92% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* the sea rows drift slowly back and forth */
+.drift {
+  animation: drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translateX(calc(-1 * var(--dx))); }
+  to { transform: translateX(var(--dx)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene *,
+  .scene {
+    animation: none !important;
+  }
+
+  /* with no motion, show the first line fully written */
+  .write {
+    stroke-dasharray: none;
+  }
+}
