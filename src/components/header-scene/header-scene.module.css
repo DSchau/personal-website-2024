@@ -6,7 +6,8 @@
   /* break out of the layout container's side padding */
   width: calc(100% + 2 * var(--padding-lg));
   max-width: none;
-  margin: 0 calc(-1 * var(--padding-lg)) calc(-1 * var(--padding-xl));
+  /* bottom margin gives the sea room to fade out before the photos start */
+  margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
 
   /* follow the art's aspect ratio (192 / 1600) so nothing is cropped on desktop */
   height: clamp(100px, 12vw, 192px);
