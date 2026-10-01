@@ -23,6 +23,7 @@ export async function getRepositories({
         pinnedItems(first: $limit, types: REPOSITORY) {
           nodes {
             ... on Repository {
+              id
               name
               createdAt
               description
