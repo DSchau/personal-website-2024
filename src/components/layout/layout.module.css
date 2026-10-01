@@ -24,3 +24,12 @@
 
   margin: 0 auto;
 }
+
+.display {
+  margin: var(--padding-lg) 0 var(--padding-md);
+  padding: 0 var(--padding-lg);
+
+  font-family: var(--header-font);
+  font-size: clamp(5rem, 18vw, 9rem);
+  line-height: 0.9;
+}

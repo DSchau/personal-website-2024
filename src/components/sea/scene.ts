@@ -1,18 +1,17 @@
 /**
- * Homepage header scene: a calm engraved sea that borrows the footer's hand
- * (src/components/footer/scene.ts) — faint sky rules, a hatched sun sitting on
- * the horizon, and rows of waves engraved like the footer hills: contour
- * hatching that follows each wave, weighted by slope.
+ * A calm engraved sea that borrows the footer's hand (src/components/footer/scene.ts):
+ * faint sky rules, a hatched sun with turning rays on the horizon, and rows of
+ * waves engraved like the footer hills (contour hatching that follows each
+ * wave, weighted by slope). Used under the homepage header and on the 404.
  *
  * Everything is seeded/deterministic and rendered to SVG markup at build time;
- * CSS (header-scene.module.css) handles the (very slow) motion.
+ * CSS (sea.module.css) handles the (very slow) motion.
  */
 
-export const VIEW = { x: 0, y: 80, w: 1600, h: 192 }
 export const PAPER = '#fefefe'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
-const r = (n: number) => Math.round(n * 10) / 10
+export const r = (n: number) => Math.round(n * 10) / 10
 
 type Ridge = (x: number) => number
 const slope = (fn: Ridge, x: number) => (fn(x + 2) - fn(x - 2)) / 4
@@ -21,15 +20,47 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
 // bands are wider than the view so they can drift without exposing an edge
 const FROM = -120
 const TO = 1720
-const FLOOR = VIEW.y + VIEW.h + 10
 
-export const HZ = 168
-export const SUN = { x: 1300, y: HZ, r: 34 }
+/** everything that varies between the homepage strip and larger seas (e.g. the 404) */
+export interface Sea {
+  view: { x: number; y: number; w: number; h: number }
+  /** horizon line */
+  hz: number
+  sun: { x: number; y: number; r: number }
+  /** y of the nearest row of waves */
+  near: number
+  rows: number
+  /** wavelength + height of the farthest row, and how much both grow toward the viewer */
+  wl: [number, number]
+  amp: [number, number]
+  /** hatch lines under the nearest row */
+  lines: number
+  glitterBottom: number
+  seed: number
+  id: string
+}
+
+/** the sea used on the homepage (under the header) and the 404 (with a bottle) */
+export const SEA: Sea = {
+  view: { x: 0, y: 70, w: 1600, h: 330 },
+  hz: 196,
+  sun: { x: 1120, y: 196, r: 46 },
+  near: 384,
+  rows: 9,
+  wl: [80, 330],
+  amp: [0.8, 9],
+  lines: 9,
+  glitterBottom: 330,
+  seed: 404,
+  id: 'sea',
+}
+
+const floor = (sea: Sea) => sea.view.y + sea.view.h + 10
 
 /** distance-from-sun-column factor (1 = right under the sun), for the reflection */
-const glow = (x: number, y: number) => {
-  const spread = 14 + (y - HZ) * 0.9
-  const u = (x - SUN.x) / spread
+const glow = (sea: Sea, x: number, y: number) => {
+  const spread = 14 + (y - sea.hz) * 0.9
+  const u = (x - sea.sun.x) / spread
   return Math.exp(-u * u)
 }
 
@@ -39,38 +70,42 @@ const glow = (x: number, y: number) => {
  * as "water" at a glance. Wavelength, height, hatch depth and weight all grow
  * toward the viewer, and a slow amplitude envelope groups the crests into sets.
  */
-interface Row { id: string; fn: Ridge; y: number; wl: number; amp: number; lines: number; spacing: number; base: number; dark: number }
+export interface Row { id: string; fn: Ridge; y: number; wl: number; amp: number; lines: number; spacing: number; base: number; dark: number }
 
-const ROWS: Row[] = Array.from({ length: 6 }, (_, k) => {
-  const t = k / 5
-  const y = HZ + 7 + (248 - HZ - 7) * t ** 1.5
-  const wl = 70 + t * 230
-  const amp = 0.7 + t * 5.2
-  const phase = k * 2.1
-  const fn: Ridge = (x) => {
-    const th = (x / wl) * Math.PI * 2 + phase
-    const env = 0.7 + 0.3 * Math.sin(x * 0.0021 + k * 1.7)
-    // a faint cross-swell at an unrelated wavelength so no two crests are quite alike
-    const cross = 0.22 * Math.cos((x / (wl * 0.61)) * Math.PI * 2 + k * 0.9)
-    return y - amp * env * (Math.cos(th) + 0.38 * Math.cos(2 * th) + cross)
-  }
-  return { id: `hs-${k}`, fn, y, wl, amp, lines: 2 + Math.round(t * 5), spacing: 1.8 + t * 1.7, base: 0.3 + t * 0.35, dark: 0.22 }
-})
+export function waveRows(sea: Sea): Row[] {
+  const n = sea.rows
+  return Array.from({ length: n }, (_, k) => {
+    const t = k / (n - 1)
+    const y = sea.hz + 7 + (sea.near - sea.hz - 7) * t ** 1.5
+    const wl = sea.wl[0] + t * sea.wl[1]
+    const amp = sea.amp[0] + t * sea.amp[1]
+    const phase = k * 2.1
+    const fn: Ridge = (x) => {
+      const th = (x / wl) * Math.PI * 2 + phase
+      const env = 0.7 + 0.3 * Math.sin(x * 0.0021 + k * 1.7)
+      // a faint cross-swell at an unrelated wavelength so no two crests are quite alike
+      const cross = 0.22 * Math.cos((x / (wl * 0.61)) * Math.PI * 2 + k * 0.9)
+      return y - amp * env * (Math.cos(th) + 0.38 * Math.cos(2 * th) + cross)
+    }
+    return { id: `${sea.id}-${k}`, fn, y, wl, amp, lines: 2 + Math.round(t * (sea.lines - 2)), spacing: 1.8 + t * 1.7, base: 0.3 + t * 0.35, dark: 0.22 }
+  })
+}
 
-function area(fn: Ridge, step = 8) {
-  let d = `M${FROM} ${FLOOR}L${FROM} ${r(fn(FROM))}`
+function area(sea: Sea, fn: Ridge, step = 8) {
+  const f = floor(sea)
+  let d = `M${FROM} ${f}L${FROM} ${r(fn(FROM))}`
   for (let x = FROM; x <= TO; x += step) d += `L${Math.round(x)} ${r(fn(x))}`
-  return d + `L${TO} ${FLOOR}Z`
+  return d + `L${TO} ${f}Z`
 }
 
 /** footer sky: faint engraved rules, darkening toward the horizon */
-function sky(rnd: () => number) {
+function sky(sea: Sea, rnd: () => number) {
   let out = ''
   const rows = 9
   for (let i = 0; i < rows; i++) {
-    const y = HZ - 4 - (rows - 1 - i) * 5
+    const y = sea.hz - 4 - (rows - 1 - i) * 5
     let x = rnd() * 40, d = ''
-    while (x < VIEW.w) {
+    while (x < sea.view.w) {
       const len = 40 + rnd() * 160
       d += `M${Math.round(x)} ${y}h${Math.round(len)}`
       x += len + 4 + rnd() * 30
@@ -81,8 +116,8 @@ function sky(rnd: () => number) {
 }
 
 /** hatched sun: horizontal rules clipped to a disc, heavier toward the bottom (lower half sits behind the sea) */
-function sun() {
-  const { x: cx, y: cy, r: rad } = SUN
+function sun(sea: Sea) {
+  const { x: cx, y: cy, r: rad } = sea.sun
   const gap = 2.8
   let out = `<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${PAPER}" stroke-width="1"/>`
   for (let y = cy - rad + gap / 2; y <= cy + rad; y += gap) {
@@ -94,9 +129,9 @@ function sun() {
 }
 
 /** sun rays as two alternating rings (long/short) so they can twinkle + turn */
-function rays(count = 32, long = 30, short = 14) {
-  const { x: cx, y: cy } = SUN
-  const inner = SUN.r + 7
+function rays(sea: Sea, count = 32, long = 30, short = 14) {
+  const { x: cx, y: cy } = sea.sun
+  const inner = sea.sun.r + 7
   let a = '', b = ''
   for (let i = 0; i < count; i++) {
     const ang = (i / count) * Math.PI * 2
@@ -108,16 +143,16 @@ function rays(count = 32, long = 30, short = 14) {
 }
 
 /** sun glitter on the water: short strokes in a widening column under the sun */
-function glitter(rnd: () => number, bottom = 236, rows = 7) {
+function glitter(sea: Sea, rnd: () => number, rows = 7) {
   const out: { d: string; delay: number }[] = []
   for (let i = 0; i < rows; i++) {
     const t = i / (rows - 1)
-    const y = HZ + 3 + (bottom - HZ - 4) * t ** 1.2
+    const y = sea.hz + 3 + (sea.glitterBottom - sea.hz - 4) * t ** 1.2
     const spread = 16 + t * 50
     let d = ''
     const n = 2 + Math.floor(rnd() * 2 + t * 2)
     for (let k = 0; k < n; k++) {
-      const x = SUN.x + (rnd() - 0.5) * 2 * spread
+      const x = sea.sun.x + (rnd() - 0.5) * 2 * spread
       const len = 3 + rnd() * (6 + t * 10)
       d += `M${r(x - len / 2)} ${r(y)}h${r(len)}`
     }
@@ -134,13 +169,13 @@ const norm = (row: Row, x: number) => slope(row.fn, x) * row.wl / (2 * Math.PI *
  * follows the wave (weight from slope, light from the left), plus a crest line.
  * Under the sun the strokes get shorter and sparser, which reads as a reflection.
  */
-function waveRow(row: Row, rnd: () => number) {
+function waveRow(sea: Sea, row: Row, rnd: () => number) {
   const step = Math.max(3, row.wl / 14)
   const buckets = new Map<number, string>()
   for (let i = 1; i <= row.lines; i++) {
     let x = FROM + rnd() * 10
     while (x < TO) {
-      const g = glow(x, row.fn(x))
+      const g = glow(sea, x, row.fn(x))
       const len = (row.wl * (0.15 + rnd() * 0.3)) * (1 - g * 0.6)
       const mid = x + len / 2
       // shadow sits on the front (right-facing, descending) face, strongest just under the crest
@@ -177,8 +212,8 @@ function waveRow(row: Row, rnd: () => number) {
   let top = ''
   for (const [w, d] of tops) top += `<path d="${d}" stroke-width="${w}"/>`
   return {
-    clip: `<clipPath id="${row.id}"><path d="${area(row.fn, step)}"/></clipPath>`,
-    html: `<path d="${area(row.fn, step)}" fill="${PAPER}" stroke="none"/><g clip-path="url(#${row.id})">${hatch}</g>${top}`,
+    clip: `<clipPath id="${row.id}"><path d="${area(sea, row.fn, step)}"/></clipPath>`,
+    html: `<path d="${area(sea, row.fn, step)}" fill="${PAPER}" stroke="none"/><g clip-path="url(#${row.id})">${hatch}</g>${top}`,
   }
 }
 
@@ -193,18 +228,18 @@ export interface SceneParts {
   rows: { html: string; wl: number }[]
 }
 
-export function swellScene(): SceneParts {
-  const rnd = rng(11)
-  const ray = rays()
-  const rows = ROWS.map(row => ({ ...waveRow(row, rnd), wl: row.wl }))
+export function seaScene(sea: Sea): SceneParts {
+  const rnd = rng(sea.seed)
+  const ray = rays(sea)
+  const rows = waveRows(sea).map(row => ({ ...waveRow(sea, row, rnd), wl: row.wl }))
   return {
     defs: rows.map(b => b.clip).join(''),
-    sky: sky(rnd),
-    sun: sun(),
+    sky: sky(sea, rnd),
+    sun: sun(sea),
     raysA: ray.a,
     raysB: ray.b,
-    glint: glitter(rnd),
-    horizon: `M${FROM} ${HZ}H${TO}`,
+    glint: glitter(sea, rnd),
+    horizon: `M${FROM} ${sea.hz}H${TO}`,
     rows: rows.map(({ html, wl }) => ({ html, wl: r(wl) })),
   }
 }
@@ -214,7 +249,7 @@ export function swellScene(): SceneParts {
  * size (depth), spacing and flap speed so it reads as a living group, not a
  * stamp. Each bird is wrapped so the group can fly while the bird bobs + flaps.
  */
-function flock(x0: number, y0: number, count: number, seed: number) {
+export function flock(x0: number, y0: number, count: number, seed: number) {
   const rnd = rng(seed)
   let out = ''
   for (let i = 0; i < count; i++) {
@@ -232,5 +267,5 @@ function flock(x0: number, y0: number, count: number, seed: number) {
   return out
 }
 
-export const FLOCK_NEAR = flock(0, 130, 7, 21)
-export const FLOCK_FAR = flock(0, 116, 3, 5)
+export const FLOCK_NEAR = flock(0, 118, 7, 21)
+export const FLOCK_FAR = flock(0, 100, 3, 5)

@@ -7,16 +7,33 @@ export const prerender = true
   .container {
     margin: 0 auto;
     padding: 0 var(--padding-lg);
-
     max-width: min(65ch, 100%);
   }
 
-  h1 {
+  .title {
+    margin: 0 0 var(--padding-lg);
   }
 </style>
-<Layout title="404: Not Found" showCopy={false}>
+<Layout title="404: Not Found" showHeader={false} display="404" scene="lost-at-sea">
   <div class="container">
-    <h2>⚠️ Oh no, a 404!</h2>
-    <p>Couldn't find the page specified. Perhaps try the <a href="/">Home page</a> or <a href="/posts">Blog posts</a>?</p>
+    <h2 class="title">Lost at sea.</h2>
+    <p>The page you're looking for can't be found. The link you followed may be broken or out of date, or the page may have been moved or removed.</p>
+    <p>A few places to get your bearings:</p>
+    <ul>
+      <li><a href="/">Home page</a></li>
+      <li><a href="/posts">Writing</a>, all of my blog posts</li>
+      <li><a href="/work">Work</a>, what I've worked on</li>
+    </ul>
+    <p>If you got here from a link on this site, please <a href="mailto:me@dustinschau.com?subject=Broken%20link" data-report-link>let me know</a> and I'll fix it.</p>
   </div>
 </Layout>
+
+<script>
+  // the page is prerendered, so add the missing URL (and where the visitor came from) at runtime
+  const link = document.querySelector<HTMLAnchorElement>('[data-report-link]')
+  if (link) {
+    const lines = [`I found a broken link: ${window.location.href}`]
+    if (document.referrer) lines.push(`I followed it from: ${document.referrer}`)
+    link.href = `mailto:me@dustinschau.com?subject=${encodeURIComponent('Broken link')}&body=${encodeURIComponent(lines.join('\n'))}`
+  }
+</script>

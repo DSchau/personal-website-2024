@@ -82,16 +82,16 @@ export function Footer({ updated, commits }: Props) {
         <div>
           <a className={styles.brand} href="/">Dustin Schau</a>
           <p className={styles.meta}>
-            {commits > 0 && <>{commits.toLocaleString('en-US')} commits</>}
-            {commits > 0 && updatedDate && <span aria-hidden="true"> · </span>}
             {updatedDate && (
               <>
-                updated{' '}
+                Last updated{' '}
                 <time dateTime={updatedDate.toISOString()}>
-                  {updatedDate.toISOString().slice(0, 10)}
+                  {updatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
                 </time>
+                {commits > 0 ? ', with ' : '.'}
               </>
             )}
+            {commits > 0 && <>{commits.toLocaleString('en-US')} commits so far.</>}
           </p>
         </div>
         <ul className={styles.links}>

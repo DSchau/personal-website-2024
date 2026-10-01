@@ -6,7 +6,7 @@ import styles from './layout.module.css'
 import { Header } from '@/components/header/header.tsx'
 import { Footer } from '@/components/footer/footer.tsx'
 import { Navigation } from '@/components/navigation/navigation.tsx'
-import { HeaderScene } from '@/components/header-scene/header-scene.tsx'
+import { Sea } from '@/components/sea/sea.tsx'
 
 interface Props {
   children: ReactNode;
@@ -19,15 +19,21 @@ interface Props {
   copy: string | undefined
   byline: string | undefined;
   photo?: boolean;
+  /** a large display heading above the scene + page content (e.g. the 404) */
+  display?: string;
+  /** the 404's full-bleed sea, with a message in a bottle */
+  scene?: 'lost-at-sea';
 }
 
-export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo }: Props) {
+export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo, display, scene }: Props) {
   return (
     <>
       <div className={styles.container}>
         <Navigation pathname={pathname} />
         {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
-        {pathname === '' && <HeaderScene />}
+        {display && <h1 className={styles.display}>{display}</h1>}
+        {pathname === '' && <Sea />}
+        {scene === 'lost-at-sea' && <Sea bottle />}
         <main>
           {children}
         </main>

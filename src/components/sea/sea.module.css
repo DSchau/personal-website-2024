@@ -6,11 +6,11 @@
   /* break out of the layout container's side padding */
   width: calc(100% + 2 * var(--padding-lg));
   max-width: none;
-  /* bottom margin gives the sea room to fade out before the photos start */
+  /* bottom margin gives the sea room to fade out before what follows */
   margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
 
-  /* follow the art's aspect ratio (192 / 1600) so nothing is cropped on desktop */
-  height: clamp(100px, 12vw, 192px);
+  /* follow the art's aspect ratio (330 / 1600) up to its natural height */
+  height: clamp(220px, 20.6vw, 330px);
 
   fill: none;
   stroke: var(--ink);
@@ -87,6 +87,28 @@
 @keyframes glint {
   0%, 100% { opacity: 0.1; }
   50% { opacity: 0.7; }
+}
+
+/* ---- the 404's bottle: rocks + bobs on its swell, a little out of step with the row's heave ---- */
+.bottle {
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  animation: rock 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes rock {
+  0% { transform: translateY(-2px) rotate(-5deg); }
+  50% { transform: translateY(1.5px) rotate(2deg); }
+  100% { transform: translateY(-1px) rotate(6deg); }
+}
+
+.wake {
+  animation: wake 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes wake {
+  from { opacity: 0.25; }
+  to { opacity: 0.8; }
 }
 
 /* ---- birds (from the mocks): a near flock and a smaller, fainter, slower far one ---- */

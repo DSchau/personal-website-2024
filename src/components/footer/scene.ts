@@ -14,6 +14,8 @@ export const H = 340
 export const INK = '#161616'
 export const PAPER = '#fefefe'
 
+import { BRIDGE, renderBridge, withStrait } from './bridge'
+
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
 
 type Ridge = (x: number) => number
@@ -23,13 +25,14 @@ const slope = (fn: Ridge, x: number) => (fn(x + 2) - fn(x - 2)) / 4
 const r = (n: number) => Math.round(n * 10) / 10
 
 const HILLS = [
-  { id: 'far', fn: ridge(205, [[20, 0.004, 1], [9, 0.011, 2], [4, 0.03, 0]]), lines: 30, spacing: 3, base: 0.55, dark: 0.5 },
+  // the far ridge opens into the strait under the bridge
+  { id: 'far', fn: withStrait(ridge(205, [[20, 0.004, 1], [9, 0.011, 2], [4, 0.03, 0]])), lines: 30, spacing: 3, base: 0.55, dark: 0.5 },
   { id: 'mid', fn: ridge(244, [[15, 0.0035, 3], [8, 0.009, 1], [3, 0.04, 2]]), lines: 24, spacing: 3.6, base: 0.7, dark: 0.4 },
   { id: 'near', fn: ridge(282, [[8, 0.003, 0.5], [4, 0.012, 4]]), lines: 16, spacing: 4.2, base: 0.5, dark: 0.1 },
 ]
 
 // Golden Gate geometry (shared with the inline lamps)
-export const BRIDGE = { t1: 1150, t2: 1370, deck: 196, top: 120, sag: 50 }
+export { BRIDGE }
 
 function area(fn: Ridge) {
   let d = `M0 ${H}L0 ${r(fn(0))}`
@@ -59,37 +62,10 @@ export function renderStaticScene(): string {
     out.push(`<path d="${d}" stroke-width=".5" opacity="${r((i / 26) ** 2 * 0.35 * 100) / 100}"/>`)
   }
 
-  // bridge
-  const { t1, t2, deck, top, sag } = BRIDGE
-  const mid = (t1 + t2) / 2, half = (t2 - t1) / 2
-  const cable = (x: number) =>
-    x < t1 ? top + (deck - 4 - top) * ((t1 - x) / 150) ** 1.4
-      : x > t2 ? top + (deck - 4 - top) * ((x - t2) / 150) ** 1.4
-        : top + sag * (1 - ((x - mid) / half) ** 2)
-  let cd = ''
-  for (let x = t1 - 150; x <= t2 + 150; x += 3) cd += (cd ? 'L' : 'M') + x + ' ' + r(cable(x))
-  let hangers = ''
-  for (let x = t1 - 140; x < t2 + 145; x += 7) {
-    if (Math.abs(x - t1) > 6 && Math.abs(x - t2) > 6) hangers += `M${x} ${r(cable(x))}V${deck}`
-  }
-  let towers = '', towerShade = ''
-  for (const x of [t1, t2]) {
-    towers += `M${x - 5} ${deck + 16}L${x - 4} ${top - 2}M${x + 5} ${deck + 16}L${x + 4} ${top - 2}`
-    for (const y of [top + 4, top + 26, top + 50, deck - 6]) towers += `M${x - 5} ${y}h10`
-    for (let y = top; y < deck + 14; y += 2.2) towerShade += `M${x - 4} ${r(y)}h8`
-  }
-  let water = ''
-  for (let i = 0; i < 10; i++) water += `M${Math.round(t1 - 180 + rnd() * 60)} ${deck + 6 + i * 3}h${Math.round(120 + rnd() * 300)}`
-  out.push(
-    `<g fill="none" opacity=".75">`,
-    `<path d="${cd}" stroke-width="1.2"/>`,
-    `<path d="${hangers}" stroke-width=".45"/>`,
-    `<path d="${towers}" stroke-width="1.5"/>`,
-    `<path d="${towerShade}" stroke-width=".35"/>`,
-    `<path d="M${t1 - 160} ${deck}H${t2 + 160}M${t1 - 160} ${deck + 3}H${t2 + 160}" stroke-width="1"/>`,
-    `<path d="${water}" stroke-width=".4" stroke-dasharray="14 6 3 6" opacity=".6"/>`,
-    `</g>`,
-  )
+  // bridge (see bridge.ts). The old water rules drew from the shared rng; keep
+  // consuming those values so the hills' hatching below stays exactly as it was.
+  out.push(renderBridge(INK, PAPER))
+  for (let i = 0; i < 20; i++) rnd()
 
   // hills: contour hatching, weight driven by slope (light from the left).
   // Segments are bucketed by stroke width so each hill is a handful of paths.
