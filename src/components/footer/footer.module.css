@@ -1,35 +1,211 @@
 .footer {
-  padding: var(--padding-lg);
-
-  text-align: center;
-  width: 100%;
-
-  border-top: 1px solid var(--border-color);
-  margin-top: var(--padding-lg);
-}
-
-.footer p {
-  text-align: center;
-}
-
-.copyright {
-  margin: 0;
-  padding: 0;
-}
-
-.footer p > svg {
-  display: inline-block;
+  --ink: #161616;
 
   position: relative;
-  top: 2px;
+  overflow: hidden;
+  width: 100%;
+  margin-top: calc(var(--padding-xl) * 2);
+
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--ink);
 }
 
-.footer a:hover {
+/* aligns with the site's 65ch content column (same as nav/header) */
+.inner {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--padding-lg) var(--padding-xl);
+
+  width: min(65ch, 100% - 2 * var(--padding-lg));
+  margin: 0 auto;
+  padding: calc(var(--padding-xl) * 2) var(--padding-lg) 0;
+}
+
+.brand {
+  font-family: var(--header-font);
+  font-size: var(--h4-size);
+  font-weight: bold;
+  color: var(--text-color);
   text-decoration: none;
 }
 
-.version {
-  font-size: 0.6rem;
+.meta {
+  margin: var(--padding-xs) 0 0;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: #999;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
+
   margin: 0;
   padding: 0;
+  list-style: none;
+}
+
+.links li {
+  margin: 0;
+  padding: 0;
+}
+
+/* same treatment as the nav links */
+.links a {
+  color: var(--text-color);
+  text-decoration-skip: ink;
+}
+
+.links a:hover {
+  text-decoration: none;
+}
+
+/* ---------- scene ---------- */
+
+.scene {
+  display: block;
+  width: 100%;
+  height: clamp(180px, 21.25vw, 340px);
+  max-width: none;
+  margin: calc(-1 * var(--padding-md)) 0 0;
+}
+
+.fog {
+  animation: drift 38s ease-in-out infinite alternate;
+}
+
+.fog.b {
+  animation-duration: 52s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes drift {
+  from { transform: translateX(-60px); }
+  to { transform: translateX(60px); }
+}
+
+.lamp {
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+
+.scene:hover .lamp {
+  opacity: 1;
+}
+
+.bird {
+  animation: fly 46s linear infinite;
+}
+
+.bird path {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flap 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes fly {
+  from { transform: translate(-80px, 0); }
+  to { transform: translate(1700px, -40px); }
+}
+
+@keyframes flap {
+  to { transform: scaleY(-0.4); }
+}
+
+.family {
+  animation: walk 120s linear infinite;
+}
+
+@keyframes walk {
+  from { transform: translateX(-260px); }
+  to { transform: translateX(1900px); }
+}
+
+/*
+  Below ~847px the scene is pinned at 180px tall and cropped from the left
+  (xMaxYMax slice), so only the right-hand part is visible:
+  x ∈ [1600 - 100vw * 340/180, 1600] in scene units. Keep the walk inside that
+  window so the family is always on screen (the family group spans x 280–390).
+*/
+@media (max-width: 846px) {
+  .family {
+    animation-name: walk-narrow;
+    animation-duration: 45s;
+  }
+
+  @keyframes walk-narrow {
+    from { transform: translateX(calc(1600px - 188.89vw - 410px)); }
+    to { transform: translateX(calc(1600px - 260px)); }
+  }
+}
+
+.leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: step 0.9s ease-in-out infinite alternate;
+}
+
+.legAlt {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes step {
+  from { transform: rotate(-16deg); }
+  to { transform: rotate(16deg); }
+}
+
+.bob {
+  animation: bob 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  to { transform: translateY(-1px); }
+}
+
+.tuft {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sway 4.5s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: skewX(-3deg); }
+  50% { transform: skewX(4deg); }
+}
+
+/* set by footer-interactions.ts when the cursor enters */
+.grass:global(.gust) .tuft {
+  animation: gust 1.6s var(--ease-fn) 1, sway 4.5s ease-in-out 1.6s infinite;
+}
+
+@keyframes gust {
+  0% { transform: skewX(0); }
+  25% { transform: skewX(18deg); }
+  60% { transform: skewX(-6deg); }
+  100% { transform: skewX(-3deg); }
+}
+
+/* tufts part around the cursor (transform set inline by footer-interactions.ts) */
+.push {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer *,
+  .footer *::before,
+  .footer *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

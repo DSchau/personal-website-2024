@@ -11,6 +11,7 @@ interface Props {
   children: ReactNode;
   pathname: string;
   commits: number;
+  totalCommits: number;
   showHeader?: boolean;
   showCopy?: boolean;
   updated: string | undefined;
@@ -19,15 +20,18 @@ interface Props {
   photo?: boolean;
 }
 
-export function Layout({ children, commits, pathname, showCopy, showHeader = true, copy, byline, updated, photo }: Props) {
+export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo }: Props) {
   return (
-    <div className={styles.container}>
-      <Navigation pathname={pathname} />
-      {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
-      <main>
-        {children}
-      </main>
-      <Footer updated={updated} />
-    </div>
+    <>
+      <div className={styles.container}>
+        <Navigation pathname={pathname} />
+        {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
+        <main>
+          {children}
+        </main>
+      </div>
+      {/* outside the container so it's full-bleed and identical on every page */}
+      <Footer updated={updated} commits={totalCommits} />
+    </>
   )
 }
