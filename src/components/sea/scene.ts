@@ -245,7 +245,7 @@ export function seaScene(sea: Sea): SceneParts {
 }
 
 /**
- * A loose flock (from the mocks): the footer's "m"-shaped birds, varied in
+ * A loose flock: the footer's "m"-shaped birds, varied in
  * size (depth), spacing and flap speed so it reads as a living group, not a
  * stamp. Each bird is wrapped so the group can fly while the bird bobs + flaps.
  */

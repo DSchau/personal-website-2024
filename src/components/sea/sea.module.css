@@ -21,7 +21,7 @@
   mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
 
-/* ---- sun (from the mocks): faint, rises on load, rays turn + twinkle; climbs + darkens on hover ---- */
+/* ---- sun: faint, rises on load, rays turn + twinkle; climbs + darkens on hover ---- */
 .sun {
   opacity: 0.35;
   transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -111,7 +111,7 @@
   to { opacity: 0.8; }
 }
 
-/* ---- birds (from the mocks): a near flock and a smaller, fainter, slower far one ---- */
+/* ---- birds: a near flock and a smaller, fainter, slower far one ---- */
 .flock {
   animation: glide 55s linear infinite;
 }
