@@ -16,9 +16,9 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 
-  /* the map fades out at the bottom, like the other scenes */
-  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent);
-  mask-image: linear-gradient(to bottom, #000 85%, transparent);
+  /* the map fades in at the top (so contours don't end in a hard edge) and out at the bottom, like the other scenes */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 85%, transparent);
 }
 
 .contours {
