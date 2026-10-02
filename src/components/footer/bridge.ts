@@ -108,7 +108,8 @@ function pylon(x: number) {
 export function renderBridge(INK: string, PAPER: string) {
   const { t1, t2, deck, top, side, truss } = BRIDGE
   const a1 = t1 - side, a2 = t2 + side
-  const from = a1 - 70, to = a2 + 70
+  // the south approach runs on into the hill; the north approach runs on over the water, off the edge of the scene
+  const from = a1 - 70, to = a2 + 140
 
   // main + side-span cables
   let cable = ''
@@ -128,6 +129,16 @@ export function renderBridge(INK: string, PAPER: string) {
   for (let x = from; x < to; x += 3) web += `M${x} ${deck + truss}L${x + 1.5} ${deck}L${x + 3} ${deck + truss}`
 
   const towers = [tower(t1), tower(t2)]
+  // the north end stands in the water, so its anchorage gets a pier down to the waterline
+  const pw = 6, py = deck + truss
+  const pierAt = (x: number, w: number) => `M${x - w} ${py}L${x - w - 1.5} ${BRIDGE.water}L${x + w + 1.5} ${BRIDGE.water}L${x + w} ${py}Z`
+  let pier = pierAt(a2, pw), pierHatch = ''
+  for (let y = py + 2; y < BRIDGE.water; y += 2.2) pierHatch += `M${a2 - pw + 1.5} ${r(y)}H${a2 + pw}`
+  // slimmer approach piers beyond it, carrying the roadway on toward Marin
+  for (let x = a2 + 26; x < to; x += 26) {
+    pier += pierAt(x, 2.2)
+    pierHatch += `M${x - 0.6} ${py + 1}V${BRIDGE.water}`
+  }
   const pylons = pylon(a1) + pylon(a2)
   let pylonHatch = ''
   for (const a of [a1, a2]) for (const dx of [-2.2, 0, 2.2]) pylonHatch += `M${a + dx} ${deck - 8}V${deck - 1}`
@@ -140,6 +151,8 @@ export function renderBridge(INK: string, PAPER: string) {
     `<path d="${cable}" stroke-width="1.15"/>`,
     `<path d="${web}" stroke-width=".35"/>`,
     `<path d="${chords}" stroke-width="1"/>`,
+    `<path d="${pier}" fill="${PAPER}" stroke-width=".8"/>`,
+    `<path d="${pierHatch}" stroke-width=".45"/>`,
     `<path d="${pylons}" fill="${PAPER}" stroke-width=".8"/>`,
     `<path d="${pylonHatch}" stroke-width=".4"/>`,
     `<path d="${towers.map(t => t.strutD).join('')}" fill="${INK}" stroke="none"/>`,
@@ -150,17 +163,18 @@ export function renderBridge(INK: string, PAPER: string) {
 }
 
 /**
- * The strait: carve the far ridge down to the water under the bridge, with the
- * city side (left) easing down to Fort Point and the Marin Headlands rising
- * steeply on the right, so the bridge spans open water between two headlands.
+ * The strait: the far ridge eases down to Fort Point, then keeps sloping
+ * down in front of the water (the hill overlaps the bay, which is drawn behind it).
+ * Past its foot there's no ridge at all, just open water
+ * under the bridge.
  */
 export function withStrait(base: (x: number) => number) {
   const { water } = BRIDGE
   // Catmull-Rom through hand-placed points (x, y)
   const pts: [number, number][] = [
-    [860, base(860)], [930, 194], [975, 203], [1025, 216], [1045, water],
-    [1455, water], [1495, 211], [1540, 199], [1590, 186], [1640, 174], [1690, 166],
+    [860, base(860)], [930, 194], [975, 203], [1015, 214], [1045, 223], [1075, 233], [1105, 246], [1140, 266], [1180, 300], [1220, 360],
   ]
+  const end = pts[pts.length - 1][0]
   const target = (x: number) => {
     let i = 0
     while (i < pts.length - 2 && x > pts[i + 1][0]) i++
@@ -173,9 +187,10 @@ export function withStrait(base: (x: number) => number) {
   const smooth = (a: number, b: number, x: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
   return (x: number) => {
     if (x <= 860) return base(x)
-    const y = Math.min(water, target(x))
+    if (x >= end) return 360 // past the bluff: no hill, below the bottom of the scene
+    const y = target(x)
     // keep a little of the ridge's texture on the headlands, none on the water
-    const rough = (Math.sin(x * 0.03) * 1.2 + Math.sin(x * 0.071 + 1) * 0.6) * Math.min(1, (water - y) / 12)
+    const rough = (Math.sin(x * 0.03) * 1.2 + Math.sin(x * 0.071 + 1) * 0.6) * Math.min(1, Math.max(0, (water - y) / 12))
     const w = smooth(860, 940, x)
     return base(x) * (1 - w) + (y + rough) * w
   }

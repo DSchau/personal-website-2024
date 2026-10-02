@@ -15,6 +15,8 @@ export const INK = '#161616'
 export const PAPER = '#fefefe'
 
 import { BRIDGE, renderBridge, withStrait } from './bridge'
+import { compactPaths } from './compact-path'
+import { type Sea, seaScene } from '@/components/sea/scene'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
 
@@ -46,6 +48,57 @@ function line(fn: Ridge) {
   return d
 }
 
+/**
+ * The water under the bridge, drawn like the homepage's sea. It's drawn
+ * before the hills, so the far ridge's bluff and the mid hill overlap it.
+ */
+const STRAIT_SEA: Sea = {
+  view: { x: 0, y: 0, w: W, h: H },
+  hz: BRIDGE.water,
+  sun: { x: -9999, y: BRIDGE.water, r: 1 }, // no sun, so no reflection thinning
+  near: BRIDGE.water + 34,
+  rows: 7,
+  wl: [26, 60],
+  amp: [0.4, 2],
+  lines: 4,
+  glitterBottom: BRIDGE.water + 34,
+  seed: 31,
+  id: 'strait',
+  span: [1000, W + 10], // just the bay (the hills cover the rest)
+}
+
+/** the towers' reflections: broken, wobbling dashes stacked down the water below each tower, fading toward the viewer */
+function reflections() {
+  const rnd = rng(7)
+  let d = ''
+  for (const cx of [BRIDGE.t1, BRIDGE.t2]) {
+    for (let y = BRIDGE.water + 2; y < BRIDGE.water + 40; y += 2 + (y - BRIDGE.water) * 0.06) {
+      const t = (y - BRIDGE.water) / 40
+      if (rnd() < t * 0.7) continue
+      const half = 7 + t * 4
+      const wob = (rnd() - 0.5) * (2 + t * 6)
+      // two legs: dashes either side of the centre, sometimes merged into one
+      if (rnd() < 0.5) d += `M${r(cx - half + wob)} ${r(y)}h${r(half * 2 * (0.6 + rnd() * 0.4))}`
+      else d += `M${r(cx - half + wob)} ${r(y)}h${r(4 + rnd() * 2)}M${r(cx + half - 5 + wob)} ${r(y)}h${r(4 + rnd() * 2)}`
+    }
+  }
+  return d
+}
+
+function strait(defs: string[]) {
+  const shape = `M1000 ${BRIDGE.water}H${W + 10}V300H1000Z`
+  const sea = seaScene(STRAIT_SEA)
+  defs.push(sea.defs, `<clipPath id="strait-water"><path d="${shape}"/></clipPath>`)
+  return [
+    `<path d="${shape}" fill="${PAPER}" stroke="none"/>`,
+    `<g clip-path="url(#strait-water)">`,
+    `<g opacity=".8">${sea.rows.map(row => row.html).join('')}</g>`,
+    `<path d="${reflections()}" stroke-width="1.3" opacity=".75"/>`,
+    `</g>`,
+    `<path d="M1000 ${BRIDGE.water}H${W + 10}" stroke-width=".9"/>`,
+  ].join('')
+}
+
 export function renderStaticScene(): string {
   const rnd = rng(11)
   const out: string[] = []
@@ -70,6 +123,7 @@ export function renderStaticScene(): string {
   // hills: contour hatching, weight driven by slope (light from the left).
   // Segments are bucketed by stroke width so each hill is a handful of paths.
   const defs: string[] = []
+  out.push(strait(defs))
   for (const h of HILLS) {
     defs.push(`<clipPath id="${h.id}"><path d="${area(h.fn)}"/></clipPath>`)
     const buckets = new Map<number, string>()
@@ -102,7 +156,7 @@ export function renderStaticScene(): string {
   }
   for (const [w, d] of dots) out.push(`<path d="${d}" stroke-width="${w}" opacity=".75"/>`)
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs.join('')}</defs><g fill="none" stroke="${INK}" stroke-linecap="round">${out.join('')}</g></svg>`
+  return compactPaths(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs.join('')}</defs><g fill="none" stroke="${INK}" stroke-linecap="round">${out.join('')}</g></svg>`)
 }
 
 /* ---------- animated layers (rendered inline by footer.tsx) ---------- */

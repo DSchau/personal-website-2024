@@ -20,6 +20,8 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
 // bands are wider than the view so they can drift without exposing an edge
 const FROM = -120
 const TO = 1720
+/** horizontal extent to draw: defaults to the full (drift-padded) band */
+const span = (sea: Sea) => sea.span ?? [FROM, TO]
 
 /** everything that varies between the homepage strip and larger seas (e.g. the 404) */
 export interface Sea {
@@ -38,6 +40,8 @@ export interface Sea {
   glitterBottom: number
   seed: number
   id: string
+  /** only draw waves across [from, to] (e.g. the footer's strait); defaults to the full band */
+  span?: [number, number]
 }
 
 /** the sea used on the homepage (under the header) and the 404 (with a bottle) */
@@ -93,6 +97,7 @@ export function waveRows(sea: Sea): Row[] {
 
 function area(sea: Sea, fn: Ridge, step = 8) {
   const f = floor(sea)
+  const [FROM, TO] = span(sea)
   let d = `M${FROM} ${f}L${FROM} ${r(fn(FROM))}`
   for (let x = FROM; x <= TO; x += step) d += `L${Math.round(x)} ${r(fn(x))}`
   return d + `L${TO} ${f}Z`
@@ -171,6 +176,7 @@ const norm = (row: Row, x: number) => slope(row.fn, x) * row.wl / (2 * Math.PI *
  */
 function waveRow(sea: Sea, row: Row, rnd: () => number) {
   const step = Math.max(3, row.wl / 14)
+  const [FROM, TO] = span(sea)
   const buckets = new Map<number, string>()
   for (let i = 1; i <= row.lines; i++) {
     let x = FROM + rnd() * 10
@@ -239,7 +245,7 @@ export function seaScene(sea: Sea): SceneParts {
     raysA: ray.a,
     raysB: ray.b,
     glint: glitter(sea, rnd),
-    horizon: `M${FROM} ${sea.hz}H${TO}`,
+    horizon: `M${span(sea)[0]} ${sea.hz}H${span(sea)[1]}`,
     rows: rows.map(({ html, wl }) => ({ html, wl: r(wl) })),
   }
 }
