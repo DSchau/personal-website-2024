@@ -9,6 +9,7 @@ import { Navigation } from '@/components/navigation/navigation.tsx'
 import { Sea } from '@/components/sea/sea.tsx'
 import { Writing } from '@/components/writing/writing.tsx'
 import { Trail } from '@/components/trail/trail.tsx'
+import { MoonlitSea } from '@/components/moonlit-sea/moonlit-sea.tsx'
 
 interface Props {
   children: ReactNode;
@@ -23,8 +24,8 @@ interface Props {
   photo?: boolean;
   /** a large display heading above the scene + page content (e.g. the 404) */
   display?: string;
-  /** a full-bleed illustration under the header: the 404's sea (with a message in a bottle), the /posts writing-into-waves, or the /work trail */
-  scene?: 'lost-at-sea' | 'writing' | 'trail';
+  /** a full-bleed illustration under the header: the 404's sea (with a message in a bottle), the /posts writing-into-waves, the /work trail, or the /favorites moonlit sea */
+  scene?: 'lost-at-sea' | 'writing' | 'trail' | 'moonlit-sea';
 }
 
 export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo, display, scene }: Props) {
@@ -38,6 +39,7 @@ export function Layout({ children, commits, totalCommits, pathname, showCopy, sh
         {scene === 'lost-at-sea' && <Sea bottle />}
         {scene === 'writing' && <Writing />}
         {scene === 'trail' && <Trail />}
+        {scene === 'moonlit-sea' && <MoonlitSea />}
         <main>
           {children}
         </main>

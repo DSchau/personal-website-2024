@@ -1,0 +1,61 @@
+.scene {
+  --ink: #161616;
+
+  display: block;
+  grid-column: 1 / -1;
+  /* break out of the layout container's side padding, like the homepage sea */
+  width: calc(100% + 2 * var(--padding-lg));
+  max-width: none;
+  margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
+
+  /* shared across all page illustrations (see layout.module.css) */
+  height: var(--scene-height);
+
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+
+  /* the sky fades in at the top; the sea fades out at the bottom, like the other scenes */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+}
+
+/* ---- sea: each row drifts slowly sideways and breathes up + down, out of step with its neighbours ---- */
+.drift {
+  animation: drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translateX(calc(-1 * var(--dx))); }
+  to { transform: translateX(var(--dx)); }
+}
+
+.heave {
+  animation: heave 7s ease-in-out infinite alternate;
+}
+
+@keyframes heave {
+  from { transform: translateY(calc(-1 * var(--dy))); }
+  to { transform: translateY(var(--dy)); }
+}
+
+/* ---- moonlight on the water ---- */
+.shimmer path {
+  animation: shimmer 3.2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene *,
+  .scene {
+    animation: none !important;
+  }
+
+  .shimmer path {
+    opacity: 0.5;
+  }
+}

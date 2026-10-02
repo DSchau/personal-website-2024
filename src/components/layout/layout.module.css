@@ -4,6 +4,9 @@
 }
 
 .container {
+  /* every page illustration (sea, writing, trail, moonlit sea) uses this height, so they line up across pages */
+  --scene-height: clamp(170px, 15.6vw, 250px);
+
   display: grid;
   grid-template-columns:
     1fr

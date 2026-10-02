@@ -9,8 +9,8 @@
   /* bottom margin gives the sea room to fade out before what follows */
   margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
 
-  /* follow the art's aspect ratio (330 / 1600) up to its natural height */
-  height: clamp(220px, 20.6vw, 330px);
+  /* shared across all page illustrations (see layout.module.css) */
+  height: var(--scene-height);
 
   fill: none;
   stroke: var(--ink);
@@ -27,7 +27,7 @@
   transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.scene:hover .sun {
+.sun:hover {
   opacity: 0.75;
   transform: translateY(-10px);
 }

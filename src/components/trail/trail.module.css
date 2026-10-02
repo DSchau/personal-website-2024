@@ -8,8 +8,8 @@
   max-width: none;
   margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
 
-  /* follow the art's aspect ratio (250 / 1600) up to its natural height */
-  height: clamp(170px, 15.6vw, 250px);
+  /* shared across all page illustrations (see layout.module.css) */
+  height: var(--scene-height);
 
   fill: none;
   stroke: var(--ink);

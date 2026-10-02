@@ -267,5 +267,5 @@ export function flock(x0: number, y0: number, count: number, seed: number) {
   return out
 }
 
-export const FLOCK_NEAR = flock(0, 118, 7, 21)
-export const FLOCK_FAR = flock(0, 100, 3, 5)
+export const FLOCK_NEAR = flock(0, 136, 7, 21)
+export const FLOCK_FAR = flock(0, 122, 3, 5)

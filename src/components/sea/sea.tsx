@@ -8,6 +8,8 @@ import styles from './sea.module.css'
 const s = seaScene(SEA)
 const b = floatingBottle()
 const { view, hz, sun } = SEA
+// the drawing is 330 tall; show the 250 that match the other pages' illustrations (crop sky above, the nearest row below)
+const BOX = { x: view.x, y: view.y + 30, w: view.w, h: 250 }
 
 interface Props {
   /** the 404's message in a bottle, floating dead centre */
@@ -28,7 +30,7 @@ export function Sea({ bottle = false }: Props) {
   return (
     <svg
       className={styles.scene}
-      viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
+      viewBox={`${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}`}
       // narrow screens crop the sides: keep the bottle (centre) or the sun (right) in view
       preserveAspectRatio={bottle ? 'xMidYMax slice' : 'xMaxYMax slice'}
       {...bottle
@@ -39,8 +41,10 @@ export function Sea({ bottle = false }: Props) {
 
       <g dangerouslySetInnerHTML={{ __html: s.sky }} />
 
-      {/* faint sun on the horizon: rays + disc move as one; climbs + darkens on hover */}
+      {/* faint sun on the horizon: rays + disc move as one; climbs + darkens when you hover it */}
       <g className={styles.sun}>
+        {/* invisible hit area, so hovering anywhere around the sun + its rays counts (not just the hairlines) */}
+        <circle cx={sun.x} cy={sun.y} r={sun.r + 40} fill="transparent" stroke="none" />
         <g className={styles.rise}>
           <g className={styles.rays} style={{ transformOrigin: `${sun.x}px ${sun.y}px` }}>
             <path className={styles.raysA} d={s.raysA} strokeWidth={1.2} />
