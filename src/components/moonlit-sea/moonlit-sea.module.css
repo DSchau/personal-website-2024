@@ -39,6 +39,38 @@
   to { transform: translateY(var(--dy)); }
 }
 
+/* ---- night sky ---- */
+.sky {
+  opacity: 0.85;
+}
+
+.stars {
+  animation: twinkle 5.1s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.glints {
+  transform-box: fill-box;
+  animation: twinkle 3.4s ease-in-out infinite;
+}
+
+/* a shooting star: a short paper streak runs down its track, then a long rest */
+.meteor {
+  stroke-dasharray: 18 200;
+  stroke-dashoffset: 18;
+  animation: meteor 13s cubic-bezier(0.3, 0, 0.7, 1) 4s infinite;
+}
+
+@keyframes meteor {
+  0% { stroke-dashoffset: 18; opacity: 1; }
+  7% { stroke-dashoffset: -100; opacity: 1; }
+  7.1%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
 /* ---- moonlight on the water ---- */
 .shimmer path {
   animation: shimmer 3.2s ease-in-out infinite;
@@ -57,5 +89,9 @@
 
   .shimmer path {
     opacity: 0.5;
+  }
+
+  .meteor {
+    display: none;
   }
 }

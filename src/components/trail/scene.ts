@@ -21,6 +21,15 @@ const num = (n: number) => String(r(n)).replace(/^(-?)0\./, '$1.')
 
 export const VIEW = { x: 0, y: 20, w: 1600, h: 250 }
 
+/**
+ * Narrow screens get the same map squeezed sideways (every x scaled by
+ * NARROW), rather than a crop of the wide one: a crop only ever shows the
+ * summit's rings, whereas this keeps both peaks, the whole trail and every
+ * waypoint in frame.
+ */
+export const NARROW = 0.35
+export const viewFor = (k: number) => ({ ...VIEW, w: VIEW.w * k })
+
 /* ---------- terrain ---------- */
 
 const G = (x: number, y: number, cx: number, cy: number, sx: number, sy: number) =>
@@ -28,22 +37,29 @@ const G = (x: number, y: number, cx: number, cy: number, sx: number, sy: number)
 
 export const SUMMIT = { x: 1190, y: 112 }
 
-const height = (x: number, y: number) =>
+type Height = (x: number, y: number) => number
+
+/** the landforms, in wide-map coordinates */
+const shape: Height = (x, y) =>
   1.0 * G(x, y, SUMMIT.x, SUMMIT.y, 250, 105) +
   0.5 * G(x, y, 560, 150, 210, 95) +
   0.32 * G(x, y, 880, 190, 260, 90) +
   0.22 * G(x, y, 200, 230, 260, 110) +
-  0.18 * G(x, y, 1500, 210, 200, 120) +
-  // a little ridge-and-gully texture, so the contours wander like real ground
+  0.18 * G(x, y, 1500, 210, 200, 120)
+
+/** a little ridge-and-gully texture, so the contours wander like real ground (in drawn coordinates, so it isn't squeezed on the narrow map) */
+const texture: Height = (x, y) =>
   0.02 * Math.sin(x / 41 + y / 29) + 0.015 * Math.sin(x / 67 - y / 23 + 1.3) + 0.01 * Math.sin(x / 19 + 2.1)
+
+const height: Height = (x, y) => shape(x, y) + texture(x, y)
 
 /* ---------- contours (marching squares) ---------- */
 
 const CELL = 6
-const X0 = -20, X1 = VIEW.w + 20, Y0 = VIEW.y - 20, Y1 = VIEW.y + VIEW.h + 20
+const X0 = -20, Y0 = VIEW.y - 20, Y1 = VIEW.y + VIEW.h + 20
 
-/** trace every contour at `level` into polylines */
-function contour(level: number): [number, number][][] {
+/** trace every contour of `height` at `level` into polylines, across [X0, X1] */
+function contour(height: Height, X1: number, level: number): [number, number][][] {
   const nx = Math.ceil((X1 - X0) / CELL), ny = Math.ceil((Y1 - Y0) / CELL)
   const v: number[][] = []
   for (let j = 0; j <= ny; j++) {
@@ -134,13 +150,16 @@ const LIGHT = (() => { const a = (-135 * Math.PI) / 180; return [Math.cos(a), Ma
 
 export interface Contours { buckets: { w: number; d: string }[] }
 
-export function contours(): Contours {
+/** `k` squeezes the map sideways (1 = the wide map; see NARROW) */
+export function contours(k = 1): Contours {
+  const h: Height = k === 1 ? height : (x, y) => shape(x / k, y) + texture(x, y)
+  const X1 = VIEW.w * k + 20
   const LEVELS = 22, lo = 0.06, hi = 0.98
   const buckets = new Map<number, string>()
   for (let n = 0; n < LEVELS; n++) {
     const level = lo + ((hi - lo) * n) / (LEVELS - 1)
     const index = n % 5 === 0
-    for (const raw of contour(level)) {
+    for (const raw of contour(h, X1, level)) {
       const line = thin(smooth(raw))
       // split each line into runs of equal (bucketed) weight
       let run = '', runW = -1, last: [number, number] = [0, 0]
@@ -148,7 +167,7 @@ export function contours(): Contours {
         const [ax, ay] = line[i - 1], [bx, by] = line[i]
         // downhill direction here ≈ −gradient
         const mx = (ax + bx) / 2, my = (ay + by) / 2
-        const gx = height(mx + 1, my) - height(mx - 1, my), gy = height(mx, my + 1) - height(mx, my - 1)
+        const gx = h(mx + 1, my) - h(mx - 1, my), gy = h(mx, my + 1) - h(mx, my - 1)
         const len = Math.hypot(gx, gy) || 1
         const facing = -(gx / len) * LIGHT[0] - (gy / len) * LIGHT[1] // 1 = slope faces the light
         const shade = (1 - facing) / 2 // 0 lit … 1 in shadow
@@ -190,17 +209,18 @@ export const WAYPOINTS = [
 ]
 
 /** Catmull-Rom through the route, then resampled evenly so fractions are along true length */
-export function trail() {
+export function trail(k = 1) {
+  const route = ROUTE.map(([x, y]): [number, number] => [x * k, y])
   const dense: [number, number][] = []
-  for (let i = 0; i < ROUTE.length - 1; i++) {
-    const p0 = ROUTE[Math.max(0, i - 1)], p1 = ROUTE[i], p2 = ROUTE[i + 1], p3 = ROUTE[Math.min(ROUTE.length - 1, i + 2)]
+  for (let i = 0; i < route.length - 1; i++) {
+    const p0 = route[Math.max(0, i - 1)], p1 = route[i], p2 = route[i + 1], p3 = route[Math.min(route.length - 1, i + 2)]
     for (let s = 0; s < 1; s += 0.05) {
       const s2 = s * s, s3 = s2 * s
       const f = (a: number, b: number, c: number, d: number) => 0.5 * (2 * b + (-a + c) * s + (2 * a - 5 * b + 4 * c - d) * s2 + (-a + 3 * b - 3 * c + d) * s3)
       dense.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1])])
     }
   }
-  dense.push(ROUTE[ROUTE.length - 1])
+  dense.push(route[route.length - 1])
   // cumulative length, to place waypoints by true distance
   const acc = [0]
   for (let i = 1; i < dense.length; i++) acc.push(acc[i - 1] + Math.hypot(dense[i][0] - dense[i - 1][0], dense[i][1] - dense[i - 1][1]))

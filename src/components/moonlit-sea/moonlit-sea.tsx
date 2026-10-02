@@ -1,12 +1,13 @@
 import type { CSSProperties } from 'react'
 
+import { PAPER } from '@/components/sea/scene'
 import { VIEW, moonlitScene } from './scene'
 import styles from './moonlit-sea.module.css'
 
 // computed once per server instance; output is deterministic
 const s = moonlitScene()
 
-/** the /favorites scene: the homepage sea at night, with a path of moonlight down the waves */
+/** the /favorites scene: a starry night over the sea, with the moon's path down the waves */
 export function MoonlitSea() {
   return (
     <svg
@@ -18,7 +19,19 @@ export function MoonlitSea() {
     >
       <defs dangerouslySetInnerHTML={{ __html: s.defs }} />
 
-      <g dangerouslySetInnerHTML={{ __html: s.sky }} />
+      <g className={styles.sky} dangerouslySetInnerHTML={{ __html: s.sky }} />
+
+      {/* stars are paper showing through the ink; three groups twinkle out of step */}
+      <g fill={PAPER} stroke="none">
+        {s.stars.map((g, i) => (
+          <g key={i} className={styles.stars} style={{ animationDelay: `${-i * 1.7}s` }} dangerouslySetInnerHTML={{ __html: g }} />
+        ))}
+      </g>
+      <path className={styles.glints} d={s.glints} stroke={PAPER} strokeWidth={1} />
+
+      {/* now and then, a shooting star */}
+      <path className={styles.meteor} d={s.meteor} pathLength={100} stroke={PAPER} strokeWidth={2.2} />
+
       <g dangerouslySetInnerHTML={{ __html: s.moon }} />
       <g dangerouslySetInnerHTML={{ __html: s.water }} />
 
@@ -37,7 +50,7 @@ export function MoonlitSea() {
         </g>
       ))}
 
-      {/* moonlight shimmers on the water */}
+      {/* moonlight glints on the water */}
       <g className={styles.shimmer}>
         {s.path.map((row, i) => <path key={i} d={row.d} strokeWidth={0.9} style={{ animationDelay: `${row.delay}s` }} />)}
       </g>

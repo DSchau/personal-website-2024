@@ -65,3 +65,18 @@
     stroke-dasharray: none;
   }
 }
+
+/* two drawings of the same map: wide (cropped from the left) and narrow (squeezed sideways, see NARROW in scene.ts) */
+.narrow {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .wide {
+    display: none;
+  }
+
+  .narrow {
+    display: block;
+  }
+}
