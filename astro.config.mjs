@@ -39,6 +39,10 @@ function remarkModifiedTime() {
 export default defineConfig({
   prefetch: true,
   output: 'server',
+  build: {
+    // inline page CSS so it doesn't block rendering behind extra requests (it's small)
+    inlineStylesheets: 'always',
+  },
   env: {
     schema: {
       PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client', access: "public" }),
