@@ -36,3 +36,8 @@
   font-size: clamp(5rem, 18vw, 9rem);
   line-height: 0.9;
 }
+
+/* the page's first section title sits right under its illustration, which already separates header from content: no rule needed */
+.container main > :first-child :global(.section-title) {
+  border-top: none;
+}

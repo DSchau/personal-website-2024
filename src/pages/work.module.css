@@ -24,7 +24,7 @@
   border-top: 1px solid #eee;
 }
 
-/* the section title above already draws a line; don't double it */
+/* nothing above the first entry but the section title */
 .experience:first-child {
   border-top: none;
 }
