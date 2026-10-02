@@ -15,13 +15,33 @@ function bookThickness(pageCount: number, height: number): number {
   );
 }
 
+// faint engraved rules behind the books: the same broken "sky rules" as the page
+// illustrations, densest through the middle (where the books sit), fading out at every edge
+const RULES = (() => {
+  let seed = 7
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647
+  let out = ''
+  for (let y = 6; y < 400; y += 7) {
+    const t = 1 - Math.abs(y - 200) / 200 // 1 in the middle, 0 at the top + bottom
+    let x = rnd() * 40, d = ''
+    while (x < 1600) {
+      const len = 40 + rnd() * 170
+      d += `M${Math.round(x)} ${y}h${Math.round(len)}`
+      x += len + 6 + rnd() * 34
+    }
+    out += `<path d="${d}" opacity="${(0.04 + t ** 1.5 * 0.16).toFixed(2)}"/>`
+  }
+  return out
+})()
+
 function shortTitle(title: string): string {
   return title.replace(/\s+\(.*\)$/, "");
 }
 ---
 
 <section class="press" aria-label="Six most recently finished books">
-  <p class="eyebrow">Recently finished</p>
+  <svg class="rules" viewBox="0 0 1600 400" preserveAspectRatio="none" aria-hidden="true" set:html={RULES} />
+  <h3 class="section-title">Recently finished</h3>
   <div class="display-grid">
     {books.map((book) => (
       <a
@@ -48,26 +68,45 @@ function shortTitle(title: string): string {
 </section>
 
 <style>
+  /* plain paper, like the rest of the site; the engraved rules behind give it texture without a panel */
   .press {
-    --press-ink: #2e2a24;
-    --press-muted: #8c8578;
+    --press-muted: var(--text-accent-color);
+    position: relative;
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    padding: 2.75rem 1.5rem 2.25rem;
-    color: var(--press-ink);
-    background: linear-gradient(180deg, #faf7f1 0%, #f3eee4 100%);
-    border-top: 1px solid #ece5d7;
-    border-bottom: 1px solid #ece5d7;
+    padding: 0 1.5rem 2.25rem;
+    color: var(--text-color);
   }
 
-  .eyebrow {
-    margin: 0 auto 2.25rem;
-    text-align: center;
-    font-size: var(--text-md);
-    font-family: var(--body-font);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--press-muted);
+  .rules {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 0.5;
+    stroke-linecap: round;
+    /* fade out at every edge, like the page illustrations */
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent),
+      linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent),
+      linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+    mask-composite: intersect;
+  }
+
+  .rules :global(path) {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .press > :global(.section-title) {
+    position: relative;
+    margin-bottom: 2.25rem;
   }
 
   .display-grid {
@@ -75,6 +114,8 @@ function shortTitle(title: string): string {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 3.25rem;
     column-gap: 0.5rem;
+    position: relative;
+    z-index: 1;
     max-width: 70rem;
     margin: 0 auto;
   }
