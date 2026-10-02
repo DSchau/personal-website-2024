@@ -1,0 +1,67 @@
+.scene {
+  --ink: #161616;
+
+  display: block;
+  grid-column: 1 / -1;
+  /* break out of the layout container's side padding, like the homepage sea */
+  width: calc(100% + 2 * var(--padding-lg));
+  max-width: none;
+  margin: 0 calc(-1 * var(--padding-lg)) var(--padding-lg);
+
+  /* follow the art's aspect ratio (250 / 1600) up to its natural height */
+  height: clamp(170px, 15.6vw, 250px);
+
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* the map fades out at the bottom, like the other scenes */
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent);
+}
+
+.contours {
+  opacity: 0.75;
+}
+
+/*
+  The trail draws itself: inside a mask, one continuous line (pathLength 100,
+  so a 100/100 dash revealed by its offset) draws in over the first 60% of a
+  28s loop, revealing the dashed trail; it rests, fades, and starts again. Waypoints pulse on the same loop, delayed to when the trail reaches
+  them (see DRAW in trail.tsx).
+*/
+.draw {
+  stroke-dasharray: 100 100;
+  animation: draw 28s linear infinite;
+}
+
+@keyframes draw {
+  0% { stroke-dashoffset: 100; opacity: 1; }
+  60% { stroke-dashoffset: 0; opacity: 1; }
+  90% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.waypoint {
+  animation: pulse 28s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); fill: var(--bg-color); }
+  2% { transform: scale(1.7); fill: var(--ink); }
+  7% { transform: scale(1); fill: var(--bg-color); }
+  100% { transform: scale(1); fill: var(--bg-color); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene *,
+  .scene {
+    animation: none !important;
+  }
+
+  /* with no motion, show the whole trail */
+  .draw {
+    stroke-dasharray: none;
+  }
+}

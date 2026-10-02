@@ -8,6 +8,7 @@ import { Footer } from '@/components/footer/footer.tsx'
 import { Navigation } from '@/components/navigation/navigation.tsx'
 import { Sea } from '@/components/sea/sea.tsx'
 import { Writing } from '@/components/writing/writing.tsx'
+import { Trail } from '@/components/trail/trail.tsx'
 
 interface Props {
   children: ReactNode;
@@ -22,8 +23,8 @@ interface Props {
   photo?: boolean;
   /** a large display heading above the scene + page content (e.g. the 404) */
   display?: string;
-  /** a full-bleed illustration under the header: the 404's sea (with a message in a bottle), or the /posts writing-into-waves */
-  scene?: 'lost-at-sea' | 'writing';
+  /** a full-bleed illustration under the header: the 404's sea (with a message in a bottle), the /posts writing-into-waves, or the /work trail */
+  scene?: 'lost-at-sea' | 'writing' | 'trail';
 }
 
 export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo, display, scene }: Props) {
@@ -36,6 +37,7 @@ export function Layout({ children, commits, totalCommits, pathname, showCopy, sh
         {pathname === '' && <Sea />}
         {scene === 'lost-at-sea' && <Sea bottle />}
         {scene === 'writing' && <Writing />}
+        {scene === 'trail' && <Trail />}
         <main>
           {children}
         </main>

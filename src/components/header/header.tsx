@@ -5,6 +5,7 @@ interface Props {
   commits: number;
   showCopy?: boolean;
   className?: string;
+  /** page copy as HTML (Layout.astro renders it from inline markdown) */
   copy?: string;
   byline?: string;
   photo?: boolean;
@@ -28,7 +29,7 @@ export function Header({ commits, showCopy = true, copy: customizedCopy, byline:
     <>
       <h1 className={styles.title}>Hi! I'm Dustin.</h1>
       {byline && <h2 className={styles.byline}>{byline}</h2>}
-      {showCopy && <p>{copy}</p>}
+      {showCopy && (customizedCopy ? <p dangerouslySetInnerHTML={{ __html: customizedCopy }} /> : <p>{copy}</p>)}
     </>
   )
 
