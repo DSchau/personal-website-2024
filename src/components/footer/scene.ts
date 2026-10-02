@@ -78,7 +78,7 @@ export function renderStaticScene(): string {
       while (x < W) {
         const len = 8 + rnd() * 26
         const shade = Math.min(1, Math.max(0, slope(h.fn, x + len / 2) * 6 + 0.25 + (i / h.lines) * h.dark))
-        const w = Math.round(h.base * (0.25 + shade * 1.6) * 5) / 5 // bucket to 0.2 steps
+        const w = Math.round(h.base * (0.25 + shade * 1.2) * 5) / 5 // bucket to 0.2 steps
         if (w > 0.2) {
           const seg = `M${Math.round(x)} ${r(h.fn(x) + i * h.spacing)}L${Math.round(x + len)} ${r(h.fn(x + len) + i * h.spacing)}`
           buckets.set(w, (buckets.get(w) ?? '') + seg)
@@ -87,7 +87,7 @@ export function renderStaticScene(): string {
       }
     }
     out.push(`<path d="${area(h.fn)}" fill="${PAPER}" stroke="none"/>`)
-    out.push(`<g clip-path="url(#${h.id})">`)
+    out.push(`<g clip-path="url(#${h.id})" opacity=".8">`)
     for (const [w, d] of buckets) out.push(`<path d="${d}" stroke-width="${w}"/>`)
     out.push(`</g>`, `<path d="${line(h.fn)}" stroke-width="${r(h.base * 1.6)}"/>`)
   }
@@ -100,7 +100,7 @@ export function renderStaticScene(): string {
     const w = Math.round((0.6 + rnd() * 1.4 * ((y - 280) / 60)) * 2) / 2
     dots.set(w, (dots.get(w) ?? '') + `M${Math.round(x)} ${Math.round(y)}h0`)
   }
-  for (const [w, d] of dots) out.push(`<path d="${d}" stroke-width="${w}"/>`)
+  for (const [w, d] of dots) out.push(`<path d="${d}" stroke-width="${w}" opacity=".75"/>`)
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs.join('')}</defs><g fill="none" stroke="${INK}" stroke-linecap="round">${out.join('')}</g></svg>`
 }
