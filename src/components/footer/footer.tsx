@@ -1,6 +1,8 @@
 import socialLinks from '@/assets/contact.yaml'
 
-import { BRIDGE, FAMILY, H, INK, PAPER, W, fogBands, grassTufts, handPaths, personGeometry } from './scene'
+import { flock } from '@/components/sea/scene'
+import { BOATS, BRIDGE, H, INK, PAPER, W, grassTufts, sailboat } from './scene'
+import { REST_X, restFamily } from './family'
 import styles from './footer.module.css'
 
 interface Props {
@@ -10,9 +12,11 @@ interface Props {
 
 // computed once per server instance; output is deterministic
 const tufts = grassTufts()
-const fog = fogBands()
-const hands = handPaths()
-const BIRDS = [[0, 90], [-14, 98], [-26, 86]] as const
+const boats = BOATS.map(b => ({ ...b, ...sailboat(b.x, b.y, b.s) }))
+// the family's resting pose (family-walk.ts animates them on the client)
+const people = restFamily(REST_X)
+// a loose flock of gulls, like the homepage's: varied sizes, spacing and wingbeats
+const gulls = flock(0, 96, 5, 13)
 
 function Scene() {
   return (
@@ -31,41 +35,59 @@ function Scene() {
         <circle key={x} className={styles.lamp} cx={x} cy={BRIDGE.top - 5} r={2} fill={INK} />
       ))}
 
-      <g stroke={PAPER} strokeLinecap="round" strokeWidth={2.4}>
-        {fog.map(f => (
-          <path key={f.className} className={`${styles.fog} ${styles[f.className]}`} d={f.d} opacity={f.opacity} />
+      {/* sailboats on the bay, drifting and rocking a little */}
+      <g stroke={INK} strokeLinejoin="round" strokeLinecap="round">
+        {boats.map((b, i) => (
+          <g key={i} className={styles.boat} style={{ animationDelay: `${b.delay}s` }}>
+            <g className={styles.rock} style={{ transformOrigin: `${b.x}px ${b.y}px`, animationDelay: `${b.delay / 7}s` }}>
+              <path d={b.mast} strokeWidth={0.7} />
+              <path d={`${b.main}${b.jib}`} fill={PAPER} strokeWidth={0.7} />
+              <path d={b.shade} strokeWidth={0.35} />
+              <path d={b.hull} fill={INK} strokeWidth={0.5} />
+            </g>
+          </g>
         ))}
       </g>
 
-      {BIRDS.map(([dx, y], i) => (
-        <g key={i} className={styles.bird} style={{ animationDelay: `${-i * 1.5 - 8}s` }}>
-          <path d={`M${dx} ${y}q4 -4 8 0q4 -4 8 0`} stroke={INK} strokeWidth={1} fill="none" style={{ animationDelay: `${i * 0.17}s` }} />
-        </g>
-      ))}
+      <g className={styles.bird} stroke={INK} fill="none" style={{ animationDelay: '-8s' }} dangerouslySetInnerHTML={{ __html: gulls }} />
 
-      <g className={styles.family}>
-        {FAMILY.map(p => {
-          const g = personGeometry(p)
-          const leg = { y1: g.hip, y2: g.ground, stroke: INK, strokeWidth: g.legWidth, strokeLinecap: 'round' as const, style: { animationDelay: `${p.delay}s` } }
-          return (
-            <g key={p.x}>
-              <line className={styles.leg} x1={p.x - 1.2} x2={p.x - 1.2} {...leg} />
-              <line className={`${styles.leg} ${styles.legAlt}`} x1={p.x + 1.2} x2={p.x + 1.2} {...leg} />
-              <g className={styles.bob} style={{ animationDelay: `${p.delay}s` }}>
-                <path d={g.torso} fill={INK} />
-                <circle cx={p.x} cy={g.headY} r={g.head} fill={INK} />
-              </g>
+      {/*
+        the family, drawn in line like the birds; a paper halo (the <use> below) lifts them off the hatching.
+        Heads are filled with paper so they read as open circles.
+      */}
+      <g data-family strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <use href="#footer-family" stroke={PAPER} strokeWidth={3.4} />
+        <g id="footer-family" stroke={INK} strokeWidth={1.15}>
+          {people.map(p => (
+            <g key={p.id} data-figure={p.id}>
+              <path d={p.d} />
+              <circle cx={p.head.cx} cy={p.head.cy} r={p.head.r} fill={PAPER} />
             </g>
-          )
-        })}
-        <path d={hands} stroke={INK} strokeWidth={2} fill="none" strokeLinecap="round" />
-        <path d="M280 319H390M283 320.2H386M286 321.4H382M289 322.6H378" stroke={INK} strokeWidth={0.5} opacity={0.5} />
+          ))}
+        </g>
       </g>
 
       <g className={styles.grass} data-footer-grass stroke={INK} fill="none" strokeLinecap="round">
         {tufts.map((t, i) => (
           <g key={i} className={styles.push} data-x={t.x} data-y={t.y}>
-            <path className={styles.tuft} d={t.d} strokeWidth={t.width} style={{ animationDelay: `${t.delay}s` }} />
+            <g className={styles.tuft} style={{ animationDelay: `${t.delay}s` }}>
+              <path d={t.d} strokeWidth={t.width} />
+              {t.flower?.kind === 'daisy' && (
+                <>
+                  <circle cx={t.flower.cx} cy={t.flower.cy} r={t.flower.r} fill={PAPER} strokeWidth={0.6} />
+                  <circle cx={t.flower.cx} cy={t.flower.cy} r={t.flower.r * 0.3} fill={INK} stroke="none" />
+                </>
+              )}
+              {t.flower?.kind === 'poppy' && (
+                // a little cup, open to the sky
+                <path
+                  d={`M${t.flower.cx - t.flower.r} ${t.flower.cy - t.flower.r * 0.6}q${t.flower.r * 0.1} ${t.flower.r * 1.5} ${t.flower.r} ${t.flower.r * 1.5}q${t.flower.r * 0.9} 0 ${t.flower.r} ${-t.flower.r * 1.5}`}
+                  fill={INK}
+                  strokeWidth={0.5}
+                  opacity={0.75}
+                />
+              )}
+            </g>
           </g>
         ))}
       </g>

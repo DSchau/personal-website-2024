@@ -78,18 +78,22 @@
   margin: calc(-1 * var(--padding-md)) 0 0;
 }
 
-.fog {
-  animation: drift 38s ease-in-out infinite alternate;
+.boat {
+  animation: sail 60s ease-in-out infinite alternate;
 }
 
-.fog.b {
-  animation-duration: 52s;
-  animation-direction: alternate-reverse;
+@keyframes sail {
+  from { transform: translateX(-28px); }
+  to { transform: translateX(28px); }
 }
 
-@keyframes drift {
-  from { transform: translateX(-60px); }
-  to { transform: translateX(60px); }
+.rock {
+  animation: rock 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes rock {
+  from { transform: rotate(-2deg) translateY(-0.3px); }
+  to { transform: rotate(2deg) translateY(0.3px); }
 }
 
 .lamp {
@@ -111,6 +115,16 @@
   animation: flap 0.5s ease-in-out infinite alternate;
 }
 
+/* each gull bobs on its own (durations + delays are set inline by flock()) */
+.bird :global(.bob) {
+  animation: bob 2s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  from { transform: translateY(-1.5px); }
+  to { transform: translateY(1.5px); }
+}
+
 @keyframes fly {
   from { transform: translate(-80px, 0); }
   to { transform: translate(1700px, -40px); }
@@ -118,56 +132,6 @@
 
 @keyframes flap {
   to { transform: scaleY(-0.4); }
-}
-
-.family {
-  animation: walk 120s linear infinite;
-}
-
-@keyframes walk {
-  from { transform: translateX(-260px); }
-  to { transform: translateX(1900px); }
-}
-
-/*
-  Below ~847px the scene is pinned at 180px tall and cropped from the left
-  (xMaxYMax slice), so only the right-hand part is visible:
-  x ∈ [1600 - 100vw * 340/180, 1600] in scene units. Keep the walk inside that
-  window so the family is always on screen (the family group spans x 280–390).
-*/
-@media (max-width: 846px) {
-  .family {
-    animation-name: walk-narrow;
-    animation-duration: 45s;
-  }
-
-  @keyframes walk-narrow {
-    from { transform: translateX(calc(1600px - 188.89vw - 410px)); }
-    to { transform: translateX(calc(1600px - 260px)); }
-  }
-}
-
-.leg {
-  transform-box: fill-box;
-  transform-origin: 50% 0;
-  animation: step 0.9s ease-in-out infinite alternate;
-}
-
-.legAlt {
-  animation-direction: alternate-reverse;
-}
-
-@keyframes step {
-  from { transform: rotate(-16deg); }
-  to { transform: rotate(16deg); }
-}
-
-.bob {
-  animation: bob 0.45s ease-in-out infinite alternate;
-}
-
-@keyframes bob {
-  to { transform: translateY(-1px); }
 }
 
 .tuft {

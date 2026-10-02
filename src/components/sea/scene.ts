@@ -120,9 +120,11 @@ function sky(sea: Sea, rnd: () => number) {
   return out
 }
 
-/** hatched sun: horizontal rules clipped to a disc, heavier toward the bottom (lower half sits behind the sea) */
-function sun(sea: Sea) {
-  const { x: cx, y: cy, r: rad } = sea.sun
+type Sun = Sea['sun']
+
+/** hatched sun: horizontal rules clipped to a disc, heavier toward the bottom (on the homepage the lower half sits behind the sea) */
+export function sunDisc(sun: Sun) {
+  const { x: cx, y: cy, r: rad } = sun
   const gap = 2.8
   let out = `<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${PAPER}" stroke-width="1"/>`
   for (let y = cy - rad + gap / 2; y <= cy + rad; y += gap) {
@@ -134,9 +136,9 @@ function sun(sea: Sea) {
 }
 
 /** sun rays as two alternating rings (long/short) so they can twinkle + turn */
-function rays(sea: Sea, count = 32, long = 30, short = 14) {
-  const { x: cx, y: cy } = sea.sun
-  const inner = sea.sun.r + 7
+export function sunRays(sun: Sun, count = 32, long = 30, short = 14) {
+  const { x: cx, y: cy } = sun
+  const inner = sun.r + 7
   let a = '', b = ''
   for (let i = 0; i < count; i++) {
     const ang = (i / count) * Math.PI * 2
@@ -236,12 +238,12 @@ export interface SceneParts {
 
 export function seaScene(sea: Sea): SceneParts {
   const rnd = rng(sea.seed)
-  const ray = rays(sea)
+  const ray = sunRays(sea.sun)
   const rows = waveRows(sea).map(row => ({ ...waveRow(sea, row, rnd), wl: row.wl }))
   return {
     defs: rows.map(b => b.clip).join(''),
     sky: sky(sea, rnd),
-    sun: sun(sea),
+    sun: sunDisc(sea.sun),
     raysA: ray.a,
     raysB: ray.b,
     glint: glitter(sea, rnd),

@@ -2,12 +2,15 @@
  * Progressive enhancement for the footer scene: a wind gust when the cursor
  * enters, and grass that parts around the cursor. CSS handles everything else.
  */
+import { walk } from './family-walk'
+
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 function init() {
   const svg = document.querySelector<SVGSVGElement>('[data-footer-scene]')
   const grass = svg?.querySelector<SVGGElement>('[data-footer-grass]')
   if (!svg || !grass || reduced.matches) return
+  const family = walk(svg)
 
   const tufts = [...grass.querySelectorAll<SVGGElement>('[data-x]')].map(el => ({
     el,
@@ -37,6 +40,7 @@ function init() {
       pt.x = last.clientX
       pt.y = last.clientY
       const p = pt.matrixTransform(ctm.inverse())
+      family.greet(p.x, p.y)
       for (const t of tufts) {
         const dx = t.x - p.x
         const d = Math.hypot(dx, (t.y - p.y) * 0.6)
@@ -50,6 +54,16 @@ function init() {
         }
       }
     })
+  })
+
+  // a tap says hello too (touch has no hover)
+  svg.addEventListener('pointerdown', e => {
+    const ctm = svg.getScreenCTM()
+    if (!ctm) return
+    pt.x = e.clientX
+    pt.y = e.clientY
+    const p = pt.matrixTransform(ctm.inverse())
+    family.greet(p.x, p.y, 22)
   })
 
   svg.addEventListener('pointerleave', () => {

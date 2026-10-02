@@ -5,12 +5,12 @@
  *
  * The heavy, static layers (sky, bridge, hills, stipple) are rendered to a
  * standalone SVG served from /footer-scene.svg so it's cached across pages.
- * The animated layers (fog, birds, family, grass) are rendered inline by
+ * The animated layers (boats, birds, family, grass) are rendered inline by
  * footer.tsx so CSS can animate them.
  */
 
-export const W = 1600
-export const H = 340
+import { H, W, midRidge } from './family'
+export { H, W }
 export const INK = '#161616'
 export const PAPER = '#fefefe'
 
@@ -29,7 +29,8 @@ const r = (n: number) => Math.round(n * 10) / 10
 const HILLS = [
   // the far ridge opens into the strait under the bridge
   { id: 'far', fn: withStrait(ridge(205, [[20, 0.004, 1], [9, 0.011, 2], [4, 0.03, 0]])), lines: 30, spacing: 3, base: 0.55, dark: 0.5 },
-  { id: 'mid', fn: ridge(244, [[15, 0.0035, 3], [8, 0.009, 1], [3, 0.04, 2]]), lines: 24, spacing: 3.6, base: 0.7, dark: 0.4 },
+  { id: 'mid', fn: midRidge, // the family's footpath (family.ts)
+    lines: 24, spacing: 3.6, base: 0.7, dark: 0.4 },
   { id: 'near', fn: ridge(282, [[8, 0.003, 0.5], [4, 0.012, 4]]), lines: 16, spacing: 4.2, base: 0.5, dark: 0.1 },
 ]
 
@@ -103,16 +104,16 @@ export function renderStaticScene(): string {
   const rnd = rng(11)
   const out: string[] = []
 
-  // sky: faint engraved rules near the horizon
-  for (let i = 0; i < 26; i++) {
-    const y = 60 + i * 6
-    let x = 0, d = ''
+  // sky: a faint haze of engraved rules low over the hills (a clear day: the upper sky stays open)
+  for (let i = 0; i < 12; i++) {
+    const y = 140 + i * 6
+    let x = rnd() * 40, d = ''
     while (x < W) {
       const len = 40 + rnd() * 160
       d += `M${Math.round(x)} ${y}h${Math.round(len)}`
-      x += len + 4 + rnd() * 30
+      x += len + 6 + rnd() * 40
     }
-    out.push(`<path d="${d}" stroke-width=".5" opacity="${r((i / 26) ** 2 * 0.35 * 100) / 100}"/>`)
+    out.push(`<path d="${d}" stroke-width=".5" opacity="${r(((i + 1) / 12) ** 2 * 0.28 * 100) / 100}"/>`)
   }
 
   // bridge (see bridge.ts). The old water rules drew from the shared rng; keep
@@ -148,77 +149,72 @@ export function renderStaticScene(): string {
 
   // foreground stipple (zero-length round-capped strokes = dots)
   const dots = new Map<number, string>()
-  for (let i = 0; i < 1400; i++) {
+  // (light: dense dark dots read as soot)
+  for (let i = 0; i < 520; i++) {
     const y = 286 + rnd() ** 0.7 * 56
     const x = rnd() * W
-    const w = Math.round((0.6 + rnd() * 1.4 * ((y - 280) / 60)) * 2) / 2
+    const w = Math.round((0.5 + rnd() * 0.8 * ((y - 280) / 60)) * 2) / 2
     dots.set(w, (dots.get(w) ?? '') + `M${Math.round(x)} ${Math.round(y)}h0`)
   }
-  for (const [w, d] of dots) out.push(`<path d="${d}" stroke-width="${w}" opacity=".75"/>`)
+  for (const [w, d] of dots) out.push(`<path d="${d}" stroke-width="${w}" opacity=".45"/>`)
 
   return compactPaths(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs.join('')}</defs><g fill="none" stroke="${INK}" stroke-linecap="round">${out.join('')}</g></svg>`)
 }
 
 /* ---------- animated layers (rendered inline by footer.tsx) ---------- */
 
-export interface Tuft { x: number; y: number; d: string; width: number; delay: number }
+export interface Tuft { x: number; y: number; d: string; width: number; delay: number; flower?: { cx: number; cy: number; r: number; kind: 'daisy' | 'poppy' } }
 
+/**
+ * Foreground grass: soft, curving tufts (a few blades each, finer than they
+ * used to be: dense black spikes read as thistles on waste ground), with
+ * wildflowers on taller stems here and there: daisies (open circles with a
+ * dot) and California poppies (little cups).
+ */
 export function grassTufts(): Tuft[] {
   const rnd = rng(23)
   const tufts: Tuft[] = []
-  for (let i = 0; i < 260; i++) {
+  for (let i = 0; i < 230; i++) {
     const y = 300 + rnd() ** 0.6 * 42
     const x = rnd() * W
     const k = (y - 292) / 50
-    const n = 3 + Math.floor(rnd() * 6 * k + 1)
+    const n = 2 + Math.floor(rnd() * 4 * k + 1)
     let d = ''
     for (let b = 0; b < n; b++) {
-      const lean = (rnd() - 0.5) * 16 * k
-      const h = (5 + rnd() * 20) * k
-      d += `M${r(x)} ${r(y)}q${r(lean / 2)} ${r(-h / 1.6)} ${r(lean)} ${r(-h)}`
+      const lean = (rnd() - 0.5) * 18 * k
+      const h = (4 + rnd() * 16) * k
+      // blades curve over at the tip
+      d += `M${r(x)} ${r(y)}q${r(lean * 0.15)} ${r(-h * 0.7)} ${r(lean)} ${r(-h)}`
     }
-    tufts.push({ x: r(x), y: r(y), d, width: r(0.4 + k), delay: r(-(x / W) * 4.5) })
+    const tuft: Tuft = { x: r(x), y: r(y), d, width: r(0.35 + k * 0.55), delay: r(-(x / W) * 4.5) }
+    if (rnd() < 0.2) {
+      // a flower on a taller, gently curving stem
+      const h = (12 + rnd() * 14) * k, lean = (rnd() - 0.5) * 8 * k
+      tuft.d += `M${r(x)} ${r(y)}q${r(lean * 0.2)} ${r(-h * 0.6)} ${r(lean)} ${r(-h)}`
+      tuft.flower = { cx: r(x + lean), cy: r(y - h), r: r(1.2 + k * 1.6), kind: rnd() < 0.55 ? 'daisy' : 'poppy' }
+    }
+    tufts.push(tuft)
   }
   return tufts
 }
 
-export interface Fog { className: 'a' | 'b'; d: string; opacity: number }
+/* ---------- the bay (rendered inline by footer.tsx so the boats can drift) ---------- */
 
-export function fogBands(): Fog[] {
-  const rnd = rng(5)
-  return ([['a', 184, 0.5], ['b', 192, 0.35]] as const).map(([className, y, opacity]) => {
-    let d = ''
-    for (let i = 0; i < 3; i++) d += `M${Math.round(980 + rnd() * 120)} ${r(y + i * 3.2)}h${Math.round(380 + rnd() * 200)}`
-    return { className, d, opacity }
-  })
-}
-
-export interface Person { x: number; h: number; dress?: boolean; delay: number }
-
-const GROUND = 318
-export const FAMILY: Person[] = [
-  { x: 300, h: 54, delay: -0.1 },
-  { x: 322, h: 33, delay: -0.55 },
-  { x: 346, h: 50, dress: true, delay: -0.3 },
-  { x: 366, h: 25, dress: true, delay: -0.8 },
+/** small sailboats on the bay: hull, mast, mainsail + jib (one sail hatched, for shade) */
+export const BOATS = [
+  { x: 1290, y: 236, s: 1, delay: 0 },
+  { x: 1520, y: 233, s: 0.75, delay: -31 },
 ]
 
-export function personGeometry({ x, h, dress }: Person) {
-  const legs = h * 0.44, body = h * 0.36, head = h * 0.12
-  const hip = GROUND - legs, sh = hip - body
-  const torso = dress
-    ? `M${r(x - head * 0.8)} ${r(sh)}L${r(x + head * 0.8)} ${r(sh)}L${r(x + head * 1.4)} ${r(hip + 2)}L${r(x - head * 1.4)} ${r(hip + 2)}Z`
-    : `M${r(x - head * 0.95)} ${r(sh)}L${r(x + head * 0.95)} ${r(sh)}L${r(x + head * 0.75)} ${r(hip)}L${r(x - head * 0.75)} ${r(hip)}Z`
-  return { ground: GROUND, hip: r(hip), sh: r(sh), head: r(head), headY: r(sh - head * 1.15), torso, legWidth: r(h * 0.075) }
-}
-
-export function handPaths(): string {
-  const g = FAMILY.map(p => ({ x: p.x, sh: personGeometry(p).sh }))
-  const sags = [18, 14, 12]
-  return sags
-    .map((sag, i) => {
-      const a = g[i], b = g[i + 1]
-      return `M${a.x + 5} ${r(a.sh + 9)}Q${(a.x + b.x) / 2} ${r(Math.max(a.sh, b.sh) + sag)} ${b.x - 5} ${r(b.sh + 7)}`
-    })
-    .join('')
+export function sailboat(x: number, y: number, s: number) {
+  const hull = `M${r(x - 9 * s)} ${r(y - 2 * s)}L${r(x + 9 * s)} ${r(y - 2 * s)}L${r(x + 6 * s)} ${r(y + 0.6 * s)}L${r(x - 6.5 * s)} ${r(y + 0.6 * s)}Z`
+  const mast = `M${r(x - 1 * s)} ${r(y - 2 * s)}V${r(y - 21 * s)}`
+  const main = `M${r(x - 1.6 * s)} ${r(y - 20 * s)}L${r(x - 1.6 * s)} ${r(y - 3.4 * s)}L${r(x - 9.5 * s)} ${r(y - 3.4 * s)}Z`
+  const jib = `M${r(x - 0.2 * s)} ${r(y - 18 * s)}L${r(x + 7.5 * s)} ${r(y - 3.4 * s)}L${r(x - 0.2 * s)} ${r(y - 3.4 * s)}Z`
+  let shade = ''
+  for (let yy = y - 16 * s; yy < y - 4 * s; yy += 1.8 * s) {
+    const t = (yy - (y - 18 * s)) / (14.6 * s)
+    shade += `M${r(x + 0.6 * s)} ${r(yy)}H${r(x - 0.2 * s + 7.7 * s * t - 0.6 * s)}`
+  }
+  return { hull, mast, main, jib, shade }
 }
