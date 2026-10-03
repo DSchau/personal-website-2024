@@ -57,7 +57,7 @@ All of the sameness in these product capabilities does however create a genuinel
 
 In the space: I don't know. I hope something better :) I aim to take a few months to advise some awesome companies (like my friends at [Mastra](https://mastra.ai)) and reserve a little thinking time of my own to recharge, think, strategize, and be part of the solution. I hope in so doing that I will find myself creatively energized, inspired, and ready to build something I deeply believe in. Specifically, I aim to focus on the following areas:
 
-- Ownership of AI. I really find open-source, open-weight, and flexible ownership and switching to be an underrated area right now (like this recent [Underdog launch](https://x.com/0xSigil/status/2106067365733790032?s=20) as an example) and want to explore it further
+- Ownership of AI. I really find open-source, open-weight, and flexible ownership and switching to be an underrated area right now (like this recent [Underdog launch](https://x.com/0xSigil/status/2106067365733790032?s=20) as an example, [CopilotKit](https://github.com/copilotkit/copilotkit), and [Mastra](https://mastra.ai)) and want to explore it further
 - AI primitives. Sandboxes, browsers, agent frameworks, the core building blocks of AI I want to use directly by building my own agents and exploring what I like, what I dislike, and maybe what's missing
 - AI automation. Factories and the process of automation of inputs, guardrails, and outputs is something I've always enjoyed (before AI even!)
   - As a sub-category of this, I'm particularly interested in exploring whether AI "slop" in open-source projects can be improved
