@@ -15,6 +15,7 @@
  * (writing.module.css) writes the top line and drifts the waves.
  */
 import { r } from '@/components/sea/scene'
+import { WATER_INK } from '@/components/sea/wash'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
 
@@ -32,7 +33,15 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const num = (n: number) => String(r(n)).replace(/^(-?)0\./, '$1.')
 const smooth = (a: number, b: number, t: number) => { const u = Math.min(1, Math.max(0, (t - a) / (b - a))); return u * u * (3 - 2 * u) }
 
-export interface Row { d: string; hatch: string; width: number; wl: number; writing: boolean }
+export interface Row { d: string; hatch: string; width: number; wl: number; writing: boolean; base: number; ink: string }
+
+const INK = '#161616'
+
+/** mix two #rrggbb colours */
+const mix = (a: string, b: string, t: number) => {
+  const c = (h: string, i: number) => parseInt(h.slice(1 + i * 2, 3 + i * 2), 16)
+  return '#' + [0, 1, 2].map(i => Math.round(lerp(c(a, i), c(b, i), t)).toString(16).padStart(2, '0')).join('')
+}
 
 function row(k: number, rnd: () => number): Row {
   const t = k / (ROWS - 1)
@@ -110,7 +119,9 @@ function row(k: number, rnd: () => number): Row {
     }
   }
 
-  return { d, hatch, width: r(lerp(0.55, 1.1, t ** 1.2) * 100) / 100, wl: r(2 * Math.PI * R), writing: sea < 0.5 }
+  return { d, hatch, width: r(lerp(0.55, 1.1, t ** 1.2) * 100) / 100, wl: r(2 * Math.PI * R), writing: sea < 0.5, base: r(base),
+    // as the writing becomes sea, its ink turns the homepage water's indigo (sea/wash.ts)
+    ink: mix(INK, WATER_INK, smooth(0.15, 0.7, sea)) }
 }
 
 export function writingScene(): Row[] {

@@ -22,12 +22,14 @@
 }
 
 /*
-  The first line writes itself, left to right (pathLength is 100, so a 100/100
-  dash revealed by its offset), rests, fades, and starts again.
+  The first few lines write themselves, left to right (pathLength is 100, so a
+  100/100 dash revealed by its offset), each a beat after the one above
+  (staggered by animation-delay in writing.tsx), rest, fade, and start again.
+  `both` keeps the later lines unwritten until their turn.
 */
 .write {
   stroke-dasharray: 100 100;
-  animation: write 26s ease-in-out infinite;
+  animation: write 14s ease-in-out infinite both;
 }
 
 @keyframes write {
