@@ -75,27 +75,3 @@ function init() {
 }
 
 init()
-
-// TEMPORARY: iOS Safari footer-gap diagnostic. Shows live layout measurements
-// when ?debug is in the URL. Remove once the gap is diagnosed.
-if (new URLSearchParams(location.search).has('debug')) {
-  const d = document.createElement('div')
-  d.style.cssText =
-    'position:fixed;top:0;left:0;z-index:999999;background:#000;color:#0f0;' +
-    'font:11px/1.5 monospace;padding:8px;white-space:pre;max-width:100vw;'
-  document.body.appendChild(d)
-  const upd = () => {
-    const de = document.documentElement
-    const fr = document.querySelector('footer')!.getBoundingClientRect()
-    const sr = document.querySelector('[data-footer-scene]')!.getBoundingClientRect()
-    const footerDocBottom = fr.bottom + scrollY
-    d.textContent =
-      `ih=${innerHeight} scrollY=${Math.round(scrollY)}\n` +
-      `doc.scrollH=${de.scrollHeight} body.scrollH=${document.body.scrollHeight}\n` +
-      `footer docBottom=${Math.round(footerDocBottom)} svg docBottom=${Math.round(sr.bottom + scrollY)}\n` +
-      `belowFooter=${Math.round(de.scrollHeight - footerDocBottom)} belowSvgInFooter=${Math.round(fr.bottom - sr.bottom)}`
-  }
-  addEventListener('scroll', upd, { passive: true })
-  addEventListener('resize', upd)
-  upd()
-}
