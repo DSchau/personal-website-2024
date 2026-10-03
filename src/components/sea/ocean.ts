@@ -98,6 +98,8 @@ export class OceanField {
       const c = this.ks.map(() => new Float32Array(n)), sn = this.ks.map(() => new Float32Array(n))
       const g = new Float32Array(n), edge = new Float32Array(n)
       const tail = Math.max(0, (u - 0.8) / 0.2)
+      // haze: the farthest lines crowd into the last few px under the horizon and would merge into a solid band, so they thin out (the very farthest drop away)
+      const haze = Math.min(1, u / 0.06) ** 0.8
       for (let i = 0; i < n; i++) {
         const x = o.from + i * step
         xs[i] = x
@@ -108,7 +110,7 @@ export class OceanField {
         // the ragged ending, line by line (static in x, so it reads as the engraving's edge, not as moving water)
         edge[i] = 0.5 + 0.5 * Math.sin(x * 0.011 + j * 1.9) * Math.sin(x * 0.027 + j * 3.1)
       }
-      this.lines.push({ j, u, y0: o.hz + span * u, amp: o.height * u, tail, base: 0.22 + 0.7 * u ** 0.8, xs, c, sn, fade, g, edge })
+      this.lines.push({ j, u, y0: o.hz + span * u, amp: o.height * u, tail, base: (0.22 + 0.7 * u ** 0.8) * haze, xs, c, sn, fade, g, edge })
     }
   }
 

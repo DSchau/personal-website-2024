@@ -57,7 +57,7 @@ export function Sea({ bottle = false, tinted = false }: Props) {
 
         {/* the sea: paper below the horizon hides the sun's lower half + lower rays */}
         <rect x={view.x} y={hz} width={view.w} height={view.h + 100} fill={PAPER} stroke="none" />
-        <path d={s.horizon} strokeWidth={0.8} />
+        <path d={s.horizon} strokeWidth={0.6} {...tinted && { stroke: WATER_INK }} />
 
         {/* the wash, multiplied over the sky + sun (the water's ink, on the canvas, sits on top of it) */}
         {tinted && <g dangerouslySetInnerHTML={{ __html: wash }} />}
