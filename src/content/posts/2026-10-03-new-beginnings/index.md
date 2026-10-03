@@ -62,6 +62,6 @@ In the space: I don't know. I hope something better :) I aim to take a few month
 - AI automation. Factories and the process of automation of inputs, guardrails, and outputs is something I've always enjoyed (before AI even!)
   - As a sub-category of this, I'm particularly interested in exploring whether AI "slop" in open-source projects can be improved
 
-While I figure this all out and explore, if you're interested in working with me in any capacity I am doing part-time arrangements and small consulting projects (a few hours per week) and would love to help out. If that sounds interesting or if you just want to say hello, [email me and let's chat!](mailto:me@dustinschau.com)
+While I figure this all out and explore, if you're interested in working with me in any capacity I am doing part-time arrangements and small consulting projects (a few hours per week) and would love to help you out. If that sounds interesting or if you just want to say hello, [email me and let's chat!](mailto:me@dustinschau.com)
 
 [^1]: These have since been debunked and I think were fairly unfounded (e.g. it was a model hallucinating not a customer breach).
