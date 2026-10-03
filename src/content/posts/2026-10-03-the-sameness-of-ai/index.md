@@ -1,29 +1,21 @@
 ---
 date: 2026-10-03
-title: "New beginnings"
+title: "The Sameness of AI"
 author: Dustin Schau
 featured: false
-excerpt: "I left a good job with good people to figure out something... different, and maybe better!"
+excerpt: "AI is fascinating, revolutionary, fun, and... feeling a little stale. In this post I outline some of my thoughts on the problems I'm seeing with a lack of creativity in AI."
 tags:
   - career
   - ai
 ---
 
-In September I decided to resign from my job at [Adapt](https://adapt.com). I haven't done this in my career before where I've left something without having something else lined up and I can honestly not recall a period where I haven't worked full-time since high school. But... I knew it was time, and I knew I was ready for something different.
+There are varying takes on AI, some gloomers on how AI is a rising tide that will lift all boats and bring in a new era of human prosperity and creativity. And then there are AI doomers that believe AI has a uh, checking my notes here, a non-zero chance of killing humanity and that it therefore needs paused. These artifical false dichotomies are kind of lazy, and both sides are being ridiculous so as with most issues I'm somewhere in the middle. I see the value, it's a tool I use daily and that most days I wouldn't want to live without, but I also am becoming increasingly disillusioned with the state of AI. We have the brightest minds in all of humanity working roughly in the same space, with the most funding available, and we're building personal assistants? Really?
 
-## Why?
-
-Well, I don't know. I wish there was a grand plan or some master strategy behind it, but the job at Adapt was good, the team was great, and the product was interesting and exciting. If I had to boil it down to a few reasons, it probably would take the shape of something like:
-
-1. A bit of exhaustion of some of the sameness of AI. AI solves real problems, but there's a lot of noise and it felt sometimes like chasing trends instead of doing durably great work, and
-2. It has never been harder to break out. AI makes creation (content, products, etc.) easier, but also creators and voices on social media seem _required_ to break out of the AI noise, and
-3. The competition was fierce. I relish a competition, but with competitors from frontier labs, to some of the hottest startups in Silicon Valley, I wasn't convinced we had a path to break out.
-
-I wish the team well! I know everyone says this, but I'll be rooting for them to be wildly successful, and I mean it! Just because _my_ risk tolerance was lower doesn't mean that the risk is insurmountable, and I'm deeply hopeful they break out because it's a great product built by good people who are innovating. I am also thankful for the opportunity to work alongside the team, and while it was a short stint, I learned much about AI-native development, modern AI practices, and had a front-row seat to building on the frontier of modern AI development.
+In this post, I aim to to discuss and share some of my thoughts on the problems I'm seeing in AI, why it led to me taking a pause in my career to evaluate and think about what can be done about it, and potentially in so doing it may cause you to evaluate and spur your own creativity to usher in a new, more creative application of AI to real problems, not made up ones.
 
 ## The sameness of AI
 
-To dive deeper into this first bullet point (which is in some sense the primary cause but linked with the others), one thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry gravitates towards them but then as has become apparent with AI, the ability to follow and build (while coding isn't solved, it's a damn sight easier!) by others comes quickly after.
+One thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry gravitates towards them but then as has become apparent with AI, the ability to follow and build (while coding isn't solved, it's a damn sight easier!) by others comes quickly after.
 
 When I look at some of the trends I've been seeing, a few patterns have emerged:
 
