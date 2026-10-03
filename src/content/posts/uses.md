@@ -15,78 +15,95 @@ I develop on macOS, and have for years. I find the unix-y environment, the build
 
 ## Development
 
-I used to be big on SublimeText (and before that, TextMate!), but the rise of VSCode and the excellent ecosystem of extensions has made it hard to use anything else.
+I used to be big on SublimeText (and before that, TextMate!), then spent years in VSCode. These days I use [Zed](https://zed.dev). It's fast and native, and it feels a lot like the Sublime days, but with modern features like built-in AI edit predictions and collaboration.
 
-- Visual Studio Code has been my editor for the past few years
+- Zed is my editor
 - Dracula Pro is my theme
 - Fira Code is my font
 
-![VSCode](./images/vscode.png)
+![Zed](./images/zed.jpg)
 
-On VSCode, I've particularly liked a more minimal setup with the side panels and footer removed. If you're curious (as of 17 January 2024), the below settings.json can be used to get the same effect. Note: these will likely need to be tweaked, configured, and various settings removed to match your setup or to install additional extensions.
+I like a minimal setup, so I hide the minimap and status bar. I also keep VSCode keybindings so muscle memory carries over, and I add Sublime's "Split into Lines" back on `cmd-shift-l`. My [Zed settings](https://github.com/DSchau/dotfiles/blob/main/init/Zed/settings.json) live in my dotfiles and sync on bootstrap. Here they are:
 
 ```json
 {
-    "editor.tabSize": 2,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "workbench.startupEditor": "newUntitledFile",
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.minimap.enabled": false,
-    "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "workbench.colorTheme": "Dracula Pro",
-    "editor.inlineSuggest.enabled": true,
-    "security.workspace.trust.untrustedFiles": "open",
-    "explorer.confirmDelete": false,
-    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
-    "workbench.activityBar.location": "hidden",
-    "workbench.statusBar.visible": false,
-    "window.titleBarStyle": "native",
-    "editor.hideCursorInOverviewRuler": true,
-    "apc.electron": {
-        "titleBarStyle": "hiddenInset",
-        "trafficLightPosition": {
-          "x": 11,
-          "y": 10
-        }
-      },
-      "apc.header": {
-        "height": 36
-      },
-      // Remove unnecessary controls from primary bar and tabs list
-      "apc.stylesheet": {
-        ".title-label > h2": "display: none", // Remove primary side bar title
-        ".title-actions": "display: none", // Remove primary side bar action icons
-        ".editor-actions": "display: none", // Remove editor action icons
-        ".nosidebar .inline-tabs-placeholder": "width: 75px" // Align tabs to not overlap window controls when primary bar is hidden
-    },
-    "update.mode": "manual",
-    "editor.multiCursorModifier": "ctrlCmd",
-    "cSpell.userWords": [
-      "customizability"
-    ],
-    "security.promptForLocalFileProtocolHandling": false
+  "cli_default_open_behavior": "new_window",
+  "base_keymap": "VSCode",
+  "project_panel": {
+    "dock": "left"
+  },
+  "status_bar": {
+    "experimental.show": false
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "show_edit_predictions": true,
+  "tab_size": 2,
+  "ui_font_size": 16,
+  "buffer_font_size": 13,
+  "buffer_font_family": "Fira Code",
+  "buffer_font_fallbacks": ["Menlo", "Monaco", "Courier New", "monospace"],
+  "theme": {
+    "mode": "system",
+    "light": "Dracula Pro (Alucard)",
+    "dark": "Dracula Pro"
+  },
+  "auto_install_extensions": {
+    "astro": true,
+    "html": true,
+    "swift": true
+  }
 }
 ```
 
-I recently tried out a great terminal called Warp, and I've been using that daily since late 2023. I quite like it!
+For a terminal, I use [Ghostty](https://ghostty.org). It's fast, native, and configured with a plain text file, which lives in my [dotfiles](https://github.com/DSchau/dotfiles/blob/main/ghostty_config). I use the Dracula+ theme and a global quake-style quick terminal on the backtick key, so a shell is always one keypress away.
 
 As far as web browsing, I've found Arc to be great for not just daily browsing, but also for debugging since it's built on Chromium the development tools are just as good as they are in Chrome.
 
 I spent quite a bit of time building up my [dotfiles repo](https://github.com/dschau/dotfiles) and with every new Mac I spend a little time making sure it's still easy to use and seamless.
 
+## Agentic Tooling
+
+More and more of my development happens alongside a coding agent in the terminal. The setup I've settled on is small and swappable, and like everything else it's checked into my [dotfiles](https://github.com/dschau/dotfiles) so a new machine is one `./bootstrap.sh` away.
+
+- **[Pi](https://pi.dev)**. A minimal, extensible coding agent harness. It ships with a small set of tools (read, write, edit, bash) and stays out of the way. Everything else comes from extensions, skills, and packages. It's model-agnostic, so I'm not tied to any one lab's CLI, and my settings live in a single `settings.json` in my dotfiles.
+- **[OpenRouter](https://openrouter.ai)**. One API key and one bill for basically every frontier model. I use it as Pi's default provider and limit the model picker to Anthropic and OpenAI models. Claude Opus is my default, and I switch models mid-session when I want a second opinion.
+- **[Open TUI](https://github.com/OldSuns/pi-open-tui)** (`pi-open-tui`). A Pi package that improves the terminal UI with a more polished layout and an inline footer showing the cwd, git branch and status, context usage, tokens, and cost. It also shows telemetry like tokens/sec and time-to-first-token. You can install it with `pi install npm:pi-open-tui`.
+
+![Pi with Open TUI](./images/pi.jpg)
+
+If you're curious, this is the whole Pi config:
+
+```json
+{
+  "defaultProvider": "openrouter",
+  "defaultModel": "anthropic/claude-opus-5.5",
+  "defaultThinkingLevel": "medium",
+  "enabledModels": [
+    "openrouter/anthropic/*",
+    "openrouter/openai/*"
+  ],
+  "packages": [
+    "npm:pi-open-tui"
+  ],
+  "quietStartup": true
+}
+```
+
 ## macOS Apps
 
-[Check out the applications](https://github.com/DSchau/dotfiles/blob/main/init/applications.txt) I install automatically with my [dotfiles](https://github.com/dschau/dotfiles) repo. That's kept most up-to-date.
+My [dotfiles](https://github.com/dschau/dotfiles) repo installs these automatically. Apps come from [Homebrew casks](https://github.com/DSchau/dotfiles/blob/main/brew.sh) and the [Mac App Store](https://github.com/DSchau/dotfiles/blob/main/init/mas_apps.txt). That's the most up-to-date list.
 
 - **Arc**. An amazing web browser that has replaced Chrome as my daily web browser. 
 - **Raycast**. A useful productivity enhancement tool. I particularly like the clipboard history, the app launching, and the AI tools.
 - **Bettertouchtool**. Every Mac I own gets Bettertouchtool installed day one. I use all kinds of gestures to be more productive with the laptop trackpad or the Apple Trackpad, dependent upon which I'm using.
 - **Fantastical**. The best calendar app I've ever used. I use it for all my events, and I have particularly loved the natural language parsing to create events.
 - **Spark Desktop**. Best mail client I've used. I use it on Mac and iOS. The snooze feature is great, as are some newer features like the block feature which introduces a gate before an e-mail gets into your inbox to block unwanted e-mail.
+- **Ghostty**. My terminal (more on it above). Its global quick terminal makes a shell one keypress away.
+- **1Password**. Passwords and passkeys across every device, plus the `op` CLI for the terminal.
+- **Ice**. A menu bar manager that hides the clutter of icons that builds up over time.
 
 ## Hardware
 
