@@ -20,12 +20,12 @@ export const midRidge = (x: number) =>
 export type Kind = 'man' | 'woman' | 'boy' | 'girl'
 export interface Spec { id: string; kind: Kind; h: number; offset: number }
 
-/** left → right, walking right: dad, the little one between the parents, mom, then the older kid holding mom's hand */
+/** left → right, walking right: dad, his daughter between the parents, mom, then his son (the older kid) holding mom's hand */
 export const FAMILY: Spec[] = [
   { id: 'dad', kind: 'man', h: 27, offset: -20 },
-  { id: 'little', kind: 'boy', h: 12.5, offset: -7 },
+  { id: 'little', kind: 'girl', h: 12.5, offset: -7 },
   { id: 'mom', kind: 'woman', h: 25, offset: 7 },
-  { id: 'big', kind: 'girl', h: 17, offset: 20 },
+  { id: 'big', kind: 'boy', h: 17, offset: 20 },
 ]
 
 /** where the family stands with no JS / reduced motion: on the ridge in front of the bay, inside even the narrowest crop */
