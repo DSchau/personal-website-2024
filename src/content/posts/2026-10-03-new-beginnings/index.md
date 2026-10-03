@@ -38,7 +38,7 @@ As a recent example, a new category of AI seems to be emerging that of the perso
 At their center, they all have the same shared concepts:
 
 - A harness. The agent loop: call the model, run its tool calls, feed back the results, and manage context.
-- Vault. A way to securely access stored user credentials to access data, logins, etc.
+- A vault or secret store. A way to securely access stored user credentials to access data, logins, etc.
 - A sandbox / microVM. A sandbox where the models can do work, access credentials securely, and run custom code.
 - A browser. A browser that can be automated to perform work on your behalf that requires a browser (book travel, complete forms, etc.).
 - Transactions / payments. A way to securely perform transactions with an approval step (oftentimes Stripe Link).
