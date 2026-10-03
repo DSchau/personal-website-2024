@@ -16,7 +16,7 @@ export const PAPER = '#fefefe'
 
 import { BRIDGE, renderBridge, withStrait } from './bridge'
 import { compactPaths } from './compact-path'
-import { WASH } from '@/components/sea/wash'
+import { GRASS_INK, WASH } from '@/components/sea/wash'
 import { type Ocean, oceanSvg } from '@/components/sea/ocean'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
@@ -157,7 +157,8 @@ export function renderStaticScene(): string {
       defs.push(`<linearGradient id="field-wash" gradientUnits="userSpaceOnUse" x1="0" y1="270" x2="0" y2="${H}"><stop offset="0" stop-color="${WASH.grass}" stop-opacity=".2"/><stop offset="1" stop-color="${WASH.grass}" stop-opacity=".75"/></linearGradient>`)
       out.push(`<path d="${area(h.fn)}" fill="url(#field-wash)" stroke="none"/>`)
     }
-    out.push(`<g clip-path="url(#${h.id})" opacity=".8">`)
+    // the hatching takes the grass's green-black ink (the ridge lines stay black)
+    out.push(`<g clip-path="url(#${h.id})" opacity=".8" stroke="${GRASS_INK}">`)
     for (const [w, d] of buckets) out.push(`<path d="${d}" stroke-width="${w}"/>`)
     out.push(`</g>`, `<path d="${line(h.fn)}" stroke-width="${r(h.base * 1.6)}"/>`)
   }
