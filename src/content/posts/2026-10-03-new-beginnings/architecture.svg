@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 566" font-family="system-ui, -apple-system, sans-serif" fill="#161616">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 880 552" font-family="system-ui, -apple-system, sans-serif" fill="#161616">
   <title>The shared architecture of today's personal agents</title>
-  <desc>Instinct, Muse, Grokbot, and Dots are all built on the same stack: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks the user for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.</desc>
+  <desc>Instinct, Muse, Grok Bot, and Dots are all built on the same stack: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks the user for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0 0L10 5L0 10z" fill="#161616" />
@@ -10,17 +10,16 @@
     </marker>
   </defs>
 
-  <rect width="880" height="566" fill="#fefefe" />
+  <rect y="14" width="880" height="552" fill="#fefefe" />
 
   <!-- the products -->
-  <text x="440" y="18" text-anchor="middle" font-size="12" font-style="italic" fill="#666">the breakout personal agents</text>
   <g font-size="15" font-weight="600" text-anchor="middle">
     <rect x="95" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
     <text x="170" y="53">Instinct</text>
     <rect x="275" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
     <text x="350" y="53">Muse</text>
     <rect x="455" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
-    <text x="530" y="53">Grokbot</text>
+    <text x="530" y="53">Grok Bot</text>
     <rect x="635" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
     <text x="710" y="53">Dots</text>
   </g>
