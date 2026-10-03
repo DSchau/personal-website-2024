@@ -18,7 +18,7 @@ import { SEA } from './scene'
 export const WATER_INK = '#1c294d'
 
 /** the footer grass's ink: a deep green-black (the grass's version of WATER_INK) */
-export const GRASS_INK = '#24331f'
+export const GRASS_INK = '#34552b'
 
 const SKY = '#fbe7d6'
 const SUN = '#f4c3a0'
