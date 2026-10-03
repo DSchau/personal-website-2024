@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 562" font-family="system-ui, -apple-system, sans-serif" fill="#161616">
+  <title>Where everyone is building</title>
+  <desc>A two-by-two grid. Across: individual versus company. Up: model versus full stack (models, then apps, then infra). Individual full stack is crowded with Instinct, Muse, Grok Bot, and Dots. Company full stack, team agents like Town, Dust, and Viktor, has no breakout yet. Individual model is chat on a swappable, commoditized model. Company model is the labs for teams: ChatGPT and Claude adding connectors, skills, and shared projects.</desc>
+  <defs>
+    <linearGradient id="trend-dots-rainbow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#016ff6" />
+      <stop offset="0.35" stop-color="#a6d33f" />
+      <stop offset="0.65" stop-color="#f4b826" />
+      <stop offset="1" stop-color="#ee16aa" />
+    </linearGradient>
+  </defs>
+
+  <rect width="880" height="562" fill="#fefefe" />
+
+  <!-- y axis: model → full stack -->
+  <path d="M78 522V28" fill="none" stroke="#1c294d" stroke-width="1.8" />
+  <path d="M71.5 30L78 17L84.5 30z" fill="#1c294d" />
+  <g text-anchor="middle" font-size="14" font-weight="700">
+    <text transform="translate(34 134) rotate(-90)">Full stack</text>
+    <text transform="translate(34 378) rotate(-90)">Model</text>
+  </g>
+  <text transform="translate(54 134) rotate(-90)" text-anchor="middle" font-size="12" fill="#444">models → apps → infra</text>
+
+  <!-- x axis: individual → company -->
+  <path d="M78 522H850" fill="none" stroke="#1c294d" stroke-width="1.8" />
+  <path d="M848 515.5L861 522L848 528.5z" fill="#1c294d" />
+  <g text-anchor="middle" font-size="14" font-weight="700">
+    <text x="294" y="546">Individual</text>
+    <text x="672" y="546">Company</text>
+  </g>
+
+  <!-- top left: personal agents (crowded) -->
+  <rect x="106" y="16" width="376" height="236" rx="10" fill="#e1ebee" stroke="#1c294d" stroke-width="2.2" />
+  <text x="294" y="50" text-anchor="middle" font-family="Rockwell, 'Rockwell Nova', 'Roboto Slab', serif" font-size="19" font-weight="700" fill="#1c294d">Personal agents</text>
+  <text x="294" y="72" text-anchor="middle" font-size="13" font-style="italic" fill="#1c294d">everyone's here</text>
+  <g font-size="15" font-weight="600" text-anchor="middle">
+    <rect x="134" y="94" width="150" height="36" rx="18" fill="#73a89a" stroke="#1f2322" stroke-width="1.5" />
+    <text x="209" y="117" fill="#1f2322">Instinct</text>
+    <rect x="304" y="94" width="150" height="36" rx="18" fill="#0064e0" stroke="#0064e0" stroke-width="1.5" />
+    <text x="379" y="117" fill="#ffffff">Muse</text>
+    <rect x="134" y="142" width="150" height="36" rx="18" fill="#000000" stroke="#000000" stroke-width="1.5" />
+    <text x="209" y="165" fill="#ffffff">Grok Bot</text>
+    <rect x="304" y="142" width="150" height="36" rx="18" fill="#000000" stroke="url(#trend-dots-rainbow)" stroke-width="2.5" />
+    <text x="379" y="165" fill="#ffffff">Dots</text>
+  </g>
+  <text x="294" y="226" text-anchor="middle" font-size="13" fill="#1c294d">crowded: same stack, four logos</text>
+
+  <!-- top right: team agents (open) -->
+  <rect x="490" y="16" width="364" height="236" rx="10" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="6 5" />
+  <text x="672" y="50" text-anchor="middle" font-family="Rockwell, 'Rockwell Nova', 'Roboto Slab', serif" font-size="19" font-weight="700">Team agents</text>
+  <text x="672" y="72" text-anchor="middle" font-size="13" font-style="italic" fill="#666">no breakout yet</text>
+  <g font-size="15" font-weight="600" text-anchor="middle" fill="#444">
+    <rect x="517" y="118" width="100" height="36" rx="18" fill="#fefefe" stroke="#999" stroke-width="1.5" />
+    <text x="567" y="141">Town</text>
+    <rect x="622" y="118" width="100" height="36" rx="18" fill="#fefefe" stroke="#999" stroke-width="1.5" />
+    <text x="672" y="141">Dust</text>
+    <rect x="727" y="118" width="100" height="36" rx="18" fill="#fefefe" stroke="#999" stroke-width="1.5" />
+    <text x="777" y="141">Viktor</text>
+  </g>
+  <text x="672" y="226" text-anchor="middle" font-size="13" fill="#444">wide open?</text>
+
+  <!-- bottom left: chat on a model (commodity) -->
+  <rect x="106" y="260" width="376" height="236" rx="10" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+  <text x="294" y="294" text-anchor="middle" font-family="Rockwell, 'Rockwell Nova', 'Roboto Slab', serif" font-size="19" font-weight="700">Chat on a model</text>
+  <text x="294" y="316" text-anchor="middle" font-size="13" font-style="italic" fill="#666">swap models at will</text>
+  <g font-size="14" font-weight="600" text-anchor="middle" fill="#444">
+    <rect x="170" y="362" width="120" height="34" rx="17" fill="#fefefe" stroke="#161616" stroke-width="1.2" />
+    <text x="230" y="384">Frontier labs</text>
+    <rect x="298" y="362" width="120" height="34" rx="17" fill="#fefefe" stroke="#161616" stroke-width="1.2" />
+    <text x="358" y="384">Open-weight</text>
+  </g>
+  <text x="294" y="470" text-anchor="middle" font-size="13" fill="#444">commodity: low switching costs</text>
+
+  <!-- bottom right: the labs, for teams -->
+  <rect x="490" y="260" width="364" height="236" rx="10" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+  <text x="672" y="294" text-anchor="middle" font-family="Rockwell, 'Rockwell Nova', 'Roboto Slab', serif" font-size="19" font-weight="700">The labs, for teams</text>
+  <text x="672" y="316" text-anchor="middle" font-size="13" font-style="italic" fill="#666">connectors, skills, shared projects</text>
+  <g font-size="14" font-weight="600" text-anchor="middle" fill="#444">
+    <rect x="557" y="362" width="110" height="34" rx="17" fill="#fefefe" stroke="#161616" stroke-width="1.2" />
+    <text x="612" y="384">ChatGPT</text>
+    <rect x="677" y="362" width="110" height="34" rx="17" fill="#fefefe" stroke="#161616" stroke-width="1.2" />
+    <text x="732" y="384">Claude</text>
+  </g>
+  <text x="672" y="470" text-anchor="middle" font-size="13" fill="#444">the labs, going multi-player</text>
+</svg>
