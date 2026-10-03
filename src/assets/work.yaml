@@ -1,17 +1,21 @@
+- title: Advisor
+  location: San Francisco, CA
+  employer: Mastra
+  date: "2026-Present"
+  description: I advise [Mastra](https://mastra.ai) in a hands-on capacity around Product strategy and engineering execution.
 - title: VP of Product & Engineering
   location: San Francisco, CA
   employer: Adapt
-  logo: ./logos/adapt.svg
-  date: "2026-Present"
-  description: I lead Product & Engineering at [Adapt](https://adapt.com), a seed-stage startup building the AI-native operating system for teams. Adapt connects to the tools your team already uses and gives you a single interface to ask questions, take action, and automate workflows — think less chatbot, more a colleague who has read every document, knows every process, and can actually _do things_ on your behalf.
+  date: "2026"
+  description: I led Product & Engineering at [Adapt](https://adapt.com), a seed-stage startup building the company agent platform.
   highlights:
-    - Building and leading the Product & Engineering teams from the ground up at seed stage
-    - Owning and delivering the product vision and roadmap for an AI-native platform used by teams to automate work across their entire tool stack
-    - Writing code and setting the technical and cultural bar for the engineering organization
+    - Launched the first iteration of the Adapt platform with micro-VMs (Firecracker), a secure integration layer, and an open-source agent framework
+    - Built and led the Product & Engineering teams from the ground up at seed stage
+    - Owned and delivered the Product vision for a company agent platform, a pivot from initial v1 of the product
+    - Wrote substantial code and set the technical and cultural bar for the engineering organization
 - title: Head of API Client
   location: San Francisco, CA
   employer: Postman
-  logo: ./logos/postman.svg
   date: "2023-2026"
   description: I led the API Client team at [Postman](https://postman.com)—one of the world's most loved developer tools, used by millions of developers daily. We owned the core request-sending engine across all protocols (REST, gRPC, WebSockets, GraphQL, MQTT, AI models, and MCP) and modernized the Postman platform for both humans and AI agents.
   highlights:
