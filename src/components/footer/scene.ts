@@ -16,6 +16,7 @@ export const PAPER = '#fefefe'
 
 import { BRIDGE, renderBridge, withStrait } from './bridge'
 import { compactPaths } from './compact-path'
+import { WASH } from '@/components/sea/wash'
 import { type Ocean, oceanSvg } from '@/components/sea/ocean'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
@@ -88,8 +89,12 @@ function reflections() {
 function strait(defs: string[]) {
   const shape = `M1000 ${BRIDGE.water}H${W + 10}V300H1000Z`
   defs.push(`<clipPath id="strait-water"><path d="${shape}"/></clipPath>`)
+  // the hand-tinted wash (sea/wash.ts): the bay is the one place the footer takes colour, a pale blue
+  // under its ink, fading toward the viewer (the hills, drawn after, cover the rest)
+  defs.push(`<linearGradient id="bay-wash" gradientUnits="userSpaceOnUse" x1="0" y1="${BRIDGE.water}" x2="0" y2="${BRIDGE.water + 60}"><stop offset="0" stop-color="${WASH.water}"/><stop offset="1" stop-color="${WASH.water}" stop-opacity=".4"/></linearGradient>`)
   return [
     `<path d="${shape}" fill="${PAPER}" stroke="none"/>`,
+    `<path d="${shape}" fill="url(#bay-wash)" stroke="none"/>`,
     `<g clip-path="url(#strait-water)">`,
     `<g opacity=".85">${oceanSvg(STRAIT_OCEAN, 0)}</g>`,
     `<path d="${reflections()}" stroke-width="1.3" opacity=".75"/>`,
@@ -113,6 +118,13 @@ export function renderStaticScene(): string {
     }
     out.push(`<path d="${d}" stroke-width=".5" opacity="${r(((i + 1) / 12) ** 2 * 0.28 * 100) / 100}"/>`)
   }
+
+  // a faint warm haze low on the horizon behind the bridge, under its ink (the wash, see sea/wash.ts)
+  const hx = (BRIDGE.t1 + BRIDGE.t2) / 2
+  out.push(
+    `<defs><radialGradient id="haze-wash"><stop offset="0" stop-color="${WASH.sky}" stop-opacity=".7"/><stop offset="1" stop-color="${WASH.sky}" stop-opacity="0"/></radialGradient></defs>`,
+    `<ellipse cx="${hx}" cy="${BRIDGE.water}" rx="420" ry="34" fill="url(#haze-wash)" stroke="none"/>`,
+  )
 
   // bridge (see bridge.ts). The old water rules drew from the shared rng; keep
   // consuming those values so the hills' hatching below stays exactly as it was.

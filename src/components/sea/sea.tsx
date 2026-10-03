@@ -1,16 +1,22 @@
 import { FLOCK_FAR, FLOCK_NEAR, PAPER, SEA, seaScene } from './scene'
 import { BOTTLE_SINK, floatingBottle } from './bottle'
 import { HOME_OCEAN, type OceanConfig, SEA_BOX as BOX } from './ocean'
+import { SUN_FILL, WATER_INK, seaWash } from './wash'
 import styles from './sea.module.css'
 
 // computed once per server instance; output is deterministic
-const s = seaScene(SEA)
+const untinted = seaScene(SEA)
+// the homepage's hand-tinted version (wash.ts)
+const tintedScene = seaScene(SEA, { sunFill: SUN_FILL })
+const wash = seaWash()
 const b = floatingBottle()
 const { view, hz, sun } = SEA
 
 interface Props {
   /** the 404's message in a bottle, floating dead centre */
   bottle?: boolean
+  /** the homepage's hand-tinted wash (wash.ts): warm sun + sky, water inked indigo */
+  tinted?: boolean
 }
 
 /**
@@ -20,14 +26,15 @@ interface Props {
  * reduced motion). Without JS, the same first frame comes from the
  * prerendered /sea-ocean.svg.
  */
-export function Sea({ bottle = false }: Props) {
+export function Sea({ bottle = false, tinted = false }: Props) {
+  const s = tinted ? tintedScene : untinted
   // narrow screens crop the sides: keep the bottle (centre) or the sun (right) in view
   const align = bottle ? 'xMidYMax slice' : 'xMaxYMax slice'
   const viewBox = `${BOX.x} ${BOX.y} ${BOX.w} ${BOX.h}`
   return (
     <div
       className={styles.scene}
-      data-ocean={JSON.stringify({ ocean: HOME_OCEAN, box: BOX, align } satisfies OceanConfig)}
+      data-ocean={JSON.stringify({ ocean: HOME_OCEAN, box: BOX, align, ...tinted && { color: WATER_INK } } satisfies OceanConfig)}
       {...bottle
         ? { role: 'img', 'aria-label': 'A message in a bottle drifting on the sea' }
         : { 'aria-hidden': true }}
@@ -52,13 +59,16 @@ export function Sea({ bottle = false }: Props) {
         <rect x={view.x} y={hz} width={view.w} height={view.h + 100} fill={PAPER} stroke="none" />
         <path d={s.horizon} strokeWidth={0.8} />
 
+        {/* the wash, multiplied over the sky + sun (the water's ink, on the canvas, sits on top of it) */}
+        {tinted && <g dangerouslySetInnerHTML={{ __html: wash }} />}
+
         <g className={styles.flock} style={{ animationDelay: '-20s' }} dangerouslySetInnerHTML={{ __html: FLOCK_NEAR }} />
         <g className={`${styles.flock} ${styles.far}`} style={{ animationDelay: '-48s' }} dangerouslySetInnerHTML={{ __html: FLOCK_FAR }} />
       </svg>
 
       <canvas className={styles.layer} data-ocean-canvas aria-hidden="true" />
       <noscript>
-        <img className={`${styles.layer} ${bottle ? styles.mid : ''}`} src="/sea-ocean.svg" alt="" />
+        <img className={`${styles.layer} ${bottle ? styles.mid : ''}`} src={tinted ? '/sea-ocean-tinted.svg' : '/sea-ocean.svg'} alt="" />
       </noscript>
 
       {bottle && (

@@ -35,7 +35,7 @@ export function Layout({ children, commits, totalCommits, pathname, showCopy, sh
         <Navigation pathname={pathname} />
         {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
         {display && <h1 className={styles.display}>{display}</h1>}
-        {pathname === '' && <Sea />}
+        {pathname === '' && <Sea tinted />}
         {scene === 'lost-at-sea' && <Sea bottle />}
         {scene === 'writing' && <Writing />}
         {scene === 'trail' && <Trail />}

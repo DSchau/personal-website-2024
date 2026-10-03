@@ -123,10 +123,10 @@ function sky(sea: Sea, rnd: () => number) {
 type Sun = Sea['sun']
 
 /** hatched sun: horizontal rules clipped to a disc, heavier toward the bottom (on the homepage the lower half sits behind the sea) */
-export function sunDisc(sun: Sun) {
+export function sunDisc(sun: Sun, fill = PAPER) {
   const { x: cx, y: cy, r: rad } = sun
   const gap = 2.8
-  let out = `<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${PAPER}" stroke-width="1"/>`
+  let out = `<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${fill}" stroke-width="1"/>`
   for (let y = cy - rad + gap / 2; y <= cy + rad; y += gap) {
     const half = Math.sqrt(Math.max(0, rad * rad - (y - cy) ** 2))
     const w = (0.35 + ((y - (cy - rad)) / (2 * rad)) * 1.1).toFixed(2)
@@ -236,14 +236,15 @@ export interface SceneParts {
   rows: { html: string; wl: number }[]
 }
 
-export function seaScene(sea: Sea): SceneParts {
+/** `sunFill`: the sun disc's fill (paper by default; the homepage's wash warms it, see wash.ts) */
+export function seaScene(sea: Sea, { sunFill = PAPER } = {}): SceneParts {
   const rnd = rng(sea.seed)
   const ray = sunRays(sea.sun)
   const rows = waveRows(sea).map(row => ({ ...waveRow(sea, row, rnd), wl: row.wl }))
   return {
     defs: rows.map(b => b.clip).join(''),
     sky: sky(sea, rnd),
-    sun: sunDisc(sea.sun),
+    sun: sunDisc(sea.sun, sunFill),
     raysA: ray.a,
     raysB: ray.b,
     glint: glitter(sea, rnd),

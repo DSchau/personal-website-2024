@@ -17,7 +17,7 @@ function start(root: HTMLElement) {
   const canvas = root.querySelector<HTMLCanvasElement>('[data-ocean-canvas]')
   const ctx = canvas?.getContext('2d')
   if (!canvas || !ctx) return
-  const { ocean, box: BOX, align } = JSON.parse(root.dataset.ocean!) as OceanConfig
+  const { ocean, box: BOX, align, color = INK } = JSON.parse(root.dataset.ocean!) as OceanConfig
   const alignMid = align.startsWith('xMid')
   const field = new OceanField(ocean)
 
@@ -44,7 +44,7 @@ function start(root: HTMLElement) {
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.setTransform(k * dpr, 0, 0, k * dpr, (tx - BOX.x * k) * dpr, (ty - BOX.y * k) * dpr)
-    ctx.strokeStyle = INK
+    ctx.strokeStyle = color
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
     // batch by stroke width: one path per weight

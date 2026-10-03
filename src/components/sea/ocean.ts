@@ -210,7 +210,13 @@ export function oceanSvg(o: Ocean, t = 0) {
 }
 
 /** what a [data-ocean] element tells ocean-motion.ts: the ocean, the viewBox it's drawn in, and how that's fitted (preserveAspectRatio) */
-export interface OceanConfig { ocean: Ocean; box: { x: number; y: number; w: number; h: number }; align: string }
+export interface OceanConfig {
+  ocean: Ocean
+  box: { x: number; y: number; w: number; h: number }
+  align: string
+  /** the lines' ink (default: the site's black; the homepage inks its water indigo, see wash.ts) */
+  color?: string
+}
 
 /** the part of the sea drawing shown under the header + on the 404 (matches the other pages' illustrations) */
 export const SEA_BOX = { x: 0, y: 100, w: 1600, h: 250 }

@@ -7,11 +7,11 @@ import { type OceanConfig, oceanSvg } from './ocean'
  * a canvas instead). Served as a cached file rather than inlined, so it
  * doesn't weigh down every page's HTML.
  */
-export const oceanFile = ({ ocean, box }: Pick<OceanConfig, 'ocean' | 'box'>) =>
+export const oceanFile = ({ ocean, box, color = '#161616' }: Pick<OceanConfig, 'ocean' | 'box' | 'color'>) =>
   new Response(
     compactPaths(
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box.x} ${box.y} ${box.w} ${box.h}" width="${box.w}" height="${box.h}">` +
-      `<g fill="none" stroke="#161616" stroke-linecap="round" stroke-linejoin="round">${oceanSvg(ocean, 0)}</g></svg>`,
+      `<g fill="none" stroke="${color}" stroke-linecap="round" stroke-linejoin="round">${oceanSvg(ocean, 0)}</g></svg>`,
     ),
     { headers: { 'Content-Type': 'image/svg+xml' } },
   )
