@@ -37,7 +37,10 @@ export function seaWash() {
   const B = SEA_BOX, { hz, sun } = SEA
   return (
     `<defs>` +
-    `<linearGradient id="wash-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SKY}" stop-opacity="0"/><stop offset=".6" stop-color="${SKY}" stop-opacity=".25"/><stop offset="1" stop-color="${SKY}" stop-opacity=".55"/></linearGradient>` +
+    // eased in: clear through the upper sky, building toward the horizon. Wide screens crop the top
+    // (slice), so ocean-motion.ts moves y1 down to the visible top, keeping the whole fade in view
+    `<linearGradient id="wash-sky" data-wash-sky gradientUnits="userSpaceOnUse" x1="0" y1="${B.y}" x2="0" y2="${hz}">` +
+    `<stop offset="0" stop-color="${SKY}" stop-opacity="0"/><stop offset=".35" stop-color="${SKY}" stop-opacity="0"/><stop offset=".55" stop-color="${SKY}" stop-opacity=".06"/><stop offset=".75" stop-color="${SKY}" stop-opacity=".2"/><stop offset=".9" stop-color="${SKY}" stop-opacity=".38"/><stop offset="1" stop-color="${SKY}" stop-opacity=".55"/></linearGradient>` +
     `<radialGradient id="wash-glow"><stop offset="0" stop-color="${SUN}" stop-opacity=".35"/><stop offset="1" stop-color="${SUN}" stop-opacity="0"/></radialGradient>` +
     `<linearGradient id="wash-column" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SUN}" stop-opacity=".2"/><stop offset="1" stop-color="${SUN}" stop-opacity="0"/></linearGradient>` +
     `</defs>` +

@@ -26,6 +26,8 @@ function start(root: HTMLElement) {
   const bLine = Number(bottle?.dataset.bottle), bX = Number(bottle?.dataset.x)
   const bScale = tilt?.getAttribute('transform')?.match(/scale\(([\d.]+)\)/)?.[1] ?? '1'
   const sink = Number(bottle?.dataset.sink ?? 0)
+  // the homepage's sky wash (wash.ts): its fade starts at the visible top, wherever the crop puts it
+  const skyWash = root.querySelector<SVGLinearGradientElement>('[data-wash-sky]')
 
   // viewBox → canvas pixels, matching preserveAspectRatio "xMaxYMax slice" / "xMidYMax slice"
   let k = 1, tx = 0, ty = 0, dpr = 1
@@ -37,6 +39,10 @@ function start(root: HTMLElement) {
     k = Math.max(width / BOX.w, height / BOX.h)
     tx = alignMid ? (width - BOX.w * k) / 2 : width - BOX.w * k
     ty = height - BOX.h * k
+    if (skyWash) {
+      const hz = Number(skyWash.getAttribute('y2'))
+      skyWash.setAttribute('y1', String(Math.min(hz - 1, Math.max(BOX.y, BOX.y - ty / k))))
+    }
   }
   resize()
 
