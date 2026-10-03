@@ -60,10 +60,11 @@ img.layer {
   animation: twinkle 3.4s ease-in-out infinite;
 }
 
-/* a shooting star: a short paper streak runs down its track, then a long rest */
+/* a shooting star: a short paper streak runs down its track, then a long rest (duration + delay per star, moonlit-sea.tsx) */
 .meteor {
   stroke-dasharray: 18 200;
   stroke-dashoffset: 18;
+  opacity: 0;
   animation: meteor 13s cubic-bezier(0.3, 0, 0.7, 1) 4s infinite;
 }
 

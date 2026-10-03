@@ -30,8 +30,10 @@ export function MoonlitSea() {
         </g>
         <path className={styles.glints} d={s.glints} stroke={PAPER} strokeWidth={1} />
 
-        {/* now and then, a shooting star */}
-        <path className={styles.meteor} d={s.meteor} pathLength={100} stroke={PAPER} strokeWidth={2.2} />
+        {/* now and then, shooting stars, each on its own cycle */}
+        {s.meteors.map((m, i) => (
+          <path key={i} className={styles.meteor} style={{ animationDuration: `${m.duration}s`, animationDelay: `${m.delay}s` }} d={m.d} pathLength={100} stroke={PAPER} strokeWidth={m.width} />
+        ))}
 
         <g dangerouslySetInnerHTML={{ __html: s.moon }} />
         <g dangerouslySetInnerHTML={{ __html: s.water }} />

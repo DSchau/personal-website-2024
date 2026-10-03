@@ -97,6 +97,20 @@ function moon() {
   }
 }
 
+/**
+ * Shooting stars: each a track, a streak width, and its own cycle + start
+ * (durations are mutually out of step, so they never fall into a pattern).
+ * The first falls toward the moon, inside the narrow-screen crop.
+ */
+const METEORS = [
+  { d: 'M1040 30L1180 64', width: 2.2, duration: 13, delay: 4 },
+  { d: 'M380 36L540 78', width: 2, duration: 11, delay: 1.5 },
+  { d: 'M1460 38L1550 66', width: 1.6, duration: 15, delay: 7.5 },
+  { d: 'M780 48L650 86', width: 1.8, duration: 17, delay: 10 },
+  { d: 'M120 64L235 96', width: 1.4, duration: 19, delay: 13 },
+  { d: 'M1180 110L1250 128', width: 1.2, duration: 23, delay: 17 },
+]
+
 export function moonlitScene() {
   const rnd = rng(42)
   const st = stars(rnd)
@@ -108,8 +122,7 @@ export function moonlitScene() {
     stars: st.groups,
     glints: st.glints,
     moon: m.html,
-    // a shooting star's track, falling toward the moon (inside the narrow-screen crop)
-    meteor: 'M1040 30L1180 64',
+    meteors: METEORS,
     water: `<rect x="-10" y="${HZ}" width="${VIEW.w + 20}" height="${VIEW.h}" fill="${PAPER}" stroke="none"/><path d="M-10 ${HZ}H${VIEW.w + 10}" stroke-width=".8"/>`,
   }
 }
