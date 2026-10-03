@@ -43,6 +43,13 @@
   padding-left: 2rem;
 }
 
+/* nested lists: hug the parent item instead of spacing out like a new block */
+.container li > ol, .container li > ul {
+  margin-top: var(--padding-s);
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
 .container details {
   margin-bottom: 1rem;
 }
