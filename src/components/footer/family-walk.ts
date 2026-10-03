@@ -36,8 +36,8 @@ export function walk(svg: SVGSVGElement) {
   measure()
   addEventListener('resize', measure)
 
-  // start them a third of the way into view, so there's someone there from the first glance
-  let gx = xmin + (W - xmin) * 0.3
+  // start them at the left edge of the visible scene, so the walk begins there instead of popping in mid-view
+  let gx = xmin
   let speed = WALK
   // what the family is up to
   let mode: 'walk' | 'pause' = 'walk'

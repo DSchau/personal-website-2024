@@ -48,6 +48,7 @@
 .employer {
   text-decoration: none;
   color: var(--adapt-color);
+  white-space: nowrap; /* keep the logo glued to the name when the byline wraps */
 }
 
 .employer:hover {
