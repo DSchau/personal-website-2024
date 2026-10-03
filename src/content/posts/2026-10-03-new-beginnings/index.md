@@ -9,7 +9,7 @@ tags:
   - ai
 ---
 
-Earlier in the month, I decided to resign from my job at [Adapt](https://adapt.com). I haven't done this in my career before where I've left something without having something else lined up and I can honestly not recall a period where I haven't worked full-time since high school. But... I knew it was time, and I knew I was ready for something different.
+Last last month, I decided to resign from my job at [Adapt](https://adapt.com). I haven't done this in my career before where I've left something without having something else lined up and I can honestly not recall a period where I haven't worked full-time since high school. But... I knew it was time, and I knew I was ready for something different.
 
 ## Why?
 
@@ -51,14 +51,14 @@ One interesting note for myself -- and I think genuinely for others -- is that b
 
 ![My "Dingus" agent powered by Muse](./images/muse.jpg)
 
-All of the sameness in these product capabilities do however create a genuinely useful manifestation of AI as a personal assistant of sorts where there can be real(ish?) productivity gains. But most of the examples being touted online are more like vitamins than painkillers. Booking a flight is not that hard, and [booking it with an agent is not a 10x improvement](https://x.com/OpenAIDevs/status/2105708732323909827?s=20). Further still, as humans, we sometimes enjoy the task of selection and the inherent friction involved -- it activates our hunter-gatherer brain and we feel the satisfaction of finding the perfect _thing_ -- (like finding a meal on DoorDash, or browsing an e-commerce website for the perfect product) and so while maybe a personal agent can reduce the time spent in some of these tasks, it makes me wonder... are we going to be happy with that time savings? If we're not, why would we as an industry and as individuals pursue and use products that make us productive but joyless?
+All of the sameness in these product capabilities does however create a genuinely useful manifestation of AI as a personal assistant of sorts where there can be real(ish?) productivity gains. But most of the examples being touted online are more like vitamins than painkillers. Booking a flight is not that hard, and [booking it with an agent is not a 10x improvement](https://x.com/OpenAIDevs/status/2105708732323909827?s=20). Further still, as humans, we sometimes enjoy the task of selection and the inherent friction involved -- it activates our hunter-gatherer brain and we feel the satisfaction of finding the perfect _thing_ -- (like finding a meal on DoorDash, or browsing an e-commerce website for the perfect product) and so while maybe a personal agent can reduce the time spent in some of these tasks, it makes me wonder... are we going to be happy with that time savings? If we're not, why would we as an industry and as individuals pursue and use products that make us productive but joyless?
 
 ## What's next?
 
-In the space: I don't know. I hope something better :) I aim to take a few months to advise some awesome companies (like my friends at [Mastra](https://mastra.ai)) and reserve a little thinking time of my own to recharge, think, strategize, and be part of the solution. I hope in so doing that I will find myself creatively energized, inspired, and ready to build something I deeply believe in. Specifically, I am to focus on the following areas:
+In the space: I don't know. I hope something better :) I aim to take a few months to advise some awesome companies (like my friends at [Mastra](https://mastra.ai)) and reserve a little thinking time of my own to recharge, think, strategize, and be part of the solution. I hope in so doing that I will find myself creatively energized, inspired, and ready to build something I deeply believe in. Specifically, I aim to focus on the following areas:
 
 - Ownership of AI. I really find open-source, open-weight, and flexible ownership and switching to be an underrated area right now (like this recent [Underdog launch](https://x.com/0xSigil/status/2106067365733790032?s=20) as an example) and want to explore it further
-- AI primitives. Sandboxes, browsers, the core building blocks of AI I want to use directly by building my own agents and exploring what I like, what I dislike, and maybe what's missing
+- AI primitives. Sandboxes, browsers, agent frameworks, the core building blocks of AI I want to use directly by building my own agents and exploring what I like, what I dislike, and maybe what's missing
 - AI automation. Factories and the process of automation of inputs, guardrails, and outputs is something I've always enjoyed (before AI even!)
   - As a sub-category of this, I'm particularly interested in exploring whether AI "slop" in open-source projects can be improved
 
