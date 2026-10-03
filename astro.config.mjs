@@ -83,7 +83,8 @@ export default defineConfig({
   redirects: {
     '/uses': '/posts/uses',
     '/blog': '/posts',
-    '/readme': '/posts/readme'
+    '/readme': '/posts/readme',
+    '/posts/2026-10-03-new-beginnings': '/posts/2026-10-03-the-sameness-of-ai'
   },
   markdown: {
     syntaxHighlight: false,
