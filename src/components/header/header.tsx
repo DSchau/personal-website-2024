@@ -7,11 +7,12 @@ interface Props {
   className?: string;
   /** page copy as HTML (Layout.astro renders it from inline markdown) */
   copy?: string;
+  employer?: boolean;
   byline?: string;
   photo?: boolean;
 }
 
-export function Header({ commits, showCopy = true, copy: customizedCopy, byline: customizedByline, className, photo = false }: Props) {
+export function Header({ commits, showCopy = true, copy: customizedCopy, employer, byline: customizedByline, className, photo = false }: Props) {
   const year = new Date().getFullYear()
   const frequency = <span className={styles.frequency}><strong>{commits} update{commits === 1 ? '' : 's'}</strong> in {year}</span>
   const updateWord = commits >= 10 ? 'occasionally' : 'infrequently'
@@ -22,7 +23,7 @@ export function Header({ commits, showCopy = true, copy: customizedCopy, byline:
   )
   const byline = customizedByline !== undefined ? customizedByline : (
     <>
-      Product & Engineering Leader at <a className={styles.employer} href="https://adapt.com" target="_blank"><img className={styles.logo} src={logo.src} alt="The logo of my employer Adapt, an AI-native operating system for teams" /> Adapt</a>
+      Product & Engineering Leader{employer && <> at <a className={styles.employer} href="https://adapt.com" target="_blank"><img className={styles.logo} src={logo.src} alt="The logo of my employer Adapt, an AI-native operating system for teams" /> Adapt</a></>}
     </>
   )
   const titleBlock = (
