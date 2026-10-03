@@ -6,6 +6,14 @@ p {
   margin-bottom: var(--padding-md);
 }
 
+/* pretty avoids widowed last words, but on narrow screens its reflow visibly
+   narrows the paragraph, so only use it where lines are long enough */
+@media only screen and (min-width: 768px) {
+  p {
+    text-wrap: pretty;
+  }
+}
+
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
