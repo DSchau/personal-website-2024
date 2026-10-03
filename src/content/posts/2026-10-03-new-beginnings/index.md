@@ -45,7 +45,7 @@ At their center, they all have the same shared concepts:
 - Tasks. A way to persist a task / goal and have the agent pursue it until complete ("Find me two middle back Odyssey tickets in IMAX, make no mistakes!").
 
 ![Instinct, Muse, Grok Bot, and Dots all share the same architecture: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks you for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.](./architecture.svg)
-<figcaption>The breakout personal agents</figcaption>
+<figcaption>OpenClaw's architecture, now available in four exciting brand colors</figcaption>
 
 One interesting note for myself -- and I think genuinely for others -- is that because they're all the same thing more or less, the switching costs are incredibly low. I used Instinct and genuinely liked it (it found and booked me Dune tickets in IMAX!!), but when I saw some speculative security concerns, it made me realize that I probably shouldn't trust it with my personal data.[^1] So... I switched to Meta's Muse 😅 And I have not found myself lacking any capabilities whatsoever.
 

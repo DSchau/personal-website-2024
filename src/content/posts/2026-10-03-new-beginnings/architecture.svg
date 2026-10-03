@@ -8,20 +8,31 @@
     <marker id="arrow-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0 0L10 5L0 10z" fill="#1c294d" />
     </marker>
+    <!-- Dots: its four characters (blue, green, yellow, pink) -->
+    <linearGradient id="dots-rainbow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#016ff6" />
+      <stop offset="0.35" stop-color="#a6d33f" />
+      <stop offset="0.65" stop-color="#f4b826" />
+      <stop offset="1" stop-color="#ee16aa" />
+    </linearGradient>
   </defs>
 
   <rect y="14" width="880" height="552" fill="#fefefe" />
 
-  <!-- the products -->
+  <!-- the products, in their (four exciting) brand colors -->
   <g font-size="15" font-weight="600" text-anchor="middle">
-    <rect x="95" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
-    <text x="170" y="53">Instinct</text>
-    <rect x="275" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
-    <text x="350" y="53">Muse</text>
-    <rect x="455" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
-    <text x="530" y="53">Grok Bot</text>
-    <rect x="635" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
-    <text x="710" y="53">Dots</text>
+    <!-- Instinct: accent teal + onyx -->
+    <rect x="95" y="30" width="150" height="36" rx="18" fill="#73a89a" stroke="#1f2322" stroke-width="1.5" />
+    <text x="170" y="53" fill="#1f2322">Instinct</text>
+    <!-- Muse: Meta blue -->
+    <rect x="275" y="30" width="150" height="36" rx="18" fill="#0064e0" stroke="#0064e0" stroke-width="1.5" />
+    <text x="350" y="53" fill="#ffffff">Muse</text>
+    <!-- Grok Bot: xAI black -->
+    <rect x="455" y="30" width="150" height="36" rx="18" fill="#000000" stroke="#000000" stroke-width="1.5" />
+    <text x="530" y="53" fill="#ffffff">Grok Bot</text>
+    <!-- Dots: black with a rainbow glow -->
+    <rect x="635" y="30" width="150" height="36" rx="18" fill="#000000" stroke="url(#dots-rainbow)" stroke-width="2.5" />
+    <text x="710" y="53" fill="#ffffff">Dots</text>
   </g>
 
   <!-- …all converge on one stack -->
