@@ -1,15 +1,16 @@
 /**
- * The 404's message in a bottle, drifting on one row of the sea (scene.ts).
+ * The 404's message in a bottle, floating on the ocean (ocean.ts).
  *
- * It's rendered inside its row's drift/heave group, just before the row itself,
- * so the row's paper-white water covers its lower half (it floats *in* the
- * swell) and it rides the same motion.
+ * It's drawn over the water and clipped at its waterline, so it sits *in* the
+ * swell; the server places it on the t = 0 surface, and ocean-motion.ts keeps
+ * it riding the water (rising, falling and tilting with the swell).
  */
-import { PAPER, SEA, r, waveRows } from './scene'
+import { BOTTLE_AT, HOME_OCEAN, OceanField } from './ocean'
+import { PAPER, r } from './scene'
 
-/** which row the bottle floats in (0 = horizon) */
-export const BOTTLE_ROW = 5
-const BOTTLE_SCALE = 1.5
+export const BOTTLE_SCALE = 1.5
+/** how far below the waterline its centre sits (so the swell covers its belly) */
+export const BOTTLE_SINK = 1.5
 
 /**
  * An engraved bottle along +x, centred on (0, 0): rounded body, shoulder, neck,
@@ -50,16 +51,11 @@ function bottle() {
 }
 
 export function floatingBottle() {
-  const row = waveRows(SEA)[BOTTLE_ROW]
-
-  // float dead centre, tilted to the slope of the water under it
-  const x = SEA.view.w / 2
-  const tilt = r((Math.atan((row.fn(x + 4) - row.fn(x - 4)) / 8) * 180) / Math.PI - 6)
-  const y = row.fn(x) + 3 * BOTTLE_SCALE // sit a little low, so the swell covers its belly
-
-  // small wake lines either side where the bottle meets the water
-  const wy = r(row.fn(x) + 1.5)
-  const wake = `M${x - 66} ${wy}q9 -2.2 18 0M${x - 46} ${r(wy + 2.6)}q6 -1.6 12 0M${x + 54} ${wy}q9 -2.2 18 0M${x + 40} ${r(wy + 2.6)}q6 -1.6 12 0`
-
-  return { x, y: r(y), scale: BOTTLE_SCALE, tilt, html: bottle(), wake }
+  const field = new OceanField(HOME_OCEAN)
+  const line = field.lineAt(BOTTLE_AT.y)
+  const { x } = BOTTLE_AT
+  const here = field.surface(x, line, 0)
+  // tilt to the slope of the water under it
+  const tilt = r((Math.atan((field.surface(x + 8, line, 0).y - field.surface(x - 8, line, 0).y) / 16) * 180) / Math.PI - 6)
+  return { x, y: r(here.y + BOTTLE_SINK), line, scale: BOTTLE_SCALE, tilt, html: bottle() }
 }

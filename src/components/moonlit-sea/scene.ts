@@ -5,13 +5,15 @@
  * horizon (and around the moon, for its glow), so it reads as night at a
  * glance. Stars are paper showing through the ink and twinkle; a crescent
  * moon hangs low with its dark limb left in the sky's hatching (earthshine);
- * now and then a shooting star crosses. Below, a darker version of the
- * homepage's sea with the moon's path glinting down it.
+ * now and then a shooting star crosses. Below, the homepage's engraved ocean
+ * (sea/ocean.ts), inked darker and a little calmer, with the moon's path
+ * glinting down it.
  *
  * Seeded/deterministic, rendered to SVG markup at build time; CSS
  * (moonlit-sea.module.css) handles the motion.
  */
-import { PAPER, type Sea, r, seaScene } from '@/components/sea/scene'
+import { PAPER, r } from '@/components/sea/scene'
+import type { Ocean } from '@/components/sea/ocean'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
 
@@ -20,18 +22,17 @@ const HZ = 182
 // on the right, so narrow screens (cropped from the left) keep it in view
 export const MOON = { x: 1330, y: 92, r: 26 }
 
-const SEA: Sea = {
-  view: VIEW,
+/** the night sea: the same ocean as the homepage's, inked darker and a little calmer, the moon's path down it */
+export const NIGHT_OCEAN: Ocean = {
   hz: HZ,
-  sun: { ...MOON, y: HZ }, // the water's hatching thins under it: the moon's path
-  near: 262,
-  rows: 8,
-  wl: [60, 220],
-  amp: [0.6, 5],
-  lines: 9,
-  glitterBottom: 250,
-  seed: 17,
-  id: 'moon-sea',
+  bottom: VIEW.y + VIEW.h + 6,
+  from: -20,
+  to: VIEW.w + 20,
+  cx: VIEW.w / 2,
+  sun: { x: MOON.x },
+  lines: 46,
+  height: 4.5,
+  ink: 1.35,
 }
 
 /**
@@ -98,33 +99,17 @@ function moon() {
 
 export function moonlitScene() {
   const rnd = rng(42)
-  const s = seaScene(SEA)
   const st = stars(rnd)
   const m = moon()
 
-  // moonlight on the water: paper glints in a widening column under the moon, in rows so they can shimmer
-  const path: { d: string; delay: number }[] = []
-  for (let i = 0; i < 14; i++) {
-    const t = i / 13, y = HZ + 3 + (250 - HZ) * t ** 1.2, spread = 8 + t * 60
-    const n = 2 + Math.floor(rnd() * 2 + t * 3)
-    let d = ''
-    for (let k = 0; k < n; k++) {
-      const x = MOON.x + (rnd() - 0.5) * 2 * spread, len = 3 + rnd() * (5 + t * 12)
-      d += `M${r(x - len / 2)} ${r(y)}h${r(len)}`
-    }
-    path.push({ d, delay: r(-rnd() * 3) })
-  }
-
   return {
-    defs: s.defs + m.defs + GLOW,
+    defs: m.defs + GLOW,
     sky: sky(),
     stars: st.groups,
     glints: st.glints,
     moon: m.html,
     // a shooting star's track, falling toward the moon (inside the narrow-screen crop)
     meteor: 'M1040 30L1180 64',
-    water: `<rect x="-10" y="${HZ}" width="${VIEW.w + 20}" height="${VIEW.h}" fill="${PAPER}" stroke="none"/><path d="${s.horizon}" stroke-width=".8"/>`,
-    rows: s.rows,
-    path,
+    water: `<rect x="-10" y="${HZ}" width="${VIEW.w + 20}" height="${VIEW.h}" fill="${PAPER}" stroke="none"/><path d="M-10 ${HZ}H${VIEW.w + 10}" stroke-width=".8"/>`,
   }
 }

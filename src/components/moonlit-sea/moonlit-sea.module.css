@@ -15,28 +15,30 @@
   stroke: var(--ink);
   stroke-linecap: round;
 
-  /* the sky fades in at the top; the sea fades out at the bottom, like the other scenes */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+  position: relative;
+
+  /* the night sky fades in at the top; the sea needs no fade (the ocean ends itself, see sea/ocean.ts) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 15%);
+  mask-image: linear-gradient(to bottom, transparent, #000 15%);
 }
 
-/* ---- sea: each row drifts slowly sideways and breathes up + down, out of step with its neighbours ---- */
-.drift {
-  animation: drift 40s ease-in-out infinite alternate;
+/* the drawing (svg) and the moving water (canvas), stacked exactly */
+.layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes drift {
-  from { transform: translateX(calc(-1 * var(--dx))); }
-  to { transform: translateX(var(--dx)); }
+canvas.layer {
+  pointer-events: none;
 }
 
-.heave {
-  animation: heave 7s ease-in-out infinite alternate;
-}
-
-@keyframes heave {
-  from { transform: translateY(calc(-1 * var(--dy))); }
-  to { transform: translateY(var(--dy)); }
+/* the no-JS sea: cropped like the SVG (slice), from the right */
+img.layer {
+  object-fit: cover;
+  object-position: right bottom;
 }
 
 /* ---- night sky ---- */
@@ -71,24 +73,10 @@
   7.1%, 100% { stroke-dashoffset: -100; opacity: 0; }
 }
 
-/* ---- moonlight on the water ---- */
-.shimmer path {
-  animation: shimmer 3.2s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.8; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .scene *,
   .scene {
     animation: none !important;
-  }
-
-  .shimmer path {
-    opacity: 0.5;
   }
 
   .meteor {

@@ -16,7 +16,7 @@ export const PAPER = '#fefefe'
 
 import { BRIDGE, renderBridge, withStrait } from './bridge'
 import { compactPaths } from './compact-path'
-import { type Sea, seaScene } from '@/components/sea/scene'
+import { type Ocean, oceanSvg } from '@/components/sea/ocean'
 
 const rng = (seed: number) => () => (seed = (seed * 16807) % 2147483647) / 2147483647
 
@@ -50,22 +50,21 @@ function line(fn: Ridge) {
 }
 
 /**
- * The water under the bridge, drawn like the homepage's sea. It's drawn
- * before the hills, so the far ridge's bluff and the mid hill overlap it.
+ * The water under the bridge: the site's engraved ocean (sea/ocean.ts), small
+ * and far off. It's drawn before the hills, so the far ridge's bluff and the
+ * mid hill overlap it (and hide its lower lines).
  */
-const STRAIT_SEA: Sea = {
-  view: { x: 0, y: 0, w: W, h: H },
+const STRAIT_OCEAN: Ocean = {
   hz: BRIDGE.water,
-  sun: { x: -9999, y: BRIDGE.water, r: 1 }, // no sun, so no reflection thinning
-  near: BRIDGE.water + 34,
-  rows: 7,
-  wl: [26, 60],
-  amp: [0.4, 2],
-  lines: 4,
-  glitterBottom: BRIDGE.water + 34,
-  seed: 31,
-  id: 'strait',
-  span: [1000, W + 10], // just the bay (the hills cover the rest)
+  bottom: 268, // about where the mid hill hides it, so the nearest (biggest) lines are the ones in view
+  from: 1000,
+  to: W + 10,
+  cx: (BRIDGE.t1 + BRIDGE.t2) / 2,
+  sun: { x: -9999 }, // no sun over the strait
+  lines: 18,
+  height: 3.2,
+  ink: 1,
+  scale: 0.35,
 }
 
 /** the towers' reflections: broken, wobbling dashes stacked down the water below each tower, fading toward the viewer */
@@ -88,12 +87,11 @@ function reflections() {
 
 function strait(defs: string[]) {
   const shape = `M1000 ${BRIDGE.water}H${W + 10}V300H1000Z`
-  const sea = seaScene(STRAIT_SEA)
-  defs.push(sea.defs, `<clipPath id="strait-water"><path d="${shape}"/></clipPath>`)
+  defs.push(`<clipPath id="strait-water"><path d="${shape}"/></clipPath>`)
   return [
     `<path d="${shape}" fill="${PAPER}" stroke="none"/>`,
     `<g clip-path="url(#strait-water)">`,
-    `<g opacity=".8">${sea.rows.map(row => row.html).join('')}</g>`,
+    `<g opacity=".85">${oceanSvg(STRAIT_OCEAN, 0)}</g>`,
     `<path d="${reflections()}" stroke-width="1.3" opacity=".75"/>`,
     `</g>`,
     `<path d="M1000 ${BRIDGE.water}H${W + 10}" stroke-width=".9"/>`,
