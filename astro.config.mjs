@@ -84,7 +84,8 @@ export default defineConfig({
     '/uses': '/posts/uses',
     '/blog': '/posts',
     '/readme': '/posts/readme',
-    '/posts/2026-10-03-new-beginnings': '/posts/2026-10-03-the-sameness-of-ai'
+    '/posts/2026-10-03-new-beginnings': '/posts/2026-10-03-the-sameness-of-ai',
+    '/posts/2026-10-03-new-beginnings/': '/posts/2026-10-03-the-sameness-of-ai/'
   },
   markdown: {
     syntaxHighlight: false,
