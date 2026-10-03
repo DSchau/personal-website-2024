@@ -1,6 +1,7 @@
 import socialLinks from '@/assets/contact.yaml'
 
 import { flock } from '@/components/sea/scene'
+import { GRASS_INK } from '@/components/sea/wash'
 import { BOATS, BRIDGE, H, INK, PAPER, W, grassTufts, sailboat } from './scene'
 import { REST_X, restFamily } from './family'
 import styles from './footer.module.css'
@@ -67,7 +68,7 @@ function Scene() {
         </g>
       </g>
 
-      <g className={styles.grass} data-footer-grass stroke={INK} fill="none" strokeLinecap="round">
+      <g className={styles.grass} data-footer-grass stroke={GRASS_INK} fill="none" strokeLinecap="round">
         {tufts.map((t, i) => (
           <g key={i} className={styles.push} data-x={t.x} data-y={t.y}>
             <g className={styles.tuft} style={{ animationDelay: `${t.delay}s` }}>

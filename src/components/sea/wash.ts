@@ -8,7 +8,8 @@
  *
  * The washes are multiplied over the drawing (sea.tsx), so the ink stays crisp
  * and only the paper picks up the colour. The footer gets the same treatment,
- * even more sparingly: just its bay and a haze behind the bridge.
+ * even more sparingly: its bay, a haze behind the bridge, and a little green
+ * in the near field and its grass.
  */
 import { SEA_BOX } from './ocean'
 import { SEA } from './scene'
@@ -16,11 +17,14 @@ import { SEA } from './scene'
 /** the water's ink: a deep blue-black */
 export const WATER_INK = '#1c294d'
 
+/** the footer grass's ink: a deep green-black (the grass's version of WATER_INK) */
+export const GRASS_INK = '#24331f'
+
 const SKY = '#fbe7d6'
 const SUN = '#f4c3a0'
 
 /** the shared wash colours (the footer's bay + haze use them too, see footer/scene.ts) */
-export const WASH = { sky: SKY, sun: SUN, water: '#e1ebee' }
+export const WASH = { sky: SKY, sun: SUN, water: '#e1ebee', grass: '#e6ecda' }
 
 /**
  * The sun disc's fill. The sun is drawn at 35% opacity (sea.module.css), so

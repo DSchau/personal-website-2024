@@ -152,6 +152,11 @@ export function renderStaticScene(): string {
       }
     }
     out.push(`<path d="${area(h.fn)}" fill="${PAPER}" stroke="none"/>`)
+    if (h.id === 'near') {
+      // the near field takes a faint green wash under its ink, fading in toward the viewer (like the bay's)
+      defs.push(`<linearGradient id="field-wash" gradientUnits="userSpaceOnUse" x1="0" y1="270" x2="0" y2="${H}"><stop offset="0" stop-color="${WASH.grass}" stop-opacity=".2"/><stop offset="1" stop-color="${WASH.grass}" stop-opacity=".75"/></linearGradient>`)
+      out.push(`<path d="${area(h.fn)}" fill="url(#field-wash)" stroke="none"/>`)
+    }
     out.push(`<g clip-path="url(#${h.id})" opacity=".8">`)
     for (const [w, d] of buckets) out.push(`<path d="${d}" stroke-width="${w}"/>`)
     out.push(`</g>`, `<path d="${line(h.fn)}" stroke-width="${r(h.base * 1.6)}"/>`)
