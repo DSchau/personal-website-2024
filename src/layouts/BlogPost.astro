@@ -19,7 +19,8 @@ const { frontmatter } = Astro.props;
 // short dates, matching the /posts list (e.g. "Jul 13, 2017")
 const formatDate = (date: string | Date) => new Date(date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })
 const isoDate = (date: string | Date) => new Date(date).toISOString().slice(0, 10)
-const shouldDisplayEdited = new Date(frontmatter.lastModified).getTime() > new Date(frontmatter.date).getTime()
+// compare calendar days (as displayed), so a same-day edit doesn't show a duplicate date
+const shouldDisplayEdited = isoDate(frontmatter.lastModified) > isoDate(frontmatter.date)
 ---
 
 <article class={styles.container}>
