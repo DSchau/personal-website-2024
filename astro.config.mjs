@@ -27,6 +27,28 @@ function arrayBufferPlugin() {
   };
 }
 
+// Dev only: Astro's dev image endpoint (/_image?href=…) has no content hash in
+// its URL but is served with `max-age=31536000`, so edited images/SVGs stay
+// stale in the browser. Make the browser revalidate instead (the ETag still
+// gives cheap 304s when nothing changed). Production builds are unaffected:
+// they emit content-hashed /_astro/ files.
+function devImageNoCachePlugin() {
+  return {
+    name: 'dev-image-no-cache',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.startsWith('/_image')) {
+          const setHeader = res.setHeader.bind(res);
+          res.setHeader = (name, value) =>
+            setHeader(name, name.toLowerCase() === 'cache-control' ? 'no-cache' : value);
+        }
+        next();
+      });
+    }
+  };
+}
+
 function remarkModifiedTime() {
   return function (_, file) {
     const filepath = file.history[0];
@@ -85,7 +107,7 @@ export default defineConfig({
     }]]
   },
   vite: {
-    plugins: [yaml(), arrayBufferPlugin()],
+    plugins: [yaml(), arrayBufferPlugin(), devImageNoCachePlugin()],
     ssr: {
       noExternal: ['@cloudflare/pages-plugin-vercel-og']
     }
