@@ -88,14 +88,22 @@
 
 .date {
   font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
   text-align: center;
+  color: var(--text-accent-color);
 
-  margin: 0;
-  padding: var(--padding-md) 0;
+  /* tucked up under the title */
+  margin: calc(-1 * var(--padding-md)) 0 0;
+  padding: 0 0 var(--padding-md);
 }
 
+/* one line with the date: "Published Jul 13, 2017 · Edited Jan 5, 2024" */
 .modified {
-  display: block;
-  font-style: italic;
-  font-size: var(--text-xs);
+  color: color-mix(in srgb, var(--text-color) 55%, transparent);
+}
+
+.modified::before {
+  content: '·';
+  margin: 0 var(--padding-md);
 }

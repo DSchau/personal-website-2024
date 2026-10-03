@@ -16,16 +16,18 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 
-const formatDate = (date: string | Date) => new Date(date).toLocaleDateString('en-us', {timeZone: 'UTC'})
+// short dates, matching the /posts list (e.g. "Jul 13, 2017")
+const formatDate = (date: string | Date) => new Date(date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })
+const isoDate = (date: string | Date) => new Date(date).toISOString().slice(0, 10)
 const shouldDisplayEdited = new Date(frontmatter.lastModified).getTime() > new Date(frontmatter.date).getTime()
 ---
 
 <article class={styles.container}>
-  <p class={styles.date}>
-    {formatDate(frontmatter.date)}
-    {shouldDisplayEdited && <span class={styles.modified}>Last edited: {formatDate(frontmatter.lastModified)}</span>}
-  </p>
   <h1 class={styles.title}>{frontmatter.title}</h1>
+  <p class={styles.date}>
+    Published <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time>
+    {shouldDisplayEdited && <span class={styles.modified}>Edited <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
+  </p>
   <Me />
   {frontmatter.featuredImage && (
     <Image src={frontmatter.featuredImage} class={[styles.full, styles.hero].join(' ')} alt={"A prefiw for a blog post"} />
