@@ -25,7 +25,7 @@ const shouldDisplayEdited = new Date(frontmatter.lastModified).getTime() > new D
 <article class={styles.container}>
   <h1 class={styles.title}>{frontmatter.title}</h1>
   <p class={styles.date}>
-    Published: <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time>
+    <span class={styles.published}>Published: <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time></span>
     {shouldDisplayEdited && <span class={styles.modified}>Edited: <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
   </p>
   <Me />

@@ -99,6 +99,12 @@
 }
 
 /* one line with the date: "Published: Jul 13, 2017 · Edited: Jan 5, 2024" */
+.published,
+.modified {
+  /* never split a label from its date */
+  white-space: nowrap;
+}
+
 .modified {
   color: color-mix(in srgb, var(--text-color) 55%, transparent);
 }
@@ -106,4 +112,16 @@
 .modified::before {
   content: '·';
   margin: 0 var(--padding-md);
+}
+
+/* narrow screens: stack the two, no separator, rather than wrapping mid-line */
+@media (max-width: 480px) {
+  .published,
+  .modified {
+    display: block;
+  }
+
+  .modified::before {
+    content: none;
+  }
 }
