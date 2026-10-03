@@ -3,8 +3,6 @@ import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
 import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
 
-import { Tags } from '@/components/tags/tags.tsx';
-
 export const prerender = true
 
 const posts = await getCollection('posts', ({ data }) => {
@@ -35,7 +33,7 @@ const posts = await getCollection('posts', ({ data }) => {
   }
 
   li {
-    padding: var(--padding-s) 0;
+    padding: var(--padding-md) 0;
     list-style-type: decimal-leading-zero;
   }
 
@@ -44,10 +42,38 @@ const posts = await getCollection('posts', ({ data }) => {
     font-size: 0.8rem;
   }
 
+  /* title ····· date, like a book's table of contents */
+  .entry {
+    display: flex;
+    align-items: baseline;
+    gap: var(--padding-md);
+  }
+
+  .leader {
+    flex: 1;
+    min-width: var(--padding-xl);
+    /* sits on the baseline; lift it to the middle of the x-height */
+    transform: translateY(-0.12em);
+    border-bottom: 2px dotted color-mix(in srgb, var(--text-color) 30%, transparent);
+  }
+
   .date {
-    font-size: 0.8rem;
-    float: right;
-    color: var(--text-color);
+    flex-shrink: 0;
+    font-size: var(--text-s);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-accent-color);
+  }
+
+  /* tags: quiet lowercase text, not boxes */
+  .tags {
+    margin: var(--padding-xs) 0 0;
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--text-color) 55%, transparent);
+  }
+
+  .excerpt {
+    margin: var(--padding-s) 0 0;
   }
 
   a > .icon {
@@ -69,11 +95,13 @@ const posts = await getCollection('posts', ({ data }) => {
         const external = /https?/.test(href)
         return (
           <li>
-            <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title} <span class="date">{new Date(post.data.date).toLocaleDateString('en-us', {timeZone: 'UTC'})}</span></a>
-            <Tags small={true} list={
-              post.data.tags.map(tag => ({ label: tag }))
-            } />
-            <p>{post.data.excerpt}</p>
+            <div class="entry">
+              <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title}</a>
+              <span class="leader" aria-hidden="true" />
+              <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
+            </div>
+            {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
+            {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
           </li>
         )
       })}
