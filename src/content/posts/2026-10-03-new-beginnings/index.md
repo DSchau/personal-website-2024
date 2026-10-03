@@ -9,7 +9,7 @@ tags:
   - ai
 ---
 
-Last last month, I decided to resign from my job at [Adapt](https://adapt.com). I haven't done this in my career before where I've left something without having something else lined up and I can honestly not recall a period where I haven't worked full-time since high school. But... I knew it was time, and I knew I was ready for something different.
+In September I decided to resign from my job at [Adapt](https://adapt.com). I haven't done this in my career before where I've left something without having something else lined up and I can honestly not recall a period where I haven't worked full-time since high school. But... I knew it was time, and I knew I was ready for something different.
 
 ## Why?
 
@@ -19,15 +19,15 @@ Well, I don't know. I wish there was a grand plan or some master strategy behind
 2. It has never been harder to break out. AI makes creation (content, products, etc.) easy, but also creators and voices on social media seem _required_ to break out of the AI noise, and
 3. The competition was fierce. I relish a competition, but with competitors from frontier labs, to some of the hottest startups in Silicon Valley, I wasn't convinced we had a path to break out.
 
-I wish the team well. I know everyone says this, but I'll be rooting for them to be wildly successful, and I mean it! Just because _my_ risk tolerance was lower doesn't mean that the risk is insurmountable, and I'm deeply hopeful they break out because it's a great product built by good people who are innovating. I am also thankful for the opportunity to work alongside the team, and while it was a short stint, I learned much about AI-native development, modern AI practices, and had a front-row seat to building on the frontier of modern AI development.
+I wish the team well! I know everyone says this, but I'll be rooting for them to be wildly successful, and I mean it! Just because _my_ risk tolerance was lower doesn't mean that the risk is insurmountable, and I'm deeply hopeful they break out because it's a great product built by good people who are innovating. I am also thankful for the opportunity to work alongside the team, and while it was a short stint, I learned much about AI-native development, modern AI practices, and had a front-row seat to building on the frontier of modern AI development.
 
 ## The sameness of AI
 
-To dive deeper into this first bullet point (which is in some sense linked with competition), one thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry gravitates towards them but then as has become apparent with AI, the ability to follow and build (while coding isn't solved, it's a damn sight easier!) by others comes quickly after.
+To dive deeper into this first bullet point (which is in some sense the primary cause but linked with the others), one thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry gravitates towards them but then as has become apparent with AI, the ability to follow and build (while coding isn't solved, it's a damn sight easier!) by others comes quickly after.
 
 When I look at some of the trends I've been seeing, a few patterns have emerged:
 
-- Single-player vs. multi-player. No team or company "agent" has broken out in a meaningful way, and what seems to be en vogue now is a personal agent ([Instinct](https://instinct.com/), [Muse](https://ai.meta.com/muse/), [Grok Bot](https://x.ai/news/introducing-grok-bot), [Dots from OpenAI](https://openai.com/index/introducing-dots/)). I don't think either is right, but I do think AI is too siloed to the individual right now.
+- Single-player vs. multi-player. No team or company "agent" has broken out in a meaningful way (Town? Dust?), and what seems to be en vogue now is a personal agent ([Instinct](https://instinct.com/), [Muse](https://ai.meta.com/muse/), [Grok Bot](https://x.ai/news/introducing-grok-bot), [Dots from OpenAI](https://openai.com/index/introducing-dots/)). I am not convinced personal agents are the future, but they're definitely the hottest space right now.
 - Models are quickly becoming commodities. Switching costs are low, and it's more or less just preference at this point. When something new comes along that is meaningfully differentiated (cheaper open-weight models that have "frontier-grade" benchmark scores and [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) with novel ideas around more deterministic outputs as two such examples), that causes waves in the industry but the models themselves are increasingly able to be swapped from one lab to another (or from a frontier lab to an open-weight model).
 - The application layer is the next battleground. It's clear that frontier labs needed to compete beyond the model into areas of stickier business-focused use cases (the "app" layer) with things like data integrations, team-based workflows (skills, shared connections, etc.), and app integrations (Slack apps). I think the infra layer may be key here as well (sandboxes, computer use, and so forth).
 
@@ -42,7 +42,7 @@ At their center, they all have the same shared concepts:
 - A sandbox / microVM. A sandbox where the models can do work, access credentials securely, and run custom code.
 - A browser. A browser that can be automated to perform work on your behalf that requires a browser (book travel, complete forms, etc.).
 - Transactions / payments. A way to securely perform transactions with an approval step (oftentimes Stripe Link).
-- Tasks. A way to persist a task / goal and have the agent pursue it until complete ("Find me the Odyssey tickets in IMAX, make no mistakes!").
+- Tasks. A way to persist a task / goal and have the agent pursue it until complete ("Find me two middle back Odyssey tickets in IMAX, make no mistakes!")
 
 ![Instinct, Muse, Grok Bot, and Dots all share the same architecture: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks you for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.](./architecture.svg)
 <figcaption>The breakout personal agents</figcaption>
