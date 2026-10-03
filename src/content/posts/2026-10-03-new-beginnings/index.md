@@ -16,7 +16,7 @@ In September I decided to resign from my job at [Adapt](https://adapt.com). I ha
 Well, I don't know. I wish there was a grand plan or some master strategy behind it, but the job at Adapt was good, the team was great, and the product was interesting and exciting. If I had to boil it down to a few reasons, it probably would take the shape of something like:
 
 1. A bit of exhaustion of some of the sameness of AI. AI solves real problems, but there's a lot of noise and it felt sometimes like chasing trends instead of doing durably great work, and
-2. It has never been harder to break out. AI makes creation (content, products, etc.) easy, but also creators and voices on social media seem _required_ to break out of the AI noise, and
+2. It has never been harder to break out. AI makes creation (content, products, etc.) easier, but also creators and voices on social media seem _required_ to break out of the AI noise, and
 3. The competition was fierce. I relish a competition, but with competitors from frontier labs, to some of the hottest startups in Silicon Valley, I wasn't convinced we had a path to break out.
 
 I wish the team well! I know everyone says this, but I'll be rooting for them to be wildly successful, and I mean it! Just because _my_ risk tolerance was lower doesn't mean that the risk is insurmountable, and I'm deeply hopeful they break out because it's a great product built by good people who are innovating. I am also thankful for the opportunity to work alongside the team, and while it was a short stint, I learned much about AI-native development, modern AI practices, and had a front-row seat to building on the frontier of modern AI development.
@@ -42,7 +42,7 @@ At their center, they all have the same shared concepts:
 - A sandbox / microVM. A sandbox where the models can do work, access credentials securely, and run custom code.
 - A browser. A browser that can be automated to perform work on your behalf that requires a browser (book travel, complete forms, etc.).
 - Transactions / payments. A way to securely perform transactions with an approval step (oftentimes Stripe Link).
-- Tasks. A way to persist a task / goal and have the agent pursue it until complete ("Find me two middle back Odyssey tickets in IMAX, make no mistakes!")
+- Tasks. A way to persist a task / goal and have the agent pursue it until complete ("Find me two middle back Odyssey tickets in IMAX, make no mistakes!").
 
 ![Instinct, Muse, Grok Bot, and Dots all share the same architecture: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks you for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.](./architecture.svg)
 <figcaption>The breakout personal agents</figcaption>
