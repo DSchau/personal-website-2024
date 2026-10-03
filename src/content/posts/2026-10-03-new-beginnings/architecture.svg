@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 566" font-family="system-ui, -apple-system, sans-serif" fill="#161616">
+  <title>The shared architecture of today's personal agents</title>
+  <desc>Instinct, Muse, Grokbot, and Dots are all built on the same stack: a task (a one-off request or a persistent goal) drives a harness (the agent loop), which talks to a swappable model, asks the user for approvals, and calls the same four tools: a credential vault, a sandbox or microVM, an automated browser, and payments.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#161616" />
+    </marker>
+    <marker id="arrow-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#1c294d" />
+    </marker>
+  </defs>
+
+  <rect width="880" height="566" fill="#fefefe" />
+
+  <!-- the products -->
+  <text x="440" y="18" text-anchor="middle" font-size="12" font-style="italic" fill="#666">the breakout personal agents</text>
+  <g font-size="15" font-weight="600" text-anchor="middle">
+    <rect x="95" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="170" y="53">Instinct</text>
+    <rect x="275" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="350" y="53">Muse</text>
+    <rect x="455" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="530" y="53">Grokbot</text>
+    <rect x="635" y="30" width="150" height="36" rx="18" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="710" y="53">Dots</text>
+  </g>
+
+  <!-- …all converge on one stack -->
+  <g fill="none" stroke="#161616" stroke-width="1.5">
+    <path d="M170 66V90M350 66V90M530 66V90M710 66V90M170 90H710" />
+    <path d="M440 90V120" marker-end="url(#arrow)" />
+  </g>
+
+  <!-- the shared stack -->
+  <rect x="40" y="124" width="800" height="426" rx="14" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="6 5" />
+
+  <!-- tasks -->
+  <rect x="80" y="150" width="720" height="50" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+  <text x="440" y="181" text-anchor="middle" font-size="14"><tspan font-weight="700">Tasks</tspan><tspan fill="#444"> · a one-off request, or a persistent goal pursued until it's done</tspan></text>
+  <path d="M440 200V228" fill="none" stroke="#161616" stroke-width="1.5" marker-end="url(#arrow)" />
+
+  <!-- the model ⇄ harness ⇄ you -->
+  <rect x="60" y="250" width="180" height="100" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+  <text x="150" y="285" text-anchor="middle" font-size="16" font-weight="700">Model</text>
+  <text x="150" y="308" text-anchor="middle" font-size="13" fill="#444">swappable:</text>
+  <text x="150" y="326" text-anchor="middle" font-size="13" fill="#444">frontier or open-weight</text>
+
+  <path d="M244 300H296" fill="none" stroke="#1c294d" stroke-width="1.8" marker-start="url(#arrow-indigo)" marker-end="url(#arrow-indigo)" />
+
+  <rect x="300" y="230" width="280" height="140" rx="10" fill="#e1ebee" stroke="#1c294d" stroke-width="2.2" />
+  <text x="440" y="282" text-anchor="middle" font-family="Rockwell, 'Rockwell Nova', 'Roboto Slab', serif" font-size="22" font-weight="700" fill="#1c294d">Harness</text>
+  <text x="440" y="304" text-anchor="middle" font-size="13" font-style="italic" fill="#1c294d">the agent loop</text>
+  <text x="440" y="338" text-anchor="middle" font-size="14" fill="#1c294d">call model → run tools → repeat</text>
+
+  <path d="M584 300H636" fill="none" stroke="#1c294d" stroke-width="1.8" marker-start="url(#arrow-indigo)" marker-end="url(#arrow-indigo)" />
+
+  <rect x="640" y="250" width="180" height="100" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+  <text x="730" y="285" text-anchor="middle" font-size="16" font-weight="700">You</text>
+  <text x="730" y="308" text-anchor="middle" font-size="13" fill="#444">approve payments,</text>
+  <text x="730" y="326" text-anchor="middle" font-size="13" fill="#444">answer questions</text>
+
+  <!-- tool calls fan out to the same four tools -->
+  <g fill="none" stroke="#161616" stroke-width="1.5">
+    <path d="M440 370V405M155 405H725" />
+    <path d="M155 405V418M345 405V418M535 405V418M725 405V418" marker-end="url(#arrow)" />
+  </g>
+  <text x="452" y="394" font-size="12" font-style="italic" fill="#666">tool calls</text>
+
+  <g text-anchor="middle">
+    <rect x="70" y="420" width="170" height="90" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="155" y="450" font-size="14" font-weight="700">Vault</text>
+    <text x="155" y="472" font-size="12" fill="#444">stored credentials,</text>
+    <text x="155" y="489" font-size="12" fill="#444">data, and logins</text>
+
+    <rect x="260" y="420" width="170" height="90" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="345" y="450" font-size="14" font-weight="700">Sandbox / microVM</text>
+    <text x="345" y="472" font-size="12" fill="#444">isolated compute</text>
+    <text x="345" y="489" font-size="12" fill="#444">for custom code</text>
+
+    <rect x="450" y="420" width="170" height="90" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="535" y="450" font-size="14" font-weight="700">Browser</text>
+    <text x="535" y="472" font-size="12" fill="#444">automated web work</text>
+    <text x="535" y="489" font-size="12" fill="#444">(travel, forms)</text>
+
+    <rect x="640" y="420" width="170" height="90" rx="8" fill="#fefefe" stroke="#161616" stroke-width="1.5" />
+    <text x="725" y="450" font-size="14" font-weight="700">Payments</text>
+    <text x="725" y="472" font-size="12" fill="#444">transactions, behind</text>
+    <text x="725" y="489" font-size="12" fill="#444">an approval step</text>
+  </g>
+</svg>
