@@ -11,7 +11,7 @@ tags:
 
 There are varying takes on AI, some gloomers on how AI is a rising tide that will lift all boats and bring in a new era of human prosperity and creativity. And then there are AI doomers that believe AI has a uh, checking my notes here, a non-zero chance of killing humanity and that it therefore needs paused or has zero value to society. These artifical false dichotomies are kind of lazy, and both sides are being ridiculous so as with most issues I'm somewhere in the middle. I see the value, it's a tool I use daily and that most days I wouldn't want to live without, but I also am becoming increasingly disillusioned with the state of AI. We have the brightest minds in all of humanity working roughly in the same space, with the most funding available, and we're building personal assistants? Really?
 
-In this post, I aim to to discuss and share some of my thoughts on the problems I'm seeing in AI, why it led to me taking a pause in my career to evaluate and think about what can be done about it, and potentially in so doing it may cause you to evaluate and spur your own creativity to usher in a new, more creative application of AI to real problems, not made up ones.
+In this post, I aim to share some of my thoughts on the problems I'm seeing in AI, why it led to me taking a pause in my career to evaluate and think about what can be done about it, and potentially in so doing it may cause you to evaluate and spur your own creativity to usher in a new, more creative application of AI to real problems, not made up ones.
 
 ## The sameness of AI
 
