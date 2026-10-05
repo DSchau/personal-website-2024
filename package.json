@@ -30,7 +30,7 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "rehype-pretty-code": "^0.14.5",
-    "resend": "^2.1.0",
+    "resend": "^6.32.0",
     "shiki": "^4.5.0",
     "thumbo": "^1.0.8",
     "typescript": "^6.0.3",
