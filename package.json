@@ -23,7 +23,7 @@
     "astro": "^7.3.5",
     "astro-icon": "^1.2.0",
     "env-ci": "^11.2.0",
-    "marked": "^17.0.6",
+    "marked": "^18.1.0",
     "medium-zoom": "^1.1.0",
     "octokit": "^3.1.2",
     "phosphor-react": "^1.4.1",
@@ -37,7 +37,7 @@
     "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^4.1.2",
+    "@rollup/plugin-yaml": "^5.0.0",
     "wrangler": "^4.147.0"
   },
   "overrides": {
