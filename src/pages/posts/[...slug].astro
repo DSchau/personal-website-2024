@@ -55,7 +55,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
   },
   {
     property: 'og:image',
-    content: `${site?.href}api/og.png?type=post&title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}`
+    content: `${site?.href}api/og.png?type=post&title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}${entry.data.excerpt ? `&excerpt=${encodeURIComponent(entry.data.excerpt)}` : ''}`
   },
   {
     property: 'og:image:width',
@@ -63,7 +63,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
   },
   {
     property: 'og:image:height',
-    content: `630`
+    content: `620`
   }
 ]}>
   <MarkdownPostLayout frontmatter={Object.assign({}, remarkPluginFrontmatter, entry.data) as any}>

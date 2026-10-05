@@ -69,8 +69,8 @@ const STRAIT_OCEAN: Ocean = {
 }
 
 /** the towers' reflections: broken, wobbling dashes stacked down the water below each tower, fading toward the viewer */
-function reflections() {
-  const rnd = rng(7)
+function reflections(seed: number) {
+  const rnd = rng(seed)
   let d = ''
   for (const cx of [BRIDGE.t1, BRIDGE.t2]) {
     for (let y = BRIDGE.water + 2; y < BRIDGE.water + 40; y += 2 + (y - BRIDGE.water) * 0.06) {
@@ -86,25 +86,43 @@ function reflections() {
   return d
 }
 
-function strait(defs: string[]) {
+function strait(defs: string[], water: string, reflectionsSeed: number) {
   const shape = `M1000 ${BRIDGE.water}H${W + 10}V300H1000Z`
   defs.push(`<clipPath id="strait-water"><path d="${shape}"/></clipPath>`)
   // the hand-tinted wash (sea/wash.ts): the bay is the one place the footer takes colour, a pale blue
   // under its ink, fading toward the viewer (the hills, drawn after, cover the rest)
-  defs.push(`<linearGradient id="bay-wash" gradientUnits="userSpaceOnUse" x1="0" y1="${BRIDGE.water}" x2="0" y2="${BRIDGE.water + 60}"><stop offset="0" stop-color="${WASH.water}"/><stop offset="1" stop-color="${WASH.water}" stop-opacity=".4"/></linearGradient>`)
+  defs.push(`<linearGradient id="bay-wash" gradientUnits="userSpaceOnUse" x1="0" y1="${BRIDGE.water}" x2="0" y2="${BRIDGE.water + 60}"><stop offset="0" stop-color="${water}"/><stop offset="1" stop-color="${water}" stop-opacity=".4"/></linearGradient>`)
   return [
     `<path d="${shape}" fill="${PAPER}" stroke="none"/>`,
     `<path d="${shape}" fill="url(#bay-wash)" stroke="none"/>`,
     `<g clip-path="url(#strait-water)">`,
     `<g opacity=".85">${oceanSvg(STRAIT_OCEAN, 0)}</g>`,
-    `<path d="${reflections()}" stroke-width="1.3" opacity=".75"/>`,
+    `<path d="${reflections(reflectionsSeed)}" stroke-width="1.3" opacity=".75"/>`,
     `</g>`,
     `<path d="M1000 ${BRIDGE.water}H${W + 10}" stroke-width=".9"/>`,
   ].join('')
 }
 
-export function renderStaticScene(): string {
-  const rnd = rng(11)
+export interface StaticSceneOpts {
+  /** main seed (sky rules, hills, stipple). Default 11 — the footer's scene. */
+  seed?: number
+  /** tower-reflections seed. Default 7. */
+  reflectionsSeed?: number
+  /** hand-tinted wash colours. Defaults are the WASH colours. */
+  sky?: string
+  water?: string
+  grass?: string
+}
+
+export function renderStaticScene(opts: StaticSceneOpts = {}): string {
+  const {
+    seed = 11,
+    reflectionsSeed = 7,
+    sky = WASH.sky,
+    water = WASH.water,
+    grass = WASH.grass,
+  } = opts
+  const rnd = rng(seed)
   const out: string[] = []
 
   // sky: a faint haze of engraved rules low over the hills (a clear day: the upper sky stays open)
@@ -122,7 +140,7 @@ export function renderStaticScene(): string {
   // a faint warm haze low on the horizon behind the bridge, under its ink (the wash, see sea/wash.ts)
   const hx = (BRIDGE.t1 + BRIDGE.t2) / 2
   out.push(
-    `<defs><radialGradient id="haze-wash"><stop offset="0" stop-color="${WASH.sky}" stop-opacity=".7"/><stop offset="1" stop-color="${WASH.sky}" stop-opacity="0"/></radialGradient></defs>`,
+    `<defs><radialGradient id="haze-wash"><stop offset="0" stop-color="${sky}" stop-opacity=".7"/><stop offset="1" stop-color="${sky}" stop-opacity="0"/></radialGradient></defs>`,
     `<ellipse cx="${hx}" cy="${BRIDGE.water}" rx="420" ry="34" fill="url(#haze-wash)" stroke="none"/>`,
   )
 
@@ -134,7 +152,7 @@ export function renderStaticScene(): string {
   // hills: contour hatching, weight driven by slope (light from the left).
   // Segments are bucketed by stroke width so each hill is a handful of paths.
   const defs: string[] = []
-  out.push(strait(defs))
+  out.push(strait(defs, water, reflectionsSeed))
   for (const h of HILLS) {
     defs.push(`<clipPath id="${h.id}"><path d="${area(h.fn)}"/></clipPath>`)
     const buckets = new Map<number, string>()
@@ -154,7 +172,7 @@ export function renderStaticScene(): string {
     out.push(`<path d="${area(h.fn)}" fill="${PAPER}" stroke="none"/>`)
     if (h.id === 'near') {
       // the near field takes a faint green wash under its ink, fading in toward the viewer (like the bay's)
-      defs.push(`<linearGradient id="field-wash" gradientUnits="userSpaceOnUse" x1="0" y1="270" x2="0" y2="${H}"><stop offset="0" stop-color="${WASH.grass}" stop-opacity=".2"/><stop offset="1" stop-color="${WASH.grass}" stop-opacity=".75"/></linearGradient>`)
+      defs.push(`<linearGradient id="field-wash" gradientUnits="userSpaceOnUse" x1="0" y1="270" x2="0" y2="${H}"><stop offset="0" stop-color="${grass}" stop-opacity=".2"/><stop offset="1" stop-color="${grass}" stop-opacity=".75"/></linearGradient>`)
       out.push(`<path d="${area(h.fn)}" fill="url(#field-wash)" stroke="none"/>`)
     }
     // the hatching takes the grass's green-black ink (the ridge lines stay black)

@@ -1,7 +1,7 @@
 import { type APIRoute } from "astro";
 import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 
-import { OG } from "../../components/og/og";
+import { OGScene } from "../../components/og/og-scene";
 
 export const prerender = false;
 
@@ -45,8 +45,9 @@ export const GET: APIRoute = async function GET({ request, redirect }) {
 
   const title = urlParams.get("title") as string;
   const tags = urlParams.get("tags")?.split(",") as string[];
+  const excerpt = urlParams.get("excerpt") ?? undefined;
 
-  const response = new ImageResponse(OG({ tags, title }), {
+  const response = new ImageResponse(OGScene({ tags, title, excerpt }), {
     width: 1200,
     height: 620,
     fonts: await loadFonts(),
