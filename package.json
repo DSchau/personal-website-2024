@@ -22,8 +22,8 @@
     "@unpic/astro": "^1.0.2",
     "astro": "^7.3.5",
     "astro-icon": "^1.2.0",
-    "env-ci": "^11.0.0",
-    "marked": "^17.0.1",
+    "env-ci": "^11.2.0",
+    "marked": "^17.0.6",
     "medium-zoom": "^1.1.0",
     "octokit": "^3.1.2",
     "phosphor-react": "^1.4.1",
@@ -32,7 +32,7 @@
     "rehype-pretty-code": "^0.12.3",
     "resend": "^2.1.0",
     "thumbo": "^1.0.8",
-    "typescript": "^5.3.3",
+    "typescript": "^6.0.3",
     "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {

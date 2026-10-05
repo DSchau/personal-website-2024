@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
@@ -17,7 +17,7 @@ const site = Astro.site
 
 // In server mode, fetch the entry based on the slug
 const slug = Astro.params.slug;
-let entry = Astro.props.entry;
+let entry: CollectionEntry<'posts'> | undefined = Astro.props.entry;
 
 if (!entry) {
   const blogEntries = await getCollection('posts');
