@@ -15,7 +15,7 @@ In this post, I aim to share some of my thoughts on the problems I'm seeing in A
 
 ## The sameness of AI
 
-One thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry gravitates towards them but then as has become apparent with AI, the ability to follow and build (while coding isn't solved, it's a damn sight easier!) by others comes quickly after.
+One thing I feel is sorely missing right now in the field of AI is _creativity_. When I look at what has broken out, there are the first movers who have their own advantages, and then a number of followers. But genuinely novel innovations and exciting, creative product ideas are few and far between. When they do occur, the industry quickly gravitates towards them. And because AI makes building so much easier (coding isn't solved, but it's a damn sight easier!), the followers aren't far behind.
 
 When I look at some of the trends I've been seeing, a few patterns have emerged:
 
