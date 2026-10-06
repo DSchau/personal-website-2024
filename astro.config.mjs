@@ -1,6 +1,9 @@
 import { defineConfig, envField } from "astro/config"
 import { execSync } from "child_process";
 import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
+import path from "path";
+import { imageMetadata } from "astro/assets/utils";
 import yaml from '@rollup/plugin-yaml';
 import react from "@astrojs/react";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -38,13 +41,30 @@ function arrayBufferPlugin() {
 // stale in the browser. Make the browser revalidate instead (the ETag still
 // gives cheap 304s when nothing changed). Production builds are unaffected:
 // they emit content-hashed /_astro/ files.
+//
+// The adapter's dev /_image endpoint transforms through the Cloudflare Images
+// binding, which can't output SVG (400 "Unsupported format: svg"). Builds
+// just copy SVGs, so do the same here: serve the source file untouched.
 function devImageNoCachePlugin() {
   return {
     name: 'dev-image-no-cache',
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+      server.middlewares.use(async (req, res, next) => {
         if (req.url?.startsWith('/_image')) {
+          const params = new URL(req.url, 'http://localhost').searchParams;
+          const href = params.get('href')?.split('?')[0];
+          if (params.get('f') === 'svg' && href?.startsWith('/@fs/')) {
+            const file = path.resolve(decodeURIComponent(href.slice('/@fs'.length)));
+            if (file.startsWith(server.config.root + path.sep) && file.endsWith('.svg')) {
+              try {
+                const svg = await readFile(file);
+                res.writeHead(200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'no-cache' });
+                res.end(svg);
+                return;
+              } catch {}
+            }
+          }
           const setHeader = res.setHeader.bind(res);
           res.setHeader = (name, value) =>
             setHeader(name, name.toLowerCase() === 'cache-control' ? 'no-cache' : value);
@@ -134,6 +154,37 @@ function pagesTrailingSlashRedirects() {
   };
 }
 
+// Markdown images span the article but are capped at 50vh tall
+// (blog-post.module.css), so the rendered width is the smallest of the
+// viewport, 50vh × aspect ratio, and the file's own width. Without this,
+// `sizes` defaults to 100vw and desktops fetch a far larger srcset candidate
+// than they show. Runs before Astro's rehypeImages, which forwards <img>
+// properties to getImage(). medium-zoom drops `sizes` when zooming, so the
+// zoomed image still loads a full-resolution candidate.
+function rehypeMarkdownImageSizes() {
+  return async function (tree, file) {
+    const images = [];
+    (function walk(node) {
+      if (node.type === 'element' && node.tagName === 'img') images.push(node);
+      node.children?.forEach(walk);
+    })(tree);
+    const dir = path.dirname(file.history[0]);
+    await Promise.all(images.map(async (node) => {
+      const src = node.properties?.src;
+      if (typeof src !== 'string' || /^[a-z]+:|^\//i.test(src) || node.properties.sizes) return;
+      // vectors aren't resized, so a srcset would just list identical copies
+      if (/\.svg$/i.test(src)) {
+        node.properties.layout = 'none';
+        return;
+      }
+      const filepath = path.resolve(dir, decodeURI(src));
+      const { width, height } = await imageMetadata(await readFile(filepath), filepath).catch(() => ({}));
+      if (!width || !height) return;
+      node.properties.sizes = `min(100vw, ${Math.round(50 * width / height)}vh, ${width}px)`;
+    }));
+  };
+}
+
 function remarkModifiedTime() {
   return function (_, file) {
     const filepath = file.history[0];
@@ -164,6 +215,11 @@ export default defineConfig({
     validateSecrets: true
   },
   site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
+  image: {
+    // responsive srcset + sizes for markdown images and <Image>; sizing CSS
+    // lives in blog-post.module.css, so skip Astro's injected styles
+    layout: 'constrained',
+  },
   integrations: [react(), sitemap(), icon(), pagesTrailingSlashRedirects()],
   redirects: {
     '/uses': '/posts/uses',
@@ -179,7 +235,7 @@ export default defineConfig({
     // remark/rehype plugins below
     processor: unified({
       remarkPlugins: [remarkModifiedTime],
-      rehypePlugins: [[rehypePrettyCode, {
+      rehypePlugins: [rehypeMarkdownImageSizes, [rehypePrettyCode, {
         theme: 'dracula',
         onVisitLine(node) {
           // Prevent lines from collapsing in `display: grid` mode, and

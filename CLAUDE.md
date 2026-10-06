@@ -99,6 +99,9 @@ Uses Octokit (`src/lib/octokit.ts`) with modified plugin configuration (excludes
 
 ### Image Handling
 - Images in content (e.g. post images) are optimized to webp at build time via the adapter's `imageService: 'compile'`; there's no runtime image transformation
+- `image.layout: 'constrained'` gives markdown images and `<Image>` a responsive `srcset`. The `rehypeMarkdownImageSizes()` plugin sets a tight `sizes` (`min(100vw, 50vh × aspect, width)`) to match the 50vh cap in `blog-post.module.css`, and opts SVGs out with `layout: 'none'`
+- Keep source images ≤ 2560px on the long edge (the largest srcset breakpoint for the compile service)
+- The content layer caches rendered markdown: after changing markdown plugins, delete `node_modules/.astro/data-store.json` (or `.astro/`) before rebuilding
 - Uses `@unpic/astro` for responsive imgix images (its `astro` peer range is stale, so `package.json` has an `overrides` entry for it)
 - Home page preconnects to `dschau-website.imgix.net` for performance
 
