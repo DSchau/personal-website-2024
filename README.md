@@ -10,6 +10,16 @@ npm create astro@latest -- --template minimal
 
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
+## 🔑 Environment variables
+
+`GITHUB_TOKEN` must be a fine-grained personal access token (not classic).
+
+| Setting | Value |
+| :------ | :---- |
+| Repository access | `DSchau/personal-website-2024` |
+| Contents | Read-only |
+| Metadata | Read-only (required) |
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:

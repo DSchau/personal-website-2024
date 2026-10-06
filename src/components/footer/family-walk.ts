@@ -25,7 +25,7 @@ export function walk(svg: SVGSVGElement) {
     const g = root.querySelector<SVGGElement>(`[data-figure="${spec.id}"]`)!
     return { spec, pose: restPose(0), offset: spec.offset, wave: 0, hop: 0, hopV: 0, path: g.querySelector('path')!, head: g.querySelector('circle')! }
   })
-  const [dad, little, mom, big] = people
+  const [dad, little, , big] = people
 
   // the visible slice of the scene (narrow screens crop from the left)
   let xmin = 0

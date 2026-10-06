@@ -1,8 +1,11 @@
-// Import utilities from `astro:content`
-import { z, defineCollection } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const postsCollection = defineCollection({
-    type: 'content',
+    // `slug:` frontmatter (used by the older posts) still overrides the id,
+    // and `<dir>/index.md` entries get the directory name as their id
+    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
     schema: ({ image }) => z.object({
       title: z.string(),
       date: z.date(),
@@ -21,12 +24,12 @@ const favoriteSchema = ({ image }: any) => z.array(z.object({
   key: z.string(),
   title: z.string(),
   subtitle: z.string().optional(),
-  hyperlink: z.string().url(),
+  hyperlink: z.url(),
   image: image().optional()
 }))
 
 const favoritesCollection = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: "**/[^_]*.yaml", base: "./src/content/favorites" }),
   schema: schemaArgs => {
     const categorySchema = favoriteSchema(schemaArgs);
     return z.object({

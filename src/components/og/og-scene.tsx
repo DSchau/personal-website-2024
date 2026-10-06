@@ -1,4 +1,3 @@
-import React from "react";
 import { H, INK, PAPER, W, renderStaticScene } from "@/components/footer/scene";
 
 const CARD_W = 1200;

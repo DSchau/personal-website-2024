@@ -7,12 +7,12 @@ type Post = CollectionEntry<"posts">
 
 interface Props {
   showImage?: boolean;
-  slug: string;
+  id: string;
   data: Post["data"];
 }
 
-export function PostPreview({ slug: partialSlug, data, showImage }: Props) {
-  const slug = `/posts/${partialSlug}`;
+export function PostPreview({ id, data, showImage }: Props) {
+  const slug = `/posts/${id}`;
   return (
     <div className={styles.post}>
       <p className={styles.date}>{new Date(data.date).toLocaleDateString("en-us", {timeZone: 'UTC'})}</p>

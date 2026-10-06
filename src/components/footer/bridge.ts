@@ -106,7 +106,7 @@ function pylon(x: number) {
 }
 
 export function renderBridge(INK: string, PAPER: string) {
-  const { t1, t2, deck, top, side, truss } = BRIDGE
+  const { t1, t2, deck, side, truss } = BRIDGE
   const a1 = t1 - side, a2 = t2 + side
   // the south approach runs on into the hill; the north approach runs on over the water, off the edge of the scene
   const from = a1 - 70, to = a2 + 140

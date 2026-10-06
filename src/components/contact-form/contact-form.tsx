@@ -1,4 +1,4 @@
-import { type FormEvent, useState, useRef } from 'react'
+import { type SubmitEvent, useState, useRef } from 'react'
 
 import styles from './contact-form.module.css';
 
@@ -9,23 +9,20 @@ enum Status {
   failed = "FAILED"
 }
 
-const SPAM_FIELD_VALUE = import.meta.env.PUBLIC_SPAM_FIELD_VALUE
-
 const delay = (duration: number) => new Promise(resolve => {
   setTimeout(resolve, duration)
 })
 
 export function ContactForm() {
   const [status, setStatus] = useState(Status.idle)
-  const [time] = useState(Date.now())
   const formEl = useRef(null)
 
-  async function submit(ev: FormEvent<HTMLFormElement>) {
+  async function submit(ev: SubmitEvent<HTMLFormElement>) {
     ev.preventDefault();
 
     setStatus(Status.in_progress)
 
-    const formData = new FormData(ev.target as HTMLFormElement)
+    const formData = new FormData(ev.currentTarget)
 
     const response = await fetch("/api/email", {
       method: 'POST',
@@ -62,7 +59,6 @@ export function ContactForm() {
     <form className={styles.container} name="contact-me" action="/api/email" method="POST" onSubmit={submit} ref={formEl}>
       <div className={styles.row}>
         <input name="name" type="text" placeholder="Your name" autoComplete="name" required />
-        <input name="lastName" type="text" placeholder="Your last name" defaultValue={SPAM_FIELD_VALUE} tabIndex={-1} required />
         <input name="email" type="email" placeholder="Your e-mail" autoComplete="email" required />
       </div>
       <div className={styles.row}>
