@@ -6,5 +6,13 @@
   "compatibility_date": "2026-10-01",
   "observability": {
     "enabled": true
-  }
+  },
+  // Serve dustinschau.com from this Worker via a route rather than a Custom
+  // Domain: the hostname keeps its existing DNS record, so the switch needs no
+  // DNS or certificate change. www is redirected to the apex by a zone rule.
+  "routes": [
+    { "pattern": "dustinschau.com/*", "zone_name": "dustinschau.com" }
+  ],
+  // keep the *.workers.dev URL for testing
+  "workers_dev": true
 }
