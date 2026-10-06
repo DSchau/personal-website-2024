@@ -24,7 +24,9 @@ const { title, description, showHeader, showCopy, copy, meta = [], byline, photo
 // page copy may use light inline markdown (e.g. **bold**)
 const copyHtml = copy ? (marked.parseInline(copy) as string) : undefined
 
-const fullTitle = `${metayaml.title}${title ? ` | ${title}` : ''}`
+// page-specific part first (search results truncate around 60 characters),
+// brand last; the home page leads with the brand
+const fullTitle = !title ? metayaml.title : pathname === '' ? `${metayaml.title} | ${title}` : `${title} | ${metayaml.title}`
 const fullDescription = description ? description : metayaml.description
 ---
 
@@ -42,6 +44,7 @@ const fullDescription = description ? description : metayaml.description
 		<meta property="og:title" content={fullTitle} />
 		<meta name="twitter:title" content={fullTitle} />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={metayaml.title} />
 		{
 			meta.map(({ property, name, content }: any) => {
 				return <meta property={property} name={name} content={content} />

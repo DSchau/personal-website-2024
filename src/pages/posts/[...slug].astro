@@ -40,7 +40,7 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
 
 </style>
 
-<Layout title={`Blog | ${entry.data.title}`} description={entry.data.excerpt} showHeader={false} meta={[
+<Layout title={entry.data.title} description={entry.data.excerpt} showHeader={false} meta={[
   {
     name: 'twitter:card',
     content: 'summary_large_image'
