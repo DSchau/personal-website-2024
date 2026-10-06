@@ -54,9 +54,21 @@ _More to come. Vince Staples' pivot into post-punk and rap-rock on Cry Baby was 
 <details>
   <summary>Books</summary>
 
-1. **[Demon Copperhead](https://www.goodreads.com/book/show/60194162-demon-copperhead)** by Barbara Kingsolver
+1. **[Make Believe](https://www.goodreads.com/book/show/241638260-make-believe)** by Mac Barnett
+2. **[The Song of Achilles](https://www.goodreads.com/book/show/11250317-the-song-of-achilles)** by Madeline Miller
+3. **[Demon Copperhead](https://www.goodreads.com/book/show/60194162-demon-copperhead)** by Barbara Kingsolver
 
 _More to come. Demon Copperhead was an absolute gut-punch of a novel and easily one of the best things I read this year._
+
+</details>
+
+<details>
+  <summary>Movies</summary>
+
+1. **[Obsession](https://letterboxd.com/film/obsession-2025/)** directed by Curry Barker
+2. **[The Odyssey](https://letterboxd.com/film/the-odyssey-2026/)** directed by Christopher Nolan
+
+_More to come._
 
 </details>
 
