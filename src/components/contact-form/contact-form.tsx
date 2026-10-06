@@ -1,4 +1,4 @@
-import { type FormEvent, useState, useRef } from 'react'
+import { type SubmitEvent, useState, useRef } from 'react'
 
 import styles from './contact-form.module.css';
 
@@ -15,15 +15,14 @@ const delay = (duration: number) => new Promise(resolve => {
 
 export function ContactForm() {
   const [status, setStatus] = useState(Status.idle)
-  const [time] = useState(Date.now())
   const formEl = useRef(null)
 
-  async function submit(ev: FormEvent<HTMLFormElement>) {
+  async function submit(ev: SubmitEvent<HTMLFormElement>) {
     ev.preventDefault();
 
     setStatus(Status.in_progress)
 
-    const formData = new FormData(ev.target as HTMLFormElement)
+    const formData = new FormData(ev.currentTarget)
 
     const response = await fetch("/api/email", {
       method: 'POST',

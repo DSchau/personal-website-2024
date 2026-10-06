@@ -4,13 +4,11 @@ import { isOnline } from './is-online';
 interface getRepositoriesArgs {
   owner?: string;
   limit: number;
-  auth?: string;
 }
 
 export async function getRepositories({
   owner = 'dschau',
-  limit = 6,
-  auth
+  limit = 6
 }: getRepositoriesArgs, fallbackValue: any[] = []) {
 
   if (!await isOnline()) {

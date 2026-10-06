@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface BooksOgBook {
   title: string;
   author: string;
