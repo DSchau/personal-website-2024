@@ -21,7 +21,6 @@ The `/favorites` page is **prerendered** (`prerender = true`) and pulls books fr
 Required environment variables (see `.env.sample`):
 - `GITHUB_TOKEN` - Used by GitHub API (Octokit) to fetch repository data (commit counts, recent commits) for the footer
 - `RESEND_API_KEY` - Used for contact form email functionality via Resend
-- `PUBLIC_SPAM_FIELD_VALUE` - Client-side spam prevention field
 
 These are configured in `astro.config.mjs` under `env.schema` using Astro's typed environment system (`astro:env/server` and `astro:env/client`).
 

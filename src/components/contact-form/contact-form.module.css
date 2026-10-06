@@ -31,10 +31,6 @@ input[name="name"] {
   max-width: 40%;
 }
 
-input[name="lastName"] {
-  display: none;
-}
-
 
 .message {
   min-height: 150px;

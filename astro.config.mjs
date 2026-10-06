@@ -158,7 +158,6 @@ export default defineConfig({
   },
   env: {
     schema: {
-      PUBLIC_SPAM_FIELD_VALUE: envField.string({ context: 'client', access: "public" }),
       GITHUB_TOKEN: envField.string({ context: "server", access: "secret" }),
       RESEND_API_KEY: envField.string({ context: "server", access: "secret" })
     },
