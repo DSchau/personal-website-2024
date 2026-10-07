@@ -185,6 +185,27 @@ function rehypeMarkdownImageSizes() {
   };
 }
 
+// A paragraph that's nothing but a bold link — `**[Do the thing](url)**` —
+// becomes a call-to-action button (styled in blog-post.module.css)
+function rehypeCallToAction() {
+  const isBlank = (node) => node.type === 'text' && !node.value.trim();
+  return function (tree) {
+    (function walk(node) {
+      if (node.type === 'element' && node.tagName === 'p') {
+        const [strong, ...rest] = node.children.filter((child) => !isBlank(child));
+        const [link, ...others] = strong?.tagName === 'strong' ? strong.children.filter((child) => !isBlank(child)) : [];
+        if (rest.length === 0 && others.length === 0 && link?.tagName === 'a') {
+          node.properties.className = ['cta'];
+          link.properties.className = ['cta-link'];
+          node.children = [link];
+          return;
+        }
+      }
+      node.children?.forEach(walk);
+    })(tree);
+  };
+}
+
 function remarkModifiedTime() {
   return function (_, file) {
     const filepath = file.history[0];
@@ -235,7 +256,7 @@ export default defineConfig({
     // remark/rehype plugins below
     processor: unified({
       remarkPlugins: [remarkModifiedTime],
-      rehypePlugins: [rehypeMarkdownImageSizes, [rehypePrettyCode, {
+      rehypePlugins: [rehypeMarkdownImageSizes, rehypeCallToAction, [rehypePrettyCode, {
         theme: 'dracula',
         onVisitLine(node) {
           // Prevent lines from collapsing in `display: grid` mode, and

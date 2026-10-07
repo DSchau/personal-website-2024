@@ -36,7 +36,7 @@ Additionally, I added a few features that I find useful:
 
 It also has, by my ancient version of Transmission, much more modern and nice UX conventions but I won't call that a feature, that's more or less my preference.
 
-[Check it out on GitHub](https://github.com/dschau/transmission-web)
+**[Check it out on GitHub](https://github.com/dschau/transmission-web)**
 
 And... coming soon, or whenever I am able to get my hands on an iPhone Duo, a Transmission client for iOS.
 

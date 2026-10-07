@@ -74,6 +74,49 @@
   border-left: 2px solid var(--border-color);
 }
 
+/* call to action: `**[Do the thing](url)**` on its own line (rehypeCallToAction) */
+.container > :global(.cta) {
+  text-align: center;
+  margin: var(--padding-xl) 0;
+}
+
+.container :global(.cta-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-md);
+
+  padding: var(--padding-md) var(--padding-xl);
+  border: 2px solid var(--button-color);
+  border-radius: 999px;
+
+  color: var(--button-color);
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: background-color 0.2s var(--ease-fn), color 0.2s var(--ease-fn);
+}
+
+.container :global(.cta-link)::after {
+  content: '→';
+  transition: transform 0.3s var(--ease-fn);
+}
+
+.container :global(.cta-link):hover,
+.container :global(.cta-link):focus-visible {
+  background-color: var(--button-color);
+  color: var(--bg-color);
+}
+
+.container :global(.cta-link):hover::after,
+.container :global(.cta-link):focus-visible::after {
+  transform: translateX(3px);
+}
+
+.container :global(.cta-link):focus-visible {
+  outline: 2px solid var(--button-color);
+  outline-offset: 2px;
+}
+
 [data-rehype-pretty-code-figure] {
   width: 100%;
   grid-column: 1 / 4;
