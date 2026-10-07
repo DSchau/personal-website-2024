@@ -8,6 +8,7 @@ excerpt: "Closing out 2026 with a look at what I learned, accomplished, and hope
 tags:
   - life
   - career
+  - year in review
 ---
 
 Oh hello, welcome again to my annual review of my life and work in 2026. I do this for a few reasons, but mostly I think it's useful to _myself_ to force reflection upon the year and turn that into improvement next year. I do this because I think that looking back on them in the past 5/10/20 years from now will be illustrative (both for me and for my children!). And, I do this because I like to write and writing creates clarity. Maybe you, dear reader, can also learn something, be inspired, or just enjoy!
@@ -18,7 +19,7 @@ At a high-level, 2026 was some of the best of times, and some of the most mid of
 
 - **Joined and quit an early-stage startup** as VP of Product & Engineering. I built the team in the Bay Area, shipped the first version of our product, and supported the team through a pivot towards an open-source framework (a space I know well from Gatsby, Mastra, et al).
 - **Read XX books**. As usual, I set a baseline of 24 books and this year I was just able to clear that baseline reading 25 books. The real highlights of the year are below, but Demon Copperhead and The Song of Achilles were by far the highlights.
-- _TODO_
+- ****
 
 ## What I learned
 
