@@ -2,9 +2,9 @@
   to: /
 - name: posts
   to: /posts
-- name: work
-  to: /work
 - name: favorites
   to: /favorites
 - name: books
   to: /books
+- name: work
+  to: /work
