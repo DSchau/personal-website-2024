@@ -10,15 +10,14 @@ tags:
   - career
 ---
 
-<!-- DRAFT: bones only. Intro, accomplishments, learnings, and 2027 focus still to be written. Favorites below are a running list to finish out the year. -->
+Oh hello, welcome again to my annual review of my life and work in 2026. I do this for a few reasons, but mostly I think it's useful to _myself_ to force reflection upon the year and turn that into improvement next year. I do this because I think that looking back on them in the past 5/10/20 years from now will be illustrative (both for me and for my children!). And, I do this because I like to write and writing creates clarity. Maybe you, dear reader, can also learn something, be inspired, or just enjoy!
 
-_Intro goes here._ In [my 2025 "Year in Review"](../2025-in-review), I set out to do less but higher quality, to be bored, and to travel more. Here's how 2026 went.
-
----
+At a high-level, 2026 was some of the best of times, and some of the most mid of times. I joined a startup called Adapt in April 2026 and unfortunately left pretty quickly after, not due to any fault of Adapt, but largely due to my [distaste of personal agents and the sameness of AI](/posts/2026-10-03-the-sameness-of-ai/). However, in so doing I also am proud of a pretty obvious realiziation with the benefit of hindsight: life is short, and there's more to life than work. I am proud that I had the conviction and support system (that's my wife Maggie and my friends at [Mastra](https://mastra.ai)) who were there for me and helped give me the time and space to process, think, and focus a little inwardly on myself and what I want to do.
 
 ## What I accomplished
 
-- _TODO_
+- **Joined and quit an early-stage startup** as VP of Product & Engineering. I built the team in the Bay Area, shipped the first version of our product, and supported the team through a pivot towards an open-source framework (a space I know well from Gatsby, Mastra, et al).
+- **Read XX books**. As usual, I set a baseline of 24 books and this year I was just able to clear that baseline reading 25 books. The real highlights of the year are below, but Demon Copperhead and The Song of Achilles were by far the highlights.
 - _TODO_
 
 ## What I learned
