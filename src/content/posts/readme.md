@@ -11,7 +11,7 @@ tags:
 
 ## `whoami`
 
-My name is Dustin Schau, and my current role at Adapt is leading the Product & Engineering teams. Adapt is a seed-stage startup building the AI-native operating system for teams. Before Adapt, I was Head of API Client at Postman, and before that co-founder and VP of Product & Engineering at Gatsby, and before that a software engineer as a consultant and at Fortune 500 companies.
+My name is Dustin Schau, and currently I'm operating as an advisor to early-stage startups particularly focused on product strategy and engineering execution. Before this role, I was Head of API Client at Postman, and before that co-founder and VP of Product & Engineering at Gatsby, and before that a software engineer as a consultant and at Fortune 500 companies.
 
 Personally, I am a lucky husband to my wife Maggie and dad to two kids, Noah and Emilia. I live in San Francisco, CA but am from the middle of America (Iowa!) and moved to the Bay Area in 2019. In my spare time, I like to spend time with my family exploring local parks, neighborhoods, and coffee shops. I like to read (recent favorites have been the Red Rising series, as well as Tomorrow, and Tomorrow, and Tomorrow), explore new restaurants in San Francisco and in the world, and golf when I can although less than I used to with the little ones.
 
