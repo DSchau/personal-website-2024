@@ -36,6 +36,22 @@ Additionally, I added a few features that I find useful:
 
 It also has, by my ancient version of Transmission, much more modern and nice UX conventions but I won't call that a feature, that's more or less my preference.
 
+## What's new
+
+I've kept iterating on it since launch. The short version:
+
+- **Drag and drop**: drop `.torrent` files anywhere in the window (or paste a magnet link) to add them
+- **Full mobile support**: a proper phone layout, so you can add torrents and debug stalled or errored ones on the go
+- **Live speed chart and statistics**: transfer speeds for the whole daemon session, plus session and all-time totals
+- **Categories**: movies, TV, books and software get their own icons, and you can filter with `type:tv`
+- **Keyboard shortcuts**: `/` to search, `n` to add, `Delete` to remove
+
+![Transmission, drag and drop](./images/drag-and-drop.jpeg)
+
+![Transmission, statistics](./images/statistics.jpeg)
+
+![Transmission, mobile](./images/mobile.jpeg)
+
 **[Check it out on GitHub](https://github.com/dschau/transmission-web)**
 
 And... coming soon, or whenever I am able to get my hands on an iPhone Duo, a Transmission client for iOS.
