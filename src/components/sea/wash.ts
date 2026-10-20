@@ -35,6 +35,7 @@ export const SUN_FILL = '#f2bb93'
 /** the washes, as SVG markup in the sea's viewBox (pointer-events off, so hovering the sun still works) */
 export function seaWash() {
   const B = SEA_BOX, { hz, sun } = SEA
+  const glowRx = sun.r * 4.5, glowRy = sun.r * 2.4
   return (
     `<defs>` +
     // eased in: clear through the upper sky, building toward the horizon. Wide screens crop the top
@@ -43,10 +44,16 @@ export function seaWash() {
     `<stop offset="0" stop-color="${SKY}" stop-opacity="0"/><stop offset=".35" stop-color="${SKY}" stop-opacity="0"/><stop offset=".55" stop-color="${SKY}" stop-opacity=".06"/><stop offset=".75" stop-color="${SKY}" stop-opacity=".2"/><stop offset=".9" stop-color="${SKY}" stop-opacity=".38"/><stop offset="1" stop-color="${SKY}" stop-opacity=".55"/></linearGradient>` +
     `<radialGradient id="wash-glow"><stop offset="0" stop-color="${SUN}" stop-opacity=".35"/><stop offset="1" stop-color="${SUN}" stop-opacity="0"/></radialGradient>` +
     `<linearGradient id="wash-column" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${SUN}" stop-opacity=".2"/><stop offset="1" stop-color="${SUN}" stop-opacity="0"/></linearGradient>` +
+    `<clipPath id="wash-above"><rect x="${B.x}" y="${B.y - 400}" width="${B.w}" height="${hz - B.y + 400}"/></clipPath>` +
+    `<clipPath id="wash-below"><rect x="${B.x}" y="${hz}" width="${B.w}" height="${B.y + B.h - hz + 400}"/></clipPath>` +
     `</defs>` +
     `<g style="mix-blend-mode:multiply" pointer-events="none" stroke="none">` +
     `<rect x="${B.x - 400}" y="${B.y}" width="${B.w + 800}" height="${hz - B.y}" fill="url(#wash-sky)"/>` +
-    `<ellipse cx="${sun.x}" cy="${hz}" rx="${sun.r * 4.5}" ry="${sun.r * 2.4}" fill="url(#wash-glow)"/>` +
+    // the glow, in two halves split at the horizon. The sky half has to fade out before the top of the scene,
+    // or it's cut off there in a hard edge; wide screens crop the top (slice), so ocean-motion.ts squashes it
+    // (ry) to fit under the visible top, like the sky's fade. The half on the water keeps its full reach
+    `<ellipse data-wash-glow cx="${sun.x}" cy="${hz}" rx="${glowRx}" ry="${Math.min(glowRy, hz - B.y)}" fill="url(#wash-glow)" clip-path="url(#wash-above)"/>` +
+    `<ellipse cx="${sun.x}" cy="${hz}" rx="${glowRx}" ry="${glowRy}" fill="url(#wash-glow)" clip-path="url(#wash-below)"/>` +
     `<path d="M${sun.x - 40} ${hz}L${sun.x + 40} ${hz}L${sun.x + 160} ${B.y + B.h}L${sun.x - 160} ${B.y + B.h}Z" fill="url(#wash-column)"/>` +
     `</g>`
   )

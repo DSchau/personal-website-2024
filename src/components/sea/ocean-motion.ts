@@ -28,6 +28,9 @@ function start(root: HTMLElement) {
   const sink = Number(bottle?.dataset.sink ?? 0)
   // the homepage's sky wash (wash.ts): its fade starts at the visible top, wherever the crop puts it
   const skyWash = root.querySelector<SVGLinearGradientElement>('[data-wash-sky]')
+  // ...and its sun glow, squashed to fade out by the visible top rather than being cut off there
+  const glow = root.querySelector<SVGEllipseElement>('[data-wash-glow]')
+  const glowRy = Number(glow?.getAttribute('ry'))
 
   // viewBox → canvas pixels, matching preserveAspectRatio "xMaxYMax slice" / "xMidYMax slice"
   let k = 1, tx = 0, ty = 0, dpr = 1
@@ -39,10 +42,12 @@ function start(root: HTMLElement) {
     k = Math.max(width / BOX.w, height / BOX.h)
     tx = alignMid ? (width - BOX.w * k) / 2 : width - BOX.w * k
     ty = height - BOX.h * k
+    const top = Math.max(BOX.y, BOX.y - ty / k)
     if (skyWash) {
       const hz = Number(skyWash.getAttribute('y2'))
-      skyWash.setAttribute('y1', String(Math.min(hz - 1, Math.max(BOX.y, BOX.y - ty / k))))
+      skyWash.setAttribute('y1', String(Math.min(hz - 1, top)))
     }
+    if (glow) glow.setAttribute('ry', String(Math.max(1, Math.min(glowRy, Number(glow.getAttribute('cy')) - top))))
   }
   resize()
 
