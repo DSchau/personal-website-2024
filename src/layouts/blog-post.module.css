@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns:
     1fr
-    min(65ch, 100%)
+    min(62ch, 100%)
     1fr;
 }
 
@@ -41,6 +41,10 @@
 
 .container ol, .container ul {
   padding-left: 2rem;
+}
+
+.container li {
+  line-height: 1.65;
 }
 
 /* nested lists: hug the parent item instead of spacing out like a new block */

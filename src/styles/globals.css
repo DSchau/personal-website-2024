@@ -16,6 +16,14 @@
   margin: 0;
 }
 /*
+  Base text size: 18px (assuming the browser default of 16px). A percentage
+  keeps user font-size preferences working, and since sizing is rem/ch based,
+  headings, spacing and ch-based measures scale along with it.
+*/
+html {
+  font-size: 112.5%;
+}
+/*
   Typographic tweaks!
   3. Add accessible line-height
   4. Improve text rendering

@@ -1,5 +1,5 @@
 p {
-  line-height: 1.75;
+  line-height: 1.65;
   font-size: 1rem;
 
   margin-top: var(--padding-md);
@@ -46,15 +46,7 @@ h4 {
 }
 
 code {
-  font-size: 0.8rem;
-}
-
-h2 code {
-  font-size: 0.9rem;
-}
-
-h3 code {
-  font-size: 0.8rem;
+  font-size: 0.875em;
 }
 
 ol, ul {
