@@ -15,6 +15,23 @@ function formatRating(rating: number): string {
 function shortTitle(title: string): string {
   return title.replace(/\s+\(.*\)$/, "");
 }
+
+function bookCount(count: number): string {
+  return `${count.toLocaleString("en-US")} ${count === 1 ? "book" : "books"}`;
+}
+
+// The page is prerendered, so "now" is build time. UTC matches how
+// groupReadsByYear buckets reads.
+const now = new Date();
+const currentYear = now.getUTCFullYear();
+const startOfYear = Date.UTC(currentYear, 0, 1);
+const dayOfYear = Math.floor((now.getTime() - startOfYear) / 86_400_000) + 1;
+const daysInYear = (Date.UTC(currentYear + 1, 0, 1) - startOfYear) / 86_400_000;
+
+// A January projection swings wildly off a book or two, so skip it.
+function pace(count: number): number | null {
+  return dayOfYear > 31 ? Math.round((count / dayOfYear) * daysInYear) : null;
+}
 ---
 
 <section class="reads">
@@ -23,39 +40,47 @@ function shortTitle(title: string): string {
     {total.toLocaleString("en-US")} books
   </p>
 
-  {groups.map((group) => (
-    <section class="year-group" aria-labelledby={`year-${group.year}`}>
-      <h4 class="year" id={`year-${group.year}`}>
-        {group.year}
-        <span class="year-count">{group.books.length}</span>
-      </h4>
-      <ul class="rows">
-        {group.books.map((book) => (
-          <li class="row">
-            {book.imageUrl ? (
-              <img
-                class="thumb"
-                src={book.imageUrl}
-                alt=""
-                width="40"
-                height="60"
-                loading="lazy"
-              />
-            ) : (
-              <span class="thumb thumb-empty" aria-hidden="true"></span>
-            )}
-            <div class="copy">
-              <a class="title" href={book.link}>{shortTitle(book.title)}</a>
-              <p class="author">{book.author}</p>
-            </div>
-            <span class="rating" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
-              {book.rating > 0 ? formatRating(book.rating) : ""}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  ))}
+  {groups.map((group) => {
+    const inProgress = group.year === currentYear;
+    const projected = inProgress ? pace(group.books.length) : null;
+    return (
+      <section class="year-group" aria-labelledby={`year-${group.year}`}>
+        <h4 class="year" id={`year-${group.year}`}>
+          {group.year}
+          <span class="year-count">
+            {bookCount(group.books.length)}
+            {inProgress && <> · year to date</>}
+            {projected !== null && projected > group.books.length && <> · on pace for ~{projected}</>}
+          </span>
+        </h4>
+        <ul class="rows">
+          {group.books.map((book) => (
+            <li class="row">
+              {book.imageUrl ? (
+                <img
+                  class="thumb"
+                  src={book.imageUrl}
+                  alt=""
+                  width="40"
+                  height="60"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="thumb thumb-empty" aria-hidden="true"></span>
+              )}
+              <div class="copy">
+                <a class="title" href={book.link}>{shortTitle(book.title)}</a>
+                <p class="author">{book.author}</p>
+              </div>
+              <span class="rating" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
+                {book.rating > 0 ? formatRating(book.rating) : ""}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
 </section>
 
 <style>
