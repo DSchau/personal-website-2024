@@ -2,13 +2,14 @@
 import Layout from "@/layouts/Layout.astro";
 import BookHero from "@/components/books/hero.astro";
 import BooksList from "@/components/books/list.astro";
-import { getCompletedReads, groupReadsByYear } from "@/lib/goodreads";
+import { getCompletedReads, groupReadsByYear, pluralizeBooks } from "@/lib/goodreads";
 
 export const prerender = true;
 
 const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
+const builtAt = new Date();
 const site = Astro.site;
 // The card is prerendered at build time (rendering it in a Worker request
 // exceeds the 10ms CPU budget). og:image must be an ABSOLUTE URL — the
@@ -70,7 +71,7 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
       )}
       {busiest && (
         <span class="stat">
-          busiest year <strong>{busiest.year}</strong> ({busiest.books.length})
+          busiest year <strong>{busiest.year}</strong> ({pluralizeBooks(busiest.books.length)})
         </span>
       )}
     </p>
@@ -81,7 +82,7 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
 
   {groups.length > 0 && (
     <section class="stacks">
-      <BooksList groups={groups} total={completed.length} />
+      <BooksList groups={groups} total={completed.length} now={builtAt} />
     </section>
   )}
 

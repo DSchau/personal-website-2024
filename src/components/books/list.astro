@@ -1,12 +1,21 @@
 ---
-import type { ReadsByYear } from "@/lib/goodreads";
+import { pluralizeBooks, projectYearTotal, type ReadsByYear } from "@/lib/goodreads";
 
 interface Props {
   groups: ReadsByYear[];
   total: number;
+  /** When the page was built; decides which year is still in progress. */
+  now: Date;
 }
 
-const { groups, total } = Astro.props;
+const { groups, total, now } = Astro.props;
+const currentYear = now.getUTCFullYear();
+const asOf = now.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 function formatRating(rating: number): string {
   return "★".repeat(rating);
@@ -20,14 +29,26 @@ function shortTitle(title: string): string {
 <section class="reads">
   <h3 class="section-title">All finished reads</h3>
   <p class="lede">
-    {total.toLocaleString("en-US")} books
+    {pluralizeBooks(total)}
   </p>
 
-  {groups.map((group) => (
+  {groups.map((group) => {
+    const count = group.books.length;
+    const inProgress = group.year === currentYear;
+    const projected = inProgress ? projectYearTotal(count, now) : null;
+    return (
     <section class="year-group" aria-labelledby={`year-${group.year}`}>
       <h4 class="year" id={`year-${group.year}`}>
         {group.year}
-        <span class="year-count">{group.books.length}</span>
+        <span class="year-count">
+          <span class="year-count-part">{pluralizeBooks(count)}</span>
+          {inProgress && (
+            <span class="year-count-part year-to-date" data-year={group.year} title={`As of ${asOf}`}>year to date</span>
+          )}
+          {projected && (
+            <span class="year-count-part year-to-date" data-year={group.year}>on pace for ~{projected}</span>
+          )}
+        </span>
       </h4>
       <ul class="rows">
         {group.books.map((book) => (
@@ -55,8 +76,20 @@ function shortTitle(title: string): string {
         ))}
       </ul>
     </section>
-  ))}
+    );
+  })}
 </section>
+
+<script>
+  // The page is prerendered, so a build from late in one year can still be
+  // serving after New Year's. Once that year is over, its count is final.
+  const thisYear = new Date().getUTCFullYear();
+  for (const el of document.querySelectorAll<HTMLElement>(".year-to-date")) {
+    if (Number(el.dataset.year) < thisYear) {
+      el.remove();
+    }
+  }
+</script>
 
 <style>
   .reads {
@@ -93,6 +126,14 @@ function shortTitle(title: string): string {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-accent-color);
+  }
+
+  .year-count-part {
+    white-space: nowrap;
+  }
+
+  .year-count-part:not(:last-child)::after {
+    content: "\00a0·" / "";
   }
 
   .rows {

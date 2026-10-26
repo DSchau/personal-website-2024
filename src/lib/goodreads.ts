@@ -374,6 +374,32 @@ export function groupReadsByYear(books: CompletedRead[]): ReadsByYear[] {
     .map(([year, yearBooks]) => ({ year, books: yearBooks }));
 }
 
+export function pluralizeBooks(count: number): string {
+  return `${count.toLocaleString("en-US")} ${count === 1 ? "book" : "books"}`;
+}
+
+function isLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+// Reads are grouped by UTC year, so pace is measured against the UTC
+// calendar too. January is too noisy to project from (one book on Jan 3rd
+// would read as "on pace for ~120"), and a projection that doesn't exceed
+// the current count adds nothing.
+export function projectYearTotal(count: number, now: Date): number | null {
+  const year = now.getUTCFullYear();
+  const startOfYear = Date.UTC(year, 0, 1);
+  const dayOfYear = Math.floor((now.getTime() - startOfYear) / 86_400_000) + 1;
+  const daysInYear = isLeapYear(year) ? 366 : 365;
+
+  if (now.getUTCMonth() === 0 || count === 0) {
+    return null;
+  }
+
+  const projected = Math.round((count / dayOfYear) * daysInYear);
+  return projected > count ? projected : null;
+}
+
 // Goodreads/Amazon cover URLs embed the rendered size as `_SX###_` or
 // `_SY###_`; swapping the token requests a smaller variant from their CDN.
 export function resizeCover(url: string, height: number): string {
