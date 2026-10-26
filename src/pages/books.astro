@@ -9,7 +9,7 @@ export const prerender = true;
 const completed = await getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
-const builtAt = new Date();
+const currentYear = new Date().getUTCFullYear();
 const site = Astro.site;
 // The card is prerendered at build time (rendering it in a Worker request
 // exceeds the 10ms CPU budget). og:image must be an ABSOLUTE URL — the
@@ -82,7 +82,7 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
 
   {groups.length > 0 && (
     <section class="stacks">
-      <BooksList groups={groups} total={completed.length} now={builtAt} />
+      <BooksList groups={groups} total={completed.length} currentYear={currentYear} />
     </section>
   )}
 
