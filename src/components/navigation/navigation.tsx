@@ -24,12 +24,12 @@ export function Navigation({ pathname }: Props) {
     <nav className={styles.navigation}>
       <ul>
         {
-          links.map((link: Link, i: number) => {
+          links.map((link: Link) => {
             const active = isActive(link, pathname)
             return (
               <li key={link.name} className={active ? styles.active : ''}>
                 <a href={link.to}>
-                  {isIconName(link.name) && <Icon name={link.name} filled={active} delay={i * 70} />}
+                  {isIconName(link.name) && <Icon name={link.name} active={active} />}
                   {link.name}
                 </a>
               </li>

@@ -35,8 +35,8 @@
 }
 
 /*
-  On hover/focus the underline fades and drops away over the same beat the icon
-  starts drawing (see icon.module.css), so text and icon read as one motion.
+  On hover/focus the underline fades and drops away as the icon's gesture
+  starts (see icon.module.css), so text and icon read as one motion.
 */
 .navigation a {
   color: var(--text-color);

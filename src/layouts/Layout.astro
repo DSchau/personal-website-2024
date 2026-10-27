@@ -52,13 +52,6 @@ const fullDescription = description ? description : metayaml.description
 			})
 		}
 		<title>{fullTitle}</title>
-		<script is:inline>
-			// link icons draw themselves on the first page of a visit only
-			try {
-				if (sessionStorage.getItem('icons-drawn')) document.documentElement.dataset.iconsDrawn = ''
-				else sessionStorage.setItem('icons-drawn', '1')
-			} catch {}
-		</script>
 		<script defer data-domain="dustinschau.com" src="https://plausible.io/js/script.js"></script>
 	</head>
 	<body>
@@ -68,6 +61,7 @@ const fullDescription = description ? description : metayaml.description
     <script>
       import '@/components/footer/footer-interactions.ts'
       import '@/components/sea/ocean-motion.ts'
+      import '@/components/icon/icon-play.ts'
     </script>
 	</body>
 </html>

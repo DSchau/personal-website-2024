@@ -119,10 +119,10 @@ export function Footer({ updated, commits }: Props) {
           </p>
         </div>
         <ul className={styles.links}>
-          {socialLinks.map((link: { href: string; label: string; icon: string }, i: number) => (
+          {socialLinks.map((link: { href: string; label: string; icon: string }) => (
             <li key={link.href}>
               <a href={link.href}>
-                {isIconName(link.icon) && <Icon name={link.icon} delay={i * 70} />}
+                {isIconName(link.icon) && <Icon name={link.icon} />}
                 {link.label}
               </a>
             </li>
