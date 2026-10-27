@@ -1,17 +1,20 @@
 /*
-  The nav sits in the page's content column, but the band runs edge to edge:
-  border-image paints the tint (with a 1px rule at the bottom) out past the
-  box to both sides without widening the layout or causing horizontal scroll.
+  A frosted-glass bar, stuck to the top of the window at every width. The nav
+  sits in the page's content column, but the glass runs edge to edge:
+  border-image paints it (with a 1px rule at the bottom) out past the box to
+  both sides without widening the layout or causing horizontal scroll.
+  The bottom padding is a touch deeper than the top so the underlined links
+  sit visually centred.
 */
 .navigation {
-  --band: color-mix(in srgb, var(--band-color) 88%, transparent);
+  --glass: color-mix(in srgb, var(--bg-color) 72%, transparent);
 
-  padding: var(--padding-s) var(--padding-lg);
+  padding: var(--padding-s) var(--padding-lg) var(--padding-md);
 
   position: sticky;
   top: 0;
-  border-image: linear-gradient(to top, var(--band-border-color) 1px, var(--band) 1px) fill 0 / / 0 100vmax;
-  backdrop-filter: blur(10px);
+  border-image: linear-gradient(to top, var(--border-color) 1px, var(--glass) 1px) fill 0 / / 0 100vmax;
+  backdrop-filter: blur(12px) saturate(1.6);
   z-index: 9001; /* it's over 9000 */
 }
 
@@ -28,17 +31,8 @@
 .navigation li {
   list-style-type: none;
   white-space: nowrap;
+  margin: 0;
   padding: var(--padding-s) 0;
-}
-
-@media only screen and (min-width: 1024px) {
-  .navigation {
-    position: static;
-  }
-
-  .navigation li {
-    padding: var(--padding-lg) 0;
-  }
 }
 
 /*

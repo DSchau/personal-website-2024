@@ -124,7 +124,7 @@ a[data-footnote-backref] {
   margin-left: var(--padding-s);
 }
 
-/* offset jump targets so they don't land flush with the viewport edge */
+/* offset jump targets so they land below the sticky nav (~2.75rem) with room to spare */
 [id^='user-content-fn'] {
-  scroll-margin-top: var(--padding-xl);
+  scroll-margin-top: calc(2.75rem + var(--padding-xl));
 }
