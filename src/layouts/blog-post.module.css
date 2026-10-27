@@ -48,10 +48,6 @@
   line-height: 1.06;
   letter-spacing: -0.01em;
   margin: 0;
-
-  /* balance (the global h1 default) squeezes big display type into a narrow
-     ragged block; pretty fills the measure and only guards the last line */
-  text-wrap: pretty;
 }
 
 .dek {
