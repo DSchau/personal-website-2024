@@ -10,3 +10,6 @@
 - href: https://github.com/dschau
   label: github
   icon: github
+- href: /rss.xml
+  label: rss
+  icon: rss
