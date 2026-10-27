@@ -51,6 +51,13 @@ const fullDescription = description ? description : metayaml.description
 			})
 		}
 		<title>{fullTitle}</title>
+		<script is:inline>
+			// link icons draw themselves on the first page of a visit only
+			try {
+				if (sessionStorage.getItem('icons-drawn')) document.documentElement.dataset.iconsDrawn = ''
+				else sessionStorage.setItem('icons-drawn', '1')
+			} catch {}
+		</script>
 		<script defer data-domain="dustinschau.com" src="https://plausible.io/js/script.js"></script>
 	</head>
 	<body>

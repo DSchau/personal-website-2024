@@ -79,3 +79,24 @@ h2 {
 a {
   text-decoration-skip: ink;
 }
+
+/*
+  Crossfade between pages instead of a hard cut (browsers without cross-document
+  view transitions just navigate as before). Native rather than Astro's ClientRouter
+  so the page scripts in Layout.astro keep running on a normal page load.
+*/
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
