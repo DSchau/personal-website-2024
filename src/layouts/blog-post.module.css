@@ -48,6 +48,10 @@
   line-height: 1.06;
   letter-spacing: -0.01em;
   margin: 0;
+
+  /* balance (the global h1 default) squeezes big display type into a narrow
+     ragged block; pretty fills the measure and only guards the last line */
+  text-wrap: pretty;
 }
 
 .dek {
@@ -56,6 +60,10 @@
   font-size: clamp(1.1rem, 2.4vw, 1.3rem);
   line-height: 1.45;
   color: color-mix(in srgb, var(--text-color) 75%, transparent);
+
+  /* a one-or-two sentence dek reads better as even lines than as a full
+     line plus a stray "mini PC" */
+  text-wrap: balance;
 }
 
 .meta {
