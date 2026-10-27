@@ -1,5 +1,5 @@
 .navigation {
-  padding: var(--padding-s) var(--padding-lg);
+  padding-top: var(--padding-s);
 
   position: sticky;
   top: 0;
@@ -8,20 +8,28 @@
   z-index: 9001; /* it's over 9000 */
 }
 
+/*
+  The hairline lives on the list (not the nav) so the active item's tab
+  underline can paint over it without being clipped by the scroll container.
+*/
 .navigation ul {
   margin: 0;
-  padding: 0;
+  padding: 0 var(--padding-lg);
 
   display: flex;
-  align-items: center;
   column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
   overflow-x: auto;
+  box-shadow: inset 0 -1px 0 var(--border-color);
 }
 
+/* items stretch to the list's full height so the active underline lands on the hairline */
 .navigation li {
   list-style-type: none;
   white-space: nowrap;
-  padding: var(--padding-s) 0;
+  margin: 0;
+  padding: var(--padding-md) 0;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -63,6 +71,7 @@
 
 .active {
   font-weight: bold;
+  box-shadow: inset 0 -2px 0 var(--text-color);
 }
 
 .active a {
