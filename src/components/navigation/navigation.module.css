@@ -16,6 +16,13 @@
   border-image: linear-gradient(to top, var(--border-color) 1px, var(--glass) 1px) fill 0 / / 0 100vmax;
   backdrop-filter: blur(12px) saturate(1.6);
   z-index: 9001; /* it's over 9000 */
+
+  transition: translate 300ms var(--ease-fn);
+}
+
+/* set by headroom.ts while scrolling down */
+.navigation[data-hidden] {
+  translate: 0 -100%;
 }
 
 .navigation ul {
@@ -71,6 +78,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .navigation,
   .navigation a {
     transition: none;
   }
