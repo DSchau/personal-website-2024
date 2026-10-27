@@ -1,9 +1,16 @@
+/*
+  The nav sits in the page's content column, but the band runs edge to edge:
+  border-image paints the tint (with a 1px rule at the bottom) out past the
+  box to both sides without widening the layout or causing horizontal scroll.
+*/
 .navigation {
+  --band: color-mix(in srgb, var(--band-color) 88%, transparent);
+
   padding: var(--padding-s) var(--padding-lg);
 
   position: sticky;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.85);
+  border-image: linear-gradient(to top, var(--band-border-color) 1px, var(--band) 1px) fill 0 / / 0 100vmax;
   backdrop-filter: blur(10px);
   z-index: 9001; /* it's over 9000 */
 }
