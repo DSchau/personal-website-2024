@@ -25,15 +25,15 @@ const shouldDisplayEdited = isoDate(frontmatter.lastModified) > isoDate(frontmat
 
 <article class={styles.container}>
   <header class={styles.header}>
-    {frontmatter.tags.length > 0 && <p class={styles.eyebrow}>{frontmatter.tags.map(tag => <span>{tag}</span>)}</p>}
+    <p class={styles.eyebrow}>
+      <time class={styles.published} datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time>
+      {frontmatter.tags.map(tag => <span>{tag}</span>)}
+    </p>
     <h1 class={styles.title}>{frontmatter.title}</h1>
     {frontmatter.excerpt && <p class={styles.dek}>{frontmatter.excerpt}</p>}
     <div class={styles.meta}>
       <Me />
-      <p class={styles.dates}>
-        <span>Published <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time></span>
-        {shouldDisplayEdited && <span class={styles.updated}>Updated <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
-      </p>
+      {shouldDisplayEdited && <p class={styles.updated}>Updated <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></p>}
     </div>
   </header>
   {frontmatter.featuredImage && (

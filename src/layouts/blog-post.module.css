@@ -16,7 +16,7 @@
   max-height: 50vh;
 }
 
-/* editorial header: tags, big title, excerpt, then a ruled byline/dates row */
+/* editorial header: date + tags, big title, excerpt, then a ruled byline row */
 .header {
   padding-top: 3.5rem;
   margin-bottom: 2.75rem;
@@ -37,7 +37,13 @@
   color: color-mix(in srgb, var(--text-color) 50%, transparent);
 }
 
-.eyebrow span + span::before {
+/* the publish date leads the eyebrow, a step darker than the tags */
+.published {
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--text-color) 80%, transparent);
+}
+
+.eyebrow > * + *::before {
   content: '·';
   margin-right: 0.9rem;
   color: inherit;
@@ -72,23 +78,16 @@
   font-size: 0.875rem;
 }
 
-.dates {
-  display: flex;
-  flex-direction: column;
-
+/* secondary to the publish date: same small caps as the eyebrow, but quieter */
+.updated {
   margin: 0;
 
-  text-align: right;
-  font-size: var(--text-s);
-  line-height: 1.5;
-  font-variant-numeric: tabular-nums;
-  color: color-mix(in srgb, var(--text-color) 50%, transparent);
-}
-
-/* secondary to the publish date */
-.updated {
   font-size: var(--text-xs);
-  color: color-mix(in srgb, var(--text-color) 38%, transparent);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--text-color) 40%, transparent);
 }
 
 @media (max-width: 480px) {
@@ -98,10 +97,6 @@
 
   .meta {
     align-items: flex-start;
-  }
-
-  .dates {
-    text-align: left;
   }
 }
 
