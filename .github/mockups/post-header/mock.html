@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @font-face { font-family: Rockwell; font-weight: 700; src: url('../personal-website-2024/src/assets/fonts/Rockwell-Bold.ttf'); }
+  @font-face { font-family: Rockwell; font-weight: 400; src: url('../personal-website-2024/src/assets/fonts/Rockwell.ttf'); }
+  @font-face { font-family: SFPro; src: url('../personal-website-2024/src/assets/fonts/SFPro.otf'); }
+
+  :root {
+    --text-color: #222;
+    --text-accent-color: #444;
+    --muted: #6b6b6b;
+    --bg-color: #fefefe;
+    --border-color: #e6e6e6;
+    --button-color: #002D62;
+    --header-font: Rockwell, serif;
+    --body-font: SFPro, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg-color); color: var(--text-color); font-family: var(--body-font); -webkit-font-smoothing: antialiased; }
+  nav { padding: 0.25rem 1rem; max-width: 100ch; margin: 0 auto; }
+  nav ul { display: flex; gap: 1.4rem; padding: 0; list-style: none; }
+  nav li { padding: 1rem 0; }
+  nav a { color: var(--text-color); }
+  nav .active { font-weight: bold; } nav .active a { text-decoration: none; }
+
+  article { display: grid; grid-template-columns: 1fr min(62ch, 100%) 1fr; }
+  article > * { grid-column: 2; padding: 0 1rem; }
+  .body p { line-height: 1.65; font-size: 1rem; margin: 0.5rem 0; text-wrap: pretty; }
+  h1 { font-family: var(--header-font); font-weight: 700; text-wrap: balance; }
+
+  /* ---------- BEFORE (current site) ---------- */
+  .before h1 { font-size: 2.125rem; line-height: 1.2; margin: 0 0 0.8rem; text-align: center; }
+  .before .date { font-size: 0.8rem; letter-spacing: 0.02em; text-align: center; color: var(--text-accent-color); margin: -0.5rem 0 0; padding-bottom: 0.5rem; }
+  .before .modified { color: color-mix(in srgb, var(--text-color) 55%, transparent); }
+  .before .modified::before { content: '·'; margin: 0 0.5rem; }
+  .before .me { display: flex; justify-content: center; padding: 1rem 0; }
+  .before .me img { width: 32px; height: 32px; border-radius: 0.5rem; margin-right: 0.5rem; }
+  .before .me h3, .before .me p { line-height: 1; font-size: 1rem; }
+  .before .me h3 { font-family: var(--header-font); }
+
+  /* ---------- OPTION A: editorial, left-aligned (Maggie Appleton-inspired) ---------- */
+  .a header { padding-top: 3.5rem; }
+  .a .eyebrow { display: flex; gap: 0.9rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--button-color); margin-bottom: 1rem; }
+  .a .eyebrow span + span::before { content: '·'; margin-right: 0.9rem; color: var(--muted); }
+  .a h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1.06; letter-spacing: -0.01em; }
+  .a .dek { font-size: clamp(1.1rem, 2.4vw, 1.3rem); line-height: 1.45; color: #5a5a5a; margin-top: 1.1rem; text-wrap: pretty; }
+  .a .meta { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+             margin-top: 2rem; padding-top: 1.1rem; border-top: 1px solid var(--border-color); font-size: 0.875rem; }
+  .a .author { display: flex; align-items: center; gap: 0.7rem; }
+  .a .author img { width: 40px; height: 40px; border-radius: 50%; }
+  .a .author .name { font-weight: 600; line-height: 1.35; }
+  .a .author .role { color: var(--muted); line-height: 1.35; }
+  .a .dates { text-align: right; color: var(--muted); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  .a .dates time { color: var(--text-accent-color); }
+  .a .body { margin-top: 2.75rem; }
+
+  /* ---------- OPTION B: centered, single meta line ---------- */
+  .b header { padding-top: 3.5rem; text-align: center; }
+  .b h1 { font-size: clamp(2.2rem, 5.5vw, 3rem); line-height: 1.08; letter-spacing: -0.01em; }
+  .b .dek { font-size: 1.15rem; line-height: 1.5; color: #5a5a5a; margin: 1rem auto 0; max-width: 48ch; text-wrap: balance; }
+  .b .meta { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 0.25rem 0.6rem;
+             margin-top: 1.75rem; font-size: 0.875rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .b .meta img { width: 28px; height: 28px; border-radius: 50%; }
+  .b .meta .name { color: var(--text-color); font-weight: 600; }
+  .b .meta .sep { color: #bbb; }
+  .b .rule { width: 3rem; height: 1px; background: #d0d0d0; margin: 2.25rem auto 2.25rem; padding: 0; }
+
+  @media (max-width: 480px) {
+    .a header, .b header { padding-top: 2rem; }
+    .a .meta { align-items: flex-start; }
+    .a .dates { text-align: left; }
+  }
+</style>
+</head>
+<body class="VARIANT">
+<nav><ul><li><a href="#">home</a></li><li class="active"><a href="#">posts</a></li><li><a href="#">favorites</a></li><li><a href="#">books</a></li><li><a href="#">work</a></li></ul></nav>
+
+<article>
+  <!-- BEFORE -->
+  <h1 class="only-before">The Sameness of AI</h1>
+  <p class="only-before date"><span>Published: Oct 3, 2026</span><span class="modified">Edited: Oct 26, 2026</span></p>
+  <div class="only-before me"><img src="https://dschau-website.imgix.net/me.jpeg?w=96&h=96&fit=crop"><div><h3>Dustin Schau</h3><p>Product &amp; Engineering Leader</p></div></div>
+
+  <!-- OPTION A -->
+  <header class="only-a">
+    <div class="eyebrow"><span>Career</span><span>AI</span></div>
+    <h1>The Sameness of AI</h1>
+    <p class="dek">AI is fascinating, revolutionary, fun, and… feeling a little stale. Some thoughts on the problems I'm seeing with a lack of creativity in AI.</p>
+    <div class="meta">
+      <div class="author"><img src="https://dschau-website.imgix.net/me.jpeg?w=96&h=96&fit=crop"><div><div class="name">Dustin Schau</div><div class="role">Product &amp; Engineering Leader</div></div></div>
+      <div class="dates"><div>Published <time>Oct 3, 2026</time></div><div>Updated <time>Oct 26, 2026</time></div></div>
+    </div>
+  </header>
+
+  <!-- OPTION B -->
+  <header class="only-b">
+    <h1>The Sameness of AI</h1>
+    <p class="dek">AI is fascinating, revolutionary, fun, and… feeling a little stale. Some thoughts on the problems I'm seeing with a lack of creativity in AI.</p>
+    <div class="meta"><img src="https://dschau-website.imgix.net/me.jpeg?w=96&h=96&fit=crop"><span class="name">Dustin Schau</span><span class="sep">·</span><span>Oct 3, 2026</span><span class="sep">·</span><span>Updated Oct 26</span></div>
+  </header>
+  <div class="only-b rule"></div>
+
+  <div class="body">
+    <p>There are varying takes on AI, some gloomers on how AI is a rising tide that will lift all boats and bring in a new era of human prosperity and creativity. And then there are AI doomers that believe AI has a uh, checking my notes here, a non-zero chance of killing humanity and that it therefore needs to be paused or has zero value to society. These artificial false dichotomies are kind of lazy, and both sides are being ridiculous so as with most issues I'm somewhere in the middle.</p>
+    <p>I see the value, it's a tool I use daily and that most days I wouldn't want to live without, but I also am becoming increasingly disillusioned with the state of AI.</p>
+  </div>
+</article>
+<style>
+  body.before .only-a, body.before .only-b,
+  body.a .only-before, body.a .only-b,
+  body.b .only-before, body.b .only-a { display: none !important; }
+</style>
+</body>
+</html>
