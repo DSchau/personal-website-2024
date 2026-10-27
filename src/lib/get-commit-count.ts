@@ -1,5 +1,6 @@
 import { octokit } from "./octokit";
 import { isOnline } from "./is-online";
+import { getUtcYearBounds, isDateInUtcYear } from "./commit-date";
 
 interface CommitCountArgs {
   owner: string;
@@ -11,9 +12,13 @@ export async function getCommitCount({ owner, repo }: CommitCountArgs, fallbackV
     return fallbackValue
   }
 
-  const currentYear = new Date().getFullYear();
-  const sinceDate = new Date(`${currentYear}-01-01`);
-  const untilDate = new Date(`${currentYear}-12-31`);
+  const currentYear = new Date().getUTCFullYear();
+  const {
+    start: sinceDate,
+    endInclusive: untilDate,
+  } = getUtcYearBounds(currentYear);
+  // GitHub's `until` bound is inclusive, so cap it one millisecond before
+  // next year starts. The local filter below uses the exclusive boundary.
 
   try {
     const data = await octokit.paginate(octokit.rest.repos.listCommits, {
@@ -26,7 +31,7 @@ export async function getCommitCount({ owner, repo }: CommitCountArgs, fallbackV
 
     const commitsThisYear = data.filter((commit: any) => {
       const commitDate = new Date(commit.commit.author.date);
-      return commitDate >= sinceDate && commitDate <= untilDate;
+      return isDateInUtcYear(commitDate, currentYear);
     });
 
     return commitsThisYear.length
