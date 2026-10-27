@@ -224,3 +224,47 @@
 
   overflow-x: scroll;
 }
+
+@media print {
+  /* the page is already a narrow measure: use all of it */
+  .container {
+    display: block;
+  }
+
+  .container > * {
+    padding: 0;
+  }
+
+  .header {
+    padding-top: 0;
+    margin-bottom: var(--padding-xl);
+  }
+
+  .container p > img {
+    cursor: auto;
+  }
+
+  /* a button means nothing on paper: print it as a link */
+  .container > :global(.cta) {
+    text-align: left;
+    margin: var(--padding-lg) 0;
+  }
+
+  .container :global(.cta-link) {
+    display: inline;
+    padding: 0;
+    border: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  .container :global(.cta-link)::after {
+    content: none;
+  }
+
+  .container :global(.cta-link[href^="http"])::after {
+    content: " (" attr(href) ")";
+    font-weight: normal;
+    font-size: 0.85em;
+  }
+}
