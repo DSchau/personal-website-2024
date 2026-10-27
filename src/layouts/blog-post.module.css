@@ -44,10 +44,12 @@
 }
 
 .title {
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-size: clamp(2.2rem, 5vw, 2.5rem);
   line-height: 1.06;
   letter-spacing: -0.01em;
   margin: 0;
+  /* balance narrows multi-line titles to even out their lines; pretty lets them fill the column */
+  text-wrap: pretty;
 }
 
 .dek {
