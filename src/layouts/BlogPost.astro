@@ -32,7 +32,7 @@ const shouldDisplayEdited = isoDate(frontmatter.lastModified) > isoDate(frontmat
       <Me />
       <p class={styles.dates}>
         <span>Published <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time></span>
-        {shouldDisplayEdited && <span>Updated <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
+        {shouldDisplayEdited && <span class={styles.updated}>Updated <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
       </p>
     </div>
   </header>
