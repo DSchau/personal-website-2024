@@ -6,3 +6,5 @@
   label: linkedin
 - href: https://github.com/dschau
   label: github
+- href: /rss.xml
+  label: rss
