@@ -16,7 +16,6 @@ const posts = await getCollection('posts', ({ data }) => {
 <style>
   .container {
     --date-column: 7.25rem;
-    --toggle-size: 2.25rem;
     --mono-font: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     --hairline: color-mix(in srgb, var(--text-color) 18%, transparent);
 
@@ -34,16 +33,6 @@ const posts = await getCollection('posts', ({ data }) => {
     text-transform: uppercase;
   }
 
-  /* "/ Date   / Title" column labels */
-  .header {
-    display: grid;
-    grid-template-columns: var(--date-column) 1fr;
-    margin-top: var(--padding-xl);
-    padding-bottom: var(--padding-s);
-    border-bottom: 1px solid var(--hairline);
-    color: var(--text-accent-color);
-  }
-
   .visually-hidden {
     position: absolute;
     width: 1px;
@@ -53,50 +42,27 @@ const posts = await getCollection('posts', ({ data }) => {
     white-space: nowrap;
   }
 
-  .slash {
-    margin-right: var(--padding-s);
-    opacity: 0.5;
-  }
-
   ol {
-    margin: 0;
+    margin: var(--padding-lg) 0 0;
+    border-top: 1px solid var(--hairline);
     padding: 0;
     list-style: none;
   }
 
-  li {
+  ol > li {
     margin: 0;
-    padding: 0;
+    padding: 0 0 var(--padding-md);
     border-bottom: 1px solid var(--hairline);
   }
 
-  .row {
-    display: flex;
-    align-items: stretch;
-    color: var(--text-color);
-    transition: background-color 120ms linear, color 120ms linear;
-  }
-
-  /* the whole row inverts on hover, like a terminal selection */
-  .row:hover,
-  .row:has(:focus-visible) {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-  }
-
   .link {
-    flex: 1;
     display: grid;
     grid-template-columns: var(--date-column) 1fr;
     align-items: baseline;
-    padding: var(--padding-md) 0;
+    padding: var(--padding-md) 0 0;
 
-    color: inherit;
+    color: var(--text-color);
     text-decoration: none;
-  }
-
-  .link:focus-visible {
-    outline: none;
   }
 
   .date {
@@ -119,16 +85,6 @@ const posts = await getCollection('posts', ({ data }) => {
     background-color: transparent;
   }
 
-  .row:hover .square,
-  .row:has(:focus-visible) .square {
-    border-color: currentColor;
-  }
-
-  .row:hover .square:not(.external),
-  .row:has(:focus-visible) .square:not(.external) {
-    background-color: currentColor;
-  }
-
   .title {
     font-size: 1rem;
     line-height: 1.35;
@@ -136,87 +92,17 @@ const posts = await getCollection('posts', ({ data }) => {
   }
 
   .arrow {
-    display: inline-block;
-    margin-left: var(--padding-md);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 150ms linear, transform 150ms var(--ease-fn);
-  }
-
-  .arrow.external {
+    margin-left: var(--padding-s);
     opacity: 0.6;
-    transform: none;
-  }
-
-  .row:hover .arrow,
-  .row:has(:focus-visible) .arrow {
-    opacity: 1;
-    transform: none;
-  }
-
-  .toggle {
-    position: relative;
-    flex-shrink: 0;
-    width: var(--toggle-size);
-    margin: 0;
-    padding: 0;
-
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .toggle:focus-visible {
-    outline: none;
-  }
-
-  /* plus that collapses into a minus when open */
-  .toggle::before,
-  .toggle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 11px;
-    height: 1.5px;
-    background-color: currentColor;
-    transform: translate(-50%, -50%);
-    transition: transform 200ms var(--ease-fn);
-  }
-
-  .toggle::after {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-
-  .toggle[aria-expanded='true']::after {
-    transform: translate(-50%, -50%) rotate(0deg);
   }
 
   .details {
-    display: grid;
-    grid-template-rows: 0fr;
-    visibility: hidden;
-    transition: grid-template-rows 250ms var(--ease-fn), visibility 250ms;
-  }
-
-  li[data-open] .details {
-    grid-template-rows: 1fr;
-    visibility: visible;
-  }
-
-  .details-inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .details dl {
     display: grid;
     grid-template-columns: var(--date-column) 1fr;
     align-items: baseline;
     row-gap: var(--padding-md);
     margin: 0;
-    padding: var(--padding-md) var(--toggle-size) 0 0;
+    padding: var(--padding-md) 0 0;
   }
 
   .details dt {
@@ -235,7 +121,7 @@ const posts = await getCollection('posts', ({ data }) => {
   }
 
   .subscribe {
-    margin: 0 0 var(--padding-md);
+    margin: var(--padding-lg) 0 0;
     text-align: center;
     font-size: var(--text-xs);
     color: color-mix(in srgb, var(--text-color) 55%, transparent);
@@ -257,27 +143,10 @@ const posts = await getCollection('posts', ({ data }) => {
     color: var(--text-accent-color);
   }
 
-  .read {
-    display: inline-block;
-    margin: var(--padding-md) 0 var(--padding-lg) var(--date-column);
-    padding: var(--padding-s) var(--padding-lg);
-
-    border: 1px solid var(--text-color);
-    color: var(--text-color);
-    text-decoration: none;
-    transition: background-color 120ms linear, color 120ms linear;
-  }
-
-  .read:hover,
-  .read:focus-visible {
-    background-color: var(--text-color);
-    color: var(--bg-color);
-  }
-
   /* stack the date over the title on narrow screens */
   @media only screen and (max-width: 768px) {
     .link,
-    .details dl {
+    .details {
       grid-template-columns: 1fr;
     }
 
@@ -285,36 +154,12 @@ const posts = await getCollection('posts', ({ data }) => {
       row-gap: var(--padding-xs);
     }
 
-    .header {
-      display: none;
-    }
-
-    ol {
-      margin-top: var(--padding-lg);
-      border-top: 1px solid var(--hairline);
-    }
-
-    .details dl {
+    .details {
       row-gap: var(--padding-xs);
     }
 
     .details dd + dt {
       margin-top: var(--padding-md);
-    }
-
-    .read {
-      margin-left: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .row,
-    .arrow,
-    .toggle::before,
-    .toggle::after,
-    .details,
-    .read {
-      transition: none;
     }
   }
 </style>
@@ -322,84 +167,55 @@ const posts = await getCollection('posts', ({ data }) => {
 <Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <p class="subscribe">follow along via <a href="/rss.xml">rss</a></p>
-    <div class="header smallcaps" aria-hidden="true">
-      <span><span class="slash">/</span>Date</span>
-      <span><span class="slash">/</span>Title</span>
-    </div>
     <ol reversed>
       {posts.map(post => {
         const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
         const external = /https?/.test(href)
         const linkProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
         const date = new Date(post.data.date).toISOString().slice(0, 10)
-        const detailsId = `post-details-${post.id.replace(/[^a-z0-9-]/gi, '-')}`
         const hasDetails = Boolean(post.data.excerpt) || post.data.tags.length > 0
         return (
           <li>
-            <div class="row">
-              <a class="link" href={href} {...linkProps}>
-                <span class="date smallcaps">
-                  <span class:list={['square', { external }]} aria-hidden="true" />
-                  <time datetime={date}>{date.replaceAll('-', '.')}</time>
-                </span>
-                <span class="title">
-                  {post.data.title}
-                  {external && <span class="visually-hidden"> (opens in a new tab)</span>}
-                  <span class:list={['arrow', { external }]} aria-hidden="true">{external ? '↗' : '→'}</span>
-                </span>
-              </a>
-              {hasDetails && (
-                <button
-                  class="toggle"
-                  type="button"
-                  aria-expanded="false"
-                  aria-controls={detailsId}
-                  aria-label={`Show details for ${post.data.title}`}
-                  data-post-toggle
-                />
-              )}
-            </div>
+            <a class="link" href={href} {...linkProps}>
+              <span class="date smallcaps">
+                <span class:list={['square', { external }]} aria-hidden="true" />
+                <time datetime={date}>{date.replaceAll('-', '.')}</time>
+              </span>
+              <span class="title">
+                {post.data.title}
+                {external && (
+                  <>
+                    <span class="visually-hidden"> (opens in a new tab)</span>
+                    <span class="arrow" aria-hidden="true">↗</span>
+                  </>
+                )}
+              </span>
+            </a>
             {hasDetails && (
-              <div class="details" id={detailsId}>
-                <div class="details-inner">
-                  <dl>
-                    {post.data.excerpt && (
-                      <>
-                        <dt class="smallcaps">Summary:</dt>
-                        <dd><p class="excerpt">{post.data.excerpt}</p></dd>
-                      </>
-                    )}
-                    {post.data.tags.length > 0 && (
-                      <>
-                        <dt class="smallcaps">Topics:</dt>
-                        <dd>
-                          <ul class="tags">
-                            {post.data.tags.map(tag => <li class="smallcaps">{tag}</li>)}
-                          </ul>
-                        </dd>
-                      </>
-                    )}
-                  </dl>
-                  <a class="read smallcaps" href={href} {...linkProps}>
-                    {external ? `Read on ${new URL(href).hostname.replace(/^www\./, '')} ↗` : 'Read →'}
-                  </a>
-                </div>
-              </div>
+              <dl class="details">
+                {post.data.excerpt && (
+                  <>
+                    <dt class="smallcaps">Summary:</dt>
+                    <dd><p class="excerpt">{post.data.excerpt}</p></dd>
+                  </>
+                )}
+                {post.data.tags.length > 0 && (
+                  <>
+                    <dt class="smallcaps">Topics:</dt>
+                    <dd>
+                      <ul class="tags">
+                        {post.data.tags.map(tag => <li class="smallcaps">{tag}</li>)}
+                      </ul>
+                    </dd>
+                  </>
+                )}
+              </dl>
             )}
           </li>
         )
       })}
     </ol>
+    <p class="subscribe">follow along via <a href="/rss.xml">rss</a></p>
   </div>
 </Layout>
 
-<script>
-  document.querySelectorAll<HTMLButtonElement>('[data-post-toggle]').forEach((toggle) => {
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') !== 'true';
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.closest('li')?.toggleAttribute('data-open', open);
-    });
-  });
-</script>
