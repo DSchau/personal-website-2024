@@ -20,6 +20,18 @@ npm create astro@latest -- --template minimal
 | Contents | Read-only |
 | Metadata | Read-only (required) |
 
+## 📰 RSS feed
+
+The site publishes an RSS 2.0 feed of all posts at [`/rss.xml`](https://www.dustinschau.com/rss.xml), newest first, and every page advertises it in its `<head>`. Posts with `draft: true` in their frontmatter are left out of the feed in every environment, including `npm run dev`. External posts link to their `canonicalLink`.
+
+The feed logic lives in `src/lib/rss-feed.ts` and the route in `src/pages/rss.xml.ts`. Run its focused tests with:
+
+```sh
+npm test
+```
+
+They need Node 22 (see `.nvmrc`) and `python3`, and don't need `GITHUB_TOKEN` or `RESEND_API_KEY`.
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
@@ -49,6 +61,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
+| `npm test`                | Run the RSS feed tests                           |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
