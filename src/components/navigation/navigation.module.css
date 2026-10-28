@@ -22,9 +22,14 @@
   transition: translate 300ms var(--ease-fn);
 }
 
-/* set by headroom.ts while scrolling down */
+/*
+  Set by headroom.ts while scrolling down. Hiding gets its own, slower
+  ease-in-out so the bar glides away; --ease-fn front-loads nearly all of its
+  motion, which read as a snap. Revealing keeps the quicker transition above.
+*/
 .navigation[data-hidden] {
   translate: 0 -100%;
+  transition: translate 600ms cubic-bezier(0.45, 0, 0.25, 1);
 }
 
 .navigation ul {
@@ -81,6 +86,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .navigation,
+  .navigation[data-hidden],
   .navigation a {
     transition: none;
   }
