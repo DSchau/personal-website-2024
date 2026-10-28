@@ -69,10 +69,13 @@
 /*
   The current page's label is bold, which is wider. Every label reserves its
   bold width with an invisible bold copy, so moving between pages never
-  nudges the other links sideways.
+  nudges the other links sideways. line-height: normal keeps the grid box
+  the same height as the inline text box, so the marker stroke keeps its
+  thickness and position.
 */
 .navigation a span {
   display: inline-grid;
+  line-height: normal;
 }
 .navigation a span::after {
   content: attr(data-text);
