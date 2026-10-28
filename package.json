@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "import-books": "node scripts/import-books.mjs"
