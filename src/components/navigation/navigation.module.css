@@ -66,6 +66,24 @@
   transition: background-size 250ms ease-out;
 }
 
+/*
+  The current page's label is bold, which is wider. Every label reserves its
+  bold width with an invisible bold copy, so moving between pages never
+  nudges the other links sideways.
+*/
+.navigation a span {
+  display: inline-grid;
+}
+.navigation a span::after {
+  content: attr(data-text);
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
 .navigation a:is(:hover, :focus-visible) span {
   background-size: 100% 25%;
 }
