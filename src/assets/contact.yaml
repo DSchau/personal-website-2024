@@ -1,8 +1,15 @@
 - href: "mailto:me@dustinschau.com"
   label: email
+  icon: email
 - href: https://x.com/schaudustin
-  label: twitter (x)
+  label: twitter
+  icon: x
 - href: https://www.linkedin.com/in/dschau/
   label: linkedin
+  icon: linkedin
 - href: https://github.com/dschau
   label: github
+  icon: github
+- href: /rss.xml
+  label: rss
+  icon: rss

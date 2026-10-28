@@ -35,6 +35,7 @@ const fullDescription = description ? description : metayaml.description
 		<meta charset="utf-8" />
 		{pathname === '' && <link rel="preconnect" href="https://dschau-website.imgix.net" />}
 		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="alternate" type="application/rss+xml" title={metayaml.title} href={new URL('rss.xml', Astro.site)} />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={fullDescription} />
@@ -60,6 +61,8 @@ const fullDescription = description ? description : metayaml.description
     <script>
       import '@/components/footer/footer-interactions.ts'
       import '@/components/sea/ocean-motion.ts'
+      import '@/components/icon/icon-play.ts'
+      import '@/components/navigation/headroom.ts'
     </script>
 	</body>
 </html>

@@ -1,5 +1,6 @@
 import socialLinks from '@/assets/contact.yaml'
 
+import { Icon, isIconName } from '@/components/icon/icon.tsx'
 import { flock } from '@/components/sea/scene'
 import { GRASS_INK } from '@/components/sea/wash'
 import { BOATS, BRIDGE, H, INK, PAPER, W, grassTufts, sailboat } from './scene'
@@ -118,9 +119,12 @@ export function Footer({ updated, commits }: Props) {
           </p>
         </div>
         <ul className={styles.links}>
-          {socialLinks.map((link: { href: string; label: string }) => (
+          {socialLinks.map((link: { href: string; label: string; icon: string }) => (
             <li key={link.href}>
-              <a href={link.href}>{link.label}</a>
+              <a href={link.href}>
+                {isIconName(link.icon) && <Icon name={link.icon} />}
+                {link.label}
+              </a>
             </li>
           ))}
         </ul>

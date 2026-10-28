@@ -4,8 +4,12 @@
 }
 
 .container {
-  /* every page illustration (sea, writing, trail, moonlit sea) uses this height, so they line up across pages */
-  --scene-height: clamp(170px, 15.6vw, 250px);
+  /*
+    every page illustration (sea, writing, trail, moonlit sea) uses this height, so they line up across pages.
+    their viewBoxes are all 1600x250 (6.4:1), sliced to fill: past 6.4:1 the slice crops the top (the sun, the rays),
+    so the height keeps growing with the width instead of capping. below ~1090px the 170px floor crops the sides instead.
+  */
+  --scene-height: max(170px, 100vw / 6.4);
 
   display: grid;
   grid-template-columns:

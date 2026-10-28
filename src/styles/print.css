@@ -1,0 +1,108 @@
+/*
+  Print styles: paper gets the words, not the chrome.
+  https://brennenputh.me/blog/printable-websites/
+*/
+@media print {
+  @page {
+    margin: 2cm;
+  }
+
+  /* 12pt body text; headings, spacing and ch-based measures are rem based, so they scale with it */
+  :root {
+    font-size: 12pt;
+  }
+
+  body {
+    background: none;
+    color: #000;
+  }
+
+  /* site chrome means nothing on paper */
+  nav,
+  footer,
+  .medium-zoom-overlay {
+    display: none !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    break-after: avoid;
+  }
+
+  p, li, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  img, figure, blockquote, table {
+    break-inside: avoid;
+  }
+
+  /* links can't be clicked on paper: drop the color, keep the underline, and spell out where they go */
+  a {
+    color: inherit !important;
+    text-decoration: underline;
+  }
+
+  main a[href^="http"]:not(:has(img))::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  /* footnote refs/backrefs are in-page jumps, not destinations */
+  a[data-footnote-ref],
+  a[data-footnote-backref] {
+    text-decoration: none;
+  }
+
+  a[data-footnote-backref] {
+    display: none;
+  }
+
+  /*
+    Code blocks: the Dracula theme is light text on a dark background, and
+    browsers drop backgrounds when printing, so print them as black-on-white
+    and wrap long lines instead of clipping them at a scroll edge.
+  */
+  [data-rehype-pretty-code-figure] {
+    background: none !important;
+    border: 1px solid #999;
+    padding: 0 !important;
+  }
+
+  [data-rehype-pretty-code-figure] pre {
+    background: none !important;
+    max-width: 100%;
+    overflow: visible;
+    white-space: pre-wrap;
+  }
+
+  [data-rehype-pretty-code-figure] code,
+  [data-rehype-pretty-code-figure] code span {
+    color: #000 !important;
+  }
+
+  [data-rehype-pretty-code-figure] code {
+    padding: var(--padding-md) 0;
+  }
+
+  [data-rehype-pretty-code-figure] code[data-language] {
+    padding-top: 1.5rem;
+  }
+
+  [data-rehype-pretty-code-figure] .line {
+    break-inside: avoid;
+  }
+
+  pre > code [data-highlighted-line] {
+    background: none;
+    border-color: #000;
+  }
+
+  [data-rehype-pretty-code-title] {
+    position: static;
+    background: none;
+    color: #000;
+    font-weight: bold;
+  }
+}
