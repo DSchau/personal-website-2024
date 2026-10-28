@@ -62,10 +62,18 @@
 .links a {
   color: var(--text-color);
   text-decoration-skip: ink;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.15em;
+  white-space: nowrap; /* keep the icon glued to its label when the list wraps */
+
+  transition:
+    text-decoration-color 200ms ease-out,
+    text-underline-offset 200ms ease-out;
 }
 
-.links a:hover {
-  text-decoration: none;
+.links a:is(:hover, :focus-visible) {
+  text-decoration-color: transparent;
+  text-underline-offset: 0.35em;
 }
 
 /* ---------- scene ---------- */

@@ -1,0 +1,290 @@
+/*
+  Link icons: outline only, still at rest. Hovering or focusing the link makes
+  the icon act out what it depicts: the door swings open while the chimney
+  puffs, the heart beats, the briefcase hops. The motion language is
+  transmission-web's (src/icons.css): lucide-weight strokes, a one-shot gesture
+  of ~450–700ms on springy or in-out curves, built from transforms on the parts,
+  and every gesture ends exactly on the resting drawing, since the rule keeps
+  matching while the link stays hovered.
+
+  icon-play.ts sets data-playing for the length of a gesture, so leaving the
+  link partway through lets it finish instead of snapping back.
+
+  Transforms on paths are in viewBox units; on the svg itself they're in em so
+  they scale with the label.
+*/
+.icon {
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /*
+    The viewBox is padded by 2 units on each side, so the box is 28/24em and
+    the negative margins put the 24-unit drawing exactly where a 1em icon would sit.
+  */
+  --pad: calc(1em / 12);
+  display: inline-block;
+  flex: none;
+  width: calc(1em + 2 * var(--pad));
+  height: calc(1em + 2 * var(--pad));
+  max-width: none;
+  margin: calc(-1 * var(--pad)) calc(0.3em - var(--pad)) calc(-1 * var(--pad)) calc(-1 * var(--pad));
+  vertical-align: -0.15em;
+  overflow: visible;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* the current page: a bolder stroke, matching its bold label */
+.active {
+  stroke-width: 2.5;
+}
+
+/* which way each spark flies */
+.icon [data-part='spark1'] { --dx: -1.5px; --dy: -1.5px; }
+.icon [data-part='spark2'] { --dx: 0px; --dy: -2px; }
+.icon [data-part='spark3'] { --dx: 1.5px; --dy: -1.5px; }
+
+/* only there while their gesture plays */
+.icon :is([data-part='smoke'], [data-part^='spark'], [data-part='letter']),
+.icon[data-icon='books'] [data-part='page'] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* home: the door swings open on its hinge as the chimney puffs out a curl of smoke */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='door'] {
+    transform-origin: left center;
+    animation: icon-door 680ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='chimney'] {
+    transform-origin: center bottom;
+    animation: icon-chimney 560ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='smoke'] {
+    transform-origin: center bottom;
+    animation: icon-puff 620ms var(--ease-out) 140ms backwards;
+  }
+
+  /* posts: the page lifts toward you, its corner flicks, and the lines write themselves in */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='posts'] {
+    transform-origin: 50% 90%;
+    animation: icon-lift 560ms var(--ease-spring);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='posts'] [data-part='fold'] {
+    transform-origin: right top;
+    animation: icon-corner 520ms var(--ease-spring);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='posts'] [data-part='line1'] {
+    animation: icon-write 300ms var(--ease-out) 120ms backwards;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='posts'] [data-part='line2'] {
+    animation: icon-write 260ms var(--ease-out) 260ms backwards;
+  }
+
+  /* favorites: the heart crouches, stretches, and beats; sparks fly off at the peak */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='favorites'] [data-part='heart'] {
+    transform-origin: center bottom;
+    animation: icon-beat 620ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='favorites'] [data-part^='spark'] {
+    animation: icon-spark 440ms var(--ease-out) 170ms backwards;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='favorites'] [data-part='spark2'] {
+    animation-delay: 200ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='favorites'] [data-part='spark3'] {
+    animation-delay: 230ms;
+  }
+
+  /* books: a page lifts off the right side and turns over the spine */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='books'] [data-part='page'] {
+    transform-origin: left center;
+    animation: icon-turn-page 640ms var(--ease-in-out);
+  }
+
+  /* work: the briefcase crouches, hops, and lands; the handle follows a beat late */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='work'] {
+    transform-origin: 50% 90%;
+    animation: icon-hop 640ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='work'] [data-part='handle'] {
+    transform-origin: center bottom;
+    animation: icon-handle 640ms var(--ease-in-out);
+  }
+
+  /* email: the flap lifts, a letter slides up and out, and the flap shuts */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='flap'] {
+    transform-origin: center top;
+    animation: icon-flap 700ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='letter'] {
+    animation: icon-send 700ms var(--ease-in-out);
+  }
+
+  /* x: winds up, then spins a half turn (the mark is symmetric, so it lands as it started) */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='x'] {
+    animation: icon-spin 620ms var(--ease-in-out);
+  }
+
+  /* linkedin: the badge tips while the letters of "in" hop one after another */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='linkedin'] {
+    transform-origin: 50% 90%;
+    animation: icon-tip 560ms var(--ease-spring);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='linkedin'] :is([data-part='dot'], [data-part='i'], [data-part='n']) {
+    transform-origin: center bottom;
+    animation: icon-letter-hop 480ms var(--ease-in-out) 40ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='linkedin'] [data-part='i'] {
+    animation-delay: 90ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='linkedin'] [data-part='n'] {
+    animation-delay: 140ms;
+  }
+
+  /* github: the octocat wiggles its head and waves its tail */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='github'] {
+    transform-origin: 50% 85%;
+    animation: icon-wiggle 640ms var(--ease-in-out);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='github'] [data-part='tail'] {
+    transform-origin: right 80%;
+    animation: icon-wag 680ms var(--ease-in-out);
+  }
+
+  /* rss: the dot pings and the waves broadcast outward from it */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='rss'] [data-part='dot'] {
+    animation: icon-ping 420ms var(--ease-spring);
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='rss'] :is([data-part='wave1'], [data-part='wave2']) {
+    transform-origin: left bottom;
+    animation: icon-broadcast 480ms var(--ease-spring) 70ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='rss'] [data-part='wave2'] {
+    animation-delay: 140ms;
+  }
+}
+
+@keyframes icon-door {
+  35%, 55% { transform: scaleX(0.2) skewY(-12deg); }
+  82% { transform: scaleX(1.1); }
+}
+
+@keyframes icon-chimney {
+  20% { transform: scaleY(0.75); }
+  42% { transform: scaleY(1.15); }
+  70% { transform: none; }
+}
+
+@keyframes icon-puff {
+  0% { opacity: 0; transform: translateY(2px) scale(0.4); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(0.6px, -2.2px) scale(1.2); }
+}
+
+@keyframes icon-lift {
+  35% { transform: translateY(-0.06em) rotate(-8deg); }
+}
+
+@keyframes icon-corner {
+  35% { transform: scale(0.45); }
+}
+
+@keyframes icon-write {
+  from { stroke-dasharray: 1 2; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+}
+
+@keyframes icon-beat {
+  14% { transform: scale(1.08, 0.86); }
+  36% { transform: translateY(-1px) scale(0.9, 1.14); }
+  56% { transform: scale(1.08, 0.93); }
+  76% { transform: scale(0.98, 1.03); }
+}
+
+@keyframes icon-spark {
+  0% { opacity: 0; transform: translate(calc(-1 * var(--dx)), calc(-1 * var(--dy))) scale(0.2); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
+}
+
+@keyframes icon-turn-page {
+  0% { opacity: 1; transform: none; }
+  40% { transform: scaleX(0.35) skewY(-12deg); }
+  62% { transform: scaleX(-0.6) skewY(-6deg); }
+  88% { opacity: 1; }
+  100% { opacity: 0; transform: scaleX(-1); }
+}
+
+@keyframes icon-hop {
+  15% { transform: scale(1.08, 0.88); }
+  42% { transform: translateY(-0.16em) scale(0.94, 1.08); }
+  62% { transform: scale(1.06, 0.92); }
+  80% { transform: scale(0.98, 1.02); }
+}
+
+@keyframes icon-handle {
+  15% { transform: scaleY(0.7); }
+  42% { transform: translateY(1px); }
+  62% { transform: translateY(-1.6px); }
+  80% { transform: translateY(0.4px); }
+}
+
+@keyframes icon-flap {
+  28%, 66% { transform: scaleY(-0.4); }
+  86% { transform: scaleY(1.12); }
+}
+
+@keyframes icon-send {
+  0%, 22% { opacity: 0; transform: translateY(4px); }
+  50% { opacity: 1; transform: translateY(-1.5px); }
+  70% { opacity: 1; transform: translateY(-2.5px); }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
+
+@keyframes icon-spin {
+  18% { transform: rotate(-18deg) scale(0.88); }
+  74% { transform: rotate(192deg) scale(1.04); }
+  100% { transform: rotate(180deg); }
+}
+
+@keyframes icon-tip {
+  30% { transform: rotate(-10deg); }
+}
+
+@keyframes icon-letter-hop {
+  35% { transform: translateY(-2px) scaleY(1.1); }
+  62% { transform: translateY(0.4px) scaleY(0.9); }
+  82% { transform: translateY(-0.3px); }
+}
+
+@keyframes icon-wiggle {
+  20% { transform: rotate(-8deg); }
+  45% { transform: rotate(6deg); }
+  70% { transform: rotate(-3deg); }
+}
+
+@keyframes icon-wag {
+  18% { transform: rotate(24deg); }
+  40% { transform: rotate(-16deg); }
+  62% { transform: rotate(12deg); }
+  82% { transform: rotate(-5deg); }
+}
+
+@keyframes icon-ping {
+  35% { transform: scale(1.8); }
+}
+
+@keyframes icon-broadcast {
+  35% { transform: scale(1.15); opacity: 0.6; }
+}

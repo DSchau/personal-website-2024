@@ -1,6 +1,7 @@
 import styles from './navigation.module.css'
 
 import links from '@/assets/navigation.yaml'
+import { Icon, isIconName } from '@/components/icon/icon.tsx'
 
 type Link = {
   name: string;
@@ -23,11 +24,17 @@ export function Navigation({ pathname }: Props) {
     <nav className={styles.navigation}>
       <ul>
         {
-          links.map((link: Link) => (
-            <li key={link.name} className={isActive(link, pathname) ? styles.active : ''}>
-              <a href={link.to}>{link.name}</a>
-            </li>
-          ))
+          links.map((link: Link) => {
+            const active = isActive(link, pathname)
+            return (
+              <li key={link.name} className={active ? styles.active : ''}>
+                <a href={link.to}>
+                  {isIconName(link.name) && <Icon name={link.name} active={active} />}
+                  {link.name}
+                </a>
+              </li>
+            )
+          })
         }
       </ul>
     </nav>
