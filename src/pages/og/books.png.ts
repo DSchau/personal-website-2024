@@ -2,12 +2,12 @@ import { type APIRoute } from "astro";
 import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 
 import { BooksOG } from "../../components/og/books";
-import { getRecentlyReadFirstPage, resizeCover } from "../../lib/goodreads";
+import { getRecentlyRead, resizeCover } from "../../lib/goodreads";
 
 // Rendering this card takes more CPU than a Worker request is allowed
 // (satori + resvg with six embedded rasters intermittently dies with
 // Cloudflare error 1102, or truncates the PNG mid-stream). The data is
-// build-time data anyway — the daily scheduled rebuild refreshes it — so
+// build-time data anyway (src/data/books.json), so
 // bake the PNG as a static asset instead of rendering per request.
 export const prerender = true;
 
@@ -77,7 +77,7 @@ async function toDataUri(url: string): Promise<string> {
 }
 
 export const GET: APIRoute = async function GET() {
-  const recent = await getRecentlyReadFirstPage(5);
+  const recent = getRecentlyRead(5);
   const [covers, avatarUrl] = await Promise.all([
     Promise.all(recent.map((book) => toDataUri(resizeCover(book.imageUrl, 240)))),
     toDataUri(AVATAR_URL),

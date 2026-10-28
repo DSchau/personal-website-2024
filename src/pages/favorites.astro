@@ -28,7 +28,7 @@ const allFavorites = Object.keys(favorites)
 		list: (favorites as any)[favorite]
 	}))
 
-const favoriteBooks = await getFavoriteBooks()
+const favoriteBooks = getFavoriteBooks()
 const favoriteBooksList = favoriteBooks.map(toFavoriteItem)
 ---
 <style>
