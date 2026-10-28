@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function Header({ commits, showCopy = true, copy: customizedCopy, employer, byline: customizedByline, className, photo = false }: Props) {
-  const year = new Date().getFullYear()
+  const year = new Date().getUTCFullYear()
   const frequency = <span className={styles.frequency}><strong>{commits} update{commits === 1 ? '' : 's'}</strong> in {year}</span>
   const updateWord = commits >= 10 ? 'occasionally' : 'infrequently'
   const copy = customizedCopy ? customizedCopy : (
