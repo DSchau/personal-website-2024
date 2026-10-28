@@ -3,6 +3,8 @@
   --text-accent-color: #444;
   --bg-color: #fefefe;
   --border-color: #eee;
+  --highlight: #fde68a; /* nav/footer link marker on hover */
+  --highlight-soft: #fef3c7; /* marker under the current page's nav link */
 
   --button-color: #002D62;
   --button-border-color: #002046;

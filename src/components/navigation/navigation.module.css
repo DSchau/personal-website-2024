@@ -3,8 +3,8 @@
   sits in the page's content column, but the glass runs edge to edge:
   border-image paints it (with a 1px rule at the bottom) out past the box to
   both sides without widening the layout or causing horizontal scroll.
-  The bottom padding is a touch deeper than the top so the underlined links
-  sit visually centred.
+  The bottom padding is a touch deeper than the top so the link labels and
+  their highlighter strokes sit visually centred.
 */
 .navigation {
   --glass: color-mix(in srgb, var(--bg-color) 72%, transparent);
@@ -50,23 +50,24 @@
 }
 
 /*
-  On hover/focus the underline fades and drops away as the icon's gesture
-  starts (see icon.module.css), so text and icon read as one motion.
+  No underlines: on hover/focus a highlighter stroke swipes in behind the
+  label as the icon's gesture starts (see icon.module.css), so text and icon
+  read as one motion. The current page keeps a paler stroke.
 */
 .navigation a {
   color: var(--text-color);
-  text-decoration-skip: ink;
-  text-decoration-color: currentColor;
-  text-underline-offset: 0.15em;
-
-  transition:
-    text-decoration-color 200ms ease-out,
-    text-underline-offset 200ms ease-out;
+  text-decoration: none;
 }
 
-.navigation a:is(:hover, :focus-visible) {
-  text-decoration-color: transparent;
-  text-underline-offset: 0.35em;
+.navigation a span {
+  background: linear-gradient(var(--highlight), var(--highlight)) no-repeat 0 87% / 0 37%;
+  padding: 0 0.1em;
+  margin: 0 -0.1em;
+  transition: background-size 250ms ease-out;
+}
+
+.navigation a:is(:hover, :focus-visible) span {
+  background-size: 100% 37%;
 }
 
 /* the nav already scrolls sideways on phones; icons would only push more of it off-screen */
@@ -80,14 +81,15 @@
   font-weight: bold;
 }
 
-.active a {
-  text-decoration: none;
+.active a span {
+  background-image: linear-gradient(var(--highlight-soft), var(--highlight-soft));
+  background-size: 100% 37%;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .navigation,
   .navigation[data-hidden],
-  .navigation a {
+  .navigation a span {
     transition: none;
   }
 }
