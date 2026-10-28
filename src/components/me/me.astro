@@ -4,36 +4,29 @@ import { Image } from '@unpic/astro'
 <style>
   .me {
     display: flex;
-    flex-direction: row;
-
-    justify-content: center;
-
-    padding: var(--padding-lg) 0;
+    align-items: center;
+    gap: 0.6rem;
   }
 
   img {
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 24px;
 
-    border-radius: var(--padding-md);
+    border-radius: 50%;
 
     margin: 0;
-    margin-right: var(--padding-md);
   }
 
-  h3, p {
+  p {
     margin: 0;
     padding: 0;
 
+    font-size: inherit;
     line-height: 1;
-    font-size: 1rem;
   }
 </style>
 
 <div class="me">
-  <Image src="https://dschau-website.imgix.net/me.jpeg" layout="fixed" height={32} width={32} background="auto" alt="Headshot portrait of Dustin Schau" />
-  <div class="row">
-    <h3>Dustin Schau</h3>
-    <p>Product & Engineering Leader</p>
-  </div>
+  <Image src="https://dschau-website.imgix.net/me.jpeg" layout="fixed" height={24} width={24} background="auto" alt="Headshot portrait of Dustin Schau" />
+  <p>Dustin Schau</p>
 </div>

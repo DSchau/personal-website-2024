@@ -24,14 +24,24 @@ const shouldDisplayEdited = isoDate(frontmatter.lastModified) > isoDate(frontmat
 ---
 
 <article class={styles.container}>
-  <h1 class={styles.title}>{frontmatter.title}</h1>
-  <p class={styles.date}>
-    <span class={styles.published}>Published: <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time></span>
-    {shouldDisplayEdited && <span class={styles.modified}>Edited: <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></span>}
-  </p>
-  <Me />
+  <header class={styles.header}>
+    <p class={styles.dateline}>
+      <time datetime={isoDate(frontmatter.date)}>{formatDate(frontmatter.date)}</time>
+    </p>
+    <h1 class={styles.title}>{frontmatter.title}</h1>
+    {frontmatter.excerpt && <p class={styles.dek}>{frontmatter.excerpt}</p>}
+    {frontmatter.tags.length > 0 && (
+      <p class={styles.tags}>
+        {frontmatter.tags.map(tag => <span>{tag}</span>)}
+      </p>
+    )}
+    <div class={styles.meta}>
+      <Me />
+      {shouldDisplayEdited && <p class={styles.updated}>Updated <time datetime={isoDate(frontmatter.lastModified)}>{formatDate(frontmatter.lastModified)}</time></p>}
+    </div>
+  </header>
   {frontmatter.featuredImage && (
-    <Image src={frontmatter.featuredImage} class={[styles.full, styles.hero].join(' ')} alt={"A prefiw for a blog post"} />
+    <Image src={frontmatter.featuredImage} class={[styles.full, styles.hero].join(' ')} alt={"A preview for a blog post"} />
   )}
   <slot />
 </article>
