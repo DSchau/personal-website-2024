@@ -48,24 +48,18 @@
   border-top: 1px solid color-mix(in srgb, var(--text-color) 15%, transparent);
 }
 
-/* tags are the least important thing here: small, light #hashtag pills */
+/* tags are the least important thing here: small, light, plain #hashtags (not links, so no pill chrome) */
 .tags {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.3rem;
+  gap: 0.75rem;
 
   margin: 1.1rem 0 0;
 
   font-size: 0.6rem;
   line-height: 1.4;
   color: color-mix(in srgb, var(--text-color) 50%, transparent);
-}
-
-.tags > span {
-  padding: 0.05rem 0.45rem;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
 }
 
 .tags > span::before {
