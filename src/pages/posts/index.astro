@@ -76,13 +76,6 @@ const posts = await getCollection('posts', ({ data }) => {
     margin: var(--padding-s) 0 0;
   }
 
-  .subscribe {
-    margin: 0 0 var(--padding-md);
-    text-align: center;
-    font-size: var(--text-xs);
-    color: color-mix(in srgb, var(--text-color) 55%, transparent);
-  }
-
   a > .icon {
     display: inline-block;
     position: relative;
@@ -96,7 +89,6 @@ const posts = await getCollection('posts', ({ data }) => {
 <Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <p class="subscribe">follow along via <a href="/rss.xml">rss</a></p>
     <ol reversed>
       {posts.map(post => {
         const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
