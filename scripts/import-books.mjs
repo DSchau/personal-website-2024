@@ -79,7 +79,9 @@ async function fetchCover(link) {
     }
     const html = await response.text();
     const url = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1] ?? "";
-    if (!url || /nophoto/.test(url)) {
+    // Books without a cover (or pages Goodreads serves without book data)
+    // fall back to a site-wide image under /assets/ rather than /books/.
+    if (!/\/books\//.test(url)) {
       return "";
     }
     return url.replace(/(\._S[XY]\d+_)?\.(jpe?g|png)$/i, "._SY475_.$2");
