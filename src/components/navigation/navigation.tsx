@@ -21,7 +21,7 @@ const isActive = (link: Link, pathname: string) => {
 
 export function Navigation({ pathname }: Props) {
   return (
-    <nav className={styles.navigation}>
+    <nav className={styles.navigation} data-headroom>
       <ul>
         {
           links.map((link: Link) => {
