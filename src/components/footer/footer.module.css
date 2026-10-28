@@ -47,6 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
+  row-gap: 0.75rem; /* only applies once the list wraps, on small screens */
 
   margin: 0;
   padding: 0;
