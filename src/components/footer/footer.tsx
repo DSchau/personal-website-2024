@@ -123,7 +123,7 @@ export function Footer({ updated, commits }: Props) {
             <li key={link.href}>
               <a href={link.href}>
                 {isIconName(link.icon) && <Icon name={link.icon} />}
-                {link.label}
+                <span>{link.label}</span>
               </a>
             </li>
           ))}
