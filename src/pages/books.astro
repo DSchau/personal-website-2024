@@ -6,7 +6,7 @@ import { getCompletedReads, groupReadsByYear } from "@/lib/goodreads";
 
 export const prerender = true;
 
-const completed = await getCompletedReads();
+const completed = getCompletedReads();
 const hero = completed.slice(0, 6);
 const groups = groupReadsByYear(completed);
 const site = Astro.site;

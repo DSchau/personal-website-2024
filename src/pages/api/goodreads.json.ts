@@ -10,11 +10,11 @@ import {
 export const prerender = false;
 
 // Browsers revalidate hourly; the Cloudflare edge holds the response for a
-// day. Combined with the day-long edge cache inside src/lib/goodreads.ts,
-// Goodreads itself is only hit about once a day per shelf.
+// day. Only currently-reading reaches Goodreads; the other shelves are
+// served from src/data/books.json.
 const CACHE_CONTROL = "public, max-age=3600, s-maxage=86400";
 
-const SHELVES: Record<string, () => Promise<GoodreadsBook[]>> = {
+const SHELVES: Record<string, () => GoodreadsBook[] | Promise<GoodreadsBook[]>> = {
   read: getReadBooks,
   "currently-reading": getCurrentlyReading,
   favorites: getFavoriteBooks,
@@ -48,7 +48,7 @@ export const GET: APIRoute = async function GET({ url }) {
     status: books.length > 0 ? 200 : 503,
     headers: {
       "Content-Type": "application/json",
-      // Don't let an empty anti-bot response get cached for a day.
+      // Don't cache a failed currently-reading scrape for a day.
       "Cache-Control": books.length > 0 ? CACHE_CONTROL : "no-store",
     },
   });
