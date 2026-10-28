@@ -5,14 +5,14 @@ import { Image } from '@unpic/astro'
   .me {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.6rem;
   }
 
   img {
-    height: 40px;
-    width: 40px;
+    height: 24px;
+    width: 24px;
 
-    border-radius: var(--padding-md);
+    border-radius: 50%;
 
     margin: 0;
   }
@@ -21,22 +21,11 @@ import { Image } from '@unpic/astro'
     margin: 0;
     padding: 0;
 
-    line-height: 1.35;
-  }
-
-  .name {
-    font-weight: 600;
-  }
-
-  .role {
-    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    line-height: 1;
   }
 </style>
 
 <div class="me">
-  <Image src="https://dschau-website.imgix.net/me.jpeg" layout="fixed" height={40} width={40} background="auto" alt="Headshot portrait of Dustin Schau" />
-  <div>
-    <p class="name">Dustin Schau</p>
-    <p class="role">Product & Engineering Leader</p>
-  </div>
+  <Image src="https://dschau-website.imgix.net/me.jpeg" layout="fixed" height={24} width={24} background="auto" alt="Headshot portrait of Dustin Schau" />
+  <p>Dustin Schau</p>
 </div>
