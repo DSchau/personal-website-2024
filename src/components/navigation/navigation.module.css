@@ -10,6 +10,8 @@
   --glass: color-mix(in srgb, var(--bg-color) 72%, transparent);
 
   padding: var(--padding-s) var(--padding-lg) var(--padding-md);
+  /* room between the rule and the page below it */
+  margin-bottom: calc(var(--padding-xl) + var(--padding-md));
 
   position: sticky;
   top: 0;
