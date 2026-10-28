@@ -4,7 +4,7 @@
   border-image paints it (with a 1px rule at the bottom) out past the box to
   both sides without widening the layout or causing horizontal scroll.
   The bottom padding is a touch deeper than the top so the link labels and
-  their highlighter strokes sit visually centred.
+  their marker strokes sit visually centred.
 */
 .navigation {
   --glass: color-mix(in srgb, var(--bg-color) 72%, transparent);
@@ -50,7 +50,7 @@
 }
 
 /*
-  No underlines: on hover/focus a highlighter stroke swipes in behind the
+  No underlines: on hover/focus a marker stroke swipes in beneath the
   label as the icon's gesture starts (see icon.module.css), so text and icon
   read as one motion. The current page keeps a paler stroke.
 */
@@ -60,14 +60,14 @@
 }
 
 .navigation a span {
-  background: linear-gradient(var(--highlight), var(--highlight)) no-repeat 0 87% / 0 37%;
+  background: linear-gradient(var(--highlight), var(--highlight)) no-repeat 0 100% / 0 25%;
   padding: 0 0.1em;
   margin: 0 -0.1em;
   transition: background-size 250ms ease-out;
 }
 
 .navigation a:is(:hover, :focus-visible) span {
-  background-size: 100% 37%;
+  background-size: 100% 25%;
 }
 
 /* the nav already scrolls sideways on phones; icons would only push more of it off-screen */
@@ -83,7 +83,7 @@
 
 .active a span {
   background-image: linear-gradient(var(--highlight-soft), var(--highlight-soft));
-  background-size: 100% 37%;
+  background-size: 100% 25%;
 }
 
 @media (prefers-reduced-motion: reduce) {

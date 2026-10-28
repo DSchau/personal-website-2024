@@ -67,14 +67,14 @@
 }
 
 .links a span {
-  background: linear-gradient(var(--highlight), var(--highlight)) no-repeat 0 87% / 0 37%;
+  background: linear-gradient(var(--highlight), var(--highlight)) no-repeat 0 100% / 0 25%;
   padding: 0 0.1em;
   margin: 0 -0.1em;
   transition: background-size 250ms ease-out;
 }
 
 .links a:is(:hover, :focus-visible) span {
-  background-size: 100% 37%;
+  background-size: 100% 25%;
 }
 
 /* ---------- scene ---------- */
