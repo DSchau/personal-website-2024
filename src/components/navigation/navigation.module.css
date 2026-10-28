@@ -1,11 +1,35 @@
+/*
+  A frosted-glass bar, stuck to the top of the window at every width. The nav
+  sits in the page's content column, but the glass runs edge to edge:
+  border-image paints it (with a 1px rule at the bottom) out past the box to
+  both sides without widening the layout or causing horizontal scroll.
+  The bottom padding is a touch deeper than the top so the underlined links
+  sit visually centred.
+*/
 .navigation {
-  padding: var(--padding-s) var(--padding-lg);
+  --glass: color-mix(in srgb, var(--bg-color) 72%, transparent);
+
+  padding: var(--padding-s) var(--padding-lg) var(--padding-md);
+  /* room between the rule and the page below it */
+  margin-bottom: calc(var(--padding-xl) + var(--padding-md));
 
   position: sticky;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
+  border-image: linear-gradient(to top, var(--border-color) 1px, var(--glass) 1px) fill 0 / / 0 100vmax;
+  backdrop-filter: blur(12px) saturate(1.6);
   z-index: 9001; /* it's over 9000 */
+
+  transition: translate 300ms var(--ease-fn);
+}
+
+/*
+  Set by headroom.ts while scrolling down. Hiding gets its own, slower
+  ease-in-out so the bar glides away; --ease-fn front-loads nearly all of its
+  motion, which read as a snap. Revealing keeps the quicker transition above.
+*/
+.navigation[data-hidden] {
+  translate: 0 -100%;
+  transition: translate 600ms cubic-bezier(0.45, 0, 0.25, 1);
 }
 
 .navigation ul {
@@ -21,17 +45,8 @@
 .navigation li {
   list-style-type: none;
   white-space: nowrap;
+  margin: 0;
   padding: var(--padding-s) 0;
-}
-
-@media only screen and (min-width: 1024px) {
-  .navigation {
-    position: static;
-  }
-
-  .navigation li {
-    padding: var(--padding-lg) 0;
-  }
 }
 
 /*
@@ -70,6 +85,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .navigation,
+  .navigation[data-hidden],
   .navigation a {
     transition: none;
   }
