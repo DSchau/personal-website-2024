@@ -4,9 +4,11 @@
   The stroke is an SVG mask filled with --highlight. The mask's turbulence
   filters wobble its edges and lay faint horizontal streaks through it, and
   its gradient lets ink pool at both ends where the nib rests. Each end is
-  cut at an angle like a chisel tip. It sits on top of the label with
-  multiply, the way ink sits on paper: the text stays crisp and the
-  colour reads as translucent.
+  cut at an angle like a chisel tip. It sits low, from about mid x-height
+  to just under the descenders, so it reads as a thick underline that only
+  catches the bottom of the letters. It's multiplied over the label, the way
+  ink sits on paper: the text stays crisp and the colour reads as
+  translucent.
 
   Hovering draws it left to right at about hand speed: --len (set to the
   label's length) gives longer words longer strokes, after a short pause
@@ -42,7 +44,7 @@ li:nth-child(3n) .marker {
 
   content: '';
   position: absolute;
-  inset: 0.3em -0.16em 0.04em;
+  inset: 0.72em -0.16em -0.14em;
   pointer-events: none;
 
   background: linear-gradient(90deg, var(--ink-deep), var(--highlight) 18%, var(--highlight) 82%, var(--ink-deep));
