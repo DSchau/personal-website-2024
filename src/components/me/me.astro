@@ -22,7 +22,10 @@ import { Image } from '@unpic/astro'
     padding: 0;
 
     font-size: inherit;
-    line-height: 1;
+    /* match the headshot height so the name stays centered on it while
+       exposing a real text baseline for siblings to align to */
+    line-height: 24px;
+    align-self: baseline;
   }
 </style>
 
