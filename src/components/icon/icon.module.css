@@ -180,18 +180,24 @@
   }
 
   /*
-    email: the envelope draws back, whooshes off to the right with its speed
-    lines streaking after it, then glides back in from the left
+    email: once the colour is in, the envelope crouches back, then takes off up
+    and to the right, tilting and shrinking into the distance as its speed lines
+    stretch out behind it. A fresh envelope then pops in where it was.
+    The flap shares the envelope's centre (4.5 units down its own box) so the
+    two turn and scale as one.
   */
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] :is([data-part='envelope'], [data-part='flap']) {
-    animation: icon-whoosh 760ms var(--ease-in-out) 120ms;
+    animation: icon-mail-fly 1500ms linear 200ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='flap'] {
+    transform-origin: center 4.5px;
   }
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part^='line'] {
     transform-origin: right center;
-    animation: icon-streak 760ms var(--ease-in-out) 120ms;
+    animation: icon-mail-trail 1500ms linear 200ms;
   }
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='line2'] {
-    animation-delay: 150ms;
+    animation-delay: 240ms;
   }
 
   /* x: winds up, then spins a half turn (the mark is symmetric, so it lands as it started) */
@@ -313,20 +319,25 @@
   80% { transform: translateY(0.4px); }
 }
 
-@keyframes icon-whoosh {
-  18% { transform: translateX(-1.5px); }
-  40% { opacity: 1; }
-  52% { opacity: 0; transform: translateX(10px); }
-  52.1% { opacity: 0; transform: translateX(-7px); }
-  82% { opacity: 1; transform: translateX(0.6px); }
+/* each step carries its own easing, so the gesture accelerates away and springs back in */
+@keyframes icon-mail-fly {
+  0% { transform: none; animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1); }
+  18% { transform: translateX(-1.2px) scale(0.92, 1.06); animation-timing-function: cubic-bezier(0.55, 0, 0.8, 0.4); }
+  42% { opacity: 1; }
+  50% { opacity: 0; transform: translate(18px, -10px) rotate(-18deg) scale(0.5); }
+  60% { opacity: 0; transform: scale(0.4); animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1.25); }
+  84% { opacity: 1; transform: scale(1.05); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  100% { transform: none; }
 }
 
-@keyframes icon-streak {
-  18% { transform: translateX(1px) scaleX(0.6); }
-  44% { opacity: 1; transform: translateX(5px) scaleX(1.6); }
-  56% { opacity: 0; transform: translateX(9px) scaleX(0.4); }
-  70% { opacity: 0; transform: translateX(-1px) scaleX(0.4); }
-  90% { opacity: 1; transform: scaleX(1.1); }
+@keyframes icon-mail-trail {
+  0% { transform: none; animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1); }
+  18% { transform: translateX(1px) scaleX(0.5); animation-timing-function: cubic-bezier(0.55, 0, 0.8, 0.4); }
+  42% { opacity: 1; }
+  50% { opacity: 0; transform: translateX(12px) scaleX(2); }
+  66% { opacity: 0; transform: scaleX(0); animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+  92% { opacity: 1; }
+  100% { transform: none; }
 }
 
 @keyframes icon-spin {
