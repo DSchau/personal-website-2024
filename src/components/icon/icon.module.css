@@ -85,7 +85,7 @@
     transition: none;
   }
   /* parts that only appear mid-gesture arrive already in colour */
-  .icon.icon :is([data-part='smoke'], [data-part='letter']) :is(.paint, .ink),
+  .icon.icon [data-part='smoke'] :is(.paint, .ink),
   .icon[data-icon='books'] :is([data-part='page'], [data-part='back']) :is(.paint, .ink) {
     clip-path: none;
     transition: none;
@@ -103,7 +103,7 @@
 .icon [data-part='spark3'] { --dx: 1.5px; --dy: -1.5px; }
 
 /* only there while their gesture plays */
-.icon :is([data-part='smoke'], [data-part^='spark'], [data-part='letter']),
+.icon :is([data-part='smoke'], [data-part^='spark']),
 .icon[data-icon='books'] :is([data-part='page'], [data-part='back']) {
   opacity: 0;
 }
@@ -179,13 +179,19 @@
     animation: icon-handle 640ms var(--ease-in-out);
   }
 
-  /* email: the flap lifts, a letter slides up and out, and the flap shuts */
-  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='flap'] {
-    transform-origin: center top;
-    animation: icon-flap 700ms var(--ease-in-out);
+  /*
+    email: the envelope draws back, whooshes off to the right with its speed
+    lines streaking after it, then glides back in from the left
+  */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] :is([data-part='envelope'], [data-part='flap']) {
+    animation: icon-whoosh 760ms var(--ease-in-out) 120ms;
   }
-  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='letter'] {
-    animation: icon-send 700ms var(--ease-in-out);
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part^='line'] {
+    transform-origin: right center;
+    animation: icon-streak 760ms var(--ease-in-out) 120ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='line2'] {
+    animation-delay: 150ms;
   }
 
   /* x: winds up, then spins a half turn (the mark is symmetric, so it lands as it started) */
@@ -307,16 +313,20 @@
   80% { transform: translateY(0.4px); }
 }
 
-@keyframes icon-flap {
-  28%, 66% { transform: scaleY(-0.4); }
-  86% { transform: scaleY(1.12); }
+@keyframes icon-whoosh {
+  18% { transform: translateX(-1.5px); }
+  40% { opacity: 1; }
+  52% { opacity: 0; transform: translateX(10px); }
+  52.1% { opacity: 0; transform: translateX(-7px); }
+  82% { opacity: 1; transform: translateX(0.6px); }
 }
 
-@keyframes icon-send {
-  0%, 22% { opacity: 0; transform: translateY(4px); }
-  50% { opacity: 1; transform: translateY(-1.5px); }
-  70% { opacity: 1; transform: translateY(-2.5px); }
-  100% { opacity: 0; transform: translateY(-5px); }
+@keyframes icon-streak {
+  18% { transform: translateX(1px) scaleX(0.6); }
+  44% { opacity: 1; transform: translateX(5px) scaleX(1.6); }
+  56% { opacity: 0; transform: translateX(9px) scaleX(0.4); }
+  70% { opacity: 0; transform: translateX(-1px) scaleX(0.4); }
+  90% { opacity: 1; transform: scaleX(1.1); }
 }
 
 @keyframes icon-spin {
