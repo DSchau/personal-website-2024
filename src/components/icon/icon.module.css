@@ -39,12 +39,60 @@
   stroke-linejoin: round;
 }
 
-.icon path {
+.icon [data-part] {
   transform-box: fill-box;
   transform-origin: center;
 }
 
-/* the current page: a bolder stroke, matching its bold label */
+/*
+  The colour under the ink. Leaving the link drains it quickly and all at once;
+  arriving pours it in part by part (see the motion block below). The ink
+  shifts from black to its part's own darker shade as the colour lands.
+*/
+.paint {
+  stroke: none;
+  opacity: 0;
+  transition: opacity 160ms var(--ease-out);
+}
+.ink {
+  transition: stroke 160ms var(--ease-out);
+}
+:is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .paint {
+  opacity: 1;
+  transition-duration: 300ms;
+  transition-delay: calc(var(--i) * 60ms);
+}
+:is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .ink {
+  stroke: var(--lit, currentColor);
+  transition-duration: 300ms;
+  transition-delay: calc(var(--i) * 70ms);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* a bottom-up wipe, like ink soaking up through paper, overshooting a touch */
+  .paint {
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 160ms var(--ease-out), clip-path 0s linear 160ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .paint {
+    clip-path: inset(-10% -10% -10% -10%);
+    transition:
+      opacity 120ms var(--ease-out) calc(var(--i) * 70ms),
+      clip-path 420ms var(--ease-out) calc(var(--i) * 70ms);
+  }
+  /* the current page's colour is already there on load, not poured in */
+  .icon.active.active :is(.paint, .ink) {
+    transition: none;
+  }
+  /* parts that only appear mid-gesture arrive already in colour */
+  .icon.icon :is([data-part='smoke'], [data-part='letter']) :is(.paint, .ink),
+  .icon[data-icon='books'] :is([data-part='page'], [data-part='back']) :is(.paint, .ink) {
+    clip-path: none;
+    transition: none;
+  }
+}
+
+/* the current page: in colour, with a bolder stroke matching its bold label */
 .active {
   stroke-width: 2.5;
 }
@@ -56,23 +104,26 @@
 
 /* only there while their gesture plays */
 .icon :is([data-part='smoke'], [data-part^='spark'], [data-part='letter']),
-.icon[data-icon='books'] [data-part='page'] {
+.icon[data-icon='books'] :is([data-part='page'], [data-part='back']) {
   opacity: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* home: the door swings open on its hinge as the chimney puffs out a curl of smoke */
+  /*
+    home: once the colour is in, the door swings open on its hinge onto a lit
+    hall, the chimney gives a little puff, and two clouds of smoke drift up
+  */
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='door'] {
     transform-origin: left center;
-    animation: icon-door 680ms var(--ease-in-out);
+    animation: icon-door 760ms var(--ease-in-out) 180ms;
   }
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='chimney'] {
     transform-origin: center bottom;
-    animation: icon-chimney 560ms var(--ease-in-out);
+    animation: icon-chimney 420ms var(--ease-in-out) 260ms;
   }
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='home'] [data-part='smoke'] {
-    transform-origin: center bottom;
-    animation: icon-puff 620ms var(--ease-out) 140ms backwards;
+    transform-origin: left bottom;
+    animation: icon-puff 720ms var(--ease-out) 380ms;
   }
 
   /* posts: the page lifts toward you, its corner flicks, and the lines write themselves in */
@@ -106,10 +157,16 @@
     animation-delay: 230ms;
   }
 
-  /* books: a page lifts off the right side and turns over the spine */
-  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='books'] [data-part='page'] {
+  /*
+    books: once the colour is in, the right-hand page lifts, turns over the
+    spine showing its blue back, and settles onto the left-hand page
+  */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='books'] :is([data-part='page'], [data-part='back']) {
     transform-origin: left center;
-    animation: icon-turn-page 640ms var(--ease-in-out);
+    animation: icon-turn-page 660ms var(--ease-in-out) 260ms, icon-page-front 660ms linear 260ms;
+  }
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='books'] [data-part='back'] {
+    animation-name: icon-turn-page, icon-page-back;
   }
 
   /* work: the briefcase crouches, hops, and lands; the handle follows a beat late */
@@ -176,20 +233,20 @@
 }
 
 @keyframes icon-door {
-  35%, 55% { transform: scaleX(0.2) skewY(-12deg); }
-  82% { transform: scaleX(1.1); }
+  40%, 60% { transform: scaleX(0.15) skewY(-14deg); }
+  86% { transform: scaleX(1.06); }
 }
 
 @keyframes icon-chimney {
-  20% { transform: scaleY(0.75); }
-  42% { transform: scaleY(1.15); }
-  70% { transform: none; }
+  30% { transform: scaleY(0.82); }
+  60% { transform: scaleY(1.08); }
 }
 
 @keyframes icon-puff {
-  0% { opacity: 0; transform: translateY(2px) scale(0.4); }
-  30% { opacity: 1; }
-  100% { opacity: 0; transform: translate(0.6px, -2.2px) scale(1.2); }
+  0% { opacity: 0; transform: translateY(1.5px) scale(0.3); }
+  25% { opacity: 1; }
+  65% { opacity: 1; }
+  100% { opacity: 0; transform: translate(0.8px, -1px) scale(1.15); }
 }
 
 @keyframes icon-lift {
@@ -219,11 +276,21 @@
 }
 
 @keyframes icon-turn-page {
-  0% { opacity: 1; transform: none; }
-  40% { transform: scaleX(0.35) skewY(-12deg); }
-  62% { transform: scaleX(-0.6) skewY(-6deg); }
-  88% { opacity: 1; }
-  100% { opacity: 0; transform: scaleX(-1); }
+  0% { transform: none; }
+  40% { transform: scaleX(0.4) skewY(-10deg); }
+  60% { transform: scaleX(-0.4) skewY(-10deg); }
+  82% { transform: scaleX(-1.04) skewY(2deg); }
+  100% { transform: scaleX(-1); }
+}
+
+/* the turning page shows its front until it's edge-on over the spine, then its back */
+@keyframes icon-page-front {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes icon-page-back {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 
 @keyframes icon-hop {

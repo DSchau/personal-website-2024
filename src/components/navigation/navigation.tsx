@@ -30,7 +30,7 @@ export function Navigation({ pathname }: Props) {
               <li key={link.name} className={active ? styles.active : ''}>
                 <a href={link.to}>
                   {isIconName(link.name) && <Icon name={link.name} active={active} />}
-                  <span>{link.name}</span>
+                  <span data-text={link.name}>{link.name}</span>
                 </a>
               </li>
             )
