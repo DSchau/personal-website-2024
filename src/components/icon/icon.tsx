@@ -115,19 +115,15 @@ const icons = {
     },
     band: { d: 'M3.5 12.5h17', ink: '#6b3712', paint: [['M10 10.6h4v3.8h-4z', '#ffd34d']] },
   },
-  // an envelope in flight, speed lines trailing behind it
+  // a paper plane, with a looping trail that only shows while it flies
   email: {
-    envelope: {
-      d: 'M9 6h11a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 20 18H9a1.5 1.5 0 0 1-1.5-1.5v-9A1.5 1.5 0 0 1 9 6z', ink: '#1d5fae',
-      fill: '#5aa9ff',
+    trail: { d: 'M2 21.5c3.5.5 2-4.5 4.5-3.5S6 21 8.5 16', ink: '#7cb8ff' },
+    plane: {
+      d: 'M21.5 2.5 2.5 10.2l7.2 3.6 3.6 7.7z', ink: '#1d5fae',
+      fill: '#e8f3ff',
+      paint: [['M21.5 2.5 9.7 13.8l3.6 7.7z', '#5aa9ff']],
     },
-    flap: {
-      d: 'M8.5 7.5 14.5 12l6-4.5', ink: '#1d5fae',
-      paint: [['M8.5 7.5 14.5 12l6-4.5z', '#b9e1ff'], ['M13.4 12a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0-2.2 0', '#ff4f6d']],
-    },
-    line1: { d: 'M2.5 9H5', ink: '#3f8ef0' },
-    line2: { d: 'M1 12h4', ink: '#3f8ef0' },
-    line3: { d: 'M2.5 15H5', ink: '#3f8ef0' },
+    crease: { d: 'M21.5 2.5 9.7 13.8', ink: '#1d5fae' },
   },
   x: {
     bar: { d: 'M4 4h4.6L20 20h-4.6z', ink: '#000', fill: '#000' },
