@@ -1,0 +1,79 @@
+/*
+  A highlighter pass under a link label, shared by the nav and footer.
+
+  The stroke is an SVG mask filled with --highlight. The mask's turbulence
+  filters wobble its edges and lay faint horizontal streaks through it, and
+  its gradient lets ink pool at both ends where the nib rests. Each end is
+  cut at an angle like a chisel tip. It sits on top of the label with
+  multiply, the way ink sits on paper: the text stays crisp and the
+  colour reads as translucent.
+
+  Hovering draws it left to right at about hand speed: --len (set to the
+  label's length) gives longer words longer strokes, after a short pause
+  for the nib to touch down. The leading edge is slanted like the nib.
+  Leaving the link fades the stroke instead of un-drawing it, since ink
+  can't retract, and resets it once it's invisible.
+
+  Three stroke shapes and tilts rotate through the list, so neighbouring
+  links never share a stroke.
+*/
+.marker {
+  --stroke-a: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><defs><linearGradient id='g'><stop offset='0' stop-opacity='1'/><stop offset='.07' stop-opacity='.84'/><stop offset='.9' stop-opacity='.8'/><stop offset='1' stop-opacity='.98'/></linearGradient><filter id='f' x='-5%25' y='-25%25' width='110%25' height='150%25'><feTurbulence type='fractalNoise' baseFrequency='.045 .35' numOctaves='2' seed='3' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='fractalNoise' baseFrequency='.003 .8' seed='3' result='s'/><feColorMatrix in='s' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.7 0 0 0 1.25' result='a'/><feComposite in='d' in2='a' operator='in'/></filter></defs><path d='M8 6 L197 3 L192 36 L3 38 Z' fill='url(%23g)' filter='url(%23f)'/></svg>");
+  --stroke-b: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><defs><linearGradient id='g'><stop offset='0' stop-opacity='.96'/><stop offset='.1' stop-opacity='.8'/><stop offset='.93' stop-opacity='.84'/><stop offset='1' stop-opacity='1'/></linearGradient><filter id='f' x='-5%25' y='-25%25' width='110%25' height='150%25'><feTurbulence type='fractalNoise' baseFrequency='.05 .3' numOctaves='2' seed='11' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='8' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='fractalNoise' baseFrequency='.002 .7' seed='11' result='s'/><feColorMatrix in='s' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.7 0 0 0 1.25' result='a'/><feComposite in='d' in2='a' operator='in'/></filter></defs><path d='M6 4 L195 6 L191 38 L2 35 Z' fill='url(%23g)' filter='url(%23f)'/></svg>");
+  --stroke-c: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><defs><linearGradient id='g'><stop offset='0' stop-opacity='1'/><stop offset='.06' stop-opacity='.82'/><stop offset='.88' stop-opacity='.8'/><stop offset='1' stop-opacity='.95'/></linearGradient><filter id='f' x='-5%25' y='-25%25' width='110%25' height='150%25'><feTurbulence type='fractalNoise' baseFrequency='.04 .4' numOctaves='2' seed='27' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='fractalNoise' baseFrequency='.003 .9' seed='27' result='s'/><feColorMatrix in='s' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.7 0 0 0 1.25' result='a'/><feComposite in='d' in2='a' operator='in'/></filter></defs><path d='M9 5 L198 4 L194 37 L4 36 Z' fill='url(%23g)' filter='url(%23f)'/></svg>");
+  --stroke: var(--stroke-a);
+  --tilt: -1.2deg;
+
+  position: relative;
+}
+
+li:nth-child(3n + 2) .marker {
+  --stroke: var(--stroke-b);
+  --tilt: 0.7deg;
+}
+li:nth-child(3n) .marker {
+  --stroke: var(--stroke-c);
+  --tilt: -0.4deg;
+}
+
+.marker::before {
+  --ink-deep: color-mix(in oklab, var(--highlight), #f59e0b 22%);
+  --drawn: polygon(-0.5em 0, calc(100% + 0.3em) 0, 100% 100%, -0.5em 100%);
+
+  content: '';
+  position: absolute;
+  inset: 0.3em -0.16em 0.04em;
+  pointer-events: none;
+
+  background: linear-gradient(90deg, var(--ink-deep), var(--highlight) 18%, var(--highlight) 82%, var(--ink-deep));
+  mask: var(--stroke) 0 0 / 100% 100% no-repeat;
+  mix-blend-mode: multiply;
+  rotate: var(--tilt);
+
+  opacity: 0;
+  clip-path: polygon(-0.5em 0, 0 0, -0.3em 100%, -0.5em 100%);
+  transition: opacity 160ms ease-out, clip-path 0s linear 160ms;
+}
+
+a:is(:hover, :focus-visible) .marker::before {
+  opacity: 1;
+  clip-path: var(--drawn);
+  transition:
+    opacity 0s,
+    clip-path calc(120ms + var(--len, 6) * 22ms) cubic-bezier(0.45, 0, 0.2, 1) 40ms;
+}
+
+/* the current page: a paler stroke that's already dry when the page loads */
+a[aria-current='page'] .marker::before {
+  --highlight: var(--highlight-soft);
+  opacity: 1;
+  clip-path: var(--drawn);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker::before,
+  a:is(:hover, :focus-visible) .marker::before {
+    transition: none;
+  }
+}

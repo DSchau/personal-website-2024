@@ -1,6 +1,9 @@
+import type { CSSProperties } from 'react'
+
 import socialLinks from '@/assets/contact.yaml'
 
 import { Icon, isIconName } from '@/components/icon/icon.tsx'
+import marker from '@/components/marker/marker.module.css'
 import { flock } from '@/components/sea/scene'
 import { GRASS_INK } from '@/components/sea/wash'
 import { BOATS, BRIDGE, H, INK, PAPER, W, grassTufts, sailboat } from './scene'
@@ -123,7 +126,7 @@ export function Footer({ updated, commits }: Props) {
             <li key={link.href}>
               <a href={link.href}>
                 {isIconName(link.icon) && <Icon name={link.icon} />}
-                <span>{link.label}</span>
+                <span className={marker.marker} style={{ '--len': link.label.length } as CSSProperties}>{link.label}</span>
               </a>
             </li>
           ))}
