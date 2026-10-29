@@ -1,5 +1,6 @@
 ---
 import type { ReadsByYear } from "@/lib/goodreads";
+import { resizeCover } from "@/lib/goodreads";
 
 interface Props {
   groups: ReadsByYear[];
@@ -39,7 +40,7 @@ const currentYear = new Date().getUTCFullYear();
             {book.imageUrl ? (
               <img
                 class="thumb"
-                src={book.imageUrl}
+                src={resizeCover(book.imageUrl, 120)}
                 alt=""
                 width="40"
                 height="60"
