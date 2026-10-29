@@ -5,7 +5,7 @@ import styles from './icon.module.css'
   Hand-drawn 24×24 icons for the nav and footer links: a lucide-weight ink
   outline (2px, round caps and joins) over flat colour. Each part is a named
   group so icon.module.css can animate it on its own; the parts it hides at rest
-  (smoke, sparks, the turning page, the letter) only appear mid-gesture.
+  (smoke, sparks, the turning page) only appear mid-gesture.
 
   A part is its outline path, plus optionally the colour under it: `fill` paints
   the outline's own shape, `paint` adds fill-only details on top (windows, a
@@ -115,17 +115,15 @@ const icons = {
     },
     band: { d: 'M3.5 12.5h17', ink: '#6b3712', paint: [['M10 10.6h4v3.8h-4z', '#ffd34d']] },
   },
+  // a paper plane, with a looping trail that only shows while it flies
   email: {
-    letter: {
-      d: 'M8 7V3h8v4', ink: '#7a8599',
-      paint: [['M8 7V3h8v4z', '#fff'], ['M11 4.4a.9.9 0 0 1 1 .5.9.9 0 0 1 1-.5c.9.2.9 1.3 0 2L12 7.2l-1-.8c-.9-.7-.9-1.8 0-2z', '#ff4f6d']],
+    trail: { d: 'M2 21.5c3.5.5 2-4.5 4.5-3.5S6 21 8.5 16', ink: '#7cb8ff' },
+    plane: {
+      d: 'M21.5 2.5 2.5 10.2l7.2 3.6 3.6 7.7z', ink: '#1d5fae',
+      fill: '#e8f3ff',
+      paint: [['M21.5 2.5 9.7 13.8l3.6 7.7z', '#5aa9ff']],
     },
-    envelope: {
-      d: 'M5 5.5h14A1.5 1.5 0 0 1 20.5 7v10a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 17V7A1.5 1.5 0 0 1 5 5.5z', ink: '#1d5fae',
-      fill: '#5aa9ff',
-      paint: [['M3.5 17 10 11.2l2 1.3 2-1.3 6.5 5.8v0a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 17z', '#3f8ef0']],
-    },
-    flap: { d: 'm4.5 7 7.5 5.5L19.5 7', ink: '#1d5fae', paint: [['M4.5 7 12 12.5 19.5 7z', '#b9e1ff']] },
+    crease: { d: 'M21.5 2.5 9.7 13.8', ink: '#1d5fae' },
   },
   x: {
     bar: { d: 'M4 4h4.6L20 20h-4.6z', ink: '#000', fill: '#000' },

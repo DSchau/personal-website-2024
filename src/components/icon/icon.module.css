@@ -85,7 +85,7 @@
     transition: none;
   }
   /* parts that only appear mid-gesture arrive already in colour */
-  .icon.icon :is([data-part='smoke'], [data-part='letter']) :is(.paint, .ink),
+  .icon.icon :is([data-part='smoke'], [data-part='trail']) :is(.paint, .ink),
   .icon[data-icon='books'] :is([data-part='page'], [data-part='back']) :is(.paint, .ink) {
     clip-path: none;
     transition: none;
@@ -103,7 +103,7 @@
 .icon [data-part='spark3'] { --dx: 1.5px; --dy: -1.5px; }
 
 /* only there while their gesture plays */
-.icon :is([data-part='smoke'], [data-part^='spark'], [data-part='letter']),
+.icon :is([data-part='smoke'], [data-part^='spark'], [data-part='trail']),
 .icon[data-icon='books'] :is([data-part='page'], [data-part='back']) {
   opacity: 0;
 }
@@ -179,13 +179,20 @@
     animation: icon-handle 640ms var(--ease-in-out);
   }
 
-  /* email: the flap lifts, a letter slides up and out, and the flap shuts */
-  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='flap'] {
-    transform-origin: center top;
-    animation: icon-flap 700ms var(--ease-in-out);
+  /*
+    email: once the colour is in, the paper plane draws back like a hand about to
+    throw it, launches up and off to the right with a dashed trail looping out
+    behind, then glides back in from the lower left and settles. Plane and crease
+    turn about the same point so they move as one.
+  */
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] :is([data-part='plane'], [data-part='crease']) {
+    transform-box: view-box;
+    transform-origin: 12px 12px;
+    animation: icon-plane-fly 1600ms linear 250ms;
   }
-  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='letter'] {
-    animation: icon-send 700ms var(--ease-in-out);
+  :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing])[data-icon='email'] [data-part='trail'] {
+    stroke-dasharray: 1.6 2.4;
+    animation: icon-plane-trail 1600ms linear 250ms;
   }
 
   /* x: winds up, then spins a half turn (the mark is symmetric, so it lands as it started) */
@@ -307,16 +314,24 @@
   80% { transform: translateY(0.4px); }
 }
 
-@keyframes icon-flap {
-  28%, 66% { transform: scaleY(-0.4); }
-  86% { transform: scaleY(1.12); }
+/* each step carries its own easing: it eases back, accelerates away, and floats in to land */
+@keyframes icon-plane-fly {
+  0% { transform: none; animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1); }
+  16% { transform: translate(-1.6px, 1.6px) rotate(6deg); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0.3); }
+  36% { opacity: 1; }
+  44% { opacity: 0; transform: translate(15px, -15px) rotate(-6deg) scale(0.75); }
+  48% { opacity: 0; transform: translate(-13px, 9px) rotate(-14deg) scale(0.85); animation-timing-function: cubic-bezier(0.22, 0.7, 0.3, 1); }
+  58% { opacity: 1; }
+  82% { transform: translate(0.6px, -0.6px) rotate(2deg); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  100% { transform: none; }
 }
 
-@keyframes icon-send {
-  0%, 22% { opacity: 0; transform: translateY(4px); }
-  50% { opacity: 1; transform: translateY(-1.5px); }
-  70% { opacity: 1; transform: translateY(-2.5px); }
-  100% { opacity: 0; transform: translateY(-5px); }
+@keyframes icon-plane-trail {
+  0%, 18% { opacity: 0; stroke-dashoffset: 0; transform: none; }
+  24% { opacity: 1; }
+  34% { opacity: 1; }
+  46% { opacity: 0; stroke-dashoffset: -8; transform: translate(4px, -4px); }
+  100% { opacity: 0; }
 }
 
 @keyframes icon-spin {
