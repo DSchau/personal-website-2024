@@ -76,6 +76,10 @@
   margin: calc(-1 * var(--padding-md)) 0 0;
 }
 
+.scene:global(.offscreen) * {
+  animation-play-state: paused !important;
+}
+
 .boat {
   animation: sail 60s ease-in-out infinite alternate;
 }

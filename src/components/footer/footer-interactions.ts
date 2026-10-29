@@ -12,6 +12,12 @@ function init() {
   if (!svg || !grass || reduced.matches) return
   const family = walk(svg)
 
+  // the ~250 CSS animations (grass, boats, gulls) otherwise keep the main
+  // thread busy while the footer is scrolled out of view
+  new IntersectionObserver(([e]) => {
+    svg.classList.toggle('offscreen', !e.isIntersecting)
+  }).observe(svg)
+
   const tufts = [...grass.querySelectorAll<SVGGElement>('[data-x]')].map(el => ({
     el,
     x: Number(el.dataset.x),

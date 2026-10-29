@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
 
 export type MediaKind = "book" | "vinyl" | "case" | "game";
 
@@ -66,7 +67,14 @@ const depth =
       ? Math.max(10, Math.round(h * 0.07))
       : 4);
 const floatDelay = -rand(0, 5);
-const src = typeof image === "string" ? image : (image?.src ?? "");
+// local artwork is resized to 2x the rendered height and served as webp;
+// the originals are full-size scans, far larger than the few hundred px shown
+const src =
+  typeof image === "string"
+    ? image
+    : image
+      ? (await getImage({ src: image, height: Math.min(h * 2, image.height), format: "webp", layout: "none" })).src
+      : "";
 const hue = Math.floor(Math.random() * 360);
 ---
 
