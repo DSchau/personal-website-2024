@@ -1,7 +1,10 @@
+import type { CSSProperties } from 'react'
+
 import styles from './navigation.module.css'
 
 import links from '@/assets/navigation.yaml'
 import { Icon, isIconName } from '@/components/icon/icon.tsx'
+import marker from '@/components/marker/marker.module.css'
 
 type Link = {
   name: string;
@@ -28,9 +31,11 @@ export function Navigation({ pathname }: Props) {
             const active = isActive(link, pathname)
             return (
               <li key={link.name} className={active ? styles.active : ''}>
-                <a href={link.to}>
+                <a href={link.to} aria-current={active ? 'page' : undefined}>
                   {isIconName(link.name) && <Icon name={link.name} active={active} />}
-                  <span data-text={link.name}>{link.name}</span>
+                  <span data-text={link.name}>
+                    <span className={marker.marker} style={{ '--len': link.name.length } as CSSProperties}>{link.name}</span>
+                  </span>
                 </a>
               </li>
             )
