@@ -1,4 +1,3 @@
-# Not active yet: move to .github/workflows/lighthouse.yml to turn it on.
 # Performance gate: builds the site, runs Lighthouse CI against the prerendered
 # pages (budgets in lighthouserc.cjs), and posts the results to the PR.
 name: Lighthouse
