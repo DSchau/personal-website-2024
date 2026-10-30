@@ -114,6 +114,7 @@ const hue = Math.floor(Math.random() * 360);
             width={w}
             height={h}
             loading={eager ? "eager" : "lazy"}
+            fetchpriority={eager ? "high" : undefined}
             decoding="async"
           />
         ) : (
