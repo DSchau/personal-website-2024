@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Allow: /api/og/*
 
-Sitemap: https://www.dustinschau.com/sitemap-index.xml
+Sitemap: https://dustinschau.com/sitemap-index.xml

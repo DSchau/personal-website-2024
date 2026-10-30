@@ -235,7 +235,8 @@ export default defineConfig({
     },
     validateSecrets: true
   },
-  site: env === 'development' ? 'http://localhost:4321' : 'https://www.dustinschau.com',
+  // apex is the live host (www 301s to it), so absolute URLs must use it
+  site: env === 'development' ? 'http://localhost:4321' : 'https://dustinschau.com',
   image: {
     // responsive srcset + sizes for markdown images and <Image>; sizing CSS
     // lives in blog-post.module.css, so skip Astro's injected styles
