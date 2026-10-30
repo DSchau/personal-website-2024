@@ -1,0 +1,55 @@
+# Performance gate: builds the site, runs Lighthouse CI against the prerendered
+# pages (budgets in lighthouserc.cjs), and posts the results to the PR.
+name: Lighthouse
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: lighthouse-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # The build reaches GitHub for the footer's commit stats; with a dummy
+      # token it falls back to placeholders, same as a local build. The
+      # contact form's Resend key is only read at runtime, but the build needs
+      # it set.
+      - run: npm run build
+        env:
+          GITHUB_TOKEN: dummy
+          RESEND_API_KEY: dummy
+      - name: Run Lighthouse CI
+        run: npx --yes @lhci/cli@0.15.1 autorun
+      - name: Summarize results
+        if: always() && hashFiles('.lighthouseci/lhr-*.json') != ''
+        run: |
+          node scripts/lighthouse-summary.mjs > lighthouse-summary.md
+          cat lighthouse-summary.md >> "$GITHUB_STEP_SUMMARY"
+      # Read-only token on PRs from forks, so this can't always comment.
+      - name: Comment on PR
+        if: always() && hashFiles('lighthouse-summary.md') != ''
+        continue-on-error: true
+        run: gh pr comment "${{ github.event.pull_request.number }}" --body-file lighthouse-summary.md --edit-last --create-if-none
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@v7
+        if: always() && hashFiles('.lighthouseci/lhr-*.json') != ''
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          include-hidden-files: true

@@ -11,6 +11,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Both `astro dev` and `astro preview` run on-demand routes in `workerd` (via the Cloudflare Vite plugin), not Node. Local state lives in `.wrangler/` and preview secrets are copied from `.env` into `dist/server/.dev.vars` (both git-ignored).
 
+### Performance gate
+`.github/workflows/lighthouse.yml` runs Lighthouse CI (mobile, 3 runs, median) on every PR to `main` against the prerendered pages in `dist/client/`, then posts a summary comment (edited in place on each push). Runs on `main` save `lighthouse-summary.json` as the `lighthouse-baseline` artifact, and PRs compare against the newest one. Pages and budgets live in `lighthouserc.cjs`: byte budgets, CLS, accessibility and best practices fail the check, and the noisier performance score and TBT only warn. To run it locally after `npm run build`: `npx @lhci/cli@0.15.1 autorun` (needs Chrome; set `CHROME_PATH` if it isn't found).
+
 ### Deployment
 This site is deployed to **Cloudflare Workers** (static assets + a Worker) using the `@astrojs/cloudflare` adapter in SSR mode (`output: 'server'`). The build writes static files to `dist/client/` and the Worker to `dist/server/`, along with a generated `dist/server/wrangler.json` (derived from the root `wrangler.jsonc`). Adapter v13+ no longer targets Cloudflare Pages.
 

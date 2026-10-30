@@ -39,6 +39,7 @@ const fullDescription = description ? description : metayaml.description
 	<head>
 		<meta charset="utf-8" />
 		{pathname === '' && <link rel="preconnect" href="https://dschau-website.imgix.net" />}
+		{/^books\/?$/.test(pathname) && <link rel="preconnect" href="https://m.media-amazon.com" />}
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="alternate" type="application/rss+xml" title={metayaml.title} href={new URL('rss.xml', Astro.site)} />
 		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
