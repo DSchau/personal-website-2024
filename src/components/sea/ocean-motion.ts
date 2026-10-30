@@ -6,8 +6,9 @@
  *
  * Redraws the ocean (ocean.ts) on a canvas laid exactly over the SVG, mapping
  * the SVG's viewBox + preserveAspectRatio "slice" onto the canvas by hand, so
- * the swells roll in toward you. Runs ~30fps, only while on screen. The 404's
- * bottle rides the surface: it rises, falls and tilts with the water under it.
+ * the swells roll in toward you. Runs ~30fps, only while on screen, and only
+ * once the page has loaded. The 404's bottle rides the surface: it rises,
+ * falls and tilts with the water under it.
  */
 import { type OceanConfig, OceanField } from './ocean'
 
@@ -34,6 +35,8 @@ function start(root: HTMLElement) {
 
   // viewBox → canvas pixels, matching preserveAspectRatio "xMaxYMax slice" / "xMidYMax slice"
   let k = 1, tx = 0, ty = 0, dpr = 1
+  // the slice of the viewBox actually on screen (a phone shows about a quarter of it), plus a little bleed
+  const view = { from: 0, to: 0 }
   const resize = () => {
     const { width, height } = root.getBoundingClientRect()
     dpr = Math.min(2, window.devicePixelRatio || 1)
@@ -42,6 +45,8 @@ function start(root: HTMLElement) {
     k = Math.max(width / BOX.w, height / BOX.h)
     tx = alignMid ? (width - BOX.w * k) / 2 : width - BOX.w * k
     ty = height - BOX.h * k
+    view.from = BOX.x - tx / k - 8
+    view.to = BOX.x + (width - tx) / k + 8
     const top = Math.max(BOX.y, BOX.y - ty / k)
     if (skyWash) {
       const hz = Number(skyWash.getAttribute('y2'))
@@ -65,7 +70,7 @@ function start(root: HTMLElement) {
       if (!p) paths.set(w, (p = new Path2D()))
       p.moveTo(pts[0], pts[1])
       for (let i = 2; i < pts.length; i += 2) p.lineTo(pts[i], pts[i + 1])
-    })
+    }, view)
     for (const [w, p] of paths) {
       ctx.lineWidth = w
       ctx.stroke(p)
@@ -91,10 +96,17 @@ function start(root: HTMLElement) {
   // re-fit (and redraw, so a still frame stays sharp) on resize; with reduced motion that's all we do
   new ResizeObserver(() => { resize(); draw(t) }).observe(root)
   if (reduced) return
-  new IntersectionObserver(([e]) => {
+  // the still frame is already up; set it rolling once the page has loaded and gone quiet, so it never competes with loading
+  whenIdle(() => new IntersectionObserver(([e]) => {
     if (e.isIntersecting && !raf) { last = performance.now(); raf = requestAnimationFrame(frame) }
     else if (!e.isIntersecting && raf) { cancelAnimationFrame(raf); raf = 0 }
-  }).observe(root)
+  }).observe(root))
+}
+
+function whenIdle(fn: () => void) {
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 300))
+  if (document.readyState === 'complete') idle()
+  else addEventListener('load', idle, { once: true })
 }
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches

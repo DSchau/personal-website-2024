@@ -132,8 +132,10 @@ export class OceanField {
   }
 
   /** trace the ocean at time `t` (seconds): `emit` gets polyline runs of constant (bucketed) stroke width, nearest lines first */
-  trace(t: number, emit: (run: Run) => void) {
+  trace(t: number, emit: (run: Run) => void, view?: { from: number; to: number }) {
     const { o, ks, top, mine, nBins } = this
+    // columns don't affect each other (hidden lines are per-x), so only the visible span needs tracing
+    const x0 = view?.from ?? -Infinity, x1 = view?.to ?? Infinity
     const BIN = OceanField.BIN
     top.fill(Infinity)
     // per-swell rotation for this frame: cos(φ − ωt) = cos φ·cos ωt + sin φ·sin ωt
@@ -150,7 +152,9 @@ export class OceanField {
       let prevBin = -1
       mine.fill(Infinity)
 
-      for (let i = 0; i < xs.length; i++) {
+      const step = xs[1] - xs[0]
+      const iEnd = Math.min(xs.length, Math.ceil((x1 - xs[0]) / step) + 1)
+      for (let i = Math.max(0, Math.floor((x0 - xs[0]) / step)); i < iEnd; i++) {
         const x = xs[i]
         let h = 0, dz = 0
         for (let s = 0; s < S; s++) {
