@@ -55,7 +55,7 @@ async function toDataUri(url: string): Promise<string> {
       headers: {
         Accept: "image/jpeg,image/png,image/gif",
         "User-Agent":
-          "Mozilla/5.0 (compatible; dustinschau.com/books; +https://www.dustinschau.com)",
+          "Mozilla/5.0 (compatible; dustinschau.com/books; +https://dustinschau.com)",
       },
       signal: AbortSignal.timeout(COVER_TIMEOUT_MS),
     });

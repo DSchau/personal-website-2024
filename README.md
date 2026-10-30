@@ -22,7 +22,7 @@ npm create astro@latest -- --template minimal
 
 ## 📰 RSS feed
 
-Published posts are available as an RSS 2.0 feed at [`/rss.xml`](https://www.dustinschau.com/rss.xml), newest first. The feed is built in `src/pages/rss.xml.ts`. It leaves out posts with `draft: true` in every environment, and cross-posted entries link to their `canonicalLink`. Every page advertises the feed in its `<head>`, and the footer links to it.
+Published posts are available as an RSS 2.0 feed at [`/rss.xml`](https://dustinschau.com/rss.xml), newest first. The feed is built in `src/pages/rss.xml.ts`. It leaves out posts with `draft: true` in every environment, and cross-posted entries link to their `canonicalLink`. Every page advertises the feed in its `<head>`, and the footer links to it.
 
 ## 🚀 Project Structure
 
