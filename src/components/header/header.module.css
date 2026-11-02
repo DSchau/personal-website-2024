@@ -22,6 +22,25 @@
   display: inline-block;
   font-size: clamp(2.4rem, 1.9rem + 2vw, 3rem);
   line-height: 1.1;
+
+  /*
+    Geist Serif's ELSH axis sets the shape of its dots, with a stop at each
+    quarter: circle (0), square (25), triangle (50), heart (75). Sweeping it
+    linearly on hover morphs the dots on "Hi! I'm" through every shape to a
+    heart, and back again on the way out.
+  */
+  font-variation-settings: 'ELSH' 0;
+  transition: font-variation-settings 600ms linear;
+}
+
+.title:hover {
+  font-variation-settings: 'ELSH' 75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title {
+    transition: none;
+  }
 }
 
 /* the serif is one weight, so the byline steps back by size and colour */
