@@ -1,0 +1,142 @@
+---
+// MOCK 4: a library card catalog, one index card per tag
+import Layout from '@/layouts/Layout.astro'
+import { getTags } from '@/lib/get-posts'
+import { year, shortTitle } from './_shared'
+
+export const prerender = true
+
+const tags = await getTags()
+const span = (years: number[]) => {
+  const lo = Math.min(...years), hi = Math.max(...years)
+  return lo === hi ? `${lo}` : `${lo}–${hi}`
+}
+---
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: 60rem;
+    padding: 0 var(--padding-lg);
+  }
+
+  .drawer {
+    margin: 0 auto var(--padding-xl);
+    width: max-content;
+    padding: 0.3rem 1rem;
+    border: 2px solid #b08d57;
+    border-radius: 3px;
+    background: linear-gradient(#f1e6cf, #e6d5b3);
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: var(--text-xs);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #5b4630;
+    box-shadow: inset 0 1px 0 #fff8;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: var(--padding-xl) var(--padding-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    --tilt: -0.6deg;
+  }
+  li:nth-child(3n + 2) { --tilt: 0.5deg; }
+  li:nth-child(4n + 3) { --tilt: -0.2deg; }
+
+  a.card {
+    position: relative;
+    display: block;
+    aspect-ratio: 5 / 3;
+    padding: 0.6rem 0.8rem 1rem;
+    overflow: hidden;
+
+    color: #2b2b2b;
+    text-decoration: none;
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: 0.68rem;
+    line-height: 1.15rem;
+
+    background:
+      radial-gradient(circle at 50% calc(100% - 0.55rem), var(--bg-color) 0.28rem, transparent 0.3rem),
+      linear-gradient(transparent 1.9rem, #e8a0a0 1.9rem, #e8a0a0 calc(1.9rem + 1px), transparent calc(1.9rem + 1px)),
+      repeating-linear-gradient(transparent 0 calc(1.15rem - 1px), #c9dcef calc(1.15rem - 1px) 1.15rem) 0 0.65rem / 100% 100%,
+      #fbf8ef;
+    box-shadow: 0 1px 2px #0002, 0 4px 10px -4px #0002;
+    rotate: var(--tilt);
+    transition: translate 200ms var(--ease-fn), rotate 200ms var(--ease-fn), box-shadow 200ms var(--ease-fn);
+  }
+
+  a.card:is(:hover, :focus-visible) {
+    translate: 0 -0.5rem;
+    rotate: 0deg;
+    box-shadow: 0 2px 4px #0002, 0 14px 24px -8px #0003;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    height: 1.9rem;
+  }
+
+  .subject {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .call {
+    flex-shrink: 0;
+    white-space: nowrap;
+    color: #8a7a64;
+  }
+
+  .titles {
+    margin: 0.15rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+  }
+
+  .titles li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .more {
+    color: #8a7a64;
+  }
+</style>
+
+<Layout title="Card catalog" scene="writing" byline="Posts by subject" copy={`Pull a card to find everything I've written on a subject.`}>
+  <div class="container">
+    <h2 class="section-title">Card catalog</h2>
+    <p class="drawer">Subjects · A – Z</p>
+    <ul>
+      {tags.map(tag => (
+        <li>
+          <a class="card" href={`/tags/${tag.slug}/`}>
+            <div class="head">
+              <span class="subject">{tag.label}</span>
+              <span class="call">{span(tag.posts.map(year))}</span>
+            </div>
+            <ul class="titles">
+              {tag.posts.slice(0, 3).map(post => <li>{shortTitle(post)}</li>)}
+              {tag.posts.length > 3 && <li class="more">+ {tag.posts.length - 3} more</li>}
+            </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

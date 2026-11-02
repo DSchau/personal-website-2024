@@ -1,0 +1,136 @@
+---
+// MOCK 3: a handful of hand-named topics that the loose tags roll up into
+import Layout from '@/layouts/Layout.astro'
+import marker from '@/components/marker/marker.module.css'
+import { getTags } from '@/lib/get-posts'
+import { postHref, shortTitle } from './_shared'
+
+export const prerender = true
+
+const topics = [
+  { name: 'Building for the web', blurb: 'React, Gatsby, CSS, and the plumbing in between.', tags: ['react', 'gatsby', 'javascript', 'css-in-js', 'styled-components', 'css', 'component-styling', 'glamorous', 'graphql', 'node', 'seo', 'web', 'modern-web', 'netlify'] },
+  { name: 'Work & leadership', blurb: 'Jobs, teams, and what I learned leading them.', tags: ['career', 'leadership', 'gatsby-inc', 'object-partners', 'excellence'] },
+  { name: 'AI & agents', blurb: 'What changes when software writes itself.', tags: ['ai', 'agents', 'software', 'technology'] },
+  { name: 'Open source', blurb: 'Maintaining things in public, and shipping side projects.', tags: ['open-source', 'maintenance', 'release', 'transmission', 'torrents'] },
+  { name: 'Life', blurb: 'Family, years in review, and the rest of it.', tags: ['life', 'personal', 'parenting', 'year-in-review', 'book'] },
+  { name: 'About this site', blurb: 'Who I am, what I use, and how this is built.', tags: ['about', 'intro', 'colophon', 'tech-stack', 'hardware', 'recommendations', 'simplicity', 'podcast'] },
+]
+
+const tags = await getTags()
+const cards = topics.map(topic => {
+  const members = tags.filter(tag => topic.tags.includes(tag.slug))
+  const posts = [...new Set(members.flatMap(tag => tag.posts))]
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  return { ...topic, members, posts }
+}).filter(card => card.posts.length > 0)
+---
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: 52rem;
+    padding: 0 var(--padding-lg);
+  }
+
+  ul.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+    gap: var(--padding-xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-xl);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+
+  h3 {
+    margin: 0;
+    font-family: var(--header-font);
+    font-size: 1.5rem;
+    font-weight: normal;
+  }
+
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .blurb {
+    margin: var(--padding-s) 0 var(--padding-lg);
+    font-size: var(--text-s);
+    color: var(--text-accent-color);
+  }
+
+  ol {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-s);
+  }
+
+  ol li {
+    display: flex;
+    gap: var(--padding-md);
+    padding: 0.35rem 0;
+    border-top: 1px solid var(--border-color);
+  }
+
+  ol a {
+    flex: 1;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ol a:is(:hover, :focus-visible) {
+    text-decoration: underline;
+  }
+
+  time {
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in srgb, var(--text-color) 50%, transparent);
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--padding-lg);
+    margin-top: var(--padding-lg);
+    font-size: var(--text-xs);
+    color: color-mix(in srgb, var(--text-color) 55%, transparent);
+  }
+
+  .footer .all {
+    white-space: nowrap;
+    color: var(--text-color);
+  }
+</style>
+
+<Layout title="Topics" scene="writing" byline="Posts by topic" copy={`Everything I've written, grouped by what it's about.`}>
+  <div class="container">
+    <h2 class="section-title">Topics</h2>
+    <ul class="cards">
+      {cards.map(card => (
+        <li class="card">
+          <h3><a href="#"><span class={`${marker.marker} ${marker.resting}`} style={`--len: ${card.name.length}`}>{card.name}</span></a></h3>
+          <p class="blurb">{card.blurb}</p>
+          <ol>
+            {card.posts.slice(0, 3).map(post => (
+              <li><a href={postHref(post)}>{shortTitle(post)}</a><time>{new Date(post.data.date).getUTCFullYear()}</time></li>
+            ))}
+          </ol>
+          <p class="footer">
+            <span>{card.members.map(tag => `#${tag.label}`).join(' ')}</span>
+            <a class="all" href="#">All {card.posts.length} →</a>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

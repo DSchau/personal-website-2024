@@ -1,0 +1,134 @@
+---
+// MOCK 5: no tag pages; /posts filters in place with ?tag=
+import Layout from '@/layouts/Layout.astro'
+import PostList from '@/components/post-list/post-list.astro'
+import marker from '@/components/marker/marker.module.css'
+import { getPosts, getTags } from '@/lib/get-posts'
+
+export const prerender = true
+
+const posts = await getPosts()
+const tags = await getTags()
+const common = tags.filter(tag => tag.posts.length > 1)
+const rest = tags.filter(tag => tag.posts.length === 1)
+---
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: var(--content-width);
+    padding: 0 var(--padding-lg);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem 1rem;
+    margin: 0 0 var(--padding-lg);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-s);
+  }
+
+  .filters li {
+    padding: 0;
+  }
+
+  .filters a {
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    text-decoration: none;
+  }
+
+  .filters a:is(:hover, :focus-visible),
+  .filters a[aria-current] {
+    color: var(--text-color);
+  }
+
+  .filters sup {
+    margin-left: 0.15em;
+    font-size: 0.6rem;
+    color: color-mix(in srgb, var(--text-color) 40%, transparent);
+  }
+
+  .filters .extra {
+    display: none;
+  }
+
+  .filters.open .extra {
+    display: list-item;
+  }
+
+  .filters button {
+    border: 0;
+    background: none;
+    font: inherit;
+    color: color-mix(in srgb, var(--text-color) 45%, transparent);
+    cursor: pointer;
+    font-style: italic;
+  }
+
+  .filters.open button {
+    display: none;
+  }
+
+  :global(li[hidden]) {
+    display: none;
+  }
+</style>
+
+<Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
+  <div class="container">
+    <h2 class="section-title" data-total={posts.length}>{posts.length} Posts</h2>
+    <ul class="filters" data-resting={marker.resting}>
+      <li><a href="?" data-tag=""><span class={marker.marker} style="--len: 3">all</span></a></li>
+      {common.map(tag => (
+        <li><a href={`?tag=${tag.slug}`} data-tag={tag.slug}><span class={marker.marker} style={`--len: ${tag.label.length}`}>{tag.label}</span></a><sup>{tag.posts.length}</sup></li>
+      ))}
+      {rest.map(tag => (
+        <li class="extra"><a href={`?tag=${tag.slug}`} data-tag={tag.slug}><span class={marker.marker} style={`--len: ${tag.label.length}`}>{tag.label}</span></a></li>
+      ))}
+      <li><button type="button">+{rest.length} more</button></li>
+    </ul>
+    <PostList posts={posts} />
+  </div>
+</Layout>
+
+<script>
+  const filters = document.querySelector<HTMLElement>('.filters')!
+  const heading = document.querySelector<HTMLElement>('.section-title')!
+  const items = [...document.querySelectorAll<HTMLLIElement>('ol > li')]
+
+  filters.querySelector('button')!.addEventListener('click', () => filters.classList.add('open'))
+
+  // tag links inside the list filter in place too
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('ol .tags a')) {
+    link.href = `?tag=${link.pathname.split('/')[2]}`
+  }
+
+  function apply() {
+    const tag = new URLSearchParams(location.search).get('tag') ?? ''
+    let shown = 0
+    for (const item of items) {
+      const slugs = [...item.querySelectorAll<HTMLAnchorElement>('.tags a')].map(a => new URL(a.href).searchParams.get('tag'))
+      item.hidden = tag !== '' && !slugs.includes(tag)
+      if (!item.hidden) shown++
+    }
+    for (const link of filters.querySelectorAll<HTMLAnchorElement>('a')) {
+      const on = link.dataset.tag === tag
+      link.toggleAttribute('aria-current', on)
+      link.querySelector('span')!.classList.toggle(filters.dataset.resting!, on)
+      if (on && link.closest('.extra')) filters.classList.add('open')
+    }
+    heading.textContent = tag ? `${shown} Post${shown === 1 ? '' : 's'} on #${tag}` : `${heading.dataset.total} Posts`
+  }
+
+  document.addEventListener('click', event => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="?"]')
+    if (!link) return
+    event.preventDefault()
+    history.pushState(null, '', link.getAttribute('href') === '?' ? location.pathname : link.href)
+    apply()
+  })
+  addEventListener('popstate', apply)
+  apply()
+</script>

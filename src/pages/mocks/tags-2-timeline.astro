@@ -1,0 +1,120 @@
+---
+// MOCK 2: interests over time, one row per tag, one column per year
+import Layout from '@/layouts/Layout.astro'
+import { getPosts, getTags } from '@/lib/get-posts'
+import { year, shortTitle } from './_shared'
+
+export const prerender = true
+
+const posts = await getPosts()
+const first = Math.min(...posts.map(year))
+const last = Math.max(...posts.map(year))
+const years = Array.from({ length: last - first + 1 }, (_, i) => first + i)
+
+// ordered by when I first wrote about it, so the chart drifts down and right
+const tags = (await getTags())
+  .map(tag => ({ ...tag, since: Math.min(...tag.posts.map(year)) }))
+  .sort((a, b) => a.since - b.since || b.posts.length - a.posts.length)
+---
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: 52rem;
+    padding: 0 var(--padding-lg);
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-s);
+  }
+
+  th {
+    font-weight: normal;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in srgb, var(--text-color) 55%, transparent);
+    padding-bottom: var(--padding-md);
+  }
+
+  th.year {
+    width: 3.2rem;
+  }
+
+  td {
+    padding: 0.2rem 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+  }
+
+  td.label {
+    text-align: right;
+    padding-right: var(--padding-lg);
+    white-space: nowrap;
+  }
+
+  td.label a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  tr:hover td {
+    background: var(--highlight-soft);
+  }
+
+  tr:hover td.label a {
+    text-decoration: underline;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin: 0 1px;
+    border-radius: 50%;
+    background: var(--text-color);
+  }
+
+  td.empty-year {
+    background: repeating-linear-gradient(135deg, transparent 0 4px, color-mix(in srgb, var(--text-color) 5%, transparent) 4px 5px);
+  }
+
+  .legend {
+    margin-top: var(--padding-lg);
+    text-align: center;
+    font-size: var(--text-xs);
+    color: color-mix(in srgb, var(--text-color) 55%, transparent);
+  }
+</style>
+
+<Layout title="Topics over time" scene="writing" byline="Posts by topic" copy={`What I've been writing about, year by year.`}>
+  <div class="container">
+    <h2 class="section-title">Topics over time</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          {years.map(y => <th class="year">'{String(y).slice(2)}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {tags.map(tag => (
+          <tr>
+            <td class="label"><a href={`/tags/${tag.slug}/`}>{tag.label}</a></td>
+            {years.map(y => {
+              const inYear = tag.posts.filter(post => year(post) === y)
+              const quiet = !posts.some(post => year(post) === y)
+              return (
+                <td class={quiet ? 'empty-year' : undefined}>
+                  {inYear.map(post => <span class="dot" title={`${shortTitle(post)} (${y})`} />)}
+                </td>
+              )
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="legend">● one post &nbsp;·&nbsp; hatched years: nothing published</p>
+  </div>
+</Layout>
