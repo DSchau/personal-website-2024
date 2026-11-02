@@ -44,15 +44,19 @@ input[name="name"] {
   margin: var(--padding-lg) auto;
   padding: var(--padding-md) var(--padding-lg);
   
-  transition: var(--ease-fn) 1s;
+  transition: background-color 200ms var(--ease-fn), transform 160ms var(--ease-fn);
+}
+
+.button:not([disabled]):active {
+  transform: scale(0.97);
 }
 
 .button[data-state="SUCCESS"] {
-  background-color: green;
+  background-color: var(--success-color);
 }
 
 .button[data-state="FAILED"] {
-  background-color: red;
+  background-color: var(--error-color);
 }
 
 .button:hover {

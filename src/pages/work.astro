@@ -64,6 +64,11 @@ const processedWork = work.map((experience: any) => ({
   [data-logo="Postman"].fly {
     animation: rocket-launch 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
+  @media (prefers-reduced-motion: reduce) {
+    [data-logo="Postman"].fly {
+      animation: none;
+    }
+  }
 </style>
 
 <script>

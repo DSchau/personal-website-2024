@@ -43,7 +43,11 @@ export const prerender = true
 		font-family: var(--body-font);
 		cursor: pointer;
 
-		transition: border-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn);
+		transition: border-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn), transform 160ms var(--ease-fn);
+	}
+
+	.copy-button:active {
+		transform: scale(0.97);
 	}
 
 	.copy-button:hover {
@@ -104,7 +108,11 @@ export const prerender = true
 		color: var(--text-accent-color);
 		background-color: var(--bg-color);
 
-		transition: background-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn), border-color 0.15s var(--ease-fn);
+		transition: background-color 0.15s var(--ease-fn), color 0.15s var(--ease-fn), border-color 0.15s var(--ease-fn), transform 160ms var(--ease-fn);
+	}
+
+	.control-options label:active {
+		transform: scale(0.97);
 	}
 
 	.control-options label:first-of-type {

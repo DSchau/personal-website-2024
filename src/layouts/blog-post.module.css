@@ -195,7 +195,11 @@
   font-weight: 600;
   text-decoration: none;
 
-  transition: background-color 0.2s var(--ease-fn), color 0.2s var(--ease-fn);
+  transition: background-color 0.2s var(--ease-fn), color 0.2s var(--ease-fn), transform 160ms var(--ease-fn);
+}
+
+.container :global(.cta-link):active {
+  transform: scale(0.97);
 }
 
 .container :global(.cta-link)::after {
@@ -209,9 +213,14 @@
   color: var(--bg-color);
 }
 
-.container :global(.cta-link):hover::after,
 .container :global(.cta-link):focus-visible::after {
   transform: translateX(3px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .container :global(.cta-link):hover::after {
+    transform: translateX(3px);
+  }
 }
 
 .container :global(.cta-link):focus-visible {
