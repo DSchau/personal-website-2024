@@ -1,7 +1,6 @@
 import { type CollectionEntry } from "astro:content"
 import type { CSSProperties } from 'react';
 
-import { Tags } from '@/components/tags/tags.tsx';
 import marker from '@/components/marker/marker.module.css'
 import styles from './post-preview.module.css';
 
@@ -21,9 +20,11 @@ export function PostPreview({ id, data, showImage }: Props) {
       <h3 className={styles.title}>
         <a href={slug}>{data.title}</a>
       </h3>
-      <Tags list={data.tags.map(tag => ({
-        label: tag
-      }))} />
+      {data.tags.length > 0 && (
+        <p className={styles.tags}>
+          {data.tags.map(tag => <span key={tag}>{tag}</span>)}
+        </p>
+      )}
       {showImage && data.featuredImage && (
         <img src={data.featuredImage.src} alt={`Image for ${data.title}`} />
       )}

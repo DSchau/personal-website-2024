@@ -1,6 +1,10 @@
+/*
+  Three groups, spaced by how related they are: the header (date, title, tags)
+  sits tight, the excerpt gets room to breathe, and the link is a footer.
+*/
 .post {
-  margin: var(--padding-s);
-  padding: var(--padding-md) var(--padding-lg);
+  margin: var(--padding-md);
+  padding: var(--padding-xl) var(--padding-xl) var(--padding-lg);
 
   display: flex;
   flex-direction: column;
@@ -10,11 +14,13 @@
   border-radius: 8px;
 }
 
-.excerpt {
-  flex-grow: 1;
-  padding-bottom: var(--padding-lg);
+.date {
+  text-align: center;
+  font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--padding-s);
 
-  font-size: var(--text-md);
+  color: var(--text-accent-color);
 }
 
 .title {
@@ -23,6 +29,7 @@
   margin: 0;
   padding: 0;
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 /* the title is the card's heading; "Continue reading" is the explicit link, marked like the nav */
@@ -39,25 +46,40 @@
   text-decoration-color: currentColor;
 }
 
+/* same quiet #hashtags as the post page header: metadata, not buttons */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.75rem;
+
+  margin: var(--padding-md) 0 0;
+
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--text-color) 50%, transparent);
+}
+
+.tags > span::before {
+  content: '#';
+  color: color-mix(in srgb, var(--text-color) 30%, transparent);
+}
+
+.excerpt {
+  flex-grow: 1;
+  margin: var(--padding-lg) 0 var(--padding-xl);
+
+  font-size: var(--text-md);
+  line-height: 1.6;
+}
+
 .link {
   color: var(--text-color);
   text-decoration: none;
   font-family: var(--header-font);
   font-size: 1.05rem;
-  padding: 0.125rem;
-  padding-top: var(--padding-s);
+  padding-top: var(--padding-lg);
   text-align: center;
 
   border-top: 1px solid var(--border-color);
-}
-
-.date {
-  text-align: center;
-  font-size: var(--text-s);
-  margin: 0;
-  padding: 0;
-  
-  padding-bottom: var(--padding-s);
-
-  color: var(--text-accent-color);
 }
