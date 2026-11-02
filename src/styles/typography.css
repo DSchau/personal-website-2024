@@ -90,6 +90,8 @@ blockquote {
 .section-title a {
   color: inherit;
   text-decoration: none;
+  /* the same dot-to-heart sweep as the hero title: slow in, quick out */
+  transition: font-variation-settings 250ms var(--ease-fn);
 }
 
 /* a thin chevron, drawn as a mask so it takes the text colour */
@@ -107,6 +109,14 @@ blockquote {
 
 .section-title a:is(:hover, :focus-visible) {
   font-variation-settings: 'ELSH' 75;
+  transition: font-variation-settings 600ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-title a,
+  .section-title a:is(:hover, :focus-visible) {
+    transition: none;
+  }
 }
 
 .section-title a:focus-visible::after {

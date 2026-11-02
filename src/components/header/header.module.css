@@ -27,18 +27,24 @@
     Geist Serif's ELSH axis sets the shape of its dots, with a stop at each
     quarter: circle (0), square (25), triangle (50), heart (75). Sweeping it
     linearly on hover morphs the dots on "Hi! I'm" through every shape to a
-    heart, and back again on the way out.
+    heart, and back again on the way out. The way in is slow so each shape
+    gets its beat; the way out is quick and eases into the resting circle.
+    Only for a real pointer: a tap on a touch screen would leave it stuck on.
   */
   font-variation-settings: 'ELSH' 0;
-  transition: font-variation-settings 600ms linear;
+  transition: font-variation-settings 250ms var(--ease-fn);
 }
 
-.title:hover {
-  font-variation-settings: 'ELSH' 75;
+@media (hover: hover) and (pointer: fine) {
+  .title:hover {
+    font-variation-settings: 'ELSH' 75;
+    transition: font-variation-settings 600ms linear;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .title {
+  .title,
+  .title:hover {
     transition: none;
   }
 }
