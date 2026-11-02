@@ -1,5 +1,13 @@
+/*
+  As many ~16rem columns as fit, up to three: one on phones (and each half of
+  a split-screen iPhone Duo), two on its inner display held upright, three
+  once it's turned sideways (951px) and on desktops.
+*/
 .collection {
+  --min-card: 16rem;
+
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--min-card), 100% / 3)), 1fr));
   list-style-type: none;
 
   margin: 0;
@@ -11,10 +19,4 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-@media only screen and (min-width: 1024px) {
-  .collection {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }

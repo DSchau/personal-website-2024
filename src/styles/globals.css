@@ -23,6 +23,8 @@
 */
 html {
   font-size: 112.5%;
+  /* Safari paints this behind its own controls (e.g. the side bar on iPhone Duo's outer display) */
+  background-color: var(--bg-color);
 }
 /*
   Typographic tweaks!

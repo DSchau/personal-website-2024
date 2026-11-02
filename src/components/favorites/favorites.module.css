@@ -1,19 +1,29 @@
+/*
+  A centred, wrapping row: five across on desktops, and on narrower screens
+  (an iPhone Duo's inner display, tablets) as many as fit with the rest
+  centred on the next row. Items never shrink below the widest artwork (the
+  170px vinyl) plus padding, so nothing is pushed out of its slot.
+*/
 .container {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--padding-s);
   list-style-type: none;
+  /* the vinyl's blurred shadow box is wider than its slot (its visible part
+     isn't): don't let the transparent edge widen the page */
+  overflow-x: clip;
 
   margin: 0;
   padding: 0;
-
-  grid-template-columns: 1fr;
-  gap: var(--padding-s);
 }
 
 .item {
-  margin: var(--padding-lg) auto;
-  padding: var(--padding-s);
-  width: 100%;
+  flex: 1 1 0;
+  min-width: min(190px, 100%);
   max-width: 220px;
+  margin: var(--padding-lg) 0;
+  padding: var(--padding-s);
 
   text-align: center;
 }
@@ -49,7 +59,6 @@ picture {
 
 @media only screen and (min-width: 768px) {
   .container {
-    grid-template-columns: repeat(5, 1fr);
     gap: var(--padding-md);
   }
 
