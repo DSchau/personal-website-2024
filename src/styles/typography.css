@@ -110,10 +110,10 @@ blockquote {
 /*
   Links in running text: a lighter cousin of the nav's highlighter, cheap
   enough to sit on every link in a post. At rest a thin rule of ink runs
-  under the words; on hover the highlight floods up from it to just past
-  x-height. Both are background gradients, so they wrap with the text
-  across lines and need no extra markup. Lists with a class (tags and the
-  like) and footnote markers style their own links.
+  under the words; on hover a pale wash of highlight rises from it to the
+  foot of the letters. Both are background gradients, so they wrap with
+  the text across lines and need no extra markup. Lists with a class
+  (tags and the like) and footnote markers style their own links.
 */
 :where(main :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]) {
   --ink: color-mix(in oklab, var(--highlight), #2563eb 35%);
@@ -122,14 +122,14 @@ blockquote {
   text-decoration: none;
   background:
     linear-gradient(var(--ink), var(--ink)) 0 100% / 100% 0.1em no-repeat,
-    linear-gradient(var(--highlight), var(--highlight)) 0 100% / 100% 0 no-repeat;
+    linear-gradient(var(--highlight-soft), var(--highlight-soft)) 0 100% / 100% 0 no-repeat;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   transition: background-size 120ms ease-out;
 }
 
 :where(main :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]):is(:hover, :focus-visible) {
-  background-size: 100% 0.1em, 100% 0.6em;
+  background-size: 100% 0.1em, 100% 0.45em;
 }
 
 @media (prefers-reduced-motion: reduce) {
