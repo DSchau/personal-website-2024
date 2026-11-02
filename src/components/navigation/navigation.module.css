@@ -40,6 +40,9 @@
   align-items: center;
   column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
   overflow-x: auto;
+  /* the scroller clips at its padding box; this gutter keeps the end links' focus rings whole */
+  padding-inline: 0.5em;
+  margin-inline: -0.5em;
 }
 
 .navigation li {
@@ -54,9 +57,21 @@
   (see marker.module.css) as the icon's gesture starts (see icon.module.css),
   so text and icon read as one motion. The current page keeps a paler stroke.
 */
+/*
+  inline-flex gives the link one box around icon + label; inline, the taller
+  icon and the text were separate fragments and the focus ring traced a notch
+  between them.
+*/
 .navigation a {
+  display: inline-flex;
+  align-items: center;
   color: var(--text-color);
   text-decoration: none;
+  border-radius: 0.3em;
+}
+.navigation a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.2em;
 }
 
 /*
