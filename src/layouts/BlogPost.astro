@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
 import Me from '@/components/me/me.astro';
+import { tagHref } from '@/lib/tags';
 
 import '@/styles/globals.css'
 import styles from './blog-post.module.css'
@@ -32,7 +33,7 @@ const shouldDisplayEdited = isoDate(frontmatter.lastModified) > isoDate(frontmat
     {frontmatter.excerpt && <p class={styles.dek}>{frontmatter.excerpt}</p>}
     {frontmatter.tags.length > 0 && (
       <p class={styles.tags}>
-        {frontmatter.tags.map(tag => <span>{tag}</span>)}
+        {frontmatter.tags.map(tag => <a href={tagHref(tag)}>{tag}</a>)}
       </p>
     )}
     <div class={styles.meta}>

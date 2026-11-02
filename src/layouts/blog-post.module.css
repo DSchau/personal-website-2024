@@ -48,7 +48,7 @@
   border-top: 1px solid color-mix(in srgb, var(--text-color) 15%, transparent);
 }
 
-/* tags are the least important thing here: small, light, plain #hashtags (not links, so no pill chrome) */
+/* tags are the least important thing here: small, light, plain #hashtags linking to their tag page (no pill chrome) */
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -62,7 +62,17 @@
   color: color-mix(in srgb, var(--text-color) 50%, transparent);
 }
 
-.tags > span::before {
+.tags > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tags > a:is(:hover, :focus-visible) {
+  color: var(--text-color);
+  text-decoration: underline;
+}
+
+.tags > a::before {
   content: '#';
   color: color-mix(in srgb, var(--text-color) 30%, transparent);
 }

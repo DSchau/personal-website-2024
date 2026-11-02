@@ -1,25 +1,13 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
-import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
+import PostList from '@/components/post-list/post-list.astro'
+import { getPosts } from '@/lib/get-posts'
 
 export const prerender = true
 
-const posts = await getCollection('posts', ({ data }) => {
-  return import.meta.env.PROD ? data.draft !== true : true;
-})
-  .then((all) => {
-    return all.sort((a, b) => {
-      return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-    })
-  })
+const posts = await getPosts()
 ---
 <style>
-  p {
-    font-size: var(--text-s);
-  }
-
-
   .container {
     margin: 0 auto;
     max-width: var(--content-width);
@@ -27,84 +15,16 @@ const posts = await getCollection('posts', ({ data }) => {
     padding: 0 var(--padding-lg);
   }
 
-  ol {
-    margin: 0;
-    padding: 0 var(--padding-md);
-  }
-
-  li {
-    padding: var(--padding-md) 0;
-    list-style-type: decimal-leading-zero;
-  }
-
-  li::marker {
-    color: var(--text-color);
-    font-size: 0.8rem;
-  }
-
-  /* title ····· date, like a book's table of contents */
-  .entry {
-    display: flex;
-    align-items: baseline;
-    gap: var(--padding-md);
-  }
-
-  .leader {
-    flex: 1;
-    min-width: var(--padding-xl);
-    /* sits on the baseline; lift it to the middle of the x-height */
-    transform: translateY(-0.12em);
-    border-bottom: 2px dotted color-mix(in srgb, var(--text-color) 30%, transparent);
-  }
-
-  .date {
-    flex-shrink: 0;
+  .browse {
+    text-align: center;
     font-size: var(--text-s);
-    font-variant-numeric: tabular-nums;
-    color: var(--text-accent-color);
   }
-
-  /* tags: quiet lowercase text, not boxes */
-  .tags {
-    margin: var(--padding-xs) 0 0;
-    font-size: var(--text-xs);
-    letter-spacing: 0.02em;
-    color: color-mix(in srgb, var(--text-color) 55%, transparent);
-  }
-
-  .excerpt {
-    margin: var(--padding-s) 0 0;
-  }
-
-  a > .icon {
-    display: inline-block;
-    position: relative;
-    top: 3px;
-
-    margin-right: var(--padding-s);
-  }
-
 </style>
 
 <Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <ol reversed>
-      {posts.map(post => {
-        const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
-        const external = /https?/.test(href)
-        return (
-          <li>
-            <div class="entry">
-              <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title}</a>
-              <span class="leader" aria-hidden="true" />
-              <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
-            </div>
-            {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
-            {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
-          </li>
-        )
-      })}
-    </ol>
+    <p class="browse"><a href="/tags/">Browse by tag</a></p>
+    <PostList posts={posts} />
   </div>
 </Layout>

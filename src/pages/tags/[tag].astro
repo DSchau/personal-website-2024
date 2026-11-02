@@ -1,0 +1,36 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import PostList from '@/components/post-list/post-list.astro'
+import { getTags, type Tag } from '@/lib/get-posts'
+
+export const prerender = true
+
+export async function getStaticPaths() {
+  const tags = await getTags()
+  return tags.map(tag => ({ params: { tag: tag.slug }, props: { tag } }))
+}
+
+const { tag } = Astro.props as { tag: Tag }
+const count = `${tag.posts.length} post${tag.posts.length > 1 ? 's' : ''}`
+---
+<style>
+  .container {
+    margin: 0 auto;
+    max-width: var(--content-width);
+
+    padding: 0 var(--padding-lg);
+  }
+
+  .back {
+    text-align: center;
+    font-size: var(--text-s);
+  }
+</style>
+
+<Layout title={`Posts tagged #${tag.label}`} description={`${count} tagged #${tag.label}.`} scene="writing" byline={`#${tag.label}`} copy={`${count} tagged **#${tag.label}**.`}>
+  <div class="container">
+    <h2 class="section-title">#{tag.label}</h2>
+    <p class="back"><a href="/tags/">All tags</a> · <a href="/posts/">All posts</a></p>
+    <PostList posts={tag.posts} />
+  </div>
+</Layout>

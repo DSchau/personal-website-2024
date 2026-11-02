@@ -1,0 +1,105 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
+import { tagHref } from '@/lib/tags'
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props
+---
+<style>
+  p {
+    font-size: var(--text-s);
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 var(--padding-md);
+  }
+
+  li {
+    padding: var(--padding-md) 0;
+    list-style-type: decimal-leading-zero;
+  }
+
+  li::marker {
+    color: var(--text-color);
+    font-size: 0.8rem;
+  }
+
+  /* title ····· date, like a book's table of contents */
+  .entry {
+    display: flex;
+    align-items: baseline;
+    gap: var(--padding-md);
+  }
+
+  .leader {
+    flex: 1;
+    min-width: var(--padding-xl);
+    /* sits on the baseline; lift it to the middle of the x-height */
+    transform: translateY(-0.12em);
+    border-bottom: 2px dotted color-mix(in srgb, var(--text-color) 30%, transparent);
+  }
+
+  .date {
+    flex-shrink: 0;
+    font-size: var(--text-s);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-accent-color);
+  }
+
+  /* tags: quiet lowercase text, not boxes */
+  .tags {
+    margin: var(--padding-xs) 0 0;
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--text-color) 55%, transparent);
+  }
+
+  .tags a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tags a:is(:hover, :focus-visible) {
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+
+  .excerpt {
+    margin: var(--padding-s) 0 0;
+  }
+
+  a > .icon {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+
+    margin-right: var(--padding-s);
+  }
+</style>
+
+<ol reversed>
+  {posts.map(post => {
+    const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
+    const external = /https?/.test(href)
+    return (
+      <li>
+        <div class="entry">
+          <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title}</a>
+          <span class="leader" aria-hidden="true" />
+          <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
+        </div>
+        {post.data.tags.length > 0 && (
+          <p class="tags">
+            {post.data.tags.map((tag, i) => <>{i > 0 && ' · '}<a href={tagHref(tag)}>{tag}</a></>)}
+          </p>
+        )}
+        {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+      </li>
+    )
+  })}
+</ol>

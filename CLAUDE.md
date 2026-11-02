@@ -65,6 +65,10 @@ Uses **Astro Content Collections** with the Content Layer API (defined in `src/c
 - `/posts/[...slug].astro` - Individual blog post pages
   - Uses `getStaticPaths()` with `getCollection('posts')` for prerendering
   - Wrapped in `BlogPost.astro` layout
+- `/tags/` and `/tags/[tag].astro` - Tag index and per-tag post listings
+  - Tags are grouped by `tagSlug()` (`src/lib/tags.ts`), so variants like "open source" / "open-source" share one page
+  - Post tags (post header, `/posts` list, home page previews) link here via `tagHref()`
+  - `getPosts()` / `getTags()` in `src/lib/get-posts.ts` apply the same draft filtering as `/posts`
 
 ### Custom Plugins & Integrations
 
