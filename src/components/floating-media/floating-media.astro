@@ -7,7 +7,7 @@ export type MediaKind = "book" | "vinyl" | "case" | "game";
 interface Props {
   /**
    * book: bound hardcover · vinyl: sleeve + record ·
-   * case: DVD/Blu-ray box · game: PS5-style disc case
+   * case: Blu-ray keep case · game: console keep case
    */
   kind?: MediaKind;
   image?: string | ImageMetadata | null;
@@ -25,14 +25,14 @@ interface Props {
   eager?: boolean;
 }
 
-// For case/game the banner occupies the top of the box, so the width is
-// chosen to leave the area below it at poster proportions (~2:3) — the
-// banner adds to the artwork instead of squeezing it.
-const ASPECTS: Record<MediaKind, number> = {
+// Width-to-height of the artwork itself. Cases wrap a plastic rim (and,
+// for Blu-ray, the logo band) around it, so the box is sized from the art
+// outward and the printed insert is never cropped.
+const ART_ASPECTS: Record<MediaKind, number> = {
   book: 0.66,
   vinyl: 1,
-  case: 0.64,
-  game: 0.63,
+  case: 0.675,
+  game: 0.85,
 };
 
 const {
@@ -58,7 +58,16 @@ const maxPose = kind === "vinyl" ? 12 : 18;
 const pose = poseProp ?? (Math.random() < 0.5 ? -1 : 1) * rand(6, maxPose);
 const lean = leanProp ?? rand(-6, 6);
 const h = height - Math.round(rand(0, height * 0.06));
-const w = Math.round(h * ASPECTS[kind]);
+// Local scans know their real proportions: a PS3 box is squatter than an
+// Xbox 360 DVD case, and the case should follow the box it came from.
+const artAspect =
+  isCase && image && typeof image !== "string"
+    ? Math.min(0.95, Math.max(0.6, image.width / image.height))
+    : ART_ASPECTS[kind];
+const rim = isCase ? Math.max(3, Math.round(h * 0.022)) : 0;
+const banner = kind === "case" ? Math.round(h * 0.075) : 0;
+const artH = h - rim * 2 - banner;
+const w = isCase ? Math.round(artH * artAspect + rim * 2) : Math.round(h * artAspect);
 const depth =
   thickness ??
   (kind === "book"
@@ -80,7 +89,7 @@ const hue = Math.floor(Math.random() * 360);
 
 <span
   class:list={["stage", `kind-${kind}`]}
-  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue};`}
+  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue}; --rim: ${rim}px; --banner: ${banner}px;`}
 >
   <span class="shadow" aria-hidden="true"></span>
   <span class="float">
@@ -107,12 +116,17 @@ const hue = Math.floor(Math.random() * 360);
         </>
       )}
       <span class="face front">
+        {kind === "case" && (
+          <span class="bd-band" aria-hidden="true">
+            <span class="bd-mark"></span>Blu-ray Disc
+          </span>
+        )}
         {src ? (
           <img
             src={src}
             alt=""
-            width={w}
-            height={h}
+            width={isCase ? w - rim * 2 : w}
+            height={isCase ? artH : h}
             loading={eager ? "eager" : "lazy"}
             decoding="async"
           />
@@ -181,32 +195,57 @@ const hue = Math.floor(Math.random() * 360);
     border-radius: 0 2px 2px 0;
   }
 
-  /* Cases hinge on the left: square hinge edge, rounded opening edge. */
+  /* ---------- keep cases ----------
+     A molded shell with a clear sleeve over the printed insert. The
+     plastic shows as a thin rim around the art and, on Blu-ray, as the
+     logo band across the top. Game scans already carry their platform
+     banner, so they get only the rim. */
   .kind-case .front,
   .kind-game .front {
-    border-radius: 2px 8px 8px 2px;
+    padding: var(--rim);
+    border-radius: 4px 9px 9px 4px;
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.45),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.14);
   }
 
-  /* The translucent banner across the top of a DVD/Blu-ray case. */
-  .kind-case .front::before,
-  .kind-game .front::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(64, 140, 218, 0.92) 0%,
-      rgba(23, 84, 158, 0.9) 82%,
-      rgba(10, 48, 96, 0.92) 100%
-    );
+  .kind-game .front {
+    background: linear-gradient(160deg, #3d4149 0%, #22252b 45%, #121417 100%);
+  }
+
+  .kind-case .front {
+    padding-top: 0;
+    background: linear-gradient(165deg, #4b96e4 0%, #2569c3 40%, #164b98 100%);
+  }
+
+  .bd-band {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--banner) * 0.2);
+    height: var(--banner);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: calc(var(--banner) * 0.48);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 20, 60, 0.45);
+  }
+
+  /* The disc mark: a silver disc with the shell showing through the hub. */
+  .bd-mark {
+    flex: none;
+    width: calc(var(--banner) * 0.58);
+    height: calc(var(--banner) * 0.58);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, #2569c3 0 17%, transparent 19%),
+      conic-gradient(from 30deg, #f4f7fb, #b4c1d3, #ffffff, #9cadc4, #f4f7fb);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.45),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      0 0 0 1px rgba(255, 255, 255, 0.55),
+      0 1px 1px rgba(0, 20, 60, 0.4);
   }
 
   .kind-vinyl .front {
@@ -220,38 +259,14 @@ const hue = Math.floor(Math.random() * 360);
     object-fit: cover;
   }
 
-  /* The banner sits above the artwork, not over it. Margins are computed
-     from --mh because percentage margins resolve against width — and
-     absolutely positioned children inside 3D faces paint unreliably. */
+  /* Heights come from --mh: percentage heights inside 3D faces are
+     unreliable, and the art box is sized in px in the frontmatter. */
   .kind-case .front img,
   .kind-game .front img {
-    margin-top: calc(var(--mh) * 0.08);
-    height: calc(var(--mh) * 0.92);
-  }
-
-  /* Games read as a PS5 case: the blue shell wraps the whole thing,
-     with a white banner and the artwork inset inside the blue frame. */
-  .kind-game .front {
-    background: linear-gradient(160deg, #4a7dea 0%, #2c56c4 55%, #1c3c96 100%);
-  }
-
-  .kind-game .front::before {
-    top: calc(var(--mh) * 0.02);
-    left: 2.5%;
-    right: 2.5%;
-    height: calc(var(--mh) * 0.08);
-    border-radius: 2px;
-    background: linear-gradient(180deg, #ffffff 0%, #f2f2f5 70%, #dfe0e6 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(20, 30, 60, 0.25);
-  }
-
-  .kind-game .front img {
     display: block;
-    margin: calc(var(--mh) * 0.1) auto 0;
-    width: 95%;
-    height: calc(var(--mh) * 0.88);
+    height: calc(var(--mh) - var(--rim) * 2 - var(--banner));
+    border-radius: 1px 3px 3px 1px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
   }
 
   .front::after {
@@ -260,70 +275,64 @@ const hue = Math.floor(Math.random() * 360);
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    /* Key light from the upper right, falloff toward the left edge. */
-    background: linear-gradient(
-      255deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      rgba(255, 255, 255, 0.06) 28%,
-      rgba(0, 0, 0, 0.02) 55%,
-      rgba(28, 20, 10, 0.18) 100%
-    );
-    box-shadow:
-      inset 5px 0 7px -3px rgba(28, 20, 10, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.28),
-      inset -1px 0 0 rgba(255, 255, 255, 0.12);
   }
 
-  /* Plastic gloss streak plus the two hinge grooves near the spine. */
-  .kind-case .front::after,
-  .kind-game .front::after {
+  /* Hardcover: key light from the upper right, the hinge groove pressed
+     into the board beside the spine, and a hairline catch-light where the
+     board's cut edge meets the light. */
+  .kind-book .front::after {
     background:
       linear-gradient(
         90deg,
-        transparent 0%,
-        transparent 3.4%,
-        rgba(0, 0, 0, 0.3) 3.4%,
-        rgba(0, 0, 0, 0.3) 4.1%,
-        transparent 4.1%,
-        transparent 7%,
-        rgba(0, 0, 0, 0.22) 7%,
-        rgba(0, 0, 0, 0.22) 7.6%,
-        transparent 7.6%
+        rgba(20, 12, 4, 0.36) 0,
+        rgba(20, 12, 4, 0.1) calc(var(--mh) * 0.012),
+        transparent calc(var(--mh) * 0.028),
+        transparent calc(var(--mh) * 0.04),
+        rgba(20, 12, 4, 0.24) calc(var(--mh) * 0.048),
+        rgba(255, 255, 255, 0.28) calc(var(--mh) * 0.056),
+        rgba(255, 255, 255, 0) calc(var(--mh) * 0.08)
       ),
       linear-gradient(
-        105deg,
-        transparent 32%,
-        rgba(255, 255, 255, 0.24) 44%,
-        rgba(255, 255, 255, 0.05) 54%,
-        transparent 62%
-      ),
-      linear-gradient(
-        255deg,
-        rgba(255, 255, 255, 0.14) 0%,
-        rgba(255, 255, 255, 0.04) 28%,
-        rgba(0, 0, 0, 0.02) 55%,
-        rgba(28, 20, 10, 0.2) 100%
+        250deg,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.04) 30%,
+        transparent 55%,
+        rgba(28, 20, 10, 0.14) 100%
       );
-    z-index: 2;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.32),
+      inset -1px 0 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.14);
   }
 
-  /* Just the plastic gloss; the blue shell itself is the front background. */
+  .kind-case .front::after,
   .kind-game .front::after {
     background:
+      /* hinge ribs molded into the sleeve beside the spine */
       linear-gradient(
-        105deg,
-        transparent 32%,
-        rgba(255, 255, 255, 0.22) 44%,
-        rgba(255, 255, 255, 0.05) 54%,
-        transparent 62%
+        90deg,
+        transparent calc(var(--mw) * 0.04),
+        rgba(0, 0, 0, 0.22) calc(var(--mw) * 0.04),
+        rgba(255, 255, 255, 0.16) calc(var(--mw) * 0.047),
+        transparent calc(var(--mw) * 0.055)
+      ),
+      /* sheen on the clear sleeve */
+      linear-gradient(
+        112deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.2) 42%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 58%
       ),
       linear-gradient(
-        255deg,
+        250deg,
         rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.04) 28%,
-        rgba(0, 0, 20, 0.04) 55%,
-        rgba(10, 20, 60, 0.22) 100%
+        transparent 40%,
+        rgba(0, 0, 0, 0.16) 100%
       );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 0 calc(var(--rim) * 1.5) rgba(0, 0, 0, 0.22);
   }
 
   /* Sleeves are printed cardboard: flatter light, visible fold on the left. */
@@ -369,37 +378,41 @@ const hue = Math.floor(Math.random() * 360);
 
   .kind-case .back,
   .kind-game .back {
-    border-radius: 8px 2px 2px 8px;
-    background: linear-gradient(200deg, #26221e 0%, #17130f 100%);
+    border-radius: 9px 4px 4px 9px;
   }
 
   .kind-game .back {
-    background: linear-gradient(200deg, #2a4a9e 0%, #16295c 100%);
+    background: linear-gradient(200deg, #2b2e34 0%, #121417 100%);
   }
 
-  /* Case spines are dark plastic with only a tint of the artwork. */
+  .kind-case .back {
+    background: linear-gradient(200deg, #2a6cc4 0%, #123f82 100%);
+  }
+
+  /* Case spines are rounded plastic over the insert's printed spine, so
+     the art only shows through as a tint under cylinder shading. */
   .kind-case .spine,
   .kind-game .spine {
-    border-radius: 2px 0 0 2px;
+    border-radius: 4px 0 0 4px;
   }
 
   .kind-game .spine::after {
     background: linear-gradient(
       90deg,
-      rgba(20, 40, 110, 0.7) 0%,
-      rgba(70, 120, 230, 0.45) 25%,
-      rgba(20, 40, 110, 0.55) 60%,
-      rgba(8, 18, 60, 0.8) 100%
+      rgba(8, 9, 11, 0.9) 0%,
+      rgba(60, 64, 72, 0.6) 30%,
+      rgba(20, 22, 26, 0.7) 60%,
+      rgba(4, 5, 6, 0.92) 100%
     );
   }
 
   .kind-case .spine::after {
     background: linear-gradient(
       90deg,
-      rgba(10, 8, 5, 0.75) 0%,
-      rgba(30, 26, 22, 0.55) 25%,
-      rgba(10, 8, 5, 0.6) 60%,
-      rgba(5, 4, 2, 0.8) 100%
+      rgba(10, 40, 100, 0.9) 0%,
+      rgba(90, 160, 235, 0.6) 30%,
+      rgba(30, 95, 185, 0.7) 60%,
+      rgba(8, 30, 80, 0.92) 100%
     );
   }
 
@@ -424,6 +437,8 @@ const hue = Math.floor(Math.random() * 360);
     background-position: 10% 32%;
   }
 
+  /* Cylinder shading sells the rounded back of a bound spine: dark at
+     both joints, a soft highlight a third of the way across. */
   .spine::after {
     content: "";
     position: absolute;
@@ -431,10 +446,11 @@ const hue = Math.floor(Math.random() * 360);
     border-radius: inherit;
     background: linear-gradient(
       90deg,
-      rgba(15, 10, 5, 0.5) 0%,
-      rgba(255, 255, 255, 0.1) 22%,
-      rgba(15, 10, 5, 0.18) 55%,
-      rgba(15, 10, 5, 0.55) 100%
+      rgba(15, 10, 5, 0.6) 0%,
+      rgba(15, 10, 5, 0.18) 16%,
+      rgba(255, 255, 255, 0.14) 36%,
+      rgba(15, 10, 5, 0.12) 64%,
+      rgba(15, 10, 5, 0.6) 100%
     );
   }
 
@@ -449,13 +465,15 @@ const hue = Math.floor(Math.random() * 360);
     background:
       repeating-linear-gradient(
         to bottom,
-        rgba(168, 148, 110, 0.28) 0px,
-        rgba(168, 148, 110, 0.28) 1px,
+        rgba(150, 132, 100, 0.18) 0px,
+        rgba(150, 132, 100, 0.18) 1px,
         transparent 1px,
-        transparent 3px
+        transparent 2px
       ),
-      linear-gradient(90deg, #efe8d6 0%, #fdfaf1 35%, #f6f0e0 82%, #e3d9c1 100%);
-    box-shadow: inset 2px 0 3px -1px rgba(60, 45, 25, 0.4);
+      linear-gradient(90deg, #e6dcc6 0%, #faf6ec 30%, #f4eedf 80%, #ddd2ba 100%);
+    box-shadow:
+      inset 3px 0 3px -2px rgba(60, 45, 25, 0.45),
+      inset -2px 0 2px -1px rgba(60, 45, 25, 0.3);
   }
 
   .edge-top {
@@ -468,41 +486,48 @@ const hue = Math.floor(Math.random() * 360);
     background:
       repeating-linear-gradient(
         90deg,
-        rgba(168, 148, 110, 0.24) 0px,
-        rgba(168, 148, 110, 0.24) 1px,
+        rgba(150, 132, 100, 0.16) 0px,
+        rgba(150, 132, 100, 0.16) 1px,
         transparent 1px,
-        transparent 3px
+        transparent 2px
       ),
-      linear-gradient(180deg, #fdfaf1 0%, #ece3cd 100%);
+      linear-gradient(180deg, #fbf8ef 0%, #e8dfc9 100%);
+    box-shadow: inset 0 2px 2px -1px rgba(60, 45, 25, 0.3);
   }
 
-  /* Case shell sides: dark plastic instead of paper. */
+  /* Case shell sides: the same plastic as the rim. */
   .side-fore {
-    top: 1px;
+    top: 2px;
     right: 0;
     width: var(--d);
-    height: calc(100% - 2px);
+    height: calc(100% - 4px);
     transform-origin: right center;
     transform: translateZ(calc(var(--d) / 2)) rotateY(90deg);
-    background: linear-gradient(90deg, #2b2622 0%, #17130f 100%);
   }
 
   .side-top {
     top: 0;
-    left: 2px;
-    width: calc(100% - 4px);
+    left: 4px;
+    width: calc(100% - 9px);
     height: var(--d);
     transform-origin: top center;
     transform: translateZ(calc(var(--d) / 2)) rotateX(90deg);
-    background: linear-gradient(180deg, #35302a 0%, #1c1712 100%);
   }
 
   .kind-game .side-fore {
-    background: linear-gradient(90deg, #35569e 0%, #1a2c62 100%);
+    background: linear-gradient(90deg, #2c2f35 0%, #3a3e46 50%, #15171a 100%);
   }
 
   .kind-game .side-top {
-    background: linear-gradient(180deg, #eef0f4 0%, #b9c0d4 100%);
+    background: linear-gradient(180deg, #4a4e57 0%, #2a2d33 50%, #17191c 100%);
+  }
+
+  .kind-case .side-fore {
+    background: linear-gradient(90deg, #1d56a8 0%, #3a82d6 50%, #12407f 100%);
+  }
+
+  .kind-case .side-top {
+    background: linear-gradient(180deg, #5aa2ea 0%, #2569c3 50%, #164b98 100%);
   }
 
   /* ---------- vinyl record ---------- */
@@ -556,6 +581,8 @@ const hue = Math.floor(Math.random() * 360);
 
   /* ---------- shadow + motion ---------- */
 
+  /* A tight contact shadow over a wide ambient one, so the piece reads as
+     an object above the page rather than a sticker on it. */
   .shadow {
     position: absolute;
     left: 50%;
@@ -564,13 +591,19 @@ const hue = Math.floor(Math.random() * 360);
     height: calc(var(--mh) * 0.1);
     margin-left: calc(var(--mw) * -0.8);
     pointer-events: none;
-    background: radial-gradient(
-      ellipse 50% 50% at 50% 50%,
-      rgba(52, 40, 22, 0.4),
-      rgba(52, 40, 22, 0.16) 55%,
-      transparent 75%
-    );
-    filter: blur(6px);
+    background:
+      radial-gradient(
+        ellipse 36% 32% at 52% 50%,
+        rgba(36, 26, 12, 0.34),
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 50% 50% at 50% 50%,
+        rgba(52, 40, 22, 0.24),
+        rgba(52, 40, 22, 0.1) 55%,
+        transparent 75%
+      );
+    filter: blur(5px);
     animation: shadow-breathe 7s ease-in-out infinite;
     animation-delay: var(--float-delay);
     transition: transform 0.6s var(--ease-fn), opacity 0.6s var(--ease-fn);
