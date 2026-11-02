@@ -25,7 +25,7 @@
   line-height: 1.2;
 }
 
-/* the title gets the highlighter every text link has (typography.css) */
+/* the title gets the underline every text link has (typography.css) */
 .title a {
   color: var(--text-color);
 }

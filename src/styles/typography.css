@@ -108,39 +108,22 @@ blockquote {
 }
 
 /*
-  Every text link gets the nav's highlighter (see marker.module.css): the
-  same chisel-tipped, streaky stroke, here painted as a background so it
-  wraps with the text across lines and needs no extra markup. At rest a
-  thin line of it runs along the foot of the words; on hover the full
-  stroke is drawn left to right, sitting low like a thick underline.
-  The stroke is baked in --highlight (#bfdbfe), since a background can't be
-  masked separately from its element. Image links, the nav/footer and
-  section-title links (which carry the marker span itself) and footnote
-  markers are left alone.
+  Every text link gets the same plain underline in the highlight blue,
+  which darkens a little on hover. Image links, the nav/footer and
+  section-title links (which carry the marker span) and footnote markers
+  are left alone.
 */
 :where(:is(main, header) a:not(:has(img, picture, .marker), [data-footnote-ref], [data-footnote-backref])) {
-  --link-stroke: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'><defs><linearGradient id='g'><stop offset='0' stop-color='%23bfdbfe' stop-opacity='.75'/><stop offset='.07' stop-color='%23bfdbfe' stop-opacity='.64'/><stop offset='.9' stop-color='%23bfdbfe' stop-opacity='.62'/><stop offset='1' stop-color='%23bfdbfe' stop-opacity='.72'/></linearGradient><filter id='f' x='-5%25' y='-25%25' width='110%25' height='150%25'><feTurbulence type='fractalNoise' baseFrequency='.045 .35' numOctaves='2' seed='3' result='n'/><feDisplacementMap in='SourceGraphic' in2='n' scale='7' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='fractalNoise' baseFrequency='.003 .8' seed='3' result='s'/><feColorMatrix in='s' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.7 0 0 0 1.25' result='a'/><feComposite in='d' in2='a' operator='in'/></filter></defs><path d='M8 6 L197 3 L192 36 L3 38 Z' fill='url(%23g)' filter='url(%23f)'/></svg>");
-
   color: inherit;
-  text-decoration: none;
-  padding-bottom: 0.1em;
-  background:
-    var(--link-stroke) 0 100% / 0% 0.55em no-repeat,
-    var(--link-stroke) 0 100% / 100% 0.12em no-repeat;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  transition: background-size 120ms ease-in;
+  text-decoration-line: underline;
+  text-decoration-color: var(--highlight);
+  text-decoration-thickness: max(1px, 0.08em);
+  text-underline-offset: 0.18em;
+  text-decoration-skip-ink: auto;
 }
 
 :where(:is(main, header) a:not(:has(img, picture, .marker), [data-footnote-ref], [data-footnote-backref])):is(:hover, :focus-visible) {
-  background-size: 100% 0.55em, 100% 0.12em;
-  transition: background-size 280ms cubic-bezier(0.45, 0, 0.2, 1) 40ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :where(:is(main, header) a) {
-    transition: none !important;
-  }
+  text-decoration-color: color-mix(in oklab, var(--highlight), #2563eb 45%);
 }
 
 /* footnotes (GFM `[^1]` syntax) */
