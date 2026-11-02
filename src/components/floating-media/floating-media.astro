@@ -65,8 +65,7 @@ const artAspect =
     ? Math.min(0.95, Math.max(0.6, image.width / image.height))
     : ART_ASPECTS[kind];
 const rim = isCase ? Math.max(3, Math.round(h * 0.022)) : 0;
-const banner = kind === "case" ? Math.round(h * 0.075) : 0;
-const artH = h - rim * 2 - banner;
+const artH = h - rim * 2;
 const w = isCase ? Math.round(artH * artAspect + rim * 2) : Math.round(h * artAspect);
 const depth =
   thickness ??
@@ -89,7 +88,7 @@ const hue = Math.floor(Math.random() * 360);
 
 <span
   class:list={["stage", `kind-${kind}`]}
-  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue}; --rim: ${rim}px; --banner: ${banner}px;`}
+  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue}; --rim: ${rim}px;`}
 >
   <span class="shadow" aria-hidden="true"></span>
   <span class="float">
@@ -116,11 +115,6 @@ const hue = Math.floor(Math.random() * 360);
         </>
       )}
       <span class="face front">
-        {kind === "case" && (
-          <span class="bd-band" aria-hidden="true">
-            <span class="bd-mark"></span>Blu-ray Disc
-          </span>
-        )}
         {src ? (
           <img
             src={src}
@@ -197,9 +191,7 @@ const hue = Math.floor(Math.random() * 360);
 
   /* ---------- keep cases ----------
      A molded shell with a clear sleeve over the printed insert. The
-     plastic shows as a thin rim around the art and, on Blu-ray, as the
-     logo band across the top. Game scans already carry their platform
-     banner, so they get only the rim. */
+     plastic shows as a thin rim around the art. */
   .kind-case .front,
   .kind-game .front {
     padding: var(--rim);
@@ -214,38 +206,7 @@ const hue = Math.floor(Math.random() * 360);
   }
 
   .kind-case .front {
-    padding-top: 0;
     background: linear-gradient(165deg, #4b96e4 0%, #2569c3 40%, #164b98 100%);
-  }
-
-  .bd-band {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: calc(var(--banner) * 0.2);
-    height: var(--banner);
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: calc(var(--banner) * 0.48);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    line-height: 1;
-    white-space: nowrap;
-    color: #fff;
-    text-shadow: 0 1px 1px rgba(0, 20, 60, 0.45);
-  }
-
-  /* The disc mark: a silver disc with the shell showing through the hub. */
-  .bd-mark {
-    flex: none;
-    width: calc(var(--banner) * 0.58);
-    height: calc(var(--banner) * 0.58);
-    border-radius: 50%;
-    background:
-      radial-gradient(circle, #2569c3 0 17%, transparent 19%),
-      conic-gradient(from 30deg, #f4f7fb, #b4c1d3, #ffffff, #9cadc4, #f4f7fb);
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.55),
-      0 1px 1px rgba(0, 20, 60, 0.4);
   }
 
   .kind-vinyl .front {
@@ -264,7 +225,7 @@ const hue = Math.floor(Math.random() * 360);
   .kind-case .front img,
   .kind-game .front img {
     display: block;
-    height: calc(var(--mh) - var(--rim) * 2 - var(--banner));
+    height: calc(var(--mh) - var(--rim) * 2);
     border-radius: 1px 3px 3px 1px;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
   }
