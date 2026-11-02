@@ -42,12 +42,11 @@
 .title {
   font-size: var(--text-md);
   color: var(--text-color);
-
-  margin: var(--padding-md) 0;
 }
 
 .subtitle {
   display: block;
+  margin-top: var(--padding-xs);
   font-size: var(--text-s);
 
   color: var(--text-accent-color);

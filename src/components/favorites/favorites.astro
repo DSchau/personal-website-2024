@@ -38,10 +38,8 @@ const height = HEIGHTS[kind]
             stageHeight={height + 16}
           />
         </a>
-        <FancyLink href={item.hyperlink} class={styles.title}>
-          {item.title}
-          {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
-        </FancyLink>
+        <FancyLink href={item.hyperlink} class={styles.title}>{item.title}</FancyLink>
+        {item.subtitle && <span class={styles.subtitle}>{item.subtitle}</span>}
       </li>
     ))
   }
