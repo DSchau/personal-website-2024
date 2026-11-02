@@ -64,18 +64,13 @@ const artAspect =
   isCase && image && typeof image !== "string"
     ? Math.min(0.95, Math.max(0.6, image.width / image.height))
     : ART_ASPECTS[kind];
-// A Blu-ray case is a fixed 135 x 171.5 mm shell with a band of molded
-// plastic across the top carrying the embossed logo; posters are cropped
-// into the insert window like a real cover would be.
+// A Blu-ray case has a band of molded plastic across the top carrying the
+// embossed logo. The case is sized to the poster so none of it is cropped.
 const isBluRay = kind === "case";
 const rim = isCase ? Math.max(3, Math.round(h * (isBluRay ? 0.026 : 0.022))) : 0;
 const band = isBluRay ? Math.round(h * 0.09) : 0;
 const artH = h - rim * 2 - band + (isBluRay ? rim : 0);
-const w = isBluRay
-  ? Math.round(h * 0.787)
-  : isCase
-    ? Math.round(artH * artAspect + rim * 2)
-    : Math.round(h * artAspect);
+const w = isCase ? Math.round(artH * artAspect + rim * 2) : Math.round(h * artAspect);
 const depth =
   thickness ??
   (kind === "book"
@@ -204,6 +199,9 @@ const hue = Math.floor(Math.random() * 360);
     position: absolute;
     display: block;
     backface-visibility: hidden;
+    /* A transparent outline makes Chrome antialias the edges of 3D-rotated
+       layers; without it the silhouettes stair-step. */
+    outline: 1px solid transparent;
   }
 
   /* ---------- front artwork ---------- */
@@ -226,7 +224,7 @@ const hue = Math.floor(Math.random() * 360);
   .kind-case .front,
   .kind-game .front {
     padding: var(--rim);
-    border-radius: 4px 9px 9px 4px;
+    border-radius: 3px 6px 6px 3px;
     box-shadow:
       0 0 0 1px rgba(0, 0, 0, 0.45),
       inset 0 0 0 1px rgba(255, 255, 255, 0.14);
@@ -240,7 +238,7 @@ const hue = Math.floor(Math.random() * 360);
      logo band across the top. */
   .kind-case .front {
     padding-top: 0;
-    border-radius: 6px 11px 11px 6px;
+    border-radius: 3px 7px 7px 3px;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0, transparent var(--band)),
       linear-gradient(170deg, #3a8cf0 0%, #1a6ad8 38%, #0f55bd 100%);
@@ -286,9 +284,6 @@ const hue = Math.floor(Math.random() * 360);
     height: calc(var(--mh) - var(--rim) - var(--band));
     border-radius: 2px 4px 6px 2px;
     box-shadow: 0 0 0 1px rgba(4, 30, 90, 0.5);
-    /* Posters are taller than the insert window; keep the top-weighted
-       title treatments most one-sheets use. */
-    object-position: 50% 22%;
   }
 
   .front::after {
@@ -400,7 +395,7 @@ const hue = Math.floor(Math.random() * 360);
 
   .kind-case .back,
   .kind-game .back {
-    border-radius: 9px 4px 4px 9px;
+    border-radius: 6px 3px 3px 6px;
   }
 
   .kind-game .back {
