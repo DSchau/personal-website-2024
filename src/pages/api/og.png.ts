@@ -6,21 +6,16 @@ import { OGScene } from "../../components/og/og-scene";
 export const prerender = false;
 
 async function loadFonts() {
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    import("../../assets/fonts/Rockwell.ttf").then((mod) => mod.default),
-    import("../../assets/fonts/Rockwell-Bold.ttf").then((mod) => mod.default),
+  const [geistSerif, sfPro] = await Promise.all([
+    import("../../assets/fonts/GeistSerif-Regular.ttf").then((mod) => mod.default),
     import("../../assets/fonts/SFPro.otf").then((mod) => mod.default),
   ]);
 
   return [
     {
-      name: "Rockwell Bold",
-      data: rockwellBold,
-      style: "normal" as const,
-    },
-    {
-      name: "Rockwell",
-      data: rockwell,
+      name: "Geist Serif",
+      data: geistSerif,
+      weight: 400 as const,
       style: "normal" as const,
     },
     {

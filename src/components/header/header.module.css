@@ -20,11 +20,16 @@
 
 .title {
   display: inline-block;
+  font-size: clamp(2.4rem, 1.9rem + 2vw, 3rem);
+  line-height: 1.1;
 }
 
+/* the serif is one weight, so the byline steps back by size and colour */
 .byline {
   padding: 0;
   margin: 0;
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  color: var(--text-accent-color);
 }
 
 .header > p > a {

@@ -29,8 +29,7 @@
 
 .brand {
   font-family: var(--header-font);
-  font-size: var(--h4-size);
-  font-weight: bold;
+  font-size: var(--h3-size);
   color: var(--text-color);
   text-decoration: none;
 }

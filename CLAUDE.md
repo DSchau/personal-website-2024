@@ -53,7 +53,7 @@ Uses **Astro Content Collections** with the Content Layer API (defined in `src/c
 **API Routes** (`src/pages/api/`):
 - `/api/og.png.ts` - Dynamic OG image generation using `@cloudflare/pages-plugin-vercel-og`
   - Accepts `title`, `tags`, and `excerpt` query parameters (`type=books` redirects to the prerendered `/og/books.png`)
-  - Uses custom fonts loaded as ArrayBuffers (Rockwell, SFPro) via custom Vite plugin
+  - Uses custom fonts loaded as ArrayBuffers (Geist Serif TTF, SFPro) via custom Vite plugin (Satori can't read woff2)
   - Set to `prerender: false` for runtime generation
 
 - `/api/email.ts` - Contact form submission endpoint using Resend
@@ -93,6 +93,8 @@ Uses Octokit (`src/lib/octokit.ts`) with modified plugin configuration (excludes
 - Both called in `Layout.astro` to populate footer with repository metadata
 
 ### Styling
+- Typeface: **Geist Serif** (vercel.com/font, OFL) for all headings/serif text, `system-ui` for body. It's self-hosted via Astro's Fonts API (`fonts` in `astro.config.mjs`, `<Font>` in `Layout.astro`) as `--font-geist-serif`, aliased to `--header-font`. It has a single weight (400): never bold it. Its `ELSH` axis swaps dot shapes (0 circle, 25 square, 50 triangle, 75 heart), used for the section-title hover. OG images use `src/assets/fonts/GeistSerif-Regular.ttf`; SVG diagrams shown as `<img>` embed a glyph subset (`@font-face` data URI)
+- Responsive targets include iPhone Duo's Safari viewports: 382, 385 (split view), 594, 669 and 951px wide, with heights down to ~368px
 - Global CSS in `src/styles/` directory (globals.css, typography.css, variables.css, code.css)
 - CSS Modules for component-specific styles (e.g., `work.module.css`)
 - No CSS framework; custom CSS throughout

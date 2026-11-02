@@ -9,7 +9,8 @@
   --button-color: #002D62;
   --button-border-color: #002046;
 
-  --header-font: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+  /* Geist Serif comes in a single weight: set serif text at 400, never bold */
+  --header-font: var(--font-geist-serif, 'Times New Roman', Times, serif);
   --body-font: system-ui, sans-serif;
 
   --h1-size: 2rem;

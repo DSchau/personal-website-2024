@@ -12,8 +12,6 @@ import { getRecentlyRead, resizeCover } from "../../lib/goodreads";
 export const prerender = true;
 
 const COVER_TIMEOUT_MS = 8000;
-const AVATAR_URL =
-  "https://dschau-website.imgix.net/me.jpeg?w=64&h=64&fit=min&fm=jpg";
 
 function bytesToBase64(bytes: Uint8Array): string {
   let binary = "";
@@ -78,28 +76,25 @@ async function toDataUri(url: string): Promise<string> {
 
 export const GET: APIRoute = async function GET() {
   const recent = getRecentlyRead(5);
-  const [covers, avatarUrl] = await Promise.all([
-    Promise.all(recent.map((book) => toDataUri(resizeCover(book.imageUrl, 240)))),
-    toDataUri(AVATAR_URL),
-  ]);
+  const covers = await Promise.all(
+    recent.map((book) => toDataUri(resizeCover(book.imageUrl, 240)))
+  );
   const books = recent.map((book, index) => ({
     title: book.title,
     author: book.author,
     imageUrl: covers[index] ?? "",
   }));
 
-  const [rockwell, rockwellBold, sfPro] = await Promise.all([
-    import("../../assets/fonts/Rockwell.ttf").then((mod) => mod.default),
-    import("../../assets/fonts/Rockwell-Bold.ttf").then((mod) => mod.default),
+  const [geistSerif, sfPro] = await Promise.all([
+    import("../../assets/fonts/GeistSerif-Regular.ttf").then((mod) => mod.default),
     import("../../assets/fonts/SFPro.otf").then((mod) => mod.default),
   ]);
 
-  const response = new ImageResponse(BooksOG({ books, avatarUrl }), {
+  const response = new ImageResponse(BooksOG({ books }), {
     width: 1200,
     height: 630,
     fonts: [
-      { name: "Rockwell Bold", data: rockwellBold, style: "normal" },
-      { name: "Rockwell", data: rockwell, style: "normal" },
+      { name: "Geist Serif", data: geistSerif, weight: 400, style: "normal" },
       { name: "SFPro", data: sfPro, style: "normal" },
     ],
   });

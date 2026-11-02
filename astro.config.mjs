@@ -1,4 +1,4 @@
-import { defineConfig, envField } from "astro/config"
+import { defineConfig, envField, fontProviders } from "astro/config"
 import { execSync } from "child_process";
 import { readFileSync } from "fs";
 import { readFile } from "fs/promises";
@@ -242,6 +242,19 @@ export default defineConfig({
     // lives in blog-post.module.css, so skip Astro's injected styles
     layout: 'constrained',
   },
+  // Geist Serif (vercel.com/font, OFL) is the site's serif: one weight (400),
+  // with an ELSH axis that swaps the shape of its dots (circle 0, square 25,
+  // triangle 50, heart 75). Self-hosted so it renders the same everywhere,
+  // with a metric-matched Times fallback while it loads
+  fonts: [{
+    provider: fontProviders.local(),
+    name: 'Geist Serif',
+    cssVariable: '--font-geist-serif',
+    fallbacks: ['Times New Roman', 'Times', 'serif'],
+    options: {
+      variants: [{ src: ['./src/assets/fonts/GeistSerifVF.woff2'], weight: '400', style: 'normal' }],
+    },
+  }],
   integrations: [react(), sitemap(), icon(), pagesTrailingSlashRedirects()],
   redirects: {
     '/uses': '/posts/uses',

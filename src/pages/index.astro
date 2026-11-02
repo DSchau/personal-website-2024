@@ -82,24 +82,24 @@ const posts = await getCollection('posts', ({ data }) => {
 	</section>
 	{currentlyReading.length > 0 && (
 		<section>
-			<h3 class="section-title">Currently Reading</h3>
+			<h3 class="section-title">Currently reading</h3>
 			<CurrentlyReading books={currentlyReading} />
 		</section>
 	)}
 	<section>
-		<h3 class="section-title"><a href="/posts">writing</a></h3>
+		<h3 class="section-title"><a href="/posts/">Writing</a></h3>
 		<p>I try to write about topics that interest me. Maybe they interest you! Some recent ones are below.</p>
 		<Collection items={posts} />
 	</section>
 	{repos.length > 0 && (
 		<section>
-			<h3 class="section-title">open-source work</h3>
+			<h3 class="section-title">Open-source work</h3>
 			<p>Working on <a href="https://github.com/dschau">open-source</a> has long been a passion of mine. Some of my favorite projects, the ones I've spent the most time on, or just simply the ones I'm most proud of are below. Check them out if you'd like.</p>
 			<Collection items={repos} renderer={Project as any} />
 		</section>
 	)}
 	<section>
-		<h3 class="section-title">contact me</h3>
+		<h3 class="section-title">Contact me</h3>
 		<p>If you'd like to chat, please do reach out. You can <a href="mailto:me@dustinschau.com">e-mail me</a> or you can use the form below.</p>
 		<ContactForm client:visible />
 	</section>

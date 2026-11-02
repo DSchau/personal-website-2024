@@ -71,7 +71,7 @@ function BookMockup({
               justifyContent: "center",
               background: "#2a2420",
               color: "#e8dfd2",
-              fontFamily: "Rockwell",
+              fontFamily: "Geist Serif",
               fontSize: 18,
               padding: 12,
               textAlign: "center",
@@ -95,69 +95,7 @@ function BookMockup({
   );
 }
 
-const Bio = ({ avatarUrl }: { avatarUrl: string }) => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: 20,
-      }}
-    >
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          width={64}
-          height={64}
-          style={{
-            height: 64,
-            width: 64,
-            borderRadius: 12,
-          }}
-        />
-      ) : null}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          paddingLeft: 10,
-        }}
-      >
-        <h2
-          style={{
-            fontFamily: "Rockwell Bold",
-            margin: 0,
-            padding: 0,
-            fontSize: 28,
-            color: "#2e2a24",
-          }}
-        >
-          Dustin Schau
-        </h2>
-        <p
-          style={{
-            fontFamily: "SFPro",
-            margin: 0,
-            padding: 0,
-            fontSize: 20,
-            color: "#6f665a",
-          }}
-        >
-          Product & Engineering Leader
-        </p>
-      </div>
-    </div>
-  );
-};
-
-export const BooksOG = ({
-  books,
-  avatarUrl = "",
-}: {
-  books: BooksOgBook[];
-  avatarUrl?: string;
-}) => (
+export const BooksOG = ({ books }: { books: BooksOgBook[] }) => (
   <div
     style={{
       display: "flex",
@@ -207,16 +145,16 @@ export const BooksOG = ({
     >
       <h3
         style={{
-          fontFamily: "Rockwell",
-          fontSize: 32,
-          padding: 24,
+          fontFamily: "Geist Serif",
+          fontWeight: 400,
+          fontSize: 34,
+          padding: "24px 28px 30px",
           margin: 0,
           color: "#2e2a24",
         }}
       >
         dustinschau.com/books
       </h3>
-      <Bio avatarUrl={avatarUrl} />
     </div>
   </div>
 );

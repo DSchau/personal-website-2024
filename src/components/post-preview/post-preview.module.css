@@ -22,6 +22,21 @@
 
   margin: 0;
   padding: 0;
+  line-height: 1.2;
+}
+
+/* the title is the card's heading; "Read more" is the explicit link */
+.title a {
+  color: var(--text-color);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 200ms ease-out;
+}
+
+.title a:is(:hover, :focus-visible) {
+  text-decoration-color: currentColor;
 }
 
 .link {

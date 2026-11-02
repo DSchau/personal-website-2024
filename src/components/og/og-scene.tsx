@@ -19,8 +19,9 @@ function hash32(s: string): number {
   return h >>> 0;
 }
 
+// Geist Serif has one (regular) weight, so titles set a touch larger than the old bold slab
 const titleSize = (title: string) =>
-  title.length > 70 ? 46 : title.length > 45 ? 56 : 68;
+  title.length > 70 ? 50 : title.length > 45 ? 60 : 74;
 
 export const OGScene = ({ tags, title, excerpt }: { tags: string[]; title: string; excerpt?: string }) => {
   const text = title ?? "";
@@ -75,9 +76,11 @@ export const OGScene = ({ tags, title, excerpt }: { tags: string[]; title: strin
         </div>
         <h1
           style={{
-            fontFamily: "Rockwell Bold",
+            fontFamily: "Geist Serif",
+            fontWeight: 400,
             fontSize: titleSize(text),
-            lineHeight: 1.12,
+            lineHeight: 1.1,
+            letterSpacing: -0.5,
             margin: "18px 0 0",
             padding: 0,
           }}
@@ -111,28 +114,12 @@ export const OGScene = ({ tags, title, excerpt }: { tags: string[]; title: strin
             backgroundColor: PAPER,
             border: `1.5px solid ${INK}`,
             borderRadius: 10,
-            fontFamily: "Rockwell Bold",
-            fontSize: 26,
-            padding: "8px 18px",
+            fontFamily: "Geist Serif",
+            fontSize: 28,
+            padding: "6px 18px 8px",
           }}
         >
           dustinschau.com
-        </div>
-        <div
-          style={{
-            display: "flex",
-            position: "absolute",
-            right: 32,
-            bottom: 20,
-            backgroundColor: PAPER,
-            border: `1.5px solid ${INK}`,
-            borderRadius: 10,
-            fontFamily: "SFPro",
-            fontSize: 24,
-            padding: "8px 18px",
-          }}
-        >
-          Dustin Schau
         </div>
       </div>
     </div>

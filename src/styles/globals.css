@@ -65,8 +65,16 @@ body {
   font-family: var(--body-font);
 }
 
+/*
+  Geist Serif has one weight, so headings are set regular and never
+  synthesised bold (a <strong> inside a heading stays regular too).
+  Larger sizes get slightly tighter tracking, as display serifs want.
+*/
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--header-font);
+  font-weight: 400;
+  font-synthesis-weight: none;
+  letter-spacing: -0.01em;
 }
 
 h1 {

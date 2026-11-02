@@ -69,18 +69,48 @@ blockquote {
   font-style: italic;
 }
 
+/* a section's name, set in the serif like a chapter heading over a hairline */
 .section-title {
   text-align: center;
-  margin: var(--padding-s) auto;
-  max-width: var(--content-width);
+  margin: var(--padding-s) auto var(--padding-md);
+  /* the body text's measure (65ch of 1rem text): ch would scale with this larger font */
+  max-width: min(36rem, 100%);
   border-top: 1px solid var(--border-color);
-  padding-top: var(--padding-lg);
-  font-size: var(--text-md);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-accent-color);
-  font-family: var(--body-font);
-  font-weight: normal;
+  padding-top: var(--padding-xl);
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2rem);
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+/*
+  A linked section title reads as the heading, not as a link: no colour or
+  underline, just a chevron that nudges forward on hover. Geist Serif's ELSH
+  axis turns its dots (the tittle on an i, a full stop) into hearts.
+*/
+.section-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* a thin chevron, drawn as a mask so it takes the text colour */
+.section-title a::after {
+  content: '';
+  display: inline-block;
+  width: 0.42em;
+  height: 0.42em;
+  margin-left: 0.28em;
+  vertical-align: 0.08em;
+  background-color: var(--text-accent-color);
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M8 3l9 9-9 9' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  transition: translate 300ms var(--ease-fn);
+}
+
+.section-title a:is(:hover, :focus-visible) {
+  font-variation-settings: 'ELSH' 75;
+}
+
+.section-title a:is(:hover, :focus-visible)::after {
+  translate: 0.2em 0;
 }
 
 /* footnotes (GFM `[^1]` syntax) */
