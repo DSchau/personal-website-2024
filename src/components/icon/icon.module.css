@@ -108,7 +108,8 @@
   opacity: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* gestures only for a real hover: a tap on a touch screen leaves :hover stuck on */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   /*
     home: once the colour is in, the door swings open on its hinge onto a lit
     hall, the chimney gives a little puff, and two clouds of smoke drift up

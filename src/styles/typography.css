@@ -109,8 +109,14 @@ blockquote {
   font-variation-settings: 'ELSH' 75;
 }
 
-.section-title a:is(:hover, :focus-visible)::after {
+.section-title a:focus-visible::after {
   translate: 0.2em 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .section-title a:hover::after {
+    translate: 0.2em 0;
+  }
 }
 
 /* footnotes (GFM `[^1]` syntax) */

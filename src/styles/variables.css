@@ -8,6 +8,8 @@
 
   --button-color: #002D62;
   --button-border-color: #002046;
+  --success-color: #166534;
+  --error-color: #b91c1c;
 
   /* Geist Serif comes in a single weight: set serif text at 400, never bold */
   --header-font: var(--font-geist-serif, 'Times New Roman', Times, serif);
