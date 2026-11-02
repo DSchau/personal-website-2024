@@ -32,18 +32,9 @@
   text-wrap: balance;
 }
 
-/* the title is the card's heading; "Continue reading" is the explicit link, marked like the nav */
+/* the title gets the underline every text link has (typography.css) */
 .title a {
   color: var(--text-color);
-  text-decoration-line: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-  transition: text-decoration-color 200ms ease-out;
-}
-
-.title a:is(:hover, :focus-visible) {
-  text-decoration-color: currentColor;
 }
 
 /* same quiet #hashtags as the post page header: metadata, not buttons */
