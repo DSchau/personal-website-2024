@@ -73,6 +73,30 @@ a[aria-current='page'] .marker::before {
   transition: none;
 }
 
+/*
+  Links outside the nav (a section title, a card's "Continue reading") have
+  nothing else marking them as links, so at rest a thin line of the same ink
+  runs along the foot of the label. It fades as the full stroke is drawn.
+*/
+.resting::after {
+  content: '';
+  position: absolute;
+  inset: auto -0.08em -0.08em;
+  height: 0.14em;
+  pointer-events: none;
+
+  background: var(--highlight);
+  mask: var(--stroke) 0 0 / 100% 100% no-repeat;
+  mix-blend-mode: multiply;
+  rotate: var(--tilt);
+
+  transition: opacity 160ms ease-out;
+}
+
+a:is(:hover, :focus-visible) .resting::after {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marker::before,
   a:is(:hover, :focus-visible) .marker::before {
