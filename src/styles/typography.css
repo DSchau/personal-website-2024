@@ -109,11 +109,12 @@ blockquote {
 
 /*
   Every text link gets the same plain underline in the highlight blue,
-  which darkens a little on hover. Image links, the nav/footer and
-  section-title links (which carry the marker span) and footnote markers
-  are left alone.
+  which darkens a little on hover. Image links and footnote markers are
+  left alone. Marker links (nav, footer, section titles, "Continue
+  reading") opt out with their own `text-decoration: none`, which beats
+  this zero-specificity rule; new marker links need to do the same.
 */
-:where(:is(main, header) a:not(:has(img, picture, .marker), [data-footnote-ref], [data-footnote-backref])) {
+:where(:is(main, header) a:not(:has(img, picture), [data-footnote-ref], [data-footnote-backref])) {
   color: inherit;
   text-decoration-line: underline;
   text-decoration-color: var(--highlight);
@@ -122,7 +123,7 @@ blockquote {
   text-decoration-skip-ink: auto;
 }
 
-:where(:is(main, header) a:not(:has(img, picture, .marker), [data-footnote-ref], [data-footnote-backref])):is(:hover, :focus-visible) {
+:where(:is(main, header) a:not(:has(img, picture), [data-footnote-ref], [data-footnote-backref])):is(:hover, :focus-visible) {
   text-decoration-color: color-mix(in oklab, var(--highlight), #2563eb 45%);
 }
 
