@@ -115,7 +115,7 @@ blockquote {
   the text across lines and need no extra markup. Lists with a class
   (tags and the like) and footnote markers style their own links.
 */
-:where(main :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]) {
+:where(:is(main, header) :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]) {
   --ink: color-mix(in oklab, var(--highlight), #2563eb 35%);
 
   color: inherit;
@@ -128,12 +128,12 @@ blockquote {
   transition: background-size 120ms ease-out;
 }
 
-:where(main :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]):is(:hover, :focus-visible) {
+:where(:is(main, header) :is(p, blockquote, td, dd, :is(ul, ol):not([class]) > li) > a):not([data-footnote-ref], [data-footnote-backref]):is(:hover, :focus-visible) {
   background-size: 100% 0.1em, 100% 0.45em;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where(main :is(p, blockquote, td, dd, li) > a) {
+  :where(:is(main, header) :is(p, blockquote, td, dd, li) > a) {
     transition: none;
   }
 }
