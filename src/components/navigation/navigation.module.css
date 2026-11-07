@@ -38,7 +38,7 @@
 
   display: flex;
   align-items: center;
-  column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
+  column-gap: clamp(1rem, 5vw, 2.25rem);
   overflow-x: auto;
   /* the scroller clips at its padding box; this gutter keeps the end links' focus rings whole */
   padding-inline: 0.5em;
@@ -50,6 +50,18 @@
   white-space: nowrap;
   margin: 0;
   padding: var(--padding-s) 0;
+}
+
+/*
+  Centred with auto margins rather than justify-content: center, which would
+  push the first links out of reach to the left when the row overflows and
+  scrolls on narrow phones.
+*/
+.navigation li:first-child {
+  margin-inline-start: auto;
+}
+.navigation li:last-child {
+  margin-inline-end: auto;
 }
 
 /*
