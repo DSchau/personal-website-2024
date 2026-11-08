@@ -53,18 +53,6 @@
 }
 
 /*
-  Centred with auto margins rather than justify-content: center, which would
-  push the first links out of reach to the left when the row overflows and
-  scrolls on narrow phones.
-*/
-.navigation li:first-child {
-  margin-inline-start: auto;
-}
-.navigation li:last-child {
-  margin-inline-end: auto;
-}
-
-/*
   No underlines: on hover/focus a highlighter pass is drawn over the label
   (see marker.module.css) as the icon's gesture starts (see icon.module.css),
   so text and icon read as one motion. The current page keeps a paler stroke.
