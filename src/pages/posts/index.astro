@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
 import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
-import marker from '@/components/marker/marker.module.css'
 
 export const prerender = true
 
@@ -38,7 +37,7 @@ const posts = await getCollection('posts', ({ data }) => {
     list-style-type: decimal-leading-zero;
   }
 
-  /* the whole entry is the link: a quiet wash on hover, the title's highlighter drawn in */
+  /* the whole entry is the link: a quiet wash on hover, and the title's highlighter rises */
   .post {
     display: block;
     padding: var(--padding-lg);
@@ -56,6 +55,34 @@ const posts = await getCollection('posts', ({ data }) => {
   .post:focus-visible {
     outline: 2px solid var(--highlight);
     outline-offset: 2px;
+  }
+
+  /*
+    The running-text link treatment from typography.css (the list's class opts
+    the entry itself out of it): a thin rule of ink under the title, and a pale
+    wash rising from it when anywhere on the entry is hovered. Background
+    gradients wrap with the title on narrow screens.
+  */
+  .title {
+    --ink: color-mix(in oklab, var(--highlight), #2563eb 35%);
+
+    background:
+      linear-gradient(var(--ink), var(--ink)) 0 100% / 100% 0.1em no-repeat,
+      linear-gradient(var(--highlight-soft), var(--highlight-soft)) 0 100% / 100% 0 no-repeat;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-size 120ms ease-out;
+  }
+
+  .post:is(:hover, :focus-visible) .title {
+    background-size: 100% 0.1em, 100% 0.45em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post,
+    .title {
+      transition: none;
+    }
   }
 
   li::marker {
@@ -110,7 +137,7 @@ const posts = await getCollection('posts', ({ data }) => {
 <Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <ol reversed>
+    <ol class="posts" reversed>
       {posts.map(post => {
         const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
         const external = /https?/.test(href)
@@ -118,7 +145,7 @@ const posts = await getCollection('posts', ({ data }) => {
           <li>
             <a class="post" href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>
               <div class="entry">
-                <span>{external ? <ExternalLink className="icon" />: null}<span class={`${marker.marker} ${marker.resting}`} style={`--len: ${Math.min(post.data.title.length, 24)}`}>{post.data.title}</span></span>
+                <span>{external ? <ExternalLink className="icon" />: null}<span class="title">{post.data.title}</span></span>
                 <span class="leader" aria-hidden="true" />
                 <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
               </div>
