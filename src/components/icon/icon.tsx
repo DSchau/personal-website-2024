@@ -115,9 +115,8 @@ const icons = {
     },
     band: { d: 'M3.5 12.5h17', ink: '#6b3712', paint: [['M10 10.6h4v3.8h-4z', '#ffd34d']] },
   },
-  // a paper plane, with a looping trail that only shows while it flies
+  // a paper plane
   email: {
-    trail: { d: 'M2 21.5c3.5.5 2-4.5 4.5-3.5S6 21 8.5 16', ink: '#7cb8ff' },
     plane: {
       d: 'M21.5 2.5 2.5 10.2l7.2 3.6 3.6 7.7z', ink: '#1d5fae',
       fill: '#e8f3ff',
@@ -183,6 +182,7 @@ export function Icon({ name, active = false }: Props) {
       aria-hidden="true"
       focusable="false"
     >
+      <g data-part="all">
       {Object.entries(icons[name] as Record<string, Part>).map(([part, { d, fill, ink, paint = [] }], i) => (
         <g key={part} data-part={part} style={{ '--i': i } as CSSProperties}>
           {(fill || paint.length > 0) && (
@@ -194,6 +194,7 @@ export function Icon({ name, active = false }: Props) {
           <path className={styles.ink} d={d} pathLength={1} style={ink ? ({ '--lit': ink } as CSSProperties) : undefined} />
         </g>
       ))}
+      </g>
     </svg>
   )
 }
