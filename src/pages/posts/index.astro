@@ -33,8 +33,56 @@ const posts = await getCollection('posts', ({ data }) => {
   }
 
   li {
-    padding: var(--padding-md) 0;
+    margin: var(--padding-md) 0;
     list-style-type: decimal-leading-zero;
+  }
+
+  /* the whole entry is the link: a quiet wash on hover, and the title's highlighter rises */
+  .post {
+    display: block;
+    padding: var(--padding-lg);
+    border-radius: 8px;
+
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 200ms ease-out;
+  }
+
+  .post:is(:hover, :focus-visible) {
+    background-color: color-mix(in srgb, var(--text-color) 4%, transparent);
+  }
+
+  .post:focus-visible {
+    outline: 2px solid var(--highlight);
+    outline-offset: 2px;
+  }
+
+  /*
+    The running-text link treatment from typography.css (the list's class opts
+    the entry itself out of it): a thin rule of ink under the title, and a pale
+    wash rising from it when anywhere on the entry is hovered. Background
+    gradients wrap with the title on narrow screens.
+  */
+  .title {
+    --ink: color-mix(in oklab, var(--highlight), #2563eb 35%);
+
+    background:
+      linear-gradient(var(--ink), var(--ink)) 0 100% / 100% 0.1em no-repeat,
+      linear-gradient(var(--highlight-soft), var(--highlight-soft)) 0 100% / 100% 0 no-repeat;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-size 120ms ease-out;
+  }
+
+  .post:is(:hover, :focus-visible) .title {
+    background-size: 100% 0.1em, 100% 0.45em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post,
+    .title {
+      transition: none;
+    }
   }
 
   li::marker {
@@ -76,7 +124,7 @@ const posts = await getCollection('posts', ({ data }) => {
     margin: var(--padding-s) 0 0;
   }
 
-  a > .icon {
+  .entry .icon {
     display: inline-block;
     position: relative;
     top: 3px;
@@ -89,19 +137,21 @@ const posts = await getCollection('posts', ({ data }) => {
 <Layout title="All posts" scene="writing" byline="Occasionally interesting content" copy={`Where I write about people, places, things, and ideas occasionally.`}>
   <div class="container">
     <h2 class="section-title">{posts.length} Post{posts.length > 1 ? 's' : ''}</h2>
-    <ol reversed>
+    <ol class="posts" reversed>
       {posts.map(post => {
         const href = post.data.canonicalLink ? post.data.canonicalLink : `/posts/${post.id}`
         const external = /https?/.test(href)
         return (
           <li>
-            <div class="entry">
-              <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title}</a>
-              <span class="leader" aria-hidden="true" />
-              <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
-            </div>
-            {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
-            {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+            <a class="post" href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>
+              <div class="entry">
+                <span>{external ? <ExternalLink className="icon" />: null}<span class="title">{post.data.title}</span></span>
+                <span class="leader" aria-hidden="true" />
+                <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
+              </div>
+              {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
+              {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+            </a>
           </li>
         )
       })}
