@@ -181,6 +181,12 @@ function rehypeMarkdownImageSizes() {
       const { width, height } = await imageMetadata(await readFile(filepath), filepath).catch(() => ({}));
       if (!width || !height) return;
       node.properties.sizes = `min(100vw, ${Math.round(50 * width / height)}vh, ${width}px)`;
+      // The stylesheet's width/height: auto lets the 50vh cap shrink the
+      // image without distorting it, but also means no box is reserved until
+      // the lazy image arrives, so the text below jumps. An explicit width
+      // (the same min() as sizes) plus the width/height attributes' aspect
+      // ratio reserves the right box up front.
+      node.properties.style = `width: min(100%, calc(50vh * ${width} / ${height}), ${width}px)`;
     }));
   };
 }

@@ -53,7 +53,7 @@ const currentYear = new Date().getUTCFullYear();
               <a class="title" href={book.link}>{shortTitle(book.title)}</a>
               <p class="author">{book.author}</p>
             </div>
-            <span class="rating" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
+            <span class="rating" role="img" aria-label={book.rating > 0 ? `${book.rating} out of 5` : "Unrated"}>
               {book.rating > 0 ? formatRating(book.rating) : ""}
             </span>
           </li>
