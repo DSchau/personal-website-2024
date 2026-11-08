@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
 import ExternalLink from 'phosphor-react/src/icons/ArrowSquareOut.tsx'
+import marker from '@/components/marker/marker.module.css'
 
 export const prerender = true
 
@@ -33,8 +34,28 @@ const posts = await getCollection('posts', ({ data }) => {
   }
 
   li {
-    padding: var(--padding-md) 0;
+    margin: var(--padding-md) 0;
     list-style-type: decimal-leading-zero;
+  }
+
+  /* the whole entry is the link: a quiet wash on hover, the title's highlighter drawn in */
+  .post {
+    display: block;
+    padding: var(--padding-lg);
+    border-radius: 8px;
+
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 200ms ease-out;
+  }
+
+  .post:is(:hover, :focus-visible) {
+    background-color: color-mix(in srgb, var(--text-color) 4%, transparent);
+  }
+
+  .post:focus-visible {
+    outline: 2px solid var(--highlight);
+    outline-offset: 2px;
   }
 
   li::marker {
@@ -76,7 +97,7 @@ const posts = await getCollection('posts', ({ data }) => {
     margin: var(--padding-s) 0 0;
   }
 
-  a > .icon {
+  .entry .icon {
     display: inline-block;
     position: relative;
     top: 3px;
@@ -95,13 +116,15 @@ const posts = await getCollection('posts', ({ data }) => {
         const external = /https?/.test(href)
         return (
           <li>
-            <div class="entry">
-              <a href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{external ? <ExternalLink className="icon" />: null}{post.data.title}</a>
-              <span class="leader" aria-hidden="true" />
-              <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
-            </div>
-            {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
-            {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+            <a class="post" href={href} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>
+              <div class="entry">
+                <span>{external ? <ExternalLink className="icon" />: null}<span class={`${marker.marker} ${marker.resting}`} style={`--len: ${Math.min(post.data.title.length, 24)}`}>{post.data.title}</span></span>
+                <span class="leader" aria-hidden="true" />
+                <time class="date" datetime={new Date(post.data.date).toISOString().slice(0, 10)}>{new Date(post.data.date).toLocaleDateString('en-us', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })}</time>
+              </div>
+              {post.data.tags.length > 0 && <p class="tags">{post.data.tags.join(' · ')}</p>}
+              {post.data.excerpt && <p class="excerpt">{post.data.excerpt}</p>}
+            </a>
           </li>
         )
       })}
