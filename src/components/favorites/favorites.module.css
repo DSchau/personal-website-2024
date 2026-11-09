@@ -10,7 +10,7 @@
   justify-content: center;
   gap: var(--padding-s);
   list-style-type: none;
-  /* the vinyl's blurred shadow box is wider than its slot (its visible part
+  /* the artwork's blurred shadow box is wider than its slot (its visible part
      isn't): don't let the transparent edge widen the page */
   overflow-x: clip;
 
