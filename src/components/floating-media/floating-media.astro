@@ -6,7 +6,7 @@ export type MediaKind = "book" | "vinyl" | "case" | "game";
 
 interface Props {
   /**
-   * book: bound hardcover · vinyl: sleeve + record ·
+   * book: bound hardcover · vinyl: record sleeve ·
    * case: Blu-ray keep case · game: console keep case
    */
   kind?: MediaKind;
@@ -79,6 +79,7 @@ const depth =
       ? Math.max(10, Math.round(h * 0.07))
       : 4);
 const floatDelay = -rand(0, 5);
+const wear = Math.floor(Math.random() * 360);
 // local artwork is resized to 2x the rendered height and served as webp;
 // the originals are full-size scans, far larger than the few hundred px shown
 const src =
@@ -87,17 +88,15 @@ const src =
     : image
       ? (await getImage({ src: image, height: Math.min(h * 2, image.height), format: "webp", layout: "none" })).src
       : "";
-const hue = Math.floor(Math.random() * 360);
 ---
 
 <span
   class:list={["stage", `kind-${kind}`]}
-  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --hue: ${hue}; --rim: ${rim}px; --band: ${band}px;`}
+  style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --wear: ${wear}deg; --rim: ${rim}px; --band: ${band}px;`}
 >
   <span class="shadow" aria-hidden="true"></span>
   <span class="float">
     <span class="media-3d">
-      {kind === "vinyl" && <span class="disc" aria-hidden="true"></span>}
       <span class="face back" aria-hidden="true"></span>
       {kind !== "vinyl" && (
         <span
@@ -353,18 +352,87 @@ const hue = Math.floor(Math.random() * 360);
       inset 0 0 calc(var(--rim) * 1.5) rgba(0, 0, 0, 0.22);
   }
 
-  /* Sleeves are printed cardboard: flatter light, visible fold on the left. */
-  .kind-vinyl .front::after {
-    background: linear-gradient(
-      255deg,
-      rgba(255, 255, 255, 0.14) 0%,
-      rgba(255, 255, 255, 0.04) 30%,
-      rgba(0, 0, 0, 0.03) 60%,
-      rgba(28, 20, 10, 0.14) 100%
+  /* Ring wear: years on a shelf press the record through the sleeve, rubbing
+     the ink pale along the disc's rim and the label's edge. It's patchy,
+     never a clean circle, so a conic mask scuffs it unevenly and each
+     sleeve starts the scuffing at its own angle. */
+  .kind-vinyl .front::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle calc(var(--mw) * 0.5) at 50% 50%,
+        transparent 85%,
+        rgba(255, 255, 255, 0.07) 88%,
+        rgba(255, 255, 255, 0.4) 91.5%,
+        rgba(255, 255, 255, 0.16) 94%,
+        rgba(20, 14, 6, 0.22) 95.5%,
+        transparent 98%
+      ),
+      radial-gradient(
+        circle calc(var(--mw) * 0.5) at 50% 50%,
+        rgba(255, 255, 255, 0.12) 0,
+        rgba(255, 255, 255, 0.04) 4%,
+        transparent 6%,
+        transparent 30%,
+        rgba(255, 255, 255, 0.2) 32%,
+        rgba(20, 14, 6, 0.14) 33.5%,
+        transparent 35.5%
+      );
+    -webkit-mask-image: conic-gradient(
+      from var(--wear),
+      #000 0deg,
+      rgba(0, 0, 0, 0.35) 50deg,
+      #000 95deg,
+      rgba(0, 0, 0, 0.15) 150deg,
+      rgba(0, 0, 0, 0.6) 215deg,
+      #000 260deg,
+      rgba(0, 0, 0, 0.25) 315deg,
+      #000 360deg
     );
+    mask-image: conic-gradient(
+      from var(--wear),
+      #000 0deg,
+      rgba(0, 0, 0, 0.35) 50deg,
+      #000 95deg,
+      rgba(0, 0, 0, 0.15) 150deg,
+      rgba(0, 0, 0, 0.6) 215deg,
+      #000 260deg,
+      rgba(0, 0, 0, 0.25) 315deg,
+      #000 360deg
+    );
+  }
+
+  /* Sleeves are printed cardboard: flatter light, a soft gloss across the
+     laminate, corners scuffed pale, and the fold along the spine. */
+  .kind-vinyl .front::after {
+    z-index: 1;
+    background:
+      radial-gradient(circle at 100% 0, rgba(255, 255, 255, 0.28), transparent 7%),
+      radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.2), transparent 6%),
+      radial-gradient(circle at 0 100%, rgba(255, 255, 255, 0.14), transparent 5%),
+      linear-gradient(
+        125deg,
+        transparent 38%,
+        rgba(255, 255, 255, 0.1) 46%,
+        rgba(255, 255, 255, 0.03) 54%,
+        transparent 62%
+      ),
+      linear-gradient(
+        255deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.04) 30%,
+        rgba(0, 0, 0, 0.03) 60%,
+        rgba(28, 20, 10, 0.16) 100%
+      );
     box-shadow:
-      inset 3px 0 4px -2px rgba(28, 20, 10, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      inset 3px 0 4px -2px rgba(28, 20, 10, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset -1px 0 0 rgba(255, 255, 255, 0.12),
+      inset 0 0 calc(var(--mw) * 0.06) rgba(28, 20, 10, 0.12);
   }
 
   .front-fallback {
@@ -548,55 +616,6 @@ const hue = Math.floor(Math.random() * 360);
     background: linear-gradient(180deg, #6fb0fb 0%, #1f6ddc 50%, #0f52b8 100%);
   }
 
-  /* ---------- vinyl record ---------- */
-
-  .disc {
-    position: absolute;
-    top: 4%;
-    right: -16%;
-    width: 92%;
-    height: 92%;
-    border-radius: 50%;
-    transform: translateZ(-1px);
-    transition: transform 0.8s var(--ease-fn);
-    background:
-      radial-gradient(
-        circle at 50% 50%,
-        #0c0c0c 0%,
-        #0c0c0c 2.5%,
-        #f3eee4 2.5%,
-        #f3eee4 4%,
-        hsl(var(--hue), 45%, 42%) 4%,
-        hsl(var(--hue), 45%, 34%) 17%,
-        hsl(var(--hue), 30%, 24%) 18%,
-        transparent 18.5%
-      ),
-      conic-gradient(
-        from 205deg,
-        rgba(255, 255, 255, 0.14) 0deg,
-        transparent 40deg,
-        transparent 160deg,
-        rgba(255, 255, 255, 0.1) 200deg,
-        transparent 240deg
-      ),
-      repeating-radial-gradient(
-        circle at 50% 50%,
-        #0b0b0b 0px,
-        #161616 1px,
-        #0e0e0e 2px,
-        #131313 3px
-      );
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.65),
-      6px 8px 18px -6px rgba(30, 22, 10, 0.5);
-  }
-
-  /* The record slips out and spins when you pick the sleeve up. */
-  :global(a:hover) .disc,
-  :global(a:focus-visible) .disc {
-    transform: translateZ(-1px) translateX(14%) rotate(140deg);
-  }
-
   /* ---------- shadow + motion ---------- */
 
   /* A tight contact shadow over a wide ambient one, so the piece reads as
@@ -625,11 +644,6 @@ const hue = Math.floor(Math.random() * 360);
     animation: shadow-breathe 7s ease-in-out infinite;
     animation-delay: var(--float-delay);
     transition: transform 0.6s var(--ease-fn), opacity 0.6s var(--ease-fn);
-  }
-
-  .kind-vinyl .shadow {
-    width: calc(var(--mw) * 1.6);
-    margin-left: calc(var(--mw) * -0.85);
   }
 
   :global(a:hover) > .stage .shadow,
@@ -667,19 +681,13 @@ const hue = Math.floor(Math.random() * 360);
     }
 
     .media-3d,
-    .shadow,
-    .disc {
+    .shadow {
       transition: none;
     }
 
     :global(a:hover) .media-3d,
     :global(a:focus-visible) .media-3d {
       transform: rotate(var(--lean)) rotateY(var(--pose)) rotateX(4deg);
-    }
-
-    :global(a:hover) .disc,
-    :global(a:focus-visible) .disc {
-      transform: translateZ(-1px);
     }
   }
 </style>
