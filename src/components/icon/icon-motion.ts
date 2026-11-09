@@ -10,6 +10,8 @@ import { CHANNELS, easeInOut, gestures, lerpFrame, restFrame, sample, type Frame
   themselves a few frames behind, a comet smear that shows where they've been.
 */
 
+/** stretches every gesture's clock so the motion has room to breathe; 1 plays them as authored */
+const TEMPO = 1.4;
 /** blend time when a gesture is retriggered from a frozen pose */
 const BLEND = 0.2;
 /** [seconds behind, strength] for each echo */
@@ -111,7 +113,7 @@ const stop = (run: Run) => {
 function tick() {
   const now = performance.now();
   for (const run of runs.values()) {
-    const t = (now - run.start) / 1000;
+    const t = (now - run.start) / 1000 / TEMPO;
     if (!run.svg.isConnected || t >= run.gesture.duration) stop(run);
     else draw(run, t);
   }
@@ -125,7 +127,7 @@ const play = (svg: SVGSVGElement) => {
   const run = runs.get(svg);
   if (!run) return start(svg, gesture, now, restFrame(gesture));
   // let it play out; late in the gesture, blend from where it is into a fresh run
-  const t = (now - run.start) / 1000;
+  const t = (now - run.start) / 1000 / TEMPO;
   if (t < run.gesture.duration * 0.6) return;
   const from = poseAt(run, t);
   stop(run);
