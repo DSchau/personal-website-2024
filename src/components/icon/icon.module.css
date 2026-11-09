@@ -46,13 +46,13 @@
 }
 :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .paint {
   opacity: 1;
-  transition-duration: 420ms;
-  transition-delay: calc(var(--i) * 90ms);
+  transition-duration: 375ms;
+  transition-delay: calc(var(--i) * 80ms);
 }
 :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .ink {
   stroke: var(--lit, currentColor);
-  transition-duration: 420ms;
-  transition-delay: calc(var(--i) * 100ms);
+  transition-duration: 375ms;
+  transition-delay: calc(var(--i) * 90ms);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -64,8 +64,8 @@
   :is(a:is(:hover, :focus-visible) .icon, .icon[data-playing], .active) .paint {
     clip-path: inset(-10% -10% -10% -10%);
     transition:
-      opacity 170ms var(--ease-out) calc(var(--i) * 100ms),
-      clip-path 600ms var(--ease-out) calc(var(--i) * 100ms);
+      opacity 150ms var(--ease-out) calc(var(--i) * 90ms),
+      clip-path 525ms var(--ease-out) calc(var(--i) * 90ms);
   }
   /* the current page's colour is already there on load, not poured in */
   .icon.active.active :is(.paint, .ink) {

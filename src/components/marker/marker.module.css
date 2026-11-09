@@ -62,7 +62,7 @@ a:is(:hover, :focus-visible) .marker::before {
   clip-path: var(--drawn);
   transition:
     opacity 0s,
-    clip-path calc(170ms + var(--len, 6) * 31ms) cubic-bezier(0.45, 0, 0.2, 1) 60ms;
+    clip-path calc(150ms + var(--len, 6) * 27ms) cubic-bezier(0.45, 0, 0.2, 1) 50ms;
 }
 
 /* the current page: a paler stroke that's already dry when the page loads */

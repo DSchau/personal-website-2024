@@ -11,7 +11,7 @@ import { CHANNELS, easeInOut, gestures, lerpFrame, restFrame, sample, type Frame
 */
 
 /** stretches every gesture's clock so the motion has room to breathe; 1 plays them as authored */
-const TEMPO = 1.4;
+const TEMPO = 1.25;
 /** blend time when a gesture is retriggered from a frozen pose */
 const BLEND = 0.2;
 /** [seconds behind, strength] for each echo */
