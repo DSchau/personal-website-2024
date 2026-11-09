@@ -28,8 +28,8 @@ const allFavorites = Object.keys(favorites)
 		list: (favorites as any)[favorite]
 	}))
 
-const favoriteBooks = getFavoriteBooks()
-const favoriteBooksList = favoriteBooks.map(toFavoriteItem)
+// cap at 10 so the grid ends on a full row
+const favoriteBooksList = getFavoriteBooks().slice(0, 10).map(toFavoriteItem)
 ---
 <style>
 	section {
