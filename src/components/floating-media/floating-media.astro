@@ -92,7 +92,7 @@ const src =
 
 <span
   class:list={["stage", `kind-${kind}`]}
-  data-tilt={kind === "book" ? "" : undefined}
+  data-tilt
   style={`--stage-h: ${stageHeight}px; --mw: ${w}px; --mh: ${h}px; --d: ${depth}px; --pose: ${pose}deg; --lean: ${lean}deg; --float-delay: ${floatDelay}s; --wear: ${wear}deg; --rim: ${rim}px; --band: ${band}px;`}
 >
   <span class="shadow" aria-hidden="true"></span>
@@ -154,7 +154,7 @@ const src =
         ) : (
           <span class="front-fallback">{title}</span>
         )}
-        {kind === "book" && <span class="sheen" aria-hidden="true"></span>}
+        <span class="sheen" aria-hidden="true"></span>
       </span>
     </span>
   </span>
@@ -197,7 +197,7 @@ const src =
       rotateX(2deg) translateZ(34px);
   }
 
-  /* Books turn toward the pointer; --tilt-x/y are set by the script below. */
+  /* Each piece turns toward the pointer; --tilt-x/y are set by the script below. */
   :global(a:hover) [data-tilt] .media-3d {
     transform: rotate(calc(var(--lean) * 0.25))
       rotateY(calc(var(--pose) * 0.35 + var(--tilt-y, 0deg)))
@@ -303,7 +303,7 @@ const src =
     border-radius: inherit;
   }
 
-  /* A band of light that sweeps across the board when the book is picked up. */
+  /* A soft band of light that drifts across the front when a piece is picked up. */
   .sheen {
     position: absolute;
     inset: 0;
@@ -311,12 +311,12 @@ const src =
     background: linear-gradient(
       115deg,
       transparent 30%,
-      rgba(255, 255, 255, 0.22) 45%,
+      rgba(255, 255, 255, 0.13) 45%,
       transparent 60%
     );
     background-size: 250% 100%;
     background-position: 100% 0;
-    transition: background-position 0.9s ease;
+    transition: background-position 1.6s ease;
   }
 
   :global(a:hover) .sheen,
@@ -730,7 +730,7 @@ const src =
 </style>
 
 <script>
-  // Tilt books toward the pointer on devices that hover.
+  // Tilt each piece gently toward the pointer on devices that hover.
   if (matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) {
     for (const stage of document.querySelectorAll<HTMLElement>("[data-tilt]")) {
       const target = stage.closest<HTMLElement>("a") ?? stage;
@@ -739,8 +739,8 @@ const src =
         const r = stage.getBoundingClientRect();
         const x = clamp((e.clientX - r.left) / r.width - 0.5);
         const y = clamp((e.clientY - r.top) / r.height - 0.5);
-        stage.style.setProperty("--tilt-y", `${(x * 26).toFixed(1)}deg`);
-        stage.style.setProperty("--tilt-x", `${(-y * 12).toFixed(1)}deg`);
+        stage.style.setProperty("--tilt-y", `${(x * 14).toFixed(1)}deg`);
+        stage.style.setProperty("--tilt-x", `${(-y * 7).toFixed(1)}deg`);
       });
       target.addEventListener("pointerleave", () => {
         stage.style.removeProperty("--tilt-y");
