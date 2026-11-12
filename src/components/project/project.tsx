@@ -15,15 +15,11 @@ interface Props {
       }
     }[]
   }
-  stargazers: {
-    totalCount: number;
-  }
-  forks: {
-    totalCount: number
-  }
+  stargazerCount: number;
+  forkCount: number;
 }
 
-export function Project({ createdAt, description, name, url, repositoryTopics, stargazers, forks }: Props) {
+export function Project({ createdAt, description, name, url, repositoryTopics, stargazerCount, forkCount }: Props) {
   return (
     <div className={styles.project}>
       <h3 className={styles.header}>
@@ -40,10 +36,10 @@ export function Project({ createdAt, description, name, url, repositoryTopics, s
       </div>
       <div className={styles.footer}>
         <span className="stars">
-          <Icon name="star" />{stargazers?.totalCount || 0}
+          <Icon name="star" />{stargazerCount || 0}
         </span>
         <span className="forks">
-           <Icon name="fork" />{forks?.totalCount || 0}
+           <Icon name="fork" />{forkCount || 0}
         </span>
       </div>
     </div>

@@ -25,12 +25,8 @@ export async function getRepositories({
               name
               createdAt
               description
-              stargazers {
-                totalCount
-              }
-              forks {
-                totalCount
-              }
+              stargazerCount
+              forkCount
               url
               homepageUrl
               repositoryTopics(first: 5) {
