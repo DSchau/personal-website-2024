@@ -5,19 +5,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Development
-- `npm run dev` - Start local dev server at `localhost:4321`
-- `npm run build` - Type check with `astro check`, then build production site to `./dist/`
-- `npm run preview` - Preview the production build locally in Cloudflare's `workerd` runtime (run `npm run build` first)
+Use **pnpm** only (`pnpm install`, `pnpm run …`); the version is pinned in `package.json`'s `packageManager`. Don't use npm or yarn: a second lockfile drifts from `pnpm-lock.yaml`. Install-script and peer-range settings live in `pnpm-workspace.yaml`.
+
+- `pnpm run dev` - Start local dev server at `localhost:4321`
+- `pnpm run build` - Type check with `astro check`, then build production site to `./dist/`
+- `pnpm test` - Node's test runner over `tests/*.test.mjs`
+- `pnpm run preview` - Preview the production build locally in Cloudflare's `workerd` runtime (run `pnpm run build` first)
 
 Both `astro dev` and `astro preview` run on-demand routes in `workerd` (via the Cloudflare Vite plugin), not Node. Local state lives in `.wrangler/` and preview secrets are copied from `.env` into `dist/server/.dev.vars` (both git-ignored).
 
 ### Performance gate
-`.github/workflows/lighthouse.yml` runs Lighthouse CI (mobile, 3 runs, median) on every PR to `main` against the prerendered pages in `dist/client/`, then posts a summary comment (edited in place on each push). Runs on `main` save `lighthouse-summary.json` as the `lighthouse-baseline` artifact, and PRs compare against the newest one. Pages and budgets live in `lighthouserc.cjs`: byte budgets, CLS, accessibility and best practices fail the check, and the noisier performance score and TBT only warn. To run it locally after `npm run build`: `npx @lhci/cli@0.15.1 autorun` (needs Chrome; set `CHROME_PATH` if it isn't found).
+`.github/workflows/lighthouse.yml` runs Lighthouse CI (mobile, 3 runs, median) on every PR to `main` against the prerendered pages in `dist/client/`, then posts a summary comment (edited in place on each push). Runs on `main` save `lighthouse-summary.json` as the `lighthouse-baseline` artifact, and PRs compare against the newest one. Pages and budgets live in `lighthouserc.cjs`: byte budgets, CLS, accessibility and best practices fail the check, and the noisier performance score and TBT only warn. To run it locally after `pnpm run build`: `pnpm dlx @lhci/cli@0.15.1 autorun` (needs Chrome; set `CHROME_PATH` if it isn't found).
 
 ### Deployment
 This site is deployed to **Cloudflare Workers** (static assets + a Worker) using the `@astrojs/cloudflare` adapter in SSR mode (`output: 'server'`). The build writes static files to `dist/client/` and the Worker to `dist/server/`, along with a generated `dist/server/wrangler.json` (derived from the root `wrangler.jsonc`). Adapter v13+ no longer targets Cloudflare Pages.
 
-Books come from Goodreads, which no longer has public shelf RSS feeds. Read history and the favorites shelf live in `src/data/books.json`, generated from a Goodreads library export (My Books → Import/Export → Export Library) with `npm run import-books -- path/to/goodreads_library_export.csv`; re-run it and commit the JSON after finishing a book. Covers for new books are looked up on their public Goodreads pages; existing covers are reused. Currently reading is scraped from the public profile page when the prerendered homepage builds, so it only refreshes on deploy; if the scrape fails the section is hidden. A daily rebuild workflow exists as `.github/scheduled-rebuild.yml.example` (move it to `.github/workflows/scheduled-rebuild.yml` to activate), but it was written for a Cloudflare Pages deploy hook (`CLOUDFLARE_DEPLOY_HOOK_URL`) and needs updating for the Workers deployment.
+Books come from Goodreads, which no longer has public shelf RSS feeds. Read history and the favorites shelf live in `src/data/books.json`, generated from a Goodreads library export (My Books → Import/Export → Export Library) with `pnpm run import-books path/to/goodreads_library_export.csv`; re-run it and commit the JSON after finishing a book. Covers for new books are looked up on their public Goodreads pages; existing covers are reused. Currently reading is scraped from the public profile page when the prerendered homepage builds, so it only refreshes on deploy; if the scrape fails the section is hidden. A daily rebuild workflow exists as `.github/scheduled-rebuild.yml.example` (move it to `.github/workflows/scheduled-rebuild.yml` to activate), but it was written for a Cloudflare Pages deploy hook (`CLOUDFLARE_DEPLOY_HOOK_URL`) and needs updating for the Workers deployment.
 
 ## Environment Variables
 
@@ -106,14 +109,14 @@ Uses Octokit (`src/lib/octokit.ts`) with modified plugin configuration (excludes
 - Every icon comes from the **Central Icon System** in Figma ([central-icon-system-v1.35](https://www.figma.com/design/ZLZdIuD9mXZkMwG4GIeqsM/central-icon-system-v1.35)), exported at the `filled=off, stroke=2, radius=2, join=round` variant (brand marks only come filled). Don't add an icon library.
 - The Figma MCP server is configured in `.mcp.json` (Claude Code) and `.pi/mcp.json` (pi); sign in once (`pi mcp login figma`). With it, `use_figma` can call `exportAsync({ format: 'SVG_STRING' })` on a variant node from the file's Icons page.
 - Drawings live in `src/components/icon/icons.ts`, split into named parts; render with `<Icon name="…" />` from `icon.tsx`. Everything is monochrome `currentColor` (outlines, or fills for brand marks). Keep Central's geometry as exported; the only marks of our own are the home's chimney and `extra` parts that show mid-gesture (smoke, sparks, signal rings, the books' turning page).
-- Each nav/footer/external-link icon has a hover gesture in `icon-gestures.ts` (pure functions of time, played by `icon-motion.ts`). Leaving the link eases the icon back to rest within ~120ms. `npm test` checks every gesture starts and ends on the resting drawing and only moves parts its icon has.
+- Each nav/footer/external-link icon has a hover gesture in `icon-gestures.ts` (pure functions of time, played by `icon-motion.ts`). Leaving the link eases the icon back to rest within ~120ms. `pnpm test` checks every gesture starts and ends on the resting drawing and only moves parts its icon has.
 
 ### Image Handling
 - Images in content (e.g. post images) are optimized to webp at build time via the adapter's `imageService: 'compile'`; there's no runtime image transformation
 - `image.layout: 'constrained'` gives markdown images and `<Image>` a responsive `srcset`. The `rehypeMarkdownImageSizes()` plugin sets a tight `sizes` (`min(100vw, 50vh × aspect, width)`) to match the 50vh cap in `blog-post.module.css`, and opts SVGs out with `layout: 'none'`
 - Keep source images ≤ 2560px on the long edge (the largest srcset breakpoint for the compile service)
 - The content layer caches rendered markdown: after changing markdown plugins, delete `node_modules/.astro/data-store.json` (or `.astro/`) before rebuilding
-- Uses `@unpic/astro` for responsive imgix images (its `astro` peer range is stale, so `package.json` has an `overrides` entry for it)
+- Uses `@unpic/astro` for responsive imgix images (its `astro` peer range is stale, so `pnpm-workspace.yaml` allows Astro 7 for it under `peerDependencyRules`)
 - Home page preconnects to `dschau-website.imgix.net` for performance
 
 ### Redirects

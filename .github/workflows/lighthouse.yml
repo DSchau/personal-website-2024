@@ -26,21 +26,23 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+      # reads the pnpm version from package.json's packageManager field
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       # The build reaches GitHub for the footer's commit stats; with a dummy
       # token it falls back to placeholders, same as a local build. The
       # contact form's Resend key is only read at runtime, but the build needs
       # it set.
-      - run: npm run build
+      - run: pnpm run build
         env:
           GITHUB_TOKEN: dummy
           RESEND_API_KEY: dummy
       - name: Run Lighthouse CI
-        run: npx --yes @lhci/cli@0.15.1 autorun
+        run: pnpm dlx @lhci/cli@0.15.1 autorun
       # The newest summary saved by a run on main. If there isn't one (or it
       # expired), the report just leaves out the comparison.
       - name: Download main baseline

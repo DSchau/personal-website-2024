@@ -2,7 +2,7 @@ import books from "@/data/books.json";
 
 // Goodreads retired its public shelf RSS feeds, so read history and
 // favorites come from a library export checked in as src/data/books.json
-// (regenerate with `npm run import-books -- <export.csv>`). Currently
+// (regenerate with `pnpm run import-books <export.csv>`). Currently
 // reading changes too often for that, so it's read from the public profile
 // page instead.
 const PROFILE_URL = "https://www.goodreads.com/user/show/7210735-dustin-schau";

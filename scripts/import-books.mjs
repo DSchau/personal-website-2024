@@ -3,7 +3,7 @@
 // books OG card build from. Goodreads retired its public shelf RSS feeds,
 // so this export is the source of truth for read history.
 //
-// Usage: npm run import-books -- path/to/goodreads_library_export.csv
+// Usage: pnpm run import-books path/to/goodreads_library_export.csv
 //
 // Only the read shelf and the custom "favorites" shelf are kept, and no
 // review text or private notes are copied. Covers aren't in the export, so
@@ -100,7 +100,7 @@ async function readExisting() {
 
 const csvPath = process.argv[2];
 if (!csvPath) {
-  console.error("Usage: npm run import-books -- path/to/goodreads_library_export.csv");
+  console.error("Usage: pnpm run import-books path/to/goodreads_library_export.csv");
   process.exit(1);
 }
 

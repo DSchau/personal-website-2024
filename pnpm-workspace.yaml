@@ -1,0 +1,10 @@
+# Packages allowed to run install scripts (pnpm blocks them by default).
+# esbuild and workerd fetch their platform binaries this way.
+allowBuilds:
+  esbuild: true
+  workerd: true
+
+# @unpic/astro's astro peer range stops at v5, but it works with Astro 7.
+peerDependencyRules:
+  allowedVersions:
+    '@unpic/astro>astro': '7'
