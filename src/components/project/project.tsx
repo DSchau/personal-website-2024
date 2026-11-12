@@ -1,6 +1,5 @@
 import styles from './project.module.css';
-import Star from 'phosphor-react/src/icons/Star.tsx';
-import GitFork from 'phosphor-react/src/icons/GitFork.tsx';
+import { Icon } from '@/components/icon/icon.tsx';
 
 import { Tags } from '@/components/tags/tags.tsx';
 
@@ -41,10 +40,10 @@ export function Project({ createdAt, description, name, url, repositoryTopics, s
       </div>
       <div className={styles.footer}>
         <span className="stars">
-          <Star weight="fill"/> {stargazers?.totalCount || 0}
+          <Icon name="star" />{stargazers?.totalCount || 0}
         </span>
         <span className="forks">
-           <GitFork /> {forks?.totalCount || 0}
+           <Icon name="fork" />{forks?.totalCount || 0}
         </span>
       </div>
     </div>

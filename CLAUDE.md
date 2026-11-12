@@ -102,6 +102,12 @@ Uses Octokit (`src/lib/octokit.ts`) with modified plugin configuration (excludes
 - CSS Modules for component-specific styles (e.g., `work.module.css`)
 - No CSS framework; custom CSS throughout
 
+### Icons
+- Every icon comes from the **Central Icon System** in Figma ([central-icon-system-v1.35](https://www.figma.com/design/ZLZdIuD9mXZkMwG4GIeqsM/central-icon-system-v1.35)), exported at the `filled=off, stroke=2, radius=2, join=round` variant (brand marks only come filled). Don't add an icon library.
+- The Figma MCP server is configured in `.mcp.json` (Claude Code) and `.pi/mcp.json` (pi); sign in once (`pi mcp login figma`). With it, `use_figma` can call `exportAsync({ format: 'SVG_STRING' })` on a variant node from the file's Icons page.
+- Drawings live in `src/components/icon/icons.ts`, split into named parts; render with `<Icon name="…" />` from `icon.tsx`. Everything is monochrome `currentColor` (outlines, or fills for brand marks). Keep Central's geometry as exported; the only marks of our own are the home's chimney and `extra` parts that show mid-gesture (smoke, sparks, signal rings, the books' turning page).
+- Each nav/footer/external-link icon has a hover gesture in `icon-gestures.ts` (pure functions of time, played by `icon-motion.ts`). Leaving the link eases the icon back to rest within ~120ms. `npm test` checks every gesture starts and ends on the resting drawing and only moves parts its icon has.
+
 ### Image Handling
 - Images in content (e.g. post images) are optimized to webp at build time via the adapter's `imageService: 'compile'`; there's no runtime image transformation
 - `image.layout: 'constrained'` gives markdown images and `<Image>` a responsive `srcset`. The `rehypeMarkdownImageSizes()` plugin sets a tight `sizes` (`min(100vw, 50vh × aspect, width)`) to match the 50vh cap in `blog-post.module.css`, and opts SVGs out with `layout: 'none'`

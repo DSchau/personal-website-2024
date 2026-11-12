@@ -19,6 +19,8 @@
 
   padding: var(--main-padding);
   margin: 0 auto;
+  /* the nav's full-bleed glass is 100vw wide, which counts the scrollbar; clip (not hidden) keeps the nav sticky */
+  overflow-x: clip;
 }
 
 .container > * {

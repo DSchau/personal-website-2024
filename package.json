@@ -29,7 +29,6 @@
     "marked": "^18.1.0",
     "medium-zoom": "^1.1.0",
     "octokit": "^5.0.5",
-    "phosphor-react": "^1.4.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "rehype-pretty-code": "^0.14.5",

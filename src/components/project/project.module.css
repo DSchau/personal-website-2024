@@ -64,13 +64,6 @@
   font-size: var(--text-s);
 }
 
-.footer svg {
-  display: inline-block;
-
-  position: relative;
-  top: 2px;
-}
-
 .footer a {
   color: var(--text-color);
   text-decoration: none;

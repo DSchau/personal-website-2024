@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "oauth": {
+        "clientName": "Claude Code"
+      },
+      "description": "Figma: read designs and export assets, e.g. icons from the Central Icon System file"
+    }
+  }
+}
