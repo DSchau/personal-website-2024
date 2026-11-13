@@ -41,14 +41,10 @@ const firstYear = groups.length > 0 ? groups[groups.length - 1].year : null;
   description="Books I've read and recently finished"
   byline="What I've been reading"
   copy="You can learn a lot about a person by what they read, so here's what I've been reading"
+  image={{ url: ogImage, width: 1200, height: 630 }}
   meta={[
-    { name: "twitter:card", content: "summary_large_image" },
     { property: "twitter:domain", content: site?.hostname.replace("www.", "") },
     { property: "twitter:url", content: `${site?.href ?? "/"}books` },
-    { property: "og:image", content: ogImage },
-    { name: "twitter:image", content: ogImage },
-    { property: "og:image:width", content: "1200" },
-    { property: "og:image:height", content: "630" },
   ]}
 >
   {hero.length > 0 && <BookHero books={hero} />}
