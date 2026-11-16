@@ -9,7 +9,8 @@
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "import-books": "node scripts/import-books.mjs"
+    "import-books": "node scripts/import-books.mjs",
+    "sync-books": "node scripts/sync-books.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
