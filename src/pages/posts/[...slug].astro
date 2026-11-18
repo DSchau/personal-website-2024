@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro'
+import { ogImageUrl } from '@/lib/og-image'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
 
@@ -40,11 +41,11 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
 
 </style>
 
-<Layout title={entry.data.title} description={entry.data.excerpt} showHeader={false} canonical={entry.data.canonicalLink} meta={[
-  {
-    name: 'twitter:card',
-    content: 'summary_large_image'
-  },
+<Layout title={entry.data.title} description={entry.data.excerpt} showHeader={false} canonical={entry.data.canonicalLink} image={{
+  url: ogImageUrl(site, { title: entry.data.title, tags: entry.data.tags, excerpt: entry.data.excerpt }),
+  width: 1200,
+  height: 620
+}} meta={[
   {
     property: 'twitter:domain',
     content: site?.hostname.replace('www.', '')
@@ -52,18 +53,6 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
   {
     property: 'twitter:url',
     content: `${site?.href}posts/${entry.id}/`
-  },
-  {
-    property: 'og:image',
-    content: `${site?.href}api/og.png?type=post&title=${encodeURIComponent(entry.data.title)}&tags=${entry.data.tags.join(',')}${entry.data.excerpt ? `&excerpt=${encodeURIComponent(entry.data.excerpt)}` : ''}`
-  },
-  {
-    property: 'og:image:width',
-    content: `1200`
-  },
-  {
-    property: 'og:image:height',
-    content: `620`
   }
 ]}>
   <MarkdownPostLayout frontmatter={Object.assign({}, remarkPluginFrontmatter, entry.data) as any}>

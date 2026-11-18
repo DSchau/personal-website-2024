@@ -61,6 +61,7 @@ Uses **Astro Content Collections** with the Content Layer API (defined in `src/c
   - Accepts `title`, `tags`, and `excerpt` query parameters (`type=books` redirects to the prerendered `/og/books.png`)
   - Uses custom fonts loaded as ArrayBuffers (Geist Serif TTF, SFPro) via custom Vite plugin (Satori can't read woff2)
   - Set to `prerender: false` for runtime generation
+  - `Layout.astro` emits og:image/twitter:image for every page via its `image` prop, defaulting to an `/api/og.png` card from the page title and description (`src/lib/og-image.ts` builds the URL); posts pass tags and excerpt, `/books` passes the prerendered `/og/books.png`
 
 - `/api/email.ts` - Contact form submission endpoint using Resend
   - Email validation with MX record checks, Gravatar verification, and disposable email detection

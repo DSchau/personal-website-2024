@@ -39,7 +39,8 @@ export const GET: APIRoute = async function GET({ request, redirect }) {
   }
 
   const title = urlParams.get("title") as string;
-  const tags = urlParams.get("tags")?.split(",") as string[];
+  const tags =
+    urlParams.get("tags")?.split(",").map((tag) => tag.trim()).filter(Boolean) ?? [];
   const excerpt = urlParams.get("excerpt") ?? undefined;
 
   const response = new ImageResponse(OGScene({ tags, title, excerpt }), {

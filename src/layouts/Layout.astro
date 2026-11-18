@@ -5,6 +5,7 @@ import { getMostRecentCommit } from "@/lib/get-most-recent-commit";
 import { getTotalCommitCount } from '@/lib/get-total-commit-count.ts';
 import metayaml from '@/assets/meta.yaml'
 import { marked } from 'marked'
+import { ogImageUrl } from '@/lib/og-image'
 import { Font } from 'astro:assets'
 
 const pathname = new URL(Astro.request.url).pathname.slice(1)
@@ -20,7 +21,7 @@ const [commits, totalCommits, updated] = await Promise.all([
 	getMostRecentCommit(gitHubArgs, new Date())
 ])
 
-const { title, description, showHeader, showCopy, copy, meta = [], byline, photo, display, scene, canonical } = Astro.props
+const { title, description, showHeader, showCopy, copy, meta = [], byline, photo, display, scene, canonical, image } = Astro.props
 
 // pages are served at `/slug/`; point crawlers at that URL on the site host
 // (or at the original article for cross-posts). `canonical={false}` opts out.
@@ -34,6 +35,17 @@ const copyHtml = copy ? (marked.parseInline(copy) as string) : undefined
 // brand last; the home page leads with the brand
 const fullTitle = !title ? metayaml.title : pathname === '' ? `${metayaml.title} | ${title}` : `${title} | ${metayaml.title}`
 const fullDescription = description ? description : metayaml.description
+
+// pages without their own card get an on-demand /api/og.png card; the home
+// page keeps it simple: the name with its tagline underneath
+const ogImage: { url: string; width: number; height: number; alt?: string } = image ?? {
+	url: ogImageUrl(
+		Astro.site,
+		pathname === '' ? { title: metayaml.title, excerpt: title } : { title: title ?? metayaml.title, excerpt: description }
+	),
+	width: 1200,
+	height: 620,
+}
 ---
 
 <html lang="en">
@@ -56,6 +68,12 @@ const fullDescription = description ? description : metayaml.description
 		<meta name="twitter:title" content={fullTitle} />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={metayaml.title} />
+		<meta property="og:image" content={ogImage.url} />
+		<meta property="og:image:width" content={String(ogImage.width)} />
+		<meta property="og:image:height" content={String(ogImage.height)} />
+		<meta property="og:image:alt" content={ogImage.alt ?? fullTitle} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content={ogImage.url} />
 		{
 			meta.map(({ property, name, content }: any) => {
 				return <meta property={property} name={name} content={content} />
