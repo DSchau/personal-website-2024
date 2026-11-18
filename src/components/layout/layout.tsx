@@ -31,8 +31,11 @@ interface Props {
 export function Layout({ children, commits, totalCommits, pathname, showCopy, showHeader = true, copy, byline, updated, photo, display, scene }: Props) {
   return (
     <>
+      <a className={styles.skip} href="#content">Skip to content</a>
       <div className={styles.container}>
         <Navigation pathname={pathname} />
+        {/* the skip link's target: right after the nav, so it lands on the page's own heading (the header, display or main) */}
+        <span id="content" className={styles.content} tabIndex={-1} />
         {showHeader && <Header commits={commits} className={styles.header} showCopy={showCopy} copy={copy} byline={byline} photo={photo} />}
         {display && <h1 className={styles.display}>{display}</h1>}
         {pathname === '' && <Sea tinted />}
