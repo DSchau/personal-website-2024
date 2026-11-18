@@ -47,3 +47,33 @@
 .container main > :first-child :global(.section-title) {
   border-top: none;
 }
+
+/*
+  The first tab stop on every page: hidden until it's focused, then shown over
+  the sticky nav (z-index 9001) so keyboard users can jump past its links.
+*/
+.skip {
+  position: fixed;
+  top: var(--padding-md);
+  left: var(--padding-md);
+  z-index: 9002;
+  padding: var(--padding-md) var(--padding-lg);
+
+  color: var(--bg-color);
+  background: var(--text-color);
+  border-radius: 0.3em;
+  text-decoration: none;
+
+  translate: 0 calc(-100% - var(--padding-lg));
+}
+
+.skip:focus-visible {
+  translate: none;
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* focused by the skip link, never by tabbing: nothing to outline */
+.content:focus {
+  outline: none;
+}
