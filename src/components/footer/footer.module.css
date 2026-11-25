@@ -45,8 +45,8 @@
 .links {
   display: flex;
   flex-wrap: wrap;
-  column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
-  row-gap: 0.75rem; /* only applies once the list wraps, on small screens */
+  align-items: center;
+  gap: clamp(0.5rem, 2.5vw, 1rem);
 
   margin: 0;
   padding: 0;
@@ -58,11 +58,13 @@
   padding: 0;
 }
 
-/* same highlighter pass as the nav links (marker.module.css) */
 .links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+
   color: var(--text-color);
   text-decoration: none;
-  white-space: nowrap; /* keep the icon glued to its label when the list wraps */
 }
 
 /* ---------- scene ---------- */
