@@ -45,8 +45,9 @@
 .links {
   display: flex;
   flex-wrap: wrap;
-  column-gap: clamp(0.6rem, 3.5vw, 1.4rem);
-  row-gap: 0.75rem; /* only applies once the list wraps, on small screens */
+  align-items: center;
+  /* five 44px links plus gaps fit the ~248px row at a 320px viewport */
+  gap: clamp(0.25rem, 1vw, 0.75rem);
 
   margin: 0;
   padding: 0;
@@ -58,11 +59,21 @@
   padding: 0;
 }
 
-/* same highlighter pass as the nav links (marker.module.css) */
+/* ~44px tap targets with the icon centred */
 .links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+
   color: var(--text-color);
   text-decoration: none;
-  white-space: nowrap; /* keep the icon glued to its label when the list wraps */
+}
+
+/* no label to space from: keep only the icon's symmetric viewBox margin */
+.links a > svg {
+  margin: calc(-1 * var(--pad));
 }
 
 /* ---------- scene ---------- */
