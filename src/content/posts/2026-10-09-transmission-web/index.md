@@ -1,7 +1,7 @@
 ---
 date: 2026-10-07
 title: "Announcing Transmission for Web client"
-draft: true
+unlisted: true
 excerpt: "Releasing my version of a Transmission web client that I use on my mini PC"
 tags:
   - torrents

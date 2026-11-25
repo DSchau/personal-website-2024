@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro'
 import { getCollection } from 'astro:content'
 
 import metayaml from '@/assets/meta.yaml'
+import { isListed } from '@/lib/post-visibility'
 
 export const prerender = true
 
@@ -11,7 +12,7 @@ export const GET: APIRoute = async ({ site }) => {
     throw new Error('The RSS feed needs `site` to be set in astro.config.mjs')
   }
 
-  const posts = (await getCollection('posts', ({ data }) => data.draft !== true))
+  const posts = (await getCollection('posts', ({ data }) => isListed(data, true)))
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
   return rss({
