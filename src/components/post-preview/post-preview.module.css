@@ -57,7 +57,7 @@
 
   font-size: var(--text-xs);
   line-height: 1.4;
-  color: color-mix(in srgb, var(--text-color) 50%, transparent);
+  color: color-mix(in srgb, var(--text-color) 65%, transparent);
 }
 
 .tags > span::before {

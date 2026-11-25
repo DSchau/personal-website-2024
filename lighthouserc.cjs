@@ -8,12 +8,12 @@
 const noisy = "warn";
 
 const pages = [
-  { path: "/", performance: 0.9, tbt: 300 },
-  { path: "/posts/", performance: 0.9, tbt: 300 },
+  { path: "/", performance: 0.9, tbt: 300, contrast: true },
+  { path: "/posts/", performance: 0.9, tbt: 300, contrast: true },
   // /favorites/ and /books/ get looser budgets until the fixes from #61 land
   { path: "/favorites/", performance: 0.85, tbt: 500 },
   { path: "/books/", performance: 0.85, tbt: 300 },
-  { path: "/work/", performance: 0.9, tbt: 300 },
+  { path: "/work/", performance: 0.9, tbt: 300, contrast: true },
   // the longest post: lots of prose and highlighted code
   { path: "/posts/css-in-js-benefits-drawbacks-and-tooling/", performance: 0.9, tbt: 300 },
 ];
@@ -37,6 +37,8 @@ module.exports = {
           "total-byte-weight": ["error", { maxNumericValue: 1024 * 1024 }],
           "categories:accessibility": ["error", { minScore: 0.95 }],
           "categories:best-practices": ["error", { minScore: 0.95 }],
+          // Pages flagged `contrast` pass axe's color-contrast check; the rest (e.g. the post header tags) aren't gated yet.
+          ...(page.contrast ? { "color-contrast": ["error", { minScore: 1 }] } : {}),
         },
       })),
     },
