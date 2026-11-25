@@ -10,6 +10,7 @@ Use **pnpm** only (`pnpm install`, `pnpm run …`); the version is pinned in `pa
 - `pnpm run dev` - Start local dev server at `localhost:4321`
 - `pnpm run build` - Type check with `astro check`, then build production site to `./dist/`
 - `pnpm test` - Node's test runner over `tests/*.test.mjs`
+- `pnpm run test:layout` - Playwright layout checks in `tests/layout/` against `dist/client` (run `pnpm run build` first; `pnpm exec playwright install chromium` once). They check element bounds at the phone widths, not just page `scrollWidth`. Screenshot baselines are Linux-only, so other platforms skip them; refresh with `--update-snapshots`, which needs Linux.
 - `pnpm run preview` - Preview the production build locally in Cloudflare's `workerd` runtime (run `pnpm run build` first)
 
 Both `astro dev` and `astro preview` run on-demand routes in `workerd` (via the Cloudflare Vite plugin), not Node. Local state lives in `.wrangler/` and preview secrets are copied from `.env` into `dist/server/.dev.vars` (both git-ignored).
