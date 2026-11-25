@@ -2,32 +2,23 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro'
 import { ogImageUrl } from '@/lib/og-image'
+import { isRoutable } from '@/lib/post-visibility'
 
 import MarkdownPostLayout from '@/layouts/BlogPost.astro';
 
 export const prerender = true
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('posts');
+  const blogEntries = await getCollection('posts', ({ data }) => isRoutable(data, import.meta.env.PROD));
   return blogEntries.map(entry => ({
     params: { slug: entry.id }, props: { entry },
   }));
 }
 
+type Props = { entry: CollectionEntry<'posts'> }
+
 const site = Astro.site
-
-// In server mode, fetch the entry based on the slug
-const slug = Astro.params.slug;
-let entry: CollectionEntry<'posts'> | undefined = Astro.props.entry;
-
-if (!entry) {
-  const blogEntries = await getCollection('posts');
-  entry = blogEntries.find(e => e.id === slug);
-
-  if (!entry) {
-    return Astro.redirect('/404');
-  }
-}
+const { entry } = Astro.props
 
 const { Content, remarkPluginFrontmatter } = await render(entry);
 

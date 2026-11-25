@@ -10,6 +10,7 @@ import { Project } from '@/components/project/project.tsx';
 import { ContactForm } from '@/components/contact-form/contact-form.tsx'
 import CurrentlyReading from '@/components/currently-reading/currently-reading.astro'
 import { getCurrentlyReading } from '@/lib/goodreads'
+import { isListed } from '@/lib/post-visibility'
 import marker from '@/components/marker/marker.module.css'
 
 export const prerender = true
@@ -24,8 +25,7 @@ const repos = await getRepositories({
 const currentlyReading = await getCurrentlyReading()
 
 const posts = await getCollection('posts', ({ data }) => {
-	const canShow = import.meta.env.PROD ? data.draft !== true : true;
-	return canShow && data.featured
+	return isListed(data, import.meta.env.PROD) && data.featured
 })
 	.then(all => {
 		return all

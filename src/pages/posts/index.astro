@@ -2,12 +2,11 @@
 import { getCollection } from "astro:content";
 import Layout from '@/layouts/Layout.astro'
 import { Icon } from '@/components/icon/icon.tsx'
+import { isListed } from '@/lib/post-visibility'
 
 export const prerender = true
 
-const posts = await getCollection('posts', ({ data }) => {
-  return import.meta.env.PROD ? data.draft !== true : true;
-})
+const posts = await getCollection('posts', ({ data }) => isListed(data, import.meta.env.PROD))
   .then((all) => {
     return all.sort((a, b) => {
       return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();

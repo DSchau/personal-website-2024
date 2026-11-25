@@ -46,6 +46,9 @@ Uses **Astro Content Collections** with the Content Layer API (defined in `src/c
    - Blog posts stored in `src/content/posts/` as Markdown files
    - The entry `id` is the URL slug: the directory/file name, or the `slug:` frontmatter field when set (several older posts use it). Render with `render(entry)` from `astro:content`
    - Schema includes: title, date, tags, excerpt, featured status, featuredImage, canonicalLink
+   - `draft: true` posts are only built in dev; production builds give them no page, so they're also absent from the sitemap, RSS and listings
+   - `unlisted: true` posts are published at their URL (and in the sitemap) but left out of `/posts`, the homepage and RSS
+   - Visibility rules live in `src/lib/post-visibility.ts` (`isRoutable`, `isListed`)
    - `lastModified` field is automatically added by the `remarkModifiedTime` plugin (uses git log)
    - Accessed via `getCollection('posts')`
 
