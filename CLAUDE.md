@@ -64,7 +64,7 @@ Uses **Astro Content Collections** with the Content Layer API (defined in `src/c
   - `Layout.astro` emits og:image/twitter:image for every page via its `image` prop, defaulting to an `/api/og.png` card from the page title and description (`src/lib/og-image.ts` builds the URL); posts pass tags and excerpt, `/books` passes the prerendered `/og/books.png`
 
 - `/api/email.ts` - Contact form submission endpoint using Resend
-  - Email validation with MX record checks, Gravatar verification, and disposable email detection
+  - Email validation with normalization, MX record checks, and disposable email detection (`src/lib/contact-email.ts`); invalid input returns 400, an upstream DNS/Resend failure returns 502
   - Uses Cloudflare DNS API for MX lookups
   - Sends formatted emails to website owner
 
@@ -135,6 +135,6 @@ The adapter writes both trailing-slash variants of each source path to `_redirec
 - `compressHTML: true` keeps Astro's HTML-aware whitespace handling (Astro 7 defaults to JSX-style stripping, which removes spaces between inline elements)
 - Endpoints with a file extension (e.g. `/api/og.png`) can't be requested with a trailing slash since Astro 6
 - OG images are generated at runtime with custom fonts, not prerendered
-- Contact form has sophisticated email validation to prevent spam (MX records, Gravatar check, disposable email detection)
+- Contact form has sophisticated email validation to prevent spam (normalization, MX records, disposable email detection)
 - Blog posts support both `date` and `lastModified` (from git) frontmatter fields
 - The Octokit instance has the throttling plugin removed to avoid compatibility issues
