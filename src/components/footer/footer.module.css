@@ -46,7 +46,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: clamp(0.5rem, 2.5vw, 1rem);
+  /* five 44px links plus gaps fit the ~248px row at a 320px viewport */
+  gap: clamp(0.25rem, 1vw, 0.75rem);
 
   margin: 0;
   padding: 0;
@@ -58,13 +59,21 @@
   padding: 0;
 }
 
+/* ~44px tap targets with the icon centred */
 .links a {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
 
   color: var(--text-color);
   text-decoration: none;
+}
+
+/* no label to space from: keep only the icon's symmetric viewBox margin */
+.links a > svg {
+  margin: calc(-1 * var(--pad));
 }
 
 /* ---------- scene ---------- */
