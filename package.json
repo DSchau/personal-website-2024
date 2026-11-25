@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "import-books": "node scripts/import-books.mjs",
-    "sync-books": "node scripts/sync-books.mjs"
+    "sync-books": "node scripts/sync-books.mjs",
+    "test:layout": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -40,6 +41,7 @@
     "unplugin-font-to-buffer": "^0.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@rollup/plugin-yaml": "^5.0.0",
     "wrangler": "^4.147.0"
   },
