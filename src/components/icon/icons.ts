@@ -25,6 +25,10 @@ export interface Part {
   width?: number;
 }
 
+// envelope (mail), redrawn to Central's stroke and radius: a 18×14 body and a V flap
+const ENVELOPE = "M5 5H19C20.1046 5 21 5.89543 21 7V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7C3 5.89543 3.89543 5 5 5Z";
+const FLAP = "M3.5 7L10.86 12.2C11.54 12.68 12.46 12.68 13.14 12.2L20.5 7";
+
 export const icons = {
   // home-open
   home: {
@@ -96,11 +100,37 @@ export const icons = {
   fork: {
     fork: {d: ["M4 6.0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0", "M10 18.0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0", "M16 6.0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0", "M6 8V10C6 11.1046 6.89543 12 8 12H10C11.1046 12 12 12.8954 12 14V16", "M18 8V10C18 11.1046 17.1046 12 16 12H14C12.8954 12 12 12.8954 12 14V16"]},
   },
+  // email icon candidates (preview: /lab/email-icons/), all one envelope drawn to Central's
+  // 2px stroke and 2px corner radius, each with its own hover gesture
+  'envelope-peek': {
+    letter: {d: ["M8 5V0.5C8 -0.0523 8.4477 -0.5 9 -0.5H15C15.5523 -0.5 16 -0.0523 16 0.5V5", "M10.5 2H13.5"], extra: true},
+    body: {d: [ENVELOPE]},
+    flap: {d: [FLAP]},
+  },
+  'envelope-send': {
+    body: {d: [ENVELOPE]},
+    flap: {d: [FLAP]},
+  },
+  'envelope-ping': {
+    body: {d: [ENVELOPE]},
+    flap: {d: [FLAP]},
+    ring: {d: ["M18.25 4.5a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0-4.5 0"], extra: true, width: 1.25},
+    dot: {d: ["M18.25 4.5a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0-4.5 0"], fill: true, extra: true},
+  },
+  'envelope-seal': {
+    body: {d: [ENVELOPE]},
+    flap: {d: [FLAP]},
+    heart: {d: ["M12 11.6C13.4 10.1 15.9 11.4 14.9 13.5C14.4 14.5 13.4 15.3 12 16.1C10.6 15.3 9.6 14.5 9.1 13.5C8.1 11.4 10.6 10.1 12 11.6Z"], fill: true, extra: true},
+  },
+  'envelope-flutter': {
+    body: {d: [ENVELOPE]},
+    flap: {d: [FLAP]},
+  },
 } satisfies Record<string, Record<string, Part>>
 
 export type IconName = keyof typeof icons
 
 /** the Central icon each one is drawn from */
-export const central: Record<IconName, string> = { home: 'home-open', posts: 'page-text', favorites: 'heart-2', books: 'newspaper-1', work: 'bag', email: 'send', x: 'x', linkedin: 'linkedin', github: 'github', rss: 'rss-feed', external: 'square-arrow-top-right', star: 'star', fork: 'fork-code' }
+export const central: Record<IconName, string> = { home: 'home-open', posts: 'page-text', favorites: 'heart-2', books: 'newspaper-1', work: 'bag', email: 'send', x: 'x', linkedin: 'linkedin', github: 'github', rss: 'rss-feed', external: 'square-arrow-top-right', star: 'star', fork: 'fork-code', 'envelope-peek': 'envelope', 'envelope-send': 'envelope', 'envelope-ping': 'envelope', 'envelope-seal': 'envelope', 'envelope-flutter': 'envelope' }
 
 export const isIconName = (name: string): name is IconName => name in icons

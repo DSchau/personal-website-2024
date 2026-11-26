@@ -328,4 +328,100 @@ export const gestures: Record<string, Gesture> = {
       };
     },
   },
+  // email candidates (preview: /lab/email-icons/)
+  // peek: the envelope crouches, its flap swings open, a letter pops up and wobbles, then tucks back in
+  'envelope-peek': {
+    duration: 1.4,
+    parts: {
+      all: { origin: [12, 19] },
+      letter: { origin: [12, 5], hidden: true },
+      flap: { origin: [12, 7] },
+    },
+    pose: t => {
+      const crouch = bell(span(t, 0, 0.16));
+      const land = bell(span(t, 1.05, 1.22));
+      const open = easeInOut(span(t, 0.08, 0.32)) - easeInOut(span(t, 0.85, 1.08));
+      const rise = easeOut(span(t, 0.25, 0.6)) - easeInOut(span(t, 0.7, 0.95));
+      return {
+        all: { sx: 1 + 0.06 * crouch + 0.04 * land, sy: 1 - 0.08 * crouch - 0.06 * land },
+        letter: { y: 4 * (1 - rise), o: clamp01(rise * 1.5), r: -6 * flick(t - 0.55, 0.35, 3) },
+        flap: { sy: 1 - 1.75 * open + 0.15 * flick(t - 1.08, 0.3, 4) },
+      };
+    },
+  },
+  // send: winds back, zips off up-right leaving a smear, and swoops back in from the lower left
+  'envelope-send': {
+    duration: 1.3,
+    parts: {
+      all: { origin: [12, 12], echo: true },
+      flap: { origin: [12, 7] },
+    },
+    pose: (t): Record<string, Pose> => {
+      if (t < 0.55) {
+        const back = bell(span(t, 0, 0.24));
+        const go = easeIn(span(t, 0.18, 0.5));
+        return {
+          all: { x: -1.4 * back + 13 * go, y: 1.4 * back - 13 * go, r: -10 * back, s: 1 - 0.06 * back - 0.45 * go, o: 1 - span(t, 0.3, 0.5) },
+        };
+      }
+      const home = arrive(t - 0.55, 0.75, 1.6, 0.55);
+      return {
+        all: { x: -9 * (1 - home), y: 9 * (1 - home), s: 0.6 + 0.4 * home, r: 8 * flick(t - 0.9, 0.4, 2.6), o: span(t, 0.55, 0.67) },
+        flap: { sy: 1 + 0.25 * flick(t - 0.95, 0.35, 3) },
+      };
+    },
+  },
+  // ping: you've got mail. The envelope buzzes, a badge pops onto its corner and sends out a ring
+  'envelope-ping': {
+    duration: 1.2,
+    parts: {
+      all: { origin: [12, 12] },
+      ring: { origin: [20.5, 4.5], hidden: true },
+      dot: { origin: [20.5, 4.5], hidden: true },
+    },
+    pose: t => {
+      const u = span(t, 0.42, 0.95);
+      return {
+        all: { r: 10 * Math.sin(2 * Math.PI * 6 * t) * bell(span(t, 0, 0.5)), y: -bell(span(t, 0, 0.25)) },
+        ring: { s: 1 + 1.3 * easeOut(u), o: 0.9 * bell(u ** 0.5) },
+        dot: { s: 0.2 + 0.8 * arrive(t - 0.35, 0.45, 2.4, 0.4), o: span(t, 0.35, 0.42) - span(t, 0.95, 1.15) },
+      };
+    },
+  },
+  // seal: the flap unwrites and writes itself shut, then a wax heart stamps onto its tip
+  'envelope-seal': {
+    duration: 1.4,
+    parts: {
+      all: { origin: [12, 19] },
+      flap: { origin: [12, 7] },
+      heart: { origin: [12, 13.5], hidden: true },
+    },
+    pose: t => {
+      const stamp = bell(span(t, 0.72, 0.9));
+      return {
+        all: { y: -bell(span(t, 0, 0.7)), sx: 1 + 0.05 * stamp, sy: 1 - 0.07 * stamp },
+        flap: { d1: 1 - easeIn(span(t, 0.05, 0.28)) + easeOut(span(t, 0.32, 0.72)) },
+        heart: {
+          s: 0.2 + 0.8 * arrive(t - 0.72, 0.5, 2.4, 0.38),
+          r: -12 * flick(t - 0.75, 0.5, 2.5),
+          o: span(t, 0.72, 0.78) - span(t, 1.15, 1.4),
+        },
+      };
+    },
+  },
+  // flutter: the shared hop, with the flap beating twice like a wing on the way up
+  'envelope-flutter': {
+    duration: 1,
+    parts: {
+      all: { origin: [12, 19] },
+      flap: { origin: [12, 7] },
+    },
+    pose: t => {
+      const beat = bell(span(t, 0.1, 0.3)) + bell(span(t, 0.28, 0.48));
+      return {
+        all: { ...bounce(t, 2.6), r: -6 * flick(t - 0.1, 0.75, 1.8, 0.45) },
+        flap: { sy: 1 - 1.5 * beat + 0.12 * flick(t - 0.55, 0.3, 4) },
+      };
+    },
+  },
 };

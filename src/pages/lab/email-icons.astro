@@ -1,0 +1,142 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { Icon, type IconName } from '@/components/icon/icon.tsx'
+
+export const prerender = true
+
+const candidates: { name: IconName; title: string; blurb: string }[] = [
+  { name: 'envelope-peek', title: 'A. Peek', blurb: 'The flap swings open and a letter pops up, wobbles, and tucks back in.' },
+  { name: 'envelope-send', title: 'B. Send', blurb: 'Winds back, zips off up-right with a smear (like the old plane), swoops back in.' },
+  { name: 'envelope-ping', title: "C. You've got mail", blurb: 'Buzzes like a notification; a badge pops on the corner and rings out, like RSS.' },
+  { name: 'envelope-seal', title: 'D. Seal', blurb: 'The flap writes itself shut (like Writing’s lines), then a wax heart stamps on.' },
+  { name: 'envelope-flutter', title: 'E. Flutter', blurb: 'The shared hop (LinkedIn, Work), with the flap beating like a wing.' },
+]
+
+const neighbours: IconName[] = ['x', 'linkedin', 'github', 'rss']
+---
+<style>
+  .container {
+    margin: 0 auto;
+    padding: 0 var(--padding-lg);
+    max-width: min(80ch, 100%);
+  }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: var(--padding-lg);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--padding-lg);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+    border-radius: 12px;
+  }
+
+  .card h3 {
+    margin: 0 0 0.25rem;
+  }
+
+  .card p {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 9rem;
+    font-size: 5rem;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .big > :global(svg) {
+    margin: 0;
+  }
+
+  /* a copy of the footer row at its real size, so it can be judged against its neighbours */
+  .row {
+    display: flex;
+    gap: clamp(0.25rem, 1vw, 0.75rem);
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--text-color);
+  }
+
+  .row a > :global(svg) {
+    margin: calc(-1 * var(--pad));
+  }
+</style>
+<Layout title="Email icon candidates" showHeader={false} canonical={false}>
+  <div class="container">
+    <h2>Email icon candidates</h2>
+    <p>Hover (or tab to) any icon to play its gesture. Each card shows it large, then at real size in a copy of the footer row. The current plane is first in the last row for comparison.</p>
+    <label class="controls"><input type="checkbox" data-autoplay /> Loop every gesture automatically</label>
+    <ul class="grid">
+      {candidates.map(({ name, title, blurb }) => (
+        <li class="card">
+          <h3>{title}</h3>
+          <a class="big" href="mailto:me@dustinschau.com" aria-label={title}><Icon name={name} /></a>
+          <ul class="row">
+            <li><a href="mailto:me@dustinschau.com" aria-label="email"><Icon name={name} /></a></li>
+            {neighbours.map(n => <li><a href="#" aria-label={n}><Icon name={n} /></a></li>)}
+          </ul>
+          <p>{blurb}</p>
+        </li>
+      ))}
+      <li class="card">
+        <h3>Current: send (plane)</h3>
+        <a class="big" href="mailto:me@dustinschau.com" aria-label="current"><Icon name="email" /></a>
+        <ul class="row">
+          <li><a href="mailto:me@dustinschau.com" aria-label="email"><Icon name="email" /></a></li>
+          {neighbours.map(n => <li><a href="#" aria-label={n}><Icon name={n} /></a></li>)}
+        </ul>
+        <p>What's in the footer today.</p>
+      </li>
+    </ul>
+  </div>
+</Layout>
+
+<script>
+  // replays every envelope's gesture by faking the pointer crossing its link
+  const toggle = document.querySelector<HTMLInputElement>('[data-autoplay]')
+  let timer = 0
+  const playAll = () => {
+    for (const svg of document.querySelectorAll<SVGSVGElement>('.big svg[data-icon]')) {
+      const link = svg.closest('a')
+      link?.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }))
+      setTimeout(() => link?.dispatchEvent(new PointerEvent('pointerout', { bubbles: true })), 2000)
+    }
+  }
+  toggle?.addEventListener('change', () => {
+    clearInterval(timer)
+    if (toggle.checked) {
+      playAll()
+      timer = window.setInterval(playAll, 2600)
+    }
+  })
+</script>
