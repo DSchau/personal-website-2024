@@ -5,7 +5,7 @@ import { Icon, type IconName } from '@/components/icon/icon.tsx'
 export const prerender = true
 
 const candidates: { name: IconName; title: string; blurb: string }[] = [
-  { name: 'envelope-peek', title: 'A. Peek', blurb: 'The flap swings open and a letter pops up, wobbles, and tucks back in.' },
+  { name: 'envelope-peek', title: 'A. Peek', blurb: 'The flap lifts and a letter pops up out of the top, wobbles, and tucks back in.' },
   { name: 'envelope-send', title: 'B. Send', blurb: 'Winds back, zips off up-right with a smear (like the old plane), swoops back in.' },
   { name: 'envelope-ping', title: "C. You've got mail", blurb: 'Buzzes like a notification; a badge pops on the corner and rings out, like RSS.' },
   { name: 'envelope-seal', title: 'D. Seal', blurb: 'The flap writes itself shut (like Writing’s lines), then a wax heart stamps on.' },
@@ -30,7 +30,7 @@ const neighbours: IconName[] = ['x', 'linkedin', 'github', 'rss']
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
     gap: var(--padding-lg);
     margin: 0;
     padding: 0;
@@ -73,9 +73,14 @@ const neighbours: IconName[] = ['x', 'linkedin', 'github', 'rss']
     display: flex;
     gap: clamp(0.25rem, 1vw, 0.75rem);
     align-items: center;
+    justify-content: center;
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .row li {
+    margin: 0;
   }
 
   .row a {
@@ -94,7 +99,7 @@ const neighbours: IconName[] = ['x', 'linkedin', 'github', 'rss']
 <Layout title="Email icon candidates" showHeader={false} canonical={false}>
   <div class="container">
     <h2>Email icon candidates</h2>
-    <p>Hover (or tab to) any icon to play its gesture. Each card shows it large, then at real size in a copy of the footer row. The current plane is first in the last row for comparison.</p>
+    <p>Hover (or tab to) any icon to play its gesture. Each card shows it large, then at real size in a copy of the footer row. The last card is the current plane, for comparison.</p>
     <label class="controls"><input type="checkbox" data-autoplay /> Loop every gesture automatically</label>
     <ul class="grid">
       {candidates.map(({ name, title, blurb }) => (

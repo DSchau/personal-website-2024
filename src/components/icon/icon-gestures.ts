@@ -329,7 +329,7 @@ export const gestures: Record<string, Gesture> = {
     },
   },
   // email candidates (preview: /lab/email-icons/)
-  // peek: the envelope crouches, its flap swings open, a letter pops up and wobbles, then tucks back in
+  // peek: the envelope crouches, its flap lifts, a letter pops up out of the top and wobbles, then tucks back in
   'envelope-peek': {
     duration: 1.4,
     parts: {
@@ -344,8 +344,8 @@ export const gestures: Record<string, Gesture> = {
       const rise = easeOut(span(t, 0.25, 0.6)) - easeInOut(span(t, 0.7, 0.95));
       return {
         all: { sx: 1 + 0.06 * crouch + 0.04 * land, sy: 1 - 0.08 * crouch - 0.06 * land },
-        letter: { y: 4 * (1 - rise), o: clamp01(rise * 1.5), r: -6 * flick(t - 0.55, 0.35, 3) },
-        flap: { sy: 1 - 1.75 * open + 0.15 * flick(t - 1.08, 0.3, 4) },
+        letter: { y: 6 * (1 - rise), o: clamp01(rise * 1.5), r: -5 * flick(t - 0.55, 0.35, 3) },
+        flap: { sy: 1 - 0.35 * open + 0.15 * flick(t - 1.08, 0.3, 4) },
       };
     },
   },
@@ -376,14 +376,14 @@ export const gestures: Record<string, Gesture> = {
     duration: 1.2,
     parts: {
       all: { origin: [12, 12] },
-      ring: { origin: [20.5, 4.5], hidden: true },
-      dot: { origin: [20.5, 4.5], hidden: true },
+      ring: { origin: [22.5, 2.75], hidden: true },
+      dot: { origin: [22.5, 2.75], hidden: true },
     },
     pose: t => {
       const u = span(t, 0.42, 0.95);
       return {
         all: { r: 10 * Math.sin(2 * Math.PI * 6 * t) * bell(span(t, 0, 0.5)), y: -bell(span(t, 0, 0.25)) },
-        ring: { s: 1 + 1.3 * easeOut(u), o: 0.9 * bell(u ** 0.5) },
+        ring: { s: 1 + 0.9 * easeOut(u), o: 0.9 * bell(u ** 0.5) },
         dot: { s: 0.2 + 0.8 * arrive(t - 0.35, 0.45, 2.4, 0.4), o: span(t, 0.35, 0.42) - span(t, 0.95, 1.15) },
       };
     },
@@ -394,7 +394,7 @@ export const gestures: Record<string, Gesture> = {
     parts: {
       all: { origin: [12, 19] },
       flap: { origin: [12, 7] },
-      heart: { origin: [12, 13.5], hidden: true },
+      heart: { origin: [12, 15.7], hidden: true },
     },
     pose: t => {
       const stamp = bell(span(t, 0.72, 0.9));

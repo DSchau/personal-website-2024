@@ -103,7 +103,7 @@ export const icons = {
   // email icon candidates (preview: /lab/email-icons/), all one envelope drawn to Central's
   // 2px stroke and 2px corner radius, each with its own hover gesture
   'envelope-peek': {
-    letter: {d: ["M8 5V0.5C8 -0.0523 8.4477 -0.5 9 -0.5H15C15.5523 -0.5 16 -0.0523 16 0.5V5", "M10.5 2H13.5"], extra: true},
+    letter: {d: ["M6 5V1C6 -0.10457 6.89543 -1 8 -1H16C17.1046 -1 18 -0.10457 18 1V5", "M9 2H15"], extra: true},
     body: {d: [ENVELOPE]},
     flap: {d: [FLAP]},
   },
@@ -114,13 +114,13 @@ export const icons = {
   'envelope-ping': {
     body: {d: [ENVELOPE]},
     flap: {d: [FLAP]},
-    ring: {d: ["M18.25 4.5a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0-4.5 0"], extra: true, width: 1.25},
-    dot: {d: ["M18.25 4.5a2.25 2.25 0 1 0 4.5 0a2.25 2.25 0 1 0-4.5 0"], fill: true, extra: true},
+    ring: {d: ["M20.75 2.75a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0-3.5 0"], extra: true, width: 1.25},
+    dot: {d: ["M20.75 2.75a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0-3.5 0"], fill: true, extra: true},
   },
   'envelope-seal': {
     body: {d: [ENVELOPE]},
     flap: {d: [FLAP]},
-    heart: {d: ["M12 11.6C13.4 10.1 15.9 11.4 14.9 13.5C14.4 14.5 13.4 15.3 12 16.1C10.6 15.3 9.6 14.5 9.1 13.5C8.1 11.4 10.6 10.1 12 11.6Z"], fill: true, extra: true},
+    heart: {d: ["M12 14.01C13.05 12.89 14.93 13.86 14.18 15.44C13.8 16.19 13.05 16.79 12 17.39C10.95 16.79 10.2 16.19 9.82 15.44C9.07 13.86 10.95 12.89 12 14.01Z"], fill: true, extra: true},
   },
   'envelope-flutter': {
     body: {d: [ENVELOPE]},
